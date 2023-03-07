@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
@@ -41,7 +42,10 @@ import app.books.tanga.ui.theme.TangaOrange
 import app.books.tanga.ui.theme.TangaOrangeTransparent
 
 @Composable
-fun AuthScreen(navController: NavController) {
+fun AuthScreen(
+    navController: NavController,
+    viewModel: AuthViewModel = hiltViewModel()
+) {
     Scaffold(topBar = {
         TopAppBar(
             elevation = 0.dp,
@@ -73,12 +77,19 @@ fun AuthScreen(navController: NavController) {
             }
         }
     }) {
-        AuthContent(modifier = Modifier.padding(it), navController)
+        AuthContent(
+            modifier = Modifier.padding(it),
+            navController = navController
+        ) { viewModel.onGoogleSignInStarted() }
     }
 }
 
 @Composable
-fun AuthContent(modifier: Modifier, navController: NavController) {
+fun AuthContent(
+    modifier: Modifier,
+    navController: NavController,
+    onGoogleSignInButtonClick: () -> Unit
+) {
     val state = rememberGoogleOneTapSignInState()
     GoogleOneTapSignIn(
         state = state,
@@ -133,37 +144,7 @@ fun AuthContent(modifier: Modifier, navController: NavController) {
                 textAlign = TextAlign.Center
             )
         }
-        Button(
-            modifier = Modifier
-                .height(55.dp)
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
-            onClick = {
-                // TODO: state.open()
-                navController.navigate(route = NavigationScreen.Main.route)
-            },
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.Transparent,
-                backgroundColor = Color.Black,
-            ),
-            shape = RoundedCornerShape(6.dp),
-            elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-        ) {
-            Box {
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),
-                    contentDescription = "google logo",
-                    modifier = Modifier.size(22.dp)
-                )
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Sign in with Google",
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-            }
-        }
+        GoogleSignInButton(onGoogleSignInButtonClick)
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -176,6 +157,43 @@ fun AuthContent(modifier: Modifier, navController: NavController) {
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold
         )
+    }
+}
+
+@Composable
+fun GoogleSignInButton(
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = Modifier
+            .height(55.dp)
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp),
+        onClick = {
+            onClick()
+            //navController.navigate(route = NavigationScreen.Main.route)
+        },
+        colors = ButtonDefaults.buttonColors(
+            contentColor = Color.Transparent,
+            backgroundColor = Color.Black,
+        ),
+        shape = RoundedCornerShape(6.dp),
+        elevation = ButtonDefaults.elevation(0.dp, 0.dp),
+    ) {
+        Box {
+            Image(
+                imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),
+                contentDescription = "google logo",
+                modifier = Modifier.size(22.dp)
+            )
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Sign in with Google",
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
+        }
     }
 }
 
