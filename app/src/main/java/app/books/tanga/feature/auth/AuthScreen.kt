@@ -1,9 +1,24 @@
 package app.books.tanga.feature.auth
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.Text
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +35,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
 import app.books.tanga.navigation.NavigationScreen
-import app.books.tanga.ui.theme.*
+import app.books.tanga.ui.theme.TangaBlueDark
+import app.books.tanga.ui.theme.TangaLightGray2
+import app.books.tanga.ui.theme.TangaOrange
+import app.books.tanga.ui.theme.TangaOrangeTransparent
 
 @Composable
 fun AuthScreen(navController: NavController) {
@@ -61,6 +79,19 @@ fun AuthScreen(navController: NavController) {
 
 @Composable
 fun AuthContent(modifier: Modifier, navController: NavController) {
+    val state = rememberGoogleOneTapSignInState()
+    GoogleOneTapSignIn(
+        state = state,
+        clientId = "806931145399-5o4s110s8qa6a7sbon8h3a52caq5pb22.apps.googleusercontent.com",
+        nonce = "sama nonnce",
+        onTokenIdReceived = {
+            Log.d("MainActivity", "TOKEN ==> $it")
+        },
+        onOneTapDialogDismissed = {
+            Log.d("MainActivity", "Error ==> $it")
+        }
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -107,7 +138,10 @@ fun AuthContent(modifier: Modifier, navController: NavController) {
                 .height(55.dp)
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp),
-            onClick = { navController.navigate(route = NavigationScreen.Main.route) },
+            onClick = {
+                // TODO: state.open()
+                navController.navigate(route = NavigationScreen.Main.route)
+            },
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Transparent,
                 backgroundColor = Color.Black,

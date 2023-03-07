@@ -84,6 +84,7 @@ dependencies {
     // Firebase
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation "com.google.firebase:firebase-firestore-ktx"
 
     // Accompanist
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
