@@ -5,6 +5,8 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult
 
 sealed interface AuthUiEvent {
 
+    object Empty: AuthUiEvent
+
     @JvmInline
     value class ShowProgress(val progressState: ProgressState): AuthUiEvent
 
@@ -12,6 +14,6 @@ sealed interface AuthUiEvent {
     value class LaunchGoogleSignIn(val signInResult: BeginSignInResult): AuthUiEvent
 
     sealed interface NavigateTo: AuthUiEvent {
-        object ToHoMeScreen: NavigateTo
+        object ToHomeScreen: NavigateTo
     }
 }

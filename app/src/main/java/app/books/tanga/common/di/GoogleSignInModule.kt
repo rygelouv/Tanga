@@ -5,22 +5,28 @@ import android.content.Context
 import app.books.tanga.R
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 
 private const val WEB_CLIENT_ID = "webClientId"
 
+@Module
+@InstallIn(SingletonComponent::class)
 class GoogleSignInModule {
 
     @Provides
     fun provideSignInClient(
         @ApplicationContext context: Context
-    ) = Identity.getSignInClient(context)
+    ): SignInClient = Identity.getSignInClient(context)
 
     @Provides
     @Named(GOOGLE_SIGN_IN_REQUEST)
-    fun provideSignInClient(@Named(WEB_CLIENT_ID) clientId: String): BeginSignInRequest {
+    fun provideSignInRequest(@Named(WEB_CLIENT_ID) clientId: String): BeginSignInRequest {
         return BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                 .setSupported(true)
@@ -32,7 +38,7 @@ class GoogleSignInModule {
     }
 
     @Provides
-    @Named(Companion.GOOGLE_SIGN_UP_REQUEST)
+    @Named(GOOGLE_SIGN_UP_REQUEST)
     fun provideSignUpRequest(@Named(WEB_CLIENT_ID) clientId: String): BeginSignInRequest {
         return BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
@@ -50,6 +56,5 @@ class GoogleSignInModule {
     companion object {
         const val GOOGLE_SIGN_IN_REQUEST = "GoogleSignInRequest"
         const val GOOGLE_SIGN_UP_REQUEST = "GoogleSignUpRequest"
-
     }
 }

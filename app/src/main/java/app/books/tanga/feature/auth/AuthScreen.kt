@@ -1,12 +1,10 @@
 package app.books.tanga.feature.auth
 
-import android.util.Log
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,12 +18,11 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,8 +76,11 @@ fun AuthScreen(
     }) {
         AuthContent(
             modifier = Modifier.padding(it),
-            navController = navController
-        ) { viewModel.onGoogleSignInStarted() }
+            navController = navController,
+            event = viewModel.events.collectAsState(initial = AuthUiEvent.Empty).value,
+            onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
+            onGoogleSignInCompleted = { intent -> viewModel.onGoogleSignInCompleted(intent) }
+        )
     }
 }
 
@@ -88,19 +88,14 @@ fun AuthScreen(
 fun AuthContent(
     modifier: Modifier,
     navController: NavController,
-    onGoogleSignInButtonClick: () -> Unit
+    event: AuthUiEvent,
+    onGoogleSignInButtonClick: () -> Unit,
+    onGoogleSignInCompleted: (Intent) -> Unit
 ) {
-    val state = rememberGoogleOneTapSignInState()
-    GoogleOneTapSignIn(
-        state = state,
-        clientId = "806931145399-5o4s110s8qa6a7sbon8h3a52caq5pb22.apps.googleusercontent.com",
-        nonce = "sama nonnce",
-        onTokenIdReceived = {
-            Log.d("MainActivity", "TOKEN ==> $it")
-        },
-        onOneTapDialogDismissed = {
-            Log.d("MainActivity", "Error ==> $it")
-        }
+    SignIn(
+        navController = navController,
+        event = event,
+        onGoogleSignInCompleted = onGoogleSignInCompleted
     )
 
     Column(
@@ -144,7 +139,10 @@ fun AuthContent(
                 textAlign = TextAlign.Center
             )
         }
-        GoogleSignInButton(onGoogleSignInButtonClick)
+
+        // Google Sign In button
+        GoogleSignInButton(onGoogleSignInButtonClick, event)
+
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -157,43 +155,6 @@ fun AuthContent(
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold
         )
-    }
-}
-
-@Composable
-fun GoogleSignInButton(
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = Modifier
-            .height(55.dp)
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
-        onClick = {
-            onClick()
-            //navController.navigate(route = NavigationScreen.Main.route)
-        },
-        colors = ButtonDefaults.buttonColors(
-            contentColor = Color.Transparent,
-            backgroundColor = Color.Black,
-        ),
-        shape = RoundedCornerShape(6.dp),
-        elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-    ) {
-        Box {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),
-                contentDescription = "google logo",
-                modifier = Modifier.size(22.dp)
-            )
-
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Sign in with Google",
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
-        }
     }
 }
 

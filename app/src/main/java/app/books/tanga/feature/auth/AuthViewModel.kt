@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.domain.AuthenticationInteractor
+import app.books.tanga.common.domain.SessionStatus
 import app.books.tanga.common.ui.ProgressState
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,8 +40,10 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val credentials = signInClient.getSignInCredentialFromIntent(intent)
             interactor.launchGoogleSignIn(credentials)
-                .onSuccess {
-                    postEvent(AuthUiEvent.NavigateTo.ToHoMeScreen)
+                .onSuccess { sessionStatus ->
+                    if (sessionStatus == SessionStatus.SIGNED_IN) {
+                        postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                    }
                 }.onFailure {
                     Log.e("AuthViewModel", "Google sign In failure: ${it.message}")
                     // TODO (Properly track failure )
