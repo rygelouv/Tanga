@@ -11,9 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.feature.FakeData
-import app.books.tanga.feature.summary.SummaryGrid
-import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.common.FakeData
 import app.books.tanga.ui.theme.TangaBlueDark
 
 @Composable

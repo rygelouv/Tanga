@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.books.tanga.feature.FakeData
+import app.books.tanga.common.FakeData
 import app.books.tanga.ui.theme.TangaLightGray2
 
 @Composable
