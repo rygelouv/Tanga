@@ -18,7 +18,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
@@ -74,10 +75,13 @@ fun AuthScreen(
             }
         }
     }) {
+        val state by viewModel.state.collectAsStateWithLifecycle()
+        val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
         AuthContent(
             modifier = Modifier.padding(it),
             navController = navController,
-            event = viewModel.events.collectAsState(initial = AuthUiEvent.Empty).value,
+            state = state,
+            event = events,
             onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
             onGoogleSignInCompleted = { intent -> viewModel.onGoogleSignInCompleted(intent) }
         )
@@ -88,6 +92,7 @@ fun AuthScreen(
 fun AuthContent(
     modifier: Modifier,
     navController: NavController,
+    state: AuthUiState,
     event: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onGoogleSignInCompleted: (Intent) -> Unit
@@ -141,7 +146,7 @@ fun AuthContent(
         }
 
         // Google Sign In button
-        GoogleSignInButton(onGoogleSignInButtonClick, event)
+        GoogleSignInButton(onGoogleSignInButtonClick, state)
 
         Text(
             modifier = Modifier

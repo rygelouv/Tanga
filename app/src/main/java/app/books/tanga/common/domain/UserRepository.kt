@@ -2,6 +2,7 @@ package app.books.tanga.common.domain
 
 import app.books.tanga.common.data.FirestoreDatabase
 import app.books.tanga.common.data.toFireStoreUserData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -11,6 +12,8 @@ interface UserRepository {
     suspend fun getUser(): User
 
     suspend fun createUser(user: User)
+
+    suspend fun deleteUser(user: User)
 }
 
 class UserRepositoryImpl @Inject constructor(
@@ -26,5 +29,12 @@ class UserRepositoryImpl @Inject constructor(
         firestore.collection(FirestoreDatabase.Users.COLLECTION_NAME)
             .document(user.uid)
             .set(userMap).await()
+    }
+
+    override suspend fun deleteUser(user: User) {
+        firestore
+            .collection(FirestoreDatabase.Users.COLLECTION_NAME)
+            .document(user.uid)
+            .delete()
     }
 }

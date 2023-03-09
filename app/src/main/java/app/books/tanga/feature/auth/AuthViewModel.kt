@@ -9,7 +9,7 @@ import app.books.tanga.common.domain.SessionStatus
 import app.books.tanga.common.ui.ProgressState
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,11 +19,14 @@ class AuthViewModel @Inject constructor(
     private val signInClient: SignInClient,
 ) : ViewModel() {
 
+    private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState.emptyState())
+    val state: StateFlow<AuthUiState> = _state.asStateFlow()
+
     private val _events: MutableSharedFlow<AuthUiEvent> = MutableSharedFlow()
-    val events: MutableSharedFlow<AuthUiEvent> by ::_events
+    val events: SharedFlow<AuthUiEvent> = _events.asSharedFlow()
 
     fun onGoogleSignInStarted() {
-        postEvent(AuthUiEvent.ShowProgress(progressState = ProgressState.Loading))
+        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Loading) }
         viewModelScope.launch {
             interactor.initGoogleSignIn()
                 .onSuccess { initSignInResult ->
@@ -43,9 +46,11 @@ class AuthViewModel @Inject constructor(
                 .onSuccess { sessionStatus ->
                     if (sessionStatus == SessionStatus.SIGNED_IN) {
                         postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Idle) }
                     }
-                }.onFailure {
-                    Log.e("AuthViewModel", "Google sign In failure: ${it.message}")
+                }.onFailure { error ->
+                    _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Idle) }
+                    Log.e("AuthViewModel", "Google sign In failure: ${error.message}")
                     // TODO (Properly track failure )
                     // TODO show failure UI with Retry
                 }
@@ -53,6 +58,6 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun postEvent(event: AuthUiEvent) {
-        viewModelScope.launch { events.emit(event) }
+        viewModelScope.launch { _events.emit(event) }
     }
 }
