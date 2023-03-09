@@ -53,7 +53,9 @@ fun SignIn(
         }
         is AuthUiEvent.NavigateTo.ToHomeScreen -> {
             LaunchedEffect(Unit) {
-                navController.navigate(route = NavigationScreen.Main.route)
+                navController.navigate(route = NavigationScreen.Main.route) {
+                    popUpTo(NavigationScreen.Authentication.route) { inclusive = true }
+                }
             }
         }
         else -> Unit
@@ -63,9 +65,9 @@ fun SignIn(
 @Composable
 fun GoogleSignInButton(
     onClick: () -> Unit,
-    event: AuthUiEvent
+    state: AuthUiState
 ) {
-    val progressState = (event as? AuthUiEvent.ShowProgress)?.progressState
+    val progressState = state.googleSignInButtonProgressState
     Button(
         modifier = Modifier
             .height(55.dp)

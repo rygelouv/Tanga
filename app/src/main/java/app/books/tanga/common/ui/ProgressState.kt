@@ -9,5 +9,5 @@ sealed interface ProgressState {
     object Loading: ProgressState
 
     /** When finished loading */
-    object Finished: ProgressState
+    object Idle: ProgressState
 }
