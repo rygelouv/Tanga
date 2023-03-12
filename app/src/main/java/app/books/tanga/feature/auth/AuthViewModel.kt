@@ -4,12 +4,18 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.common.domain.AuthenticationInteractor
-import app.books.tanga.common.domain.SessionStatus
+import app.books.tanga.common.domain.auth.AuthenticationInteractor
+import app.books.tanga.common.domain.session.SessionState
 import app.books.tanga.common.ui.ProgressState
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,7 +50,7 @@ class AuthViewModel @Inject constructor(
             val credentials = signInClient.getSignInCredentialFromIntent(intent)
             interactor.launchGoogleSignIn(credentials)
                 .onSuccess { sessionStatus ->
-                    if (sessionStatus == SessionStatus.SIGNED_IN) {
+                    if (sessionStatus is SessionState.LoggedIn) {
                         postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                         _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Idle) }
                     }

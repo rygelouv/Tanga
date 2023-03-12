@@ -1,7 +1,7 @@
 package app.books.tanga.common.di
 
-import app.books.tanga.common.data.UserRepository
-import app.books.tanga.common.data.UserRepositoryImpl
+import app.books.tanga.common.data.PrefSessionManager
+import app.books.tanga.common.domain.session.SessionManager
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -9,8 +9,8 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface RepositoriesModule {
+interface SessionModule {
 
     @Binds
-    fun UserRepositoryImpl.provideUserRepository(): UserRepository
+    fun PrefSessionManager.provideSessionManager(): SessionManager
 }

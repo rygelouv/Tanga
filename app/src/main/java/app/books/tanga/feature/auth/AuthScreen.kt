@@ -64,7 +64,11 @@ fun AuthScreen(
                     ),
                     shape = RoundedCornerShape(40.dp),
                     elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-                    onClick = { navController.navigate(route = NavigationScreen.Main.route) }
+                    onClick = {
+                        navController.navigate(route = NavigationScreen.Main.route) {
+                            popUpTo(NavigationScreen.Authentication.route) { inclusive = true }
+                        }
+                    }
                 ) {
                     Text(
                         text = "Skip",

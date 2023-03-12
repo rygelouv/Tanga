@@ -1,4 +1,4 @@
-package app.books.tanga.common.domain
+package app.books.tanga.common.domain.user
 
 data class User(
     val uid: String,

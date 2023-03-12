@@ -7,8 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,9 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
+import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent
 import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent2
@@ -33,9 +34,12 @@ import app.books.tanga.ui.theme.TangaLightGray2
 import app.books.tanga.ui.theme.TangaBluePale
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
+
     Scaffold(
-        modifier = Modifier.fillMaxSize().padding(bottom = 10.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 10.dp),
         floatingActionButton = {
             ProButton()
         },
@@ -56,14 +60,16 @@ fun ProfileScreen(navController: NavController) {
             ) {
                 ProfileHeader(modifier = Modifier)
                 Spacer(modifier = Modifier.height(70.dp))
-                ProfileScreenContent()
+                ProfileScreenContent {
+                    viewModel.onLogout()
+                }
             }
         }
     }
 }
 
 @Composable
-fun ProfileScreenContent() {
+fun ProfileScreenContent(onLogout: () -> Unit) {
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -79,26 +85,32 @@ fun ProfileScreenContent() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
+            val openDialogState = remember { mutableStateOf(false) }
+
             ProfileContentAction(modifier = Modifier, ProfileAction.CONTACT)
             ProfileContentAction(modifier = Modifier, ProfileAction.PRIVACY_AND_TERMS)
             ProfileContentAction(modifier = Modifier, ProfileAction.NOTIFICATIONS)
-            ProfileContentAction(modifier = Modifier, ProfileAction.LOGOUT)
+            ProfileContentAction(modifier = Modifier, ProfileAction.LOGOUT) {
+                openDialogState.value = true
+            }
             Spacer(modifier = Modifier.height(60.dp))
+
+            LogoutDialog(openDialog = openDialogState.value, onConfirm = onLogout)
         }
     }
 }
 
 @Composable
-fun ProfileContentAction(modifier: Modifier, action: ProfileAction) {
+fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () -> Unit = {}) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true, color = TangaBluePaleSemiTransparent2),
-            ) {}
+            ) { onClick() }
             .padding(horizontal = 30.dp, vertical = 15.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -181,7 +193,8 @@ fun ProButton() {
         ExtendedFloatingActionButton(
             modifier = Modifier
                 .height(70.dp)
-                .width(320.dp).align(Alignment.BottomCenter),
+                .width(320.dp)
+                .align(Alignment.BottomCenter),
             backgroundColor = TangaBluePale,
             onClick = {},
             elevation = FloatingActionButtonDefaults.elevation(2.dp),
@@ -241,6 +254,6 @@ fun ProfileImage(modifier: Modifier) {
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    val navController = rememberNavController()
-    ProfileScreen(navController)
+    //val navController = rememberNavController()
+    ProfileScreen()
 }

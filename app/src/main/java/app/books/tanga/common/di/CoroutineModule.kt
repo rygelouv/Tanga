@@ -1,4 +1,4 @@
-package app.books.tanga.di
+package app.books.tanga.common.di
 
 import dagger.Module
 import dagger.Provides
