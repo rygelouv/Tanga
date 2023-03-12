@@ -2,7 +2,7 @@ package app.books.tanga.feature.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.preferences.DefaultPrefDataStoreRepository
+import app.books.tanga.common.data.preferences.DefaultPrefDataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

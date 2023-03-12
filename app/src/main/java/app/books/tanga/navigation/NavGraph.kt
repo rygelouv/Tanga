@@ -25,7 +25,7 @@ fun NavigationGraph(
             AuthScreen(navController = navController)
         }
         composable(route = NavigationScreen.Main.route) {
-            MainScreen()
+            MainScreen(navController = navController)
         }
     }
 }
@@ -43,7 +43,7 @@ fun BottomBarNavigationGraph(
             LibraryScreen()
         }
         composable(route = NavigationScreen.Profile.route) {
-            ProfileScreen(navController = navController)
+            ProfileScreen()
         }
     }
 }

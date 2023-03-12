@@ -1,7 +1,7 @@
 package app.books.tanga.common.di
 
-import app.books.tanga.common.domain.AuthenticationInteractor
-import app.books.tanga.common.domain.AuthenticationInteractorImpl
+import app.books.tanga.common.domain.auth.AuthenticationInteractor
+import app.books.tanga.common.domain.auth.AuthenticationInteractorImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

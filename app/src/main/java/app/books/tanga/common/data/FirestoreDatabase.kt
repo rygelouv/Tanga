@@ -7,7 +7,8 @@ object FirestoreDatabase {
 
         //Fields
         object Fields {
-            const val DISPLAY_NAME = "displayName"
+            const val UID = "uid"
+            const val FULL_NAME = "fullName"
             const val EMAIL = "email"
             const val PHOTO_URL = "photoUrl"
             const val CREATED_AT = "createdAt"

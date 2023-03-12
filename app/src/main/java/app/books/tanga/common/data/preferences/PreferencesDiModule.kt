@@ -1,13 +1,11 @@
-package app.books.tanga.preferences
+package app.books.tanga.common.data.preferences
 
 import android.content.Context
-import app.books.tanga.di.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -16,7 +14,6 @@ class PreferencesDiModule {
     @Provides
     @Singleton
     fun provideDefaultPreDataStoreModule(
-        @ApplicationContext context: Context,
-        @IoDispatcher dispatcher: CoroutineDispatcher
-    ) = DefaultPrefDataStoreRepository(context = context, dispatcher)
+        @ApplicationContext context: Context
+    ) = DefaultPrefDataStoreRepository(context = context)
 }

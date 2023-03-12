@@ -9,4 +9,9 @@
     <string name="library_explore_summaries">Explore Summaries</string>
     <string name="home_see_all">See all</string>
     <string name="personal_growth">Personal Growth</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_logout_title">Log out from Tanga?</string>
+    <string name="confirm_logout_message">Are you sure you want to log out? If yes that\'s fine, you can log back in later</string>
+    <string name="freemium">Freemium</string>
 </resources>
