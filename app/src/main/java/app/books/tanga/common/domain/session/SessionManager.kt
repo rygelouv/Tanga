@@ -1,6 +1,6 @@
 package app.books.tanga.common.domain.session
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface SessionManager {
 
@@ -8,6 +8,5 @@ interface SessionManager {
 
     suspend fun closeSession()
 
-    suspend fun sessionState(): StateFlow<SessionState>
-
+    suspend fun sessionState(): Flow<SessionState>
 }

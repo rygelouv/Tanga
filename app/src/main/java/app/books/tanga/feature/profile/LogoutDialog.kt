@@ -10,32 +10,28 @@ import app.books.tanga.R
 
 @Composable
 fun LogoutDialog(
-    openDialog: Boolean,
+    onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
-    if (openDialog) {
-        AlertDialog(
-            onDismissRequest = { },
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    Text(text = stringResource(id = R.string.confirm))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {}) {
-                    Text(text = stringResource(id = R.string.cancel))
-                }
-            },
-            title = { Text(text = stringResource(id = R.string.confirm_logout_title)) },
-            text = { Text(text = stringResource(id = R.string.confirm_logout_message)) }
-        )
-    }
+    AlertDialog(
+        onDismissRequest = { },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text(text = stringResource(id = R.string.confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.cancel))
+            }
+        },
+        title = { Text(text = stringResource(id = R.string.confirm_logout_title)) },
+        text = { Text(text = stringResource(id = R.string.confirm_logout_message)) }
+    )
 }
 
 @Composable
 @Preview
 fun LogoutDialogPreview() {
-    LogoutDialog(false) {
-
-    }
+    LogoutDialog({}, {})
 }

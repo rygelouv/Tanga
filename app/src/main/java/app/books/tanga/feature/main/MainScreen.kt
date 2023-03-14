@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,14 +18,16 @@ import app.books.tanga.navigation.BottomBarNavigationGraph
 import app.books.tanga.navigation.NavigationScreen
 
 @Composable
-fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
-
+fun MainScreen(rootNavController: NavController, viewModel: MainViewModel = hiltViewModel()) {
+    val navController = rememberNavController()
     val event by viewModel.event.collectAsStateWithLifecycle(initialValue = MainUiEvent.Empty)
 
     when(event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
-            navController.navigate(route = NavigationScreen.Authentication.route) {
-                popUpTo(NavigationScreen.Authentication.route) { inclusive = true }
+            LaunchedEffect(Unit) {
+                rootNavController.navigate(route = NavigationScreen.Authentication.route) {
+                    popUpTo(NavigationScreen.Main.route) { inclusive = true }
+                }
             }
         }
         else -> Unit
@@ -36,9 +39,8 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
         bottomBar = { BottomBarNavigation(navController) }
     ) {
         Surface(modifier = Modifier.padding(it)) {
-            val bottomBarNavController = rememberNavController()
             BottomBarNavigationGraph(
-                navController = bottomBarNavController,
+                navController = navController,
                 startDestination = NavigationScreen.Home.route
             )
         }
