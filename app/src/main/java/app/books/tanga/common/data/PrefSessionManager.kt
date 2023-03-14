@@ -1,6 +1,5 @@
 package app.books.tanga.common.data
 
-import android.util.Log
 import app.books.tanga.common.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.common.di.IoDispatcher
 import app.books.tanga.common.domain.session.SessionId
@@ -29,10 +28,7 @@ class PrefSessionManager @Inject constructor(
         prefRepository.getSessionId()
             .map { sessionId ->
                 when(sessionId) {
-                    null -> {
-                        Log.e("TAG000", "Session State Pref ===> LoggedOut")
-                        SessionState.LoggedOut
-                    }
+                    null -> SessionState.LoggedOut
                     else -> SessionState.LoggedIn(sessionId)
                 }
             }
