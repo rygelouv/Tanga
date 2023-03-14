@@ -25,7 +25,7 @@ fun NavigationGraph(
             AuthScreen(navController = navController)
         }
         composable(route = NavigationScreen.Main.route) {
-            MainScreen(navController = navController)
+            MainScreen(rootNavController = navController)
         }
     }
 }

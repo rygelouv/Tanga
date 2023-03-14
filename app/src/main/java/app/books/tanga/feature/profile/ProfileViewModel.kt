@@ -30,9 +30,7 @@ class ProfileViewModel @Inject constructor(
 
     fun onLogout() {
         viewModelScope.launch {
-            authInteractor.signOut().onSuccess {
-
-                }
+            authInteractor.signOut().onSuccess {}
         }
     }
 }

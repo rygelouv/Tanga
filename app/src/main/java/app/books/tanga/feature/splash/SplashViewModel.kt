@@ -10,7 +10,6 @@ import app.books.tanga.common.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.common.domain.session.SessionManager
 import app.books.tanga.common.domain.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
