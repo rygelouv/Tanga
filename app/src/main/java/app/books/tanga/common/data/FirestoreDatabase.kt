@@ -1,5 +1,7 @@
 package app.books.tanga.common.data
 
+typealias FirestoreData = Map<String, Any?>
+
 object FirestoreDatabase {
     object Users {
         //Collection Reference

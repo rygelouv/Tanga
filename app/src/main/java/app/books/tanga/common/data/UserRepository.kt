@@ -27,8 +27,10 @@ class UserRepositoryImpl @Inject constructor(
         val sessionId = prefDataStoreRepo.getSessionId().first()
         return sessionId?.let {
             runCatching {
-                val userDocument = firestore.userCollection.document(it.value).get().await()
-                userDocument.toObject(User::class.java)
+                val uid = sessionId.value
+                val userDocument = firestore.userCollection.document(uid).get().await()
+                val userDataMap = userDocument.data
+                userDataMap?.toUser(uid)
             }.onFailure { Result.failure<Throwable>(it) }
         } ?: Result.failure(OperationError("Session Id not found in pref datastore"))
     }

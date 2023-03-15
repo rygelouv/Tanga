@@ -25,7 +25,17 @@ class ProfileViewModel @Inject constructor(
     val state: StateFlow<ProfileUiState> = _state.asStateFlow()
 
     init {
-        _state.update { it.copy(fullName = "Rygel Louv") }
+        viewModelScope.launch {
+            userRepository.getUser().onSuccess {
+                val user = it ?: return@launch
+                _state.update { state ->
+                    state.copy(
+                        fullName = user.fullName,
+                        photoUrl = user.photoUrl
+                    )
+                }
+            }
+        }
     }
 
     fun onLogout() {

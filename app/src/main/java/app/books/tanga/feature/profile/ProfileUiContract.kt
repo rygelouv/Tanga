@@ -5,5 +5,6 @@ import app.books.tanga.R
 
 data class ProfileUiState(
     val fullName: String? = null,
+    val photoUrl: String? = null,
     @StringRes val accountTypeRes: Int = R.string.freemium
 )

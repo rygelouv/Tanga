@@ -19,3 +19,11 @@ fun User.toFireStoreUserData() = mapOf(
     FirestoreDatabase.Users.Fields.PHOTO_URL to photoUrl,
     FirestoreDatabase.Users.Fields.CREATED_AT to FieldValue.serverTimestamp()
 )
+
+fun FirestoreData.toUser(uid: String) = User(
+    uid = uid,
+    fullName = this[FirestoreDatabase.Users.Fields.FULL_NAME].toString(),
+    email = this[FirestoreDatabase.Users.Fields.EMAIL].toString(),
+    photoUrl = this[FirestoreDatabase.Users.Fields.PHOTO_URL].toString(),
+    isPro = false
+)
