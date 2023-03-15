@@ -12,16 +12,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -31,16 +29,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent
 import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent2
 import app.books.tanga.ui.theme.TangaLightGray2
 import app.books.tanga.ui.theme.TangaBluePale
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
-
+    val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +64,11 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                ProfileHeader(modifier = Modifier)
+                ProfileHeader(
+                    modifier = Modifier,
+                    fullName = state.fullName,
+                    photoUrl = state.photoUrl
+                )
                 Spacer(modifier = Modifier.height(70.dp))
                 ProfileScreenContent {
                     viewModel.onLogout()
@@ -163,19 +168,19 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
 }
 
 @Composable
-fun ProfileHeader(modifier: Modifier) {
+fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Spacer(modifier = Modifier.height(80.dp))
-        ProfileImage(modifier = Modifier)
+        ProfileImage(modifier = Modifier, photoUrl = photoUrl)
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Stephanie Milton",
+            text = fullName ?: "",
             style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
             color = TangaBlueDark,
@@ -256,14 +261,18 @@ fun ProButton() {
 }
 
 @Composable
-fun ProfileImage(modifier: Modifier) {
+fun ProfileImage(modifier: Modifier, photoUrl: String?) {
     Surface(
         modifier = modifier.size(120.dp),
         shape = RoundedCornerShape(30.dp),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.jessica_felicio_image),
+            painter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(photoUrl)
+                    .build()
+            ),
             contentDescription = "profile picture",
             modifier = modifier.size(120.dp),
             contentScale = ContentScale.Crop
