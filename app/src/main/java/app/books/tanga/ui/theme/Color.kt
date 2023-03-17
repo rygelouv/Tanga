@@ -2,6 +2,7 @@ package app.books.tanga.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val TangaWhiteBackground = Color(0xFFF6F3F6)
 val TangaBluePale = Color(0xFF115A8E)
 val ProfileBackgroundPurplePal = Color(0xFFD7DAFE)
 val TangaBlueDark = Color(0xFF091A38)

@@ -1,5 +1,6 @@
 package app.books.tanga.feature.library
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,12 +14,14 @@ import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.FakeData
 import app.books.tanga.ui.theme.TangaBlueDark
+import app.books.tanga.ui.theme.TangaWhiteBackground
 
 @Composable
 fun LibraryScreen() {
     val summaries = FakeData.allSummaries()
     Column(
         modifier = Modifier
+            .background(color = TangaWhiteBackground)
             .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
     ) {
         Text(
