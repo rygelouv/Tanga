@@ -31,11 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.ui.theme.TangaBlueDark
-import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent
-import app.books.tanga.ui.theme.TangaBluePaleSemiTransparent2
-import app.books.tanga.ui.theme.TangaLightGray2
-import app.books.tanga.ui.theme.TangaBluePale
+import app.books.tanga.ui.theme.*
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -45,15 +41,12 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 10.dp),
-        floatingActionButton = {
-            ProButton()
-        },
+            .padding(bottom = 10.dp).verticalScroll(rememberScrollState()),
         scaffoldState = rememberScaffoldState(),
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
-            color = TangaBluePaleSemiTransparent2,
+            color = TangaWhiteBackground,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -90,7 +83,6 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
@@ -170,7 +162,7 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
 @Composable
 fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(horizontal = 44.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -188,7 +180,8 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Button(
+        ProButton()
+/*        Button(
             modifier = Modifier.height(34.dp),
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.White,
@@ -196,7 +189,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
             ),
             shape = RoundedCornerShape(20.dp),
             elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-            onClick = { /*TODO*/ }
+            onClick = { *//*TODO*//* }
         ) {
             Text(
                 text = "Freemium",
@@ -205,58 +198,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
             )
-        }
-    }
-}
-
-@Composable
-fun ProButton() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        ExtendedFloatingActionButton(
-            modifier = Modifier
-                .height(70.dp)
-                .width(320.dp)
-                .align(Alignment.BottomCenter),
-            backgroundColor = TangaBluePale,
-            onClick = {},
-            elevation = FloatingActionButtonDefaults.elevation(2.dp),
-            contentColor = Color.Unspecified,
-            text = {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = "Upgrade to Tanga Pro",
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.h4,
-                        textAlign = TextAlign.Start,
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            },
-            icon = {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(52.dp)
-                        .clip(CircleShape)
-                        .background(color = Color.White)
-                        .padding(all = 10.dp),
-                ) {
-                    Icon(
-                        modifier = Modifier.size(36.dp),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_premium),
-                        contentDescription = "action icon",
-                    )
-                }
-            }
-        )
+        }*/
     }
 }
 

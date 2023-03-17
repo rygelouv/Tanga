@@ -47,6 +47,6 @@ fun TangaTheme(
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
-        color = Color.White
+        color = TangaWhiteBackground
     )
 }

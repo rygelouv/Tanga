@@ -1,6 +1,7 @@
 package app.books.tanga.feature.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -23,12 +24,13 @@ import app.books.tanga.feature.summary.SummaryRow
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaBluePale
 import app.books.tanga.ui.theme.TangaLightGray2
+import app.books.tanga.ui.theme.TangaWhiteBackground
 
 @Composable
 fun HomeScreen() {
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().background(color = TangaWhiteBackground)
             .padding(14.dp),
         topBar = { HomeTopBar() },
     ) {
@@ -40,7 +42,7 @@ fun HomeScreen() {
 fun HomeTopBar() {
     TopAppBar(
         elevation = 0.dp,
-        backgroundColor = Color.White,
+        backgroundColor = TangaWhiteBackground,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -92,7 +94,7 @@ fun HomeContent(modifier: Modifier) {
 @Composable
 fun HomeSection(modifier: Modifier, sectionTitle: String) {
     Column(
-        modifier = modifier
+        modifier = modifier.background(color = TangaWhiteBackground)
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         Row(
@@ -105,7 +107,7 @@ fun HomeSection(modifier: Modifier, sectionTitle: String) {
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h4,
                 color = TangaBlueDark,
-                fontSize = 22.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
 
