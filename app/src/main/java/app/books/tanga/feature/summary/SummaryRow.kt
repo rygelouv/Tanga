@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SummaryRow(summaries: List<SummaryUi>) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         items(summaries) { summary ->
             SummaryItemSmall(summaryUi = summary)
