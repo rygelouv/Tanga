@@ -14,4 +14,6 @@
     <string name="confirm_logout_title">Log out from Tanga?</string>
     <string name="confirm_logout_message">Are you sure you want to log out? If yes that\'s fine, you can log back in later</string>
     <string name="freemium">Freemium</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="summary_duration">%1$s min</string>
 </resources>

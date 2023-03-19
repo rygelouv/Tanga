@@ -4,7 +4,9 @@ import androidx.compose.ui.graphics.Color
 
 val TangaWhiteBackground = Color(0xFFF6F3F6)
 val TangaBluePale = Color(0xFF115A8E)
-val ProfileBackgroundPurplePal = Color(0xFFD7DAFE)
+val TangaBottomBarIconColorSelected = Color(0xFF0f4c90)
+val TangaBottomBarIconColorSelected40PercentTransparent = Color(0x660f4c90)
+val TangaBottomBarIconColorUnSelected = Color(0xFFafafaf)
 val TangaBlueDark = Color(0xFF091A38)
 val TangaBluePaleSemiTransparent = Color(0x80115A8E)
 val TangaBluePaleSemiTransparent2 = Color(0x1A115A8E)

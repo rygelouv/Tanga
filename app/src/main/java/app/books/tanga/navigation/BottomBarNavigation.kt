@@ -7,11 +7,12 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import app.books.tanga.R
+import app.books.tanga.ui.theme.TangaBottomBarIconColorSelected
+import app.books.tanga.ui.theme.TangaBottomBarIconColorUnSelected
 
 enum class BottomNavScreen(
     val route: String,
@@ -44,8 +45,8 @@ fun BottomBarNavigation(navController: NavController) {
     )
     BottomNavigation(
         backgroundColor = Color.White,
-        contentColor = Color.Unspecified
-    ) {
+
+        ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
@@ -53,10 +54,13 @@ fun BottomBarNavigation(navController: NavController) {
             BottomNavigationItem(
                 icon = {
                     Icon(
-                        imageVector = ImageVector.vectorResource(
-                            id = if (currentRoute == item.route) item.selectedIcon else item.unselectedIcon
+                        painter = painterResource(
+                            id = if (currentRoute == item.route) item.selectedIcon
+                            else item.unselectedIcon
                         ),
-                        contentDescription = "bottom bar item"
+                        contentDescription = "bottom bar item",
+                        tint = if (currentRoute == item.route) TangaBottomBarIconColorSelected
+                        else TangaBottomBarIconColorUnSelected
                     )
                 },
                 selected = currentRoute == item.route,

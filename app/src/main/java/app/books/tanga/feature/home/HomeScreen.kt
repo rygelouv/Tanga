@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,11 +16,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.FakeData
+import app.books.tanga.feature.auth.HomeTopCard
 import app.books.tanga.feature.summary.SummaryRow
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaBluePale
@@ -30,11 +33,12 @@ import app.books.tanga.ui.theme.TangaWhiteBackground
 fun HomeScreen() {
     Scaffold(
         modifier = Modifier
-            .fillMaxSize().background(color = TangaWhiteBackground)
+            .fillMaxSize()
+            .background(color = TangaWhiteBackground)
             .padding(14.dp),
         topBar = { HomeTopBar() },
     ) {
-        HomeContent(modifier = Modifier.padding(it))
+        HomeContent(modifier = Modifier.padding(it), userFirstName = "Rygel")
     }
 }
 
@@ -71,32 +75,46 @@ fun HomeTopBar() {
 }
 
 @Composable
-fun HomeContent(modifier: Modifier) {
-    LazyColumn(
-        modifier
-            .fillMaxSize()
-    ) {
-        item {
-            HomeSection(modifier = modifier, "Personal Growth")
-        }
-        item {
-            HomeSection(modifier = modifier, "Financial education")
-        }
-        item {
-            HomeSection(modifier = modifier, "Business")
-        }
-        item {
-            HomeSection(modifier = modifier, "Psychology")
+fun HomeContent(modifier: Modifier, userFirstName: String) {
+    val dailySummary = remember {
+        FakeData.allSummaries().first()
+    }
+    Column(modifier = modifier.background(color = TangaWhiteBackground)) {
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            color = TangaLightGray2,
+            text = "Welcome back, $userFirstName",
+            fontSize = 18.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.body1,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        LazyColumn(modifier.fillMaxSize()) {
+            item {
+                HomeTopCard(dailySummary)
+            }
+            item {
+                HomeSection(modifier = modifier, sectionTitle = "Personal Growth", isFirst = true)
+            }
+            item {
+                HomeSection(modifier = modifier, "Financial education")
+            }
+            item {
+                HomeSection(modifier = modifier, "Business")
+            }
+            item {
+                HomeSection(modifier = modifier, "Psychology")
+            }
         }
     }
 }
 
 @Composable
-fun HomeSection(modifier: Modifier, sectionTitle: String) {
-    Column(
-        modifier = modifier.background(color = TangaWhiteBackground)
-    ) {
-        Spacer(modifier = Modifier.height(24.dp))
+fun HomeSection(modifier: Modifier, sectionTitle: String, isFirst: Boolean = false) {
+    Column {
+        Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -107,7 +125,7 @@ fun HomeSection(modifier: Modifier, sectionTitle: String) {
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h4,
                 color = TangaBlueDark,
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -116,6 +134,7 @@ fun HomeSection(modifier: Modifier, sectionTitle: String) {
                 color = TangaBluePale,
                 textAlign = TextAlign.End,
                 fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
             )
         }
         Spacer(modifier = Modifier.height(22.dp))

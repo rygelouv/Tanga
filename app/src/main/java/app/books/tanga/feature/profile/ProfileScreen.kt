@@ -7,7 +7,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -41,7 +40,8 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 10.dp).verticalScroll(rememberScrollState()),
+            .padding(bottom = 10.dp)
+            .verticalScroll(rememberScrollState()),
         scaffoldState = rememberScaffoldState(),
         floatingActionButtonPosition = FabPosition.Center
     ) {
@@ -162,7 +162,9 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
 @Composable
 fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
     Column(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 44.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 44.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -172,7 +174,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = fullName ?: "",
+            text = fullName ?: stringResource(id = R.string.anonymous),
             style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
             color = TangaBlueDark,
@@ -210,11 +212,13 @@ fun ProfileImage(modifier: Modifier, photoUrl: String?) {
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
     ) {
         Image(
-            painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(photoUrl)
-                    .build()
-            ),
+            painter = if (photoUrl != null) {
+                rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(photoUrl)
+                        .build()
+                )
+            } else { painterResource(id = R.drawable.profile_placeholder) },
             contentDescription = "profile picture",
             modifier = modifier.size(120.dp),
             contentScale = ContentScale.Crop

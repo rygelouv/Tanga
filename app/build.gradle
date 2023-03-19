@@ -60,6 +60,9 @@ dependencies {
     // implementation 'androidx.compose.material3:material3:1.0.0-alpha02' Will migrate later
     implementation "androidx.compose.material:material:$compose_material_version"
 
+    // Constrain Layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
     //KTX
     implementation "androidx.activity:activity-ktx:$activity_version"
 
