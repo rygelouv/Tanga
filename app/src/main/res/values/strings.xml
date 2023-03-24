@@ -16,4 +16,5 @@
     <string name="freemium">Freemium</string>
     <string name="anonymous">Anonymous</string>
     <string name="summary_duration">%1$s min</string>
+    <string name="home_welcome_message">Great to see you, %1$s</string>
 </resources>

@@ -1,49 +1,68 @@
 package app.books.tanga.feature.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.FakeData
 import app.books.tanga.feature.auth.HomeTopCard
 import app.books.tanga.feature.summary.SummaryRow
-import app.books.tanga.ui.theme.TangaBlueDark
-import app.books.tanga.ui.theme.TangaBluePale
-import app.books.tanga.ui.theme.TangaLightGray2
-import app.books.tanga.ui.theme.TangaWhiteBackground
+import app.books.tanga.ui.theme.*
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(color = TangaWhiteBackground)
             .padding(14.dp),
-        topBar = { HomeTopBar() },
+        topBar = { HomeTopBar(state.userPhotoUrl) },
     ) {
-        HomeContent(modifier = Modifier.padding(it), userFirstName = "Rygel")
+        LoadHomeContent(modifier = Modifier.padding(it), state = state)
     }
 }
 
 @Composable
-fun HomeTopBar() {
+fun LoadHomeContent(modifier: Modifier, state: HomeUiState) {
+
+    if (state.isLoading) {
+        AnimatedShimmerLoader(modifier)
+    } else {
+        HomeContent(
+            modifier = modifier,
+            userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous)
+        )
+    }
+}
+
+@Composable
+fun HomeTopBar(photoUrl: String?) {
     TopAppBar(
         elevation = 0.dp,
         backgroundColor = TangaWhiteBackground,
@@ -61,10 +80,19 @@ fun HomeTopBar() {
             Surface(
                 modifier = Modifier.size(40.dp),
                 shape = CircleShape,
+                border = BorderStroke(2.dp, TangaOrange),
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.jessica_felicio_image),
+                    painter = if (photoUrl != null) {
+                        rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(photoUrl)
+                                .build()
+                        )
+                    } else {
+                        painterResource(id = R.drawable.profile_placeholder)
+                    },
                     contentDescription = "home profile picture",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -83,12 +111,11 @@ fun HomeContent(modifier: Modifier, userFirstName: String) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             color = TangaLightGray2,
-            text = "Welcome back, $userFirstName",
+            text = getWelcomeMessage(firstName = userFirstName),
             fontSize = 18.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier.fillMaxSize()) {
@@ -112,7 +139,25 @@ fun HomeContent(modifier: Modifier, userFirstName: String) {
 }
 
 @Composable
+@ReadOnlyComposable
+fun getWelcomeMessage(firstName: String, ): AnnotatedString {
+    val welcomeMessage = stringResource(id = R.string.home_welcome_message, firstName)
+    val firstPart = welcomeMessage.replace(firstName, "", ignoreCase = true)
+    return buildAnnotatedString {
+        withStyle(style = SpanStyle(color = TangaLightGray2)) {
+            append(firstPart)
+        }
+        withStyle(style = SpanStyle(color = TangaBottomBarIconColorSelected)) {
+            append(firstName)
+        }
+    }
+}
+
+@Composable
 fun HomeSection(modifier: Modifier, sectionTitle: String, isFirst: Boolean = false) {
+    val summaries = remember {
+        FakeData.allSummaries().shuffled().take(4)
+    }
     Column {
         Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))
         Row(
@@ -138,7 +183,7 @@ fun HomeSection(modifier: Modifier, sectionTitle: String, isFirst: Boolean = fal
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(FakeData.allSummaries().shuffled().take(4))
+        SummaryRow(summaries)
     }
 }
 
