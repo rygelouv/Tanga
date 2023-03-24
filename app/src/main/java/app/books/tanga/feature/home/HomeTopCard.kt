@@ -99,7 +99,7 @@ fun HomeTopCard(summaryUi: SummaryUi) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun HomeTopCardPreview() {
     HomeTopCard(summaryUi = FakeData.allSummaries().first())
