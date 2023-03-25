@@ -19,7 +19,7 @@ import app.books.tanga.ui.theme.TangaBluePale
 import app.books.tanga.ui.theme.TangaLightGray
 
 @Composable
-fun EmptyLibraryScreen() {
+fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
     Column(
         modifier = Modifier.padding(top = 64.dp, bottom = 34.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -43,7 +43,7 @@ fun EmptyLibraryScreen() {
         )
         Button(
             modifier = Modifier.fillMaxWidth().height(64.dp),
-            onClick = {  },
+            onClick = onExploreButtonClicked,
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.White,
                 backgroundColor = TangaBluePale,

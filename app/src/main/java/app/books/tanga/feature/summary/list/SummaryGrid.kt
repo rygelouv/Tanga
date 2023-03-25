@@ -1,4 +1,4 @@
-package app.books.tanga.feature.summary
+package app.books.tanga.feature.summary.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,14 +9,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SummaryGrid(modifier: Modifier, summaries: List<SummaryUi>) {
+fun SummaryGrid(
+    modifier: Modifier, summaries: List<SummaryUi>,
+    onSummaryClicked: () -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(summaries) { summary ->
-            SummaryItemBig(summaryUi = summary)
+            SummaryItemBig(
+                summaryUi = summary,
+                onSummaryClicked = onSummaryClicked
+            )
         }
     }
 }

@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
+import app.books.tanga.feature.auth.toAuthentication
 import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.ui.theme.*
 import com.google.accompanist.pager.*
@@ -87,7 +88,7 @@ fun OnboardingScreen(
             onFinishClick = {
                 onboardingViewModel.onOnboardingCompleted()
                 navController.popBackStack()
-                navController.navigate(route = NavigationScreen.Authentication.route)
+                navController.toAuthentication()
             }
         )
     }

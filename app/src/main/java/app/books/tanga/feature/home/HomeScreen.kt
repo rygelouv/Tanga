@@ -3,6 +3,7 @@ package app.books.tanga.feature.home
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -28,41 +29,59 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.FakeData
-import app.books.tanga.feature.auth.HomeTopCard
-import app.books.tanga.feature.summary.SummaryRow
+import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.ui.theme.*
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    onSearch: () -> Unit,
+    onProfilePictureClicked: () -> Unit,
+    onSummaryClicked: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(color = TangaWhiteBackground)
             .padding(14.dp),
-        topBar = { HomeTopBar(state.userPhotoUrl) },
+        topBar = {
+            HomeTopBar(
+                onSearch = onSearch,
+                onProfilePictureClicked = onProfilePictureClicked,
+                state.userPhotoUrl
+            )
+        },
     ) {
-        LoadHomeContent(modifier = Modifier.padding(it), state = state)
+        LoadHomeContent(
+            modifier = Modifier.padding(it),
+            state = state, onSummaryClicked = onSummaryClicked
+        )
     }
 }
 
 @Composable
-fun LoadHomeContent(modifier: Modifier, state: HomeUiState) {
+fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: () -> Unit) {
 
     if (state.isLoading) {
         AnimatedShimmerLoader(modifier)
     } else {
         HomeContent(
             modifier = modifier,
-            userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous)
+            userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous),
+            onSummaryClicked = onSummaryClicked
         )
     }
 }
 
 @Composable
-fun HomeTopBar(photoUrl: String?) {
+fun HomeTopBar(
+    onSearch: () -> Unit,
+    onProfilePictureClicked: () -> Unit,
+    photoUrl: String?
+) {
     TopAppBar(
         elevation = 0.dp,
         backgroundColor = TangaWhiteBackground,
@@ -74,11 +93,14 @@ fun HomeTopBar(photoUrl: String?) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = "home search icon",
-                tint = TangaLightGray2
+                tint = TangaLightGray2,
+                modifier = Modifier.clickable { onSearch() }
             )
             Spacer(modifier = Modifier.weight(5f))
             Surface(
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier
+                    .size(40.dp)
+                    .clickable { onProfilePictureClicked() },
                 shape = CircleShape,
                 border = BorderStroke(2.dp, TangaOrange),
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
@@ -103,7 +125,11 @@ fun HomeTopBar(photoUrl: String?) {
 }
 
 @Composable
-fun HomeContent(modifier: Modifier, userFirstName: String) {
+fun HomeContent(
+    modifier: Modifier,
+    userFirstName: String,
+    onSummaryClicked: () -> Unit
+) {
     val dailySummary = remember {
         FakeData.allSummaries().first()
     }
@@ -120,19 +146,36 @@ fun HomeContent(modifier: Modifier, userFirstName: String) {
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier.fillMaxSize()) {
             item {
-                HomeTopCard(dailySummary)
+                HomeTopCard(dailySummary, onSummaryClicked)
             }
             item {
-                HomeSection(modifier = modifier, sectionTitle = "Personal Growth", isFirst = true)
+                HomeSection(
+                    modifier = modifier,
+                    sectionTitle = "Personal Growth",
+                    isFirst = true,
+                    onSummaryClicked = onSummaryClicked
+                )
             }
             item {
-                HomeSection(modifier = modifier, "Financial education")
+                HomeSection(
+                    modifier = modifier,
+                    sectionTitle = "Financial education",
+                    onSummaryClicked = onSummaryClicked
+                )
             }
             item {
-                HomeSection(modifier = modifier, "Business")
+                HomeSection(
+                    modifier = modifier,
+                    sectionTitle = "Business",
+                    onSummaryClicked = onSummaryClicked
+                )
             }
             item {
-                HomeSection(modifier = modifier, "Psychology")
+                HomeSection(
+                    modifier = modifier,
+                    sectionTitle = "Psychology",
+                    onSummaryClicked = onSummaryClicked
+                )
             }
         }
     }
@@ -140,7 +183,7 @@ fun HomeContent(modifier: Modifier, userFirstName: String) {
 
 @Composable
 @ReadOnlyComposable
-fun getWelcomeMessage(firstName: String, ): AnnotatedString {
+fun getWelcomeMessage(firstName: String): AnnotatedString {
     val welcomeMessage = stringResource(id = R.string.home_welcome_message, firstName)
     val firstPart = welcomeMessage.replace(firstName, "", ignoreCase = true)
     return buildAnnotatedString {
@@ -154,7 +197,12 @@ fun getWelcomeMessage(firstName: String, ): AnnotatedString {
 }
 
 @Composable
-fun HomeSection(modifier: Modifier, sectionTitle: String, isFirst: Boolean = false) {
+fun HomeSection(
+    modifier: Modifier,
+    sectionTitle: String,
+    isFirst: Boolean = false,
+    onSummaryClicked: () -> Unit
+) {
     val summaries = remember {
         FakeData.allSummaries().shuffled().take(4)
     }
@@ -183,12 +231,12 @@ fun HomeSection(modifier: Modifier, sectionTitle: String, isFirst: Boolean = fal
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries)
+        SummaryRow(summaries, onSummaryClicked)
     }
 }
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen({}, {}, {})
 }
