@@ -1,4 +1,4 @@
-package app.books.tanga.feature.summary
+package app.books.tanga.feature.summary.list
 
 import androidx.annotation.DrawableRes
 

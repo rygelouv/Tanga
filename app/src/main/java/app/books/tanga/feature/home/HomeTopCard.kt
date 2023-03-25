@@ -1,4 +1,4 @@
-package app.books.tanga.feature.auth
+package app.books.tanga.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,23 +20,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import app.books.tanga.common.FakeData
-import app.books.tanga.feature.summary.SummaryImage
-import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.summary.list.SummaryImage
+import app.books.tanga.feature.summary.list.SummaryUi
 import app.books.tanga.R
 import app.books.tanga.feature.category.CategoryTag
 import app.books.tanga.ui.theme.*
 
 @Composable
-fun HomeTopCard(summaryUi: SummaryUi) {
+fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
     val gradientColors = listOf(TangaBlueDark, TangaBluePale, TangaLightBlue)
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(170.dp)
-            .clickable { },
+            .clickable { onSummaryClicked() },
         shape = RoundedCornerShape(10.dp),
         elevation = 10.dp,
         backgroundColor = TangaBottomBarIconColorSelected40PercentTransparent
@@ -93,7 +91,8 @@ fun HomeTopCard(summaryUi: SummaryUi) {
 
             SummaryImage(
                 modifier = Modifier.width(90.dp),
-                summaryCover = summaryUi.cover
+                summaryCover = summaryUi.cover,
+                onSummaryClicked = onSummaryClicked
             )
         }
     }
@@ -102,5 +101,5 @@ fun HomeTopCard(summaryUi: SummaryUi) {
 @Preview(showBackground = true)
 @Composable
 fun HomeTopCardPreview() {
-    HomeTopCard(summaryUi = FakeData.allSummaries().first())
+    HomeTopCard(summaryUi = FakeData.allSummaries().first(), {})
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -65,7 +66,7 @@ fun ProButton() {
             }
 
             Text(
-                text = "Upgrade to Tanga Pro",
+                text = stringResource(id = R.string.profile_upgrade_to_pro),
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.h4,
                 textAlign = TextAlign.Center,

@@ -1,4 +1,4 @@
-package app.books.tanga.feature.summary
+package app.books.tanga.feature.summary.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -27,23 +27,41 @@ import app.books.tanga.R
 import app.books.tanga.ui.theme.TangaBluePale
 
 @Composable
-fun SummaryItemBig(summaryUi: SummaryUi) {
-    SummaryItem(summaryUi = summaryUi, width = 134.dp, titleSize = 18.sp)
+fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
+    SummaryItem(
+        summaryUi = summaryUi,
+        width = 134.dp,
+        titleSize = 18.sp,
+        onSummaryClicked = onSummaryClicked
+    )
 }
 
 @Composable
-fun SummaryItemSmall(summaryUi: SummaryUi) {
-    SummaryItem(summaryUi = summaryUi, width = 120.dp, titleSize = 15.sp)
+fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
+    SummaryItem(
+        summaryUi = summaryUi,
+        width = 120.dp,
+        titleSize = 15.sp,
+        onSummaryClicked = onSummaryClicked
+    )
 }
 
 @Composable
-fun SummaryItem(summaryUi: SummaryUi, width: Dp, titleSize: TextUnit) {
+fun SummaryItem(
+    summaryUi: SummaryUi,
+    width: Dp,
+    titleSize: TextUnit,
+    onSummaryClicked: () -> Unit
+) {
     Column(
         modifier = Modifier.width(width),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        SummaryImage(summaryCover = summaryUi.cover)
+        SummaryImage(
+            summaryCover = summaryUi.cover,
+            onSummaryClicked = onSummaryClicked
+        )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -112,11 +130,16 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
 }
 
 @Composable
-fun SummaryImage(modifier: Modifier = Modifier, summaryCover: Int) {
+fun SummaryImage(
+    modifier: Modifier = Modifier,
+    summaryCover: Int,
+    onSummaryClicked: () -> Unit
+) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(elevation = 10.dp).clickable {  },
+            .shadow(elevation = 10.dp)
+            .clickable { onSummaryClicked() },
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
     ) {
@@ -132,5 +155,5 @@ fun SummaryImage(modifier: Modifier = Modifier, summaryCover: Int) {
 @Composable
 fun SummaryItemPreview() {
     val summary = FakeData.allSummaries().first()
-    SummaryItemBig(summary)
+    SummaryItemBig(summary, {})
 }

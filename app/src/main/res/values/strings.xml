@@ -17,4 +17,5 @@
     <string name="anonymous">Anonymous</string>
     <string name="summary_duration">%1$s min</string>
     <string name="home_welcome_message">Great to see you, %1$s</string>
+    <string name="profile_upgrade_to_pro">Upgrade to Tanga Pro</string>
 </resources>

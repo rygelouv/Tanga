@@ -1,7 +1,7 @@
 package app.books.tanga.common
 
 import app.books.tanga.R
-import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.summary.list.SummaryUi
 import java.util.UUID
 
 object FakeData {

@@ -17,7 +17,7 @@ import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaWhiteBackground
 
 @Composable
-fun LibraryScreen() {
+fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
     val summaries = FakeData.allSummaries()
     Column(
         modifier = Modifier
@@ -33,7 +33,7 @@ fun LibraryScreen() {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(22.dp))
-        EmptyLibraryScreen()
+        EmptyLibraryScreen(onExploreButtonClicked = onExploreButtonClicked)
         //SummaryGrid(Modifier, summaries)
     }
 }
@@ -41,5 +41,5 @@ fun LibraryScreen() {
 @Preview
 @Composable
 fun LibraryScreenPreview() {
-    LibraryScreen()
+    LibraryScreen({})
 }

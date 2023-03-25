@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
+import app.books.tanga.feature.main.toMain
 import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaLightGray2
@@ -41,7 +42,8 @@ import app.books.tanga.ui.theme.TangaOrangeTransparent
 
 @Composable
 fun AuthScreen(
-    navController: NavController,
+    onAuthSkipped: () -> Unit,
+    onAuthSuccess: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     Scaffold(topBar = {
@@ -65,9 +67,7 @@ fun AuthScreen(
                     shape = RoundedCornerShape(40.dp),
                     elevation = ButtonDefaults.elevation(0.dp, 0.dp),
                     onClick = {
-                        navController.navigate(route = NavigationScreen.Main.route) {
-                            popUpTo(NavigationScreen.Authentication.route) { inclusive = true }
-                        }
+                        onAuthSkipped()
                     }
                 ) {
                     Text(
@@ -83,7 +83,7 @@ fun AuthScreen(
         val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
         AuthContent(
             modifier = Modifier.padding(it),
-            navController = navController,
+            onAuthSuccess = onAuthSuccess,
             state = state,
             event = events,
             onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
@@ -95,14 +95,14 @@ fun AuthScreen(
 @Composable
 fun AuthContent(
     modifier: Modifier,
-    navController: NavController,
+    onAuthSuccess: () -> Unit,
     state: AuthUiState,
     event: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onGoogleSignInCompleted: (Intent) -> Unit
 ) {
     SignIn(
-        navController = navController,
+        onAuthSuccess = onAuthSuccess,
         event = event,
         onGoogleSignInCompleted = onGoogleSignInCompleted
     )
@@ -170,5 +170,5 @@ fun AuthContent(
 @Preview
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(rememberNavController())
+    AuthScreen({}, {})
 }
