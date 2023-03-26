@@ -16,9 +16,11 @@ import app.books.tanga.common.FakeData
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaWhiteBackground
 
+/**
+ * Shows the summaries saved by the user
+ */
 @Composable
 fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
-    val summaries = FakeData.allSummaries()
     Column(
         modifier = Modifier
             .background(color = TangaWhiteBackground)
