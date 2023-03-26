@@ -1,4 +1,4 @@
-![tanga_banner](https://user-images.githubusercontent.com/7549316/227628015-12d6e90f-c3e0-4693-8754-611b1bad366f.png)
+![tanga_banner_new](https://user-images.githubusercontent.com/7549316/227763934-09182cfc-89f2-4bba-9fb1-783c1eee511c.png)
 
 
 # Tanga Mobile App
