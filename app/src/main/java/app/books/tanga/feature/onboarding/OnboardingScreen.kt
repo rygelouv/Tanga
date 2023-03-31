@@ -5,7 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -24,7 +28,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
 import app.books.tanga.feature.auth.toAuthentication
-import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.ui.theme.*
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
@@ -119,7 +122,7 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = onBoardingPage.title,
-                style = MaterialTheme.typography.h2,
+                style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
                 color = TextBlackMate,
             )
@@ -131,7 +134,7 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
                     .weight(1f),
                 color = TextGray,
                 text = onBoardingPage.description,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
@@ -163,10 +166,10 @@ fun FinishOnboardingButton(
                 onClick = onNextClick,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    backgroundColor = TangaBluePale,
+                    containerColor = TangaBluePale,
                 ),
                 shape = CircleShape,
-                elevation = ButtonDefaults.elevation(0.dp, 0.dp)
+                elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_right_arrow),
@@ -185,10 +188,10 @@ fun FinishOnboardingButton(
                 onClick = onFinishClick,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    backgroundColor = TangaBluePale,
+                    containerColor = TangaBluePale,
                 ),
                 shape = RoundedCornerShape(16.dp),
-                elevation = ButtonDefaults.elevation(0.dp, 0.dp)
+                elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
             ) {
                 Text(text = "Get Started",
                     fontWeight = FontWeight.SemiBold,

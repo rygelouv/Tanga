@@ -2,8 +2,8 @@ package app.books.tanga.feature.library
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.common.FakeData
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaWhiteBackground
 
@@ -29,7 +28,7 @@ fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.library),
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineMedium,
             color = TangaBlueDark,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold

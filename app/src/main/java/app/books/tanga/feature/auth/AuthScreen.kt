@@ -11,17 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.Text
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,11 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
-import app.books.tanga.feature.main.toMain
-import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.ui.theme.TangaBlueDark
 import app.books.tanga.ui.theme.TangaLightGray2
 import app.books.tanga.ui.theme.TangaOrange
@@ -46,11 +40,8 @@ fun AuthScreen(
     onAuthSuccess: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
-    Scaffold(topBar = {
-        TopAppBar(
-            elevation = 0.dp,
-            backgroundColor = Color.White
-        ) {
+    Scaffold(
+        topBar = {
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.End
@@ -62,23 +53,22 @@ fun AuthScreen(
                         .weight(2f),
                     colors = ButtonDefaults.buttonColors(
                         contentColor = TangaOrange,
-                        backgroundColor = TangaOrangeTransparent,
+                        containerColor = TangaOrangeTransparent,
                     ),
                     shape = RoundedCornerShape(40.dp),
-                    elevation = ButtonDefaults.elevation(0.dp, 0.dp),
+                    elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
                     onClick = {
                         onAuthSkipped()
                     }
                 ) {
                     Text(
                         text = "Skip",
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
             }
-        }
-    }) {
+        }) {
         val state by viewModel.state.collectAsStateWithLifecycle()
         val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
         AuthContent(
@@ -130,7 +120,7 @@ fun AuthContent(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Welcome to Tanga",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = TangaBlueDark,
                 fontSize = 28.sp
@@ -144,7 +134,7 @@ fun AuthContent(
                 color = TangaLightGray2,
                 text = "Sign in or Sign up with Google to start enjoying Tanga Now",
                 fontSize = 14.sp,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
@@ -160,7 +150,7 @@ fun AuthContent(
             color = TangaLightGray2,
             text = "Terms and Conditions",
             fontSize = 12.sp,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold
         )

@@ -1,6 +1,6 @@
 package app.books.tanga.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -19,22 +19,22 @@ val Poppins = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    body1 = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
-    h2 = TextStyle(
+    displayMedium = TextStyle(
         fontFamily = Montserra,
         fontWeight = FontWeight.SemiBold,
         fontSize = 38.sp
     ),
-    h4 = TextStyle(
+    headlineMedium = TextStyle(
         fontFamily = Montserra,
         fontWeight = FontWeight.SemiBold,
         fontSize = 28.sp
     ),
-    button = TextStyle(
+    labelLarge = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.W500,
         fontSize = 14.sp

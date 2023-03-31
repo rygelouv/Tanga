@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,12 +32,12 @@ fun ProButton() {
         modifier = Modifier
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = TangaWhiteBackground,
+            containerColor = TangaWhiteBackground,
             
             contentColor = Color.Unspecified
         ),
         onClick = {},
-        elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(40.dp)
     ) {
         Row(
@@ -68,7 +68,7 @@ fun ProButton() {
             Text(
                 text = stringResource(id = R.string.profile_upgrade_to_pro),
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 fontSize = 14.sp,

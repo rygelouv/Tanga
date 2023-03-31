@@ -4,7 +4,14 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import app.books.tanga.R
-import app.books.tanga.ui.theme.*
+import app.books.tanga.ui.theme.ProfileYellow
+import app.books.tanga.ui.theme.ProfileYellowBackground
+import app.books.tanga.ui.theme.ProfileGreen
+import app.books.tanga.ui.theme.ProfileGreenBackground
+import app.books.tanga.ui.theme.ProfilePurple
+import app.books.tanga.ui.theme.ProfilePurpleBackground
+import app.books.tanga.ui.theme.ProfileRed
+import app.books.tanga.ui.theme.ProfileRedBackground
 
 enum class ProfileAction(
     @DrawableRes val icon: Int,
