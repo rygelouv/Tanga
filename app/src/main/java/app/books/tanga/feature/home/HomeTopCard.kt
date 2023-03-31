@@ -2,12 +2,22 @@ package app.books.tanga.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,8 +46,8 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
             .height(170.dp)
             .clickable { onSummaryClicked() },
         shape = RoundedCornerShape(10.dp),
-        elevation = 10.dp,
-        backgroundColor = TangaBottomBarIconColorSelected40PercentTransparent
+        elevation = CardDefaults.cardElevation(10.dp),
+        colors = CardDefaults.cardColors(TangaBottomBarIconColorSelected40PercentTransparent)
     ) {
         Row(
             modifier = Modifier
@@ -60,7 +70,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
                     modifier = Modifier.weight(1f),
                     text = "Summary Of \nThe Day!",
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.h4.copy(
+                    style = MaterialTheme.typography.headlineMedium.copy(
                         lineHeight = 30.sp
                     ),
                     color = Color.White,
@@ -77,7 +87,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
                         fontSize = 12.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Icon(

@@ -84,7 +84,7 @@ fun HomeTopBar(
     photoUrl: String?
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().background(TangaWhiteBackground),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

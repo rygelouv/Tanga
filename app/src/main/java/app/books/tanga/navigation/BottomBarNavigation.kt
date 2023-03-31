@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -69,6 +70,9 @@ fun RowScope.AddItem(
                 restoreState = true
             }
         },
-        alwaysShowLabel = false
+        alwaysShowLabel = false,
+        colors = NavigationBarItemDefaults.colors(
+            indicatorColor = Color.White
+        )
     )
 }
