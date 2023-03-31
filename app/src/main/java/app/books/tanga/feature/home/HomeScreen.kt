@@ -7,7 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -76,50 +76,46 @@ fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: ()
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(
     onSearch: () -> Unit,
     onProfilePictureClicked: () -> Unit,
     photoUrl: String?
 ) {
-    TopAppBar(
-        elevation = 0.dp,
-        backgroundColor = TangaWhiteBackground,
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Icon(
+            painter = painterResource(id = R.drawable.ic_search),
+            contentDescription = "home search icon",
+            tint = TangaLightGray2,
+            modifier = Modifier.clickable { onSearch() }
+        )
+        Spacer(modifier = Modifier.weight(5f))
+        Surface(
+            modifier = Modifier
+                .size(40.dp)
+                .clickable { onProfilePictureClicked() },
+            shape = CircleShape,
+            border = BorderStroke(2.dp, TangaOrange),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = "home search icon",
-                tint = TangaLightGray2,
-                modifier = Modifier.clickable { onSearch() }
+            Image(
+                painter = if (photoUrl != null) {
+                    rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(photoUrl)
+                            .build()
+                    )
+                } else {
+                    painterResource(id = R.drawable.profile_placeholder)
+                },
+                contentDescription = "home profile picture",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.weight(5f))
-            Surface(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clickable { onProfilePictureClicked() },
-                shape = CircleShape,
-                border = BorderStroke(2.dp, TangaOrange),
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
-            ) {
-                Image(
-                    painter = if (photoUrl != null) {
-                        rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(photoUrl)
-                                .build()
-                        )
-                    } else {
-                        painterResource(id = R.drawable.profile_placeholder)
-                    },
-                    contentDescription = "home profile picture",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            }
         }
     }
 }
@@ -141,7 +137,7 @@ fun HomeContent(
             fontSize = 18.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
         )
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier.fillMaxSize()) {
@@ -216,7 +212,7 @@ fun HomeSection(
                 modifier = modifier.weight(2f),
                 text = sectionTitle,
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
                 color = TangaBlueDark,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold

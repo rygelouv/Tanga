@@ -2,9 +2,8 @@ package app.books.tanga.feature.main
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,7 +31,6 @@ fun MainScreen(onLogout: () -> Unit, viewModel: MainViewModel = hiltViewModel())
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        scaffoldState = rememberScaffoldState(),
         bottomBar = { BottomBarNavigation(navController) }
     ) {
         Surface(modifier = Modifier.padding(it)) {

@@ -4,10 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +69,7 @@ fun SummaryItem(
             fontSize = titleSize,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -78,7 +78,7 @@ fun SummaryItem(
             fontSize = 12.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
         )
         SummaryIndicators(summaryUi)
@@ -141,7 +141,7 @@ fun SummaryImage(
             .shadow(elevation = 10.dp)
             .clickable { onSummaryClicked() },
         shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         Image(
             painter = painterResource(id = summaryCover),

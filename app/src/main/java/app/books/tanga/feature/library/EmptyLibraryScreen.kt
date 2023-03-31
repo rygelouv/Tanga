@@ -3,7 +3,7 @@ package app.books.tanga.feature.library
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +28,7 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.library_empty),
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineMedium,
             color = TangaLightGray,
             fontSize = 28.sp,
             fontWeight = FontWeight.SemiBold,
@@ -46,10 +46,10 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
             onClick = onExploreButtonClicked,
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.White,
-                backgroundColor = TangaBluePale,
+                containerColor = TangaBluePale,
             ),
             shape = RoundedCornerShape(16.dp),
-            elevation = ButtonDefaults.elevation(0.dp, 0.dp)
+            elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
         ) {
             Box(modifier = Modifier.padding(start = 30.dp)) {
                 Icon(

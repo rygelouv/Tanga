@@ -8,8 +8,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple.rememberRipple
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +46,6 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
             .fillMaxSize()
             .padding(bottom = 10.dp)
             .verticalScroll(rememberScrollState()),
-        scaffoldState = rememberScaffoldState(),
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
@@ -77,7 +81,6 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp),
-        elevation = 0.dp
     ) {
         Column(
             modifier = Modifier
@@ -145,7 +148,7 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
         Text(
             modifier = Modifier.weight(5f),
             text = stringResource(id = action.text),
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineMedium,
             color = if (action.shouldTint) action.color else TangaBlueDark,
             fontSize = 14.sp
         )
@@ -174,7 +177,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = fullName ?: stringResource(id = R.string.anonymous),
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             color = TangaBlueDark,
             fontWeight = FontWeight.Bold,
@@ -208,7 +211,7 @@ fun ProfileImage(modifier: Modifier, photoUrl: String?) {
     Surface(
         modifier = modifier.size(120.dp),
         shape = RoundedCornerShape(30.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         Image(
             painter = if (photoUrl != null) {

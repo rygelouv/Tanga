@@ -1,9 +1,9 @@
 package app.books.tanga.navigation
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,7 @@ fun BottomBarNavigation(navController: NavController) {
     val isBottomBarDestination = items.any { it.route == currentRoute }
 
     if (isBottomBarDestination) {
-        BottomNavigation(backgroundColor = Color.White) {
+        NavigationBar(containerColor = Color.White) {
             items.forEach { item ->
                 AddItem(
                     navController = navController,
@@ -45,7 +45,7 @@ fun RowScope.AddItem(
     currentRoute: String?,
     item: NavigationScreen.BottomBarScreen
 ) {
-    BottomNavigationItem(
+    NavigationBarItem(
         icon = {
             Icon(
                 painter = painterResource(

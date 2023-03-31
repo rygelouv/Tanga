@@ -24,11 +24,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.feature.main.toMain
-import app.books.tanga.navigation.NavigationScreen
 
 @Composable
 fun SignIn(
