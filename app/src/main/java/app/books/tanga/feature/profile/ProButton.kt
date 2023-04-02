@@ -1,10 +1,22 @@
 package app.books.tanga.feature.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,20 +32,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.ui.theme.TangaBlueDark
-import app.books.tanga.ui.theme.TangaBluePale
-import app.books.tanga.ui.theme.TangaLightBlue
-import app.books.tanga.ui.theme.TangaWhiteBackground
 
 @Composable
 fun ProButton() {
-    val gradientColors = listOf(TangaBlueDark, TangaBluePale, TangaLightBlue)
+    val gradientColors = listOf(
+        MaterialTheme.colorScheme.onBackground,
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary
+    )
     Button(
         modifier = Modifier
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = TangaWhiteBackground,
-            
+            containerColor = MaterialTheme.colorScheme.background,
+
             contentColor = Color.Unspecified
         ),
         onClick = {},

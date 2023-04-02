@@ -2,7 +2,15 @@ package app.books.tanga.feature.summary.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,10 +29,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.books.tanga.common.FakeData
-import app.books.tanga.ui.theme.TangaLightGray2
 import app.books.tanga.R
-import app.books.tanga.ui.theme.TangaBluePale
+import app.books.tanga.common.FakeData
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
@@ -73,7 +79,7 @@ fun SummaryItem(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            color = TangaLightGray2,
+            color = MaterialTheme.colorScheme.outline,
             text = summaryUi.author,
             fontSize = 12.sp,
             maxLines = 1,
@@ -98,13 +104,13 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_listen),
                 contentDescription = null,
-                tint = TangaBluePale
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(id = R.string.summary_duration, summaryUi.duration),
                 fontSize = 12.sp,
-                color = TangaBluePale,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
@@ -114,7 +120,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_watch),
                 contentDescription = null,
-                tint = TangaBluePale
+                tint = MaterialTheme.colorScheme.primary
             )
         }
         if (summaryUi.hasGraphic) {
@@ -123,7 +129,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_mindmap),
                 contentDescription = null,
-                tint = TangaBluePale
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
