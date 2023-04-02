@@ -5,11 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -76,8 +76,8 @@ fun OnboardingScreen(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .weight(1f),
-            activeColor = TangaLightBlue,
-            inactiveColor = TangaLightGray,
+            activeColor = MaterialTheme.colorScheme.secondary,
+            inactiveColor = MaterialTheme.colorScheme.outline,
             indicatorWidth = 10.dp
         )
         FinishOnboardingButton(
@@ -124,7 +124,7 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
                 text = onBoardingPage.title,
                 style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
-                color = TextBlackMate,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 modifier = Modifier
@@ -132,7 +132,7 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
                     .padding(horizontal = 41.dp)
                     .padding(top = 20.dp)
                     .weight(1f),
-                color = TextGray,
+                color = MaterialTheme.colorScheme.outline,
                 text = onBoardingPage.description,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
@@ -166,7 +166,7 @@ fun FinishOnboardingButton(
                 onClick = onNextClick,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    containerColor = TangaBluePale,
+                    containerColor = MaterialTheme.colorScheme.primary,
                 ),
                 shape = CircleShape,
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
@@ -188,7 +188,7 @@ fun FinishOnboardingButton(
                 onClick = onFinishClick,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    containerColor = TangaBluePale,
+                    containerColor = MaterialTheme.colorScheme.primary,
                 ),
                 shape = RoundedCornerShape(16.dp),
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)

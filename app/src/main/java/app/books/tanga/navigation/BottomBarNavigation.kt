@@ -1,9 +1,10 @@
 package app.books.tanga.navigation
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,8 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import app.books.tanga.ui.theme.TangaBottomBarIconColorSelected
-import app.books.tanga.ui.theme.TangaBottomBarIconColorUnSelected
 
 @Composable
 fun BottomBarNavigation(navController: NavController) {
@@ -54,8 +53,8 @@ fun RowScope.AddItem(
                     else item.unselectedIcon
                 ),
                 contentDescription = "bottom bar item",
-                tint = if (currentRoute == item.route) TangaBottomBarIconColorSelected
-                else TangaBottomBarIconColorUnSelected
+                tint = if (currentRoute == item.route) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.outline
             )
         },
         selected = currentRoute == item.route,

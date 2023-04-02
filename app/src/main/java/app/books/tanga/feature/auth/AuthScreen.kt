@@ -3,19 +3,19 @@ package app.books.tanga.feature.auth
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,10 +29,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.ui.theme.TangaBlueDark
-import app.books.tanga.ui.theme.TangaLightGray2
-import app.books.tanga.ui.theme.TangaOrange
-import app.books.tanga.ui.theme.TangaOrangeTransparent
 
 @Composable
 fun AuthScreen(
@@ -52,8 +48,8 @@ fun AuthScreen(
                         .size(76.dp)
                         .weight(2f),
                     colors = ButtonDefaults.buttonColors(
-                        contentColor = TangaOrange,
-                        containerColor = TangaOrangeTransparent,
+                        contentColor = MaterialTheme.colorScheme.tertiary,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     ),
                     shape = RoundedCornerShape(40.dp),
                     elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
@@ -122,7 +118,7 @@ fun AuthContent(
                 text = "Welcome to Tanga",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
-                color = TangaBlueDark,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontSize = 28.sp
             )
             Text(
@@ -131,7 +127,7 @@ fun AuthContent(
                     .padding(horizontal = 41.dp)
                     .padding(top = 10.dp)
                     .weight(1f),
-                color = TangaLightGray2,
+                color = MaterialTheme.colorScheme.outline,
                 text = "Sign in or Sign up with Google to start enjoying Tanga Now",
                 fontSize = 14.sp,
                 style = MaterialTheme.typography.bodyLarge,
@@ -147,7 +143,7 @@ fun AuthContent(
                 .fillMaxWidth()
                 .padding(horizontal = 41.dp)
                 .padding(top = 14.dp),
-            color = TangaLightGray2,
+            color = MaterialTheme.colorScheme.outline,
             text = "Terms and Conditions",
             fontSize = 12.sp,
             style = MaterialTheme.typography.bodyLarge,

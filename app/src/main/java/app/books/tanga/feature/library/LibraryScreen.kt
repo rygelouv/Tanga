@@ -1,7 +1,11 @@
 package app.books.tanga.feature.library
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.ui.theme.TangaBlueDark
-import app.books.tanga.ui.theme.TangaWhiteBackground
 
 /**
  * Shows the summaries saved by the user
@@ -22,14 +24,14 @@ import app.books.tanga.ui.theme.TangaWhiteBackground
 fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
     Column(
         modifier = Modifier
-            .background(color = TangaWhiteBackground)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.library),
             style = MaterialTheme.typography.headlineMedium,
-            color = TangaBlueDark,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )

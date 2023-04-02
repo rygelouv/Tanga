@@ -1,31 +1,34 @@
 package app.books.tanga.feature.profile
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.ui.theme.*
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -49,7 +51,7 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
-            color = TangaWhiteBackground,
+            color = MaterialTheme.colorScheme.background,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -118,50 +120,6 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
 }
 
 @Composable
-fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () -> Unit = {}) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(bounded = true, color = TangaBluePaleSemiTransparent2),
-            ) { onClick() }
-            .padding(horizontal = 30.dp, vertical = 15.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(50.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(color = action.iconBackgroundColor)
-                .padding(all = 10.dp)
-        ) {
-            Icon(
-                modifier = Modifier.size(25.dp),
-                imageVector = ImageVector.vectorResource(id = action.icon),
-                contentDescription = "action icon",
-                tint = action.color
-            )
-        }
-        Spacer(modifier = Modifier.width(25.dp))
-        Text(
-            modifier = Modifier.weight(5f),
-            text = stringResource(id = action.text),
-            style = MaterialTheme.typography.headlineMedium,
-            color = if (action.shouldTint) action.color else TangaBlueDark,
-            fontSize = 14.sp
-        )
-        Icon(
-            modifier = Modifier.size(20.dp),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevon_right),
-            contentDescription = "action icon",
-            tint = if (action.shouldTint) action.color else TangaLightGray2
-        )
-    }
-}
-
-@Composable
 fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
     Column(
         modifier = modifier
@@ -179,7 +137,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
             text = fullName ?: stringResource(id = R.string.anonymous),
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
-            color = TangaBlueDark,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )

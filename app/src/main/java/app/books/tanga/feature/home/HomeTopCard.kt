@@ -14,10 +14,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,16 +30,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.books.tanga.R
 import app.books.tanga.common.FakeData
+import app.books.tanga.feature.category.CategoryTag
 import app.books.tanga.feature.summary.list.SummaryImage
 import app.books.tanga.feature.summary.list.SummaryUi
-import app.books.tanga.R
-import app.books.tanga.feature.category.CategoryTag
-import app.books.tanga.ui.theme.*
 
 @Composable
 fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
-    val gradientColors = listOf(TangaBlueDark, TangaBluePale, TangaLightBlue)
+    val gradientColors = listOf(
+        MaterialTheme.colorScheme.onPrimaryContainer,
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary
+    )
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +50,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
             .clickable { onSummaryClicked() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
-        colors = CardDefaults.cardColors(TangaBottomBarIconColorSelected40PercentTransparent)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)
     ) {
         Row(
             modifier = Modifier

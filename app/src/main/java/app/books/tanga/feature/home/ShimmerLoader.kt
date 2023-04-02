@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import app.books.tanga.ui.theme.TangaWhiteBackground
 
 @Composable
 fun AnimatedShimmerLoader(modifier: Modifier) {
@@ -52,7 +52,7 @@ fun AnimatedShimmerLoader(modifier: Modifier) {
         start = Offset.Zero,
         end = Offset(x = translateAnimation.value, y = translateAnimation.value)
     )
-    Column(modifier = modifier.background(color = TangaWhiteBackground)) {
+    Column(modifier = modifier.background(color = MaterialTheme.colorScheme.background)) {
         repeat(3) {
             Spacer(modifier = Modifier.height(24.dp))
             AnimatedShimmerRow(brush)
