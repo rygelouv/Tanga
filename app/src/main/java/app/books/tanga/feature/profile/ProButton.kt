@@ -1,6 +1,7 @@
 package app.books.tanga.feature.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
+import app.books.tanga.ui.theme.button
 
 @Composable
 fun ProButton() {
@@ -40,53 +42,41 @@ fun ProButton() {
         MaterialTheme.colorScheme.primary,
         MaterialTheme.colorScheme.secondary
     )
-    Button(
+
+    Row(
         modifier = Modifier
-            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.background,
-
-            contentColor = Color.Unspecified
-        ),
-        onClick = {},
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
-        shape = RoundedCornerShape(40.dp)
+            .height(70.dp)
+            .background(
+                brush = Brush.linearGradient(colors = gradientColors),
+                shape = RoundedCornerShape(40.dp)
+            )
+            .clickable { },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
+        Spacer(modifier = Modifier.width(12.dp))
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .height(70.dp)
-                .background(
-                    brush = Brush.linearGradient(colors = gradientColors),
-                    shape = RoundedCornerShape(40.dp)
-                ),
-            verticalAlignment = Alignment.CenterVertically
+                .size(52.dp)
+                .clip(CircleShape)
+                .background(color = Color.White)
+                .padding(all = 10.dp),
         ) {
-            Spacer(modifier = Modifier.width(12.dp))
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(52.dp)
-                    .clip(CircleShape)
-                    .background(color = Color.White)
-                    .padding(all = 10.dp),
-            ) {
-                Icon(
-                    modifier = Modifier.size(36.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_premium),
-                    contentDescription = "action icon",
-                )
-            }
-
-            Text(
-                text = stringResource(id = R.string.profile_upgrade_to_pro),
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+            Icon(
+                modifier = Modifier.size(36.dp),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_premium),
+                contentDescription = "action icon",
+                tint = Color.Unspecified
             )
         }
+
+        Text(
+            text = stringResource(id = R.string.profile_upgrade_to_pro),
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.button,
+            textAlign = TextAlign.Center,
+            color = Color.White
+        )
     }
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
@@ -27,7 +28,7 @@ fun BottomBarNavigation(navController: NavController) {
     val isBottomBarDestination = items.any { it.route == currentRoute }
 
     if (isBottomBarDestination) {
-        NavigationBar(containerColor = Color.White) {
+        NavigationBar(containerColor = Color.White, tonalElevation = 10.dp) {
             items.forEach { item ->
                 AddItem(
                     navController = navController,

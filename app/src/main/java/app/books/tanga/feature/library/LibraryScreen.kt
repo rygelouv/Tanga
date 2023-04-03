@@ -32,7 +32,6 @@ fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
             text = stringResource(id = R.string.library),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(22.dp))
