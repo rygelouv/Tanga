@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
+import app.books.tanga.ui.theme.button
 
 @Composable
 fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
@@ -37,8 +38,6 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
             text = stringResource(id = R.string.library_empty),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.outline,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center
         )
         Image(
@@ -67,8 +66,7 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.library_explore_summaries),
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
+                    style = MaterialTheme.typography.button
                 )
             }
         }

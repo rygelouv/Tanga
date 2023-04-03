@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -146,7 +147,6 @@ fun HomeContent(
         Text(
             color = MaterialTheme.colorScheme.outline,
             text = getWelcomeMessage(firstName = userFirstName),
-            fontSize = 18.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge,
@@ -218,7 +218,8 @@ fun HomeSection(
         Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 modifier = modifier.weight(2f),
@@ -241,6 +242,12 @@ fun HomeSection(
         Spacer(modifier = Modifier.height(22.dp))
         SummaryRow(summaries, onSummaryClicked)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeSectionPreview() {
+    HomeSection(Modifier, "Personal Growth", true, {})
 }
 
 @Preview

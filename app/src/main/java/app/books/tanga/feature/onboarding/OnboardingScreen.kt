@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -193,7 +194,7 @@ fun FinishOnboardingButton(
                 shape = RoundedCornerShape(16.dp),
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
             ) {
-                Text(text = "Get Started",
+                Text(text = stringResource(id = R.string.onboarding_get_started),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp
                 )
