@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.common.FakeData
+import app.books.tanga.common.data.FakeData
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
