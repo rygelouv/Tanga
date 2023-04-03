@@ -1,4 +1,4 @@
-package app.books.tanga.common
+package app.books.tanga.common.data
 
 import app.books.tanga.R
 import app.books.tanga.feature.summary.list.SummaryUi
