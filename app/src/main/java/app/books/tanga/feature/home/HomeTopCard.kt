@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.common.data.FakeData
+import app.books.tanga.common.FakeData
 import app.books.tanga.feature.category.CategoryTag
 import app.books.tanga.feature.summary.list.SummaryImage
 import app.books.tanga.feature.summary.list.SummaryUi

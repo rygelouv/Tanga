@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.common.data.FakeData
+import app.books.tanga.common.FakeData
 import app.books.tanga.feature.summary.list.SummaryRow
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
