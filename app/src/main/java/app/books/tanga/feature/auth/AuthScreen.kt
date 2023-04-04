@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -123,10 +122,11 @@ fun AuthContent(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.auth_welcome_to_tanga),
+                text = "Welcome to Tanga",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontSize = 28.sp
             )
             Text(
                 modifier = Modifier
@@ -135,8 +135,9 @@ fun AuthContent(
                     .padding(top = 10.dp)
                     .weight(1f),
                 color = MaterialTheme.colorScheme.outline,
-                text = stringResource(id = R.string.auth_sign_up_with_google_message),
-                style = MaterialTheme.typography.bodyMedium,
+                text = "Sign in or Sign up with Google to start enjoying Tanga Now",
+                fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
@@ -150,7 +151,7 @@ fun AuthContent(
                 .padding(horizontal = 41.dp)
                 .padding(top = 14.dp),
             color = MaterialTheme.colorScheme.outline,
-            text = stringResource(id = R.string.auth_terms_and_conditions),
+            text = "Terms and Conditions",
             fontSize = 12.sp,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,

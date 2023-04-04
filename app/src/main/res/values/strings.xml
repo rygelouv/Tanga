@@ -18,12 +18,4 @@
     <string name="summary_duration">%1$s min</string>
     <string name="home_welcome_message">Great to see you, %1$s</string>
     <string name="profile_upgrade_to_pro">Upgrade to Tanga Pro</string>
-    <string name="auth_welcome_to_tanga">Welcome to Tanga</string>
-    <string name="auth_sign_up_with_google_message">Sign in or Sign up with Google to start enjoying Tanga Now</string>
-    <string name="auth_terms_and_conditions">Terms and Conditions</string>
-    <string name="auth_sign_in_with_google">Sign in with Google</string>
-    <string name="home_top_card_title">Summary Of \nThe Day!</string>
-    <string name="home_top_card_action_text">Check It Out Now!</string>
-    <string name="onboarding_get_started">Get Started</string>
-    <string name="auth_skip">Skip</string>
 </resources>

@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -72,10 +71,13 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.home_top_card_title),
+                    text = "Summary Of \nThe Day!",
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        lineHeight = 30.sp
+                    ),
                     color = Color.White,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2,
                 )
@@ -84,10 +86,11 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
                 ) {
                     Text(
                         color = Color.White,
-                        text = stringResource(id = R.string.home_top_card_action_text),
+                        text = "Check It Out Now",
+                        fontSize = 12.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Icon(

@@ -82,9 +82,11 @@ fun SummaryItem(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
             text = summaryUi.author,
+            fontSize = 12.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold
         )
         SummaryIndicators(summaryUi)
     }
@@ -108,7 +110,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(id = R.string.summary_duration, summaryUi.duration),
-                style = MaterialTheme.typography.labelMedium,
+                fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
             )
