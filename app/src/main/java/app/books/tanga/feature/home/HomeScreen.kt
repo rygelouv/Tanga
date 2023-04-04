@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,6 +46,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.data.FakeData
 import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.ui.theme.LocalSpacing
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -97,7 +99,9 @@ fun HomeTopBar(
     photoUrl: String?
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -142,8 +146,10 @@ fun HomeContent(
     val dailySummary = remember {
         FakeData.allSummaries().first()
     }
-    Column(modifier = modifier.background(color = MaterialTheme.colorScheme.background)) {
-        Spacer(modifier = Modifier.height(8.dp))
+    Column(
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background).padding(0.dp)
+    ) {
+        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Text(
             color = MaterialTheme.colorScheme.outline,
             text = getWelcomeMessage(firstName = userFirstName),
@@ -151,14 +157,17 @@ fun HomeContent(
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge,
         )
-        Spacer(modifier = Modifier.height(6.dp))
-        LazyColumn(modifier.fillMaxSize()) {
+        //Spacer(modifier = Modifier.height(6.dp))
+       LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
+            contentPadding = PaddingValues(0.dp)
+        ) {
             item {
                 HomeTopCard(dailySummary, onSummaryClicked)
             }
             item {
                 HomeSection(
-                    modifier = modifier,
                     sectionTitle = "Personal Growth",
                     isFirst = true,
                     onSummaryClicked = onSummaryClicked
@@ -166,21 +175,18 @@ fun HomeContent(
             }
             item {
                 HomeSection(
-                    modifier = modifier,
                     sectionTitle = "Financial education",
                     onSummaryClicked = onSummaryClicked
                 )
             }
             item {
                 HomeSection(
-                    modifier = modifier,
                     sectionTitle = "Business",
                     onSummaryClicked = onSummaryClicked
                 )
             }
             item {
                 HomeSection(
-                    modifier = modifier,
                     sectionTitle = "Psychology",
                     onSummaryClicked = onSummaryClicked
                 )
@@ -206,7 +212,6 @@ fun getWelcomeMessage(firstName: String): AnnotatedString {
 
 @Composable
 fun HomeSection(
-    modifier: Modifier,
     sectionTitle: String,
     isFirst: Boolean = false,
     onSummaryClicked: () -> Unit
@@ -222,7 +227,6 @@ fun HomeSection(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                modifier = modifier.weight(2f),
                 text = sectionTitle,
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.headlineMedium,
@@ -247,7 +251,7 @@ fun HomeSection(
 @Preview(showBackground = true)
 @Composable
 fun HomeSectionPreview() {
-    HomeSection(Modifier, "Personal Growth", true, {})
+    HomeSection("Personal Growth", true, {})
 }
 
 @Preview

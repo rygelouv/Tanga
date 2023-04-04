@@ -30,19 +30,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.data.FakeData
 import app.books.tanga.feature.category.CategoryTag
 import app.books.tanga.feature.summary.list.SummaryImage
 import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.ui.theme.LocalGradientColors
 
 @Composable
 fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
     val gradientColors = listOf(
-        MaterialTheme.colorScheme.onPrimaryContainer,
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary
+        LocalGradientColors.current.start,
+        LocalGradientColors.current.center,
+        LocalGradientColors.current.end
     )
     Card(
         modifier = Modifier
