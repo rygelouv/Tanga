@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.common.FakeData
+import app.books.tanga.common.data.FakeData
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
@@ -81,11 +81,9 @@ fun SummaryItem(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
             text = summaryUi.author,
-            fontSize = 12.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.SemiBold
+            style = MaterialTheme.typography.labelMedium,
         )
         SummaryIndicators(summaryUi)
     }
@@ -109,7 +107,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(id = R.string.summary_duration, summaryUi.duration),
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
             )

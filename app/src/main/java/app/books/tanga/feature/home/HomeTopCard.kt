@@ -35,14 +35,13 @@ import app.books.tanga.common.FakeData
 import app.books.tanga.feature.category.CategoryTag
 import app.books.tanga.feature.summary.list.SummaryImage
 import app.books.tanga.feature.summary.list.SummaryUi
-import app.books.tanga.ui.theme.LocalGradientColors
 
 @Composable
 fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
     val gradientColors = listOf(
-        LocalGradientColors.current.start,
-        LocalGradientColors.current.center,
-        LocalGradientColors.current.end
+        MaterialTheme.colorScheme.onPrimaryContainer,
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary
     )
     Card(
         modifier = Modifier

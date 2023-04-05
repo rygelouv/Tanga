@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.common.ui.Tag
-import app.books.tanga.ui.theme.LocalTintColor
 
 @Composable
 fun CategoryTag(icon: Int, categoryName: String) {
@@ -21,7 +20,7 @@ fun CategoryTag(icon: Int, categoryName: String) {
         ),
         text = categoryName,
         icon = icon,
-        tint = LocalTintColor.current.color
+        tint = MaterialTheme.colorScheme.primary
     )
 }
 

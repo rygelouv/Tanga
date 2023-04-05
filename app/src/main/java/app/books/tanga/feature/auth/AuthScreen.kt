@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.ui.theme.LocalSpacing
 
 @Composable
 fun AuthScreen(
@@ -42,32 +40,27 @@ fun AuthScreen(
     Scaffold(
         topBar = {
             Row(
-                modifier = Modifier.padding(
-                    top = 5.dp,
-                    start = 5.dp,
-                    end = LocalSpacing.current.extraLarge,
-                    bottom = 5.dp
-                ),
+                modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                Spacer(modifier = Modifier.weight(7f))
+                Spacer(modifier = Modifier.weight(8f))
                 Button(
                     modifier = Modifier
-                        .width(120.dp)
-                        .weight(3f),
+                        .size(76.dp)
+                        .weight(2f),
                     colors = ButtonDefaults.buttonColors(
                         contentColor = MaterialTheme.colorScheme.tertiary,
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     ),
-                    shape = RoundedCornerShape(20.dp),
+                    shape = RoundedCornerShape(40.dp),
                     elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
                     onClick = {
                         onAuthSkipped()
                     }
                 ) {
                     Text(
-                        text = stringResource(id = R.string.auth_skip),
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = "Skip",
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

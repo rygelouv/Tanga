@@ -33,15 +33,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.ui.theme.LocalGradientColors
 import app.books.tanga.ui.theme.button
 
 @Composable
 fun ProButton() {
     val gradientColors = listOf(
-        LocalGradientColors.current.start,
-        LocalGradientColors.current.center,
-        LocalGradientColors.current.end
+        MaterialTheme.colorScheme.onBackground,
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary
     )
 
     Row(

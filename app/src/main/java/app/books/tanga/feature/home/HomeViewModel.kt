@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
-            withContext(Dispatchers.IO) { delay(1000) }
+            withContext(Dispatchers.IO) { delay(5000) }
             _state.update {
                 it.copy(isLoading = false)
             }
