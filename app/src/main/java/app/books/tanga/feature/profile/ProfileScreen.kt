@@ -135,32 +135,12 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = fullName ?: stringResource(id = R.string.anonymous),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(10.dp))
         ProButton()
-/*        Button(
-            modifier = Modifier.height(34.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                backgroundColor = TangaBluePaleSemiTransparent,
-            ),
-            shape = RoundedCornerShape(20.dp),
-            elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-            onClick = { *//*TODO*//* }
-        ) {
-            Text(
-                text = "Freemium",
-                style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center,
-            )
-        }*/
     }
 }
 

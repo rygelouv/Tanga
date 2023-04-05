@@ -158,7 +158,7 @@ fun HomeContent(
             style = MaterialTheme.typography.bodyLarge,
         )
         //Spacer(modifier = Modifier.height(6.dp))
-       LazyColumn(
+        LazyColumn(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(0.dp)

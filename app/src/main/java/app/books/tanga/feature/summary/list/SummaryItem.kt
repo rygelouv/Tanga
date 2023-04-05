@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.data.FakeData
+import app.books.tanga.ui.theme.LocalTintColor
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
@@ -102,7 +103,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_listen),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = LocalTintColor.current.color
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
@@ -118,7 +119,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_watch),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = LocalTintColor.current.color
             )
         }
         if (summaryUi.hasGraphic) {
@@ -127,7 +128,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = R.drawable.ic_indicator_mindmap),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = LocalTintColor.current.color
             )
         }
     }
