@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
@@ -105,9 +106,8 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
         Text(
             modifier = Modifier.weight(5f),
             text = stringResource(id = action.text),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = if (action.shouldTint) action.color else MaterialTheme.colorScheme.onPrimaryContainer,
-            fontSize = 14.sp
         )
         Icon(
             modifier = Modifier.size(20.dp),

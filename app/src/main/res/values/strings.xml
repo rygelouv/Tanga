@@ -25,4 +25,5 @@
     <string name="home_top_card_title">Summary Of \nThe Day!</string>
     <string name="home_top_card_action_text">Check It Out Now!</string>
     <string name="onboarding_get_started">Get Started</string>
+    <string name="auth_skip">Skip</string>
 </resources>

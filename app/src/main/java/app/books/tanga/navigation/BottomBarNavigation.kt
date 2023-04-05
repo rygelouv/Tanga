@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import app.books.tanga.ui.theme.LocalTintColor
 
 @Composable
 fun BottomBarNavigation(navController: NavController) {
@@ -27,7 +29,7 @@ fun BottomBarNavigation(navController: NavController) {
     val isBottomBarDestination = items.any { it.route == currentRoute }
 
     if (isBottomBarDestination) {
-        NavigationBar(containerColor = Color.White) {
+        NavigationBar(containerColor = Color.White, tonalElevation = 10.dp) {
             items.forEach { item ->
                 AddItem(
                     navController = navController,
@@ -53,15 +55,15 @@ fun RowScope.AddItem(
                     else item.unselectedIcon
                 ),
                 contentDescription = "bottom bar item",
-                tint = if (currentRoute == item.route) MaterialTheme.colorScheme.primary
+                tint = if (currentRoute == item.route) LocalTintColor.current.color
                 else MaterialTheme.colorScheme.outline
             )
         },
         selected = currentRoute == item.route,
         onClick = {
             navController.navigate(item.route) {
-                navController.graph.startDestinationRoute?.let { screen_route ->
-                    popUpTo(screen_route) {
+                navController.graph.startDestinationRoute?.let { screenRoute ->
+                    popUpTo(screenRoute) {
                         saveState = true
                     }
                 }
