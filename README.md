@@ -9,7 +9,10 @@
 
 
 ## This is a work in progress.
-Come back in a few months to see the progress.
+You can come back in a few months to see considerable progress. 
+In the meantime, We made a lot of progress in the last 7 days! 🙌
+
+We recovered some lost files and made a commit after pushing to dev and creating a mess with git. We also created a new Typography sub-system and refactored all screens with styles. Additionally, we fixed a bug that was causing the Codeball build to fail when a PR needed review. We also added permissions to the Codeball job and made some minor changes to see how Codeball would work. Finally, we added a Codeball Github Action workflow and updated the README file with badges.
 
 # License
 ```xml
