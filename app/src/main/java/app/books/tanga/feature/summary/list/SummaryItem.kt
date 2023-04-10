@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.data.FakeData
+import app.books.tanga.common.ui.components.SummaryImage
 import app.books.tanga.ui.theme.LocalTintColor
 
 @Composable
@@ -66,7 +67,7 @@ fun SummaryItem(
         verticalArrangement = Arrangement.Top
     ) {
         SummaryImage(
-            summaryCover = summaryUi.cover,
+            painter =  painterResource(id = summaryUi.cover),
             onSummaryClicked = onSummaryClicked
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -131,28 +132,6 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 tint = LocalTintColor.current.color
             )
         }
-    }
-}
-
-@Composable
-fun SummaryImage(
-    modifier: Modifier = Modifier,
-    summaryCover: Int,
-    onSummaryClicked: () -> Unit
-) {
-    Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked() },
-        shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-    ) {
-        Image(
-            painter = painterResource(id = summaryCover),
-            contentDescription = "summary cover",
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
 

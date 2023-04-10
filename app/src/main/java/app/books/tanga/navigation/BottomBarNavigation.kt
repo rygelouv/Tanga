@@ -56,7 +56,7 @@ fun RowScope.AddItem(
                 ),
                 contentDescription = "bottom bar item",
                 tint = if (currentRoute == item.route) LocalTintColor.current.color
-                else MaterialTheme.colorScheme.outline
+                else MaterialTheme.colorScheme.onTertiaryContainer
             )
         },
         selected = currentRoute == item.route,

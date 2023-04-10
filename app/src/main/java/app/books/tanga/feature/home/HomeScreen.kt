@@ -1,7 +1,5 @@
 package app.books.tanga.feature.home
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,13 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -27,8 +23,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -45,10 +39,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.data.FakeData
+import app.books.tanga.common.ui.components.ProfileImage
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.ui.theme.LocalSpacing
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 
 @Composable
 fun HomeScreen(
@@ -111,29 +104,13 @@ fun HomeTopBar(
             modifier = Modifier.clickable { onSearch() }
         )
         Spacer(modifier = Modifier.weight(5f))
-        Surface(
-            modifier = Modifier
-                .size(40.dp)
-                .clickable { onProfilePictureClicked() },
+        ProfileImage(
+            photoUrl = photoUrl,
             shape = CircleShape,
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary),
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-        ) {
-            Image(
-                painter = if (photoUrl != null) {
-                    rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(photoUrl)
-                            .build()
-                    )
-                } else {
-                    painterResource(id = R.drawable.profile_placeholder)
-                },
-                contentDescription = "home profile picture",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
+            size = 40.dp,
+            hasBorder = true,
+            onClick = onProfilePictureClicked,
+        )
     }
 }
 
@@ -147,7 +124,9 @@ fun HomeContent(
         FakeData.allSummaries().first()
     }
     Column(
-        modifier = modifier.background(color = MaterialTheme.colorScheme.background).padding(0.dp)
+        modifier = modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(0.dp)
     ) {
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Text(

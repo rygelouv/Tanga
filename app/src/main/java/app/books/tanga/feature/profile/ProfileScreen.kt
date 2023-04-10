@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.common.ui.components.ProfileImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -129,7 +130,10 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
         verticalArrangement = Arrangement.Center,
     ) {
         Spacer(modifier = Modifier.height(80.dp))
-        ProfileImage(modifier = Modifier, photoUrl = photoUrl)
+        ProfileImage(
+            photoUrl = photoUrl,
+            onClick = { /*TODO*/ },
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -141,28 +145,6 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
         )
         Spacer(modifier = Modifier.height(10.dp))
         ProButton()
-    }
-}
-
-@Composable
-fun ProfileImage(modifier: Modifier, photoUrl: String?) {
-    Surface(
-        modifier = modifier.size(120.dp),
-        shape = RoundedCornerShape(30.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-    ) {
-        Image(
-            painter = if (photoUrl != null) {
-                rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(photoUrl)
-                        .build()
-                )
-            } else { painterResource(id = R.drawable.profile_placeholder) },
-            contentDescription = "profile picture",
-            modifier = modifier.size(120.dp),
-            contentScale = ContentScale.Crop
-        )
     }
 }
 
