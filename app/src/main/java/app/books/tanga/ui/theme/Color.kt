@@ -21,6 +21,7 @@ val Water = Color(0xFFCEE5FF)
 val Cultured = Color(0xFFF6F3F6)
 val Gray = Color(0xFF43474E)
 val AuroMetalSaurus = Color(0xFF74777F)
+val SilverFoil = Color(0xFFAFAFAF)
 
 // Orange Tones
 val Orange = Color(0xFFFA974A)
@@ -65,7 +66,7 @@ val LightColors = lightColorScheme(
     tertiary = Orange,
     onTertiary = White,
     tertiaryContainer = OrangeTransparent,
-    onTertiaryContainer = DarkChocolate,
+    onTertiaryContainer = SilverFoil,
     error = Red,
     errorContainer = PalePink,
     onError = White,

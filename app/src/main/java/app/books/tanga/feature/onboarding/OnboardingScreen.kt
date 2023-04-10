@@ -1,8 +1,12 @@
 package app.books.tanga.feature.onboarding
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -16,11 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,8 +31,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
 import app.books.tanga.feature.auth.toAuthentication
-import app.books.tanga.ui.theme.*
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
+
 import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 3
@@ -78,7 +84,7 @@ fun OnboardingScreen(
                 .align(Alignment.CenterHorizontally)
                 .weight(1f),
             activeColor = MaterialTheme.colorScheme.secondary,
-            inactiveColor = MaterialTheme.colorScheme.outline,
+            inactiveColor = MaterialTheme.colorScheme.onTertiaryContainer,
             indicatorWidth = 10.dp
         )
         FinishOnboardingButton(
@@ -95,50 +101,6 @@ fun OnboardingScreen(
                 navController.toAuthentication()
             }
         )
-    }
-}
-
-
-@Composable
-fun PagerScreen(onBoardingPage: OnboardingPage) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Image(
-            modifier = Modifier
-                .weight(3f)
-                .padding(horizontal = 28.dp),
-            painter = painterResource(id = onBoardingPage.image),
-            contentDescription = "Pager image"
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = onBoardingPage.title,
-                style = MaterialTheme.typography.displayMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 41.dp)
-                    .padding(top = 20.dp)
-                    .weight(1f),
-                color = MaterialTheme.colorScheme.outline,
-                text = onBoardingPage.description,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
-            )
-        }
     }
 }
 

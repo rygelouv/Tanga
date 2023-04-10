@@ -1,4 +1,4 @@
-package app.books.tanga.common.ui
+package app.books.tanga.common.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +16,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import app.books.tanga.ui.theme.LocalSpacing
 
+/**
+ * This is a composable function that displays a tag with an icon and text.
+ *
+ * @param modifier: An instance of [Modifier] that can be used to apply styling to the [Row] composable.
+ * @param text: The text to be displayed as a tag.
+ * @param icon: The icon to be displayed as a tag.
+ * @param tint: The tint of the icon.
+ */
 @Composable
 fun Tag(modifier: Modifier, text: String, icon: Int, tint: Color) {
     Row(

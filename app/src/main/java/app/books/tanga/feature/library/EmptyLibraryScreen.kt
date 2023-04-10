@@ -35,7 +35,7 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.library_empty),
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.outline,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
             textAlign = TextAlign.Center
         )
         Image(
