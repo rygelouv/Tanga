@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.navigation.NavigationScreen
-import app.books.tanga.common.data.preferences.DefaultPrefDataStoreRepository
-import app.books.tanga.common.domain.session.SessionManager
-import app.books.tanga.common.domain.session.SessionState
+import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
+import app.books.tanga.domain.session.SessionManager
+import app.books.tanga.domain.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.ui.theme.LocalGradientColors
-import app.books.tanga.ui.theme.button
+import app.books.tanga.core_ui.theme.LocalGradientColors
+import app.books.tanga.core_ui.theme.button
 
 @Composable
 fun ProButton() {

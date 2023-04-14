@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.common.data.FakeData
-import app.books.tanga.common.ui.components.SummaryImage
-import app.books.tanga.ui.theme.LocalTintColor
+import app.books.tanga.data.FakeData
+import app.books.tanga.core_ui.components.SummaryImage
+import app.books.tanga.core_ui.theme.LocalTintColor
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {

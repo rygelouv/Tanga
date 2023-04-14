@@ -16,7 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.common.ui.components.TangaButtonLeftIcon
+import app.books.tanga.core_ui.R.drawable.ic_search
+import app.books.tanga.core_ui.components.TangaButtonLeftIcon
 
 @Composable
 fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
@@ -44,7 +45,7 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
                 .fillMaxWidth()
                 .height(64.dp),
             onClick = onExploreButtonClicked,
-            rightIcon = R.drawable.ic_search,
+            rightIcon = ic_search,
             text = stringResource(id = R.string.library_explore_summaries),
         )
     }

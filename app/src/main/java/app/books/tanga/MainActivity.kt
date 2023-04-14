@@ -13,7 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.feature.splash.SplashViewModel
 import app.books.tanga.navigation.NavigationGraph
-import app.books.tanga.ui.theme.TangaTheme
+import app.books.tanga.core_ui.theme.TangaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
