@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -22,21 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
+import app.books.tanga.common.ui.components.TangaButtonRightIcon
 import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-
 import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 3
@@ -146,21 +142,11 @@ fun FinishOnboardingButton(
             visible = pagerState.currentPage == MAX_PAGER_INDEX,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Button(
-                modifier = modifier.size(64.dp),
+            TangaButtonRightIcon(
                 onClick = onFinishClick,
-                colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White,
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                shape = RoundedCornerShape(16.dp),
-                elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
-            ) {
-                Text(text = stringResource(id = R.string.onboarding_get_started),
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
-                )
-            }
+                leftIcon = R.drawable.ic_right_arrow,
+                text = stringResource(id = R.string.onboarding_get_started)
+            )
         }
     }
 }
