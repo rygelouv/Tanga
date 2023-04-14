@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 
 /**
  * This is a composable function that displays a description text with centered alignment and padding.
@@ -17,13 +18,18 @@ import androidx.compose.ui.text.style.TextAlign
 fun TangaDescriptionText(
     modifier: Modifier = Modifier,
     text: String,
-    style: TextStyle = MaterialTheme.typography.bodyLarge
+    overflow: TextOverflow = TextOverflow.Ellipsis,
+    maxLines: Int = 50,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     Text(
         modifier = modifier,
         color = MaterialTheme.colorScheme.onTertiaryContainer,
         text = text,
         style = style,
-        textAlign = TextAlign.Center
+        overflow = overflow,
+        maxLines = maxLines,
+        textAlign = textAlign
     )
 }

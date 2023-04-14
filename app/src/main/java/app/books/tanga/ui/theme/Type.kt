@@ -137,7 +137,7 @@ val Typography = Typography(
 
 val Typography.button: TextStyle
     get() = TextStyle(
-        fontFamily = Montserra,
+        fontFamily = Poppins,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
         lineHeight = 20.sp,

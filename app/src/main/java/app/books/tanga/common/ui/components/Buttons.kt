@@ -68,7 +68,7 @@ fun TangaButtonRightIcon(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.weight(2f),
+                modifier = Modifier.weight(1f),
                 text = text,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.button
