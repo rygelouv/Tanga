@@ -10,9 +10,9 @@
 
 ## This is a work in progress.
 You can come back in a few months to see considerable progress. 
-In the meantime, We made a lot of progress in the last 7 days! 🙌
+In the meantime, We made some progress in the last 7 days! 🙌
 
-We recovered some lost files and made a commit after pushing to dev and creating a mess with git. We also created a new Typography sub-system and refactored all screens with styles. Additionally, we fixed a bug that was causing the Codeball build to fail when a PR needed review. We also added permissions to the Codeball job and made some minor changes to see how Codeball would work. Finally, we added a Codeball Github Action workflow and updated the README file with badges.
+In the last week, we've been working hard on making our app more usable and visually pleasing by updating some old screens and components to use our new Tanga design system. We've also created some new reusable components that can be used across the app.
 
 # License
 ```xml
