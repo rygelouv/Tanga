@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.SummaryImage
+import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalTintColor
 
 @Composable
@@ -96,7 +97,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
         ) {
             Icon(
                 modifier = Modifier.size(13.dp),
-                painter = painterResource(id = R.drawable.ic_indicator_listen),
+                painter = painterResource(id = TangaIcons.IndicatorListen),
                 contentDescription = null,
                 tint = LocalTintColor.current.color
             )
@@ -112,7 +113,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
         if (summaryUi.hasVideo) {
             Icon(
                 modifier = Modifier.size(13.dp),
-                painter = painterResource(id = R.drawable.ic_indicator_watch),
+                painter = painterResource(id = TangaIcons.IndicatorWatch),
                 contentDescription = null,
                 tint = LocalTintColor.current.color
             )
@@ -121,7 +122,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
             Spacer(modifier = Modifier.width(5.dp))
             Icon(
                 modifier = Modifier.size(13.dp),
-                painter = painterResource(id = R.drawable.ic_indicator_mindmap),
+                painter = painterResource(id = TangaIcons.IndicatorMindMap),
                 contentDescription = null,
                 tint = LocalTintColor.current.color
             )

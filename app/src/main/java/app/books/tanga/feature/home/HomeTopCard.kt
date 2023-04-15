@@ -34,7 +34,8 @@ import app.books.tanga.R
 import app.books.tanga.core_ui.R.drawable.ic_right_arrow
 import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.SummaryImage
-import app.books.tanga.feature.category.CategoryTag
+import app.books.tanga.core_ui.components.Tag
+import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.list.SummaryUi
 import app.books.tanga.core_ui.theme.LocalGradientColors
 
@@ -66,10 +67,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
             ) {
-                CategoryTag(
-                    icon = R.drawable.ic_indicator_mindmap,
-                    categoryName = "Business"
-                )
+                Tag(text = "Business", icon = TangaIcons.IndicatorMindMap)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier.weight(1f),
