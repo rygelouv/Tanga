@@ -26,7 +26,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
-import app.books.tanga.common.ui.components.TangaButtonRightIcon
+import app.books.tanga.core_ui.components.TangaButtonRightIcon
+import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -131,7 +132,7 @@ fun FinishOnboardingButton(
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_right_arrow),
+                    imageVector = ImageVector.vectorResource(id = TangaIcons.RightArrow),
                     contentDescription = "Next Icon",
                     modifier = Modifier.size(24.dp)
                 )
@@ -144,7 +145,7 @@ fun FinishOnboardingButton(
         ) {
             TangaButtonRightIcon(
                 onClick = onFinishClick,
-                leftIcon = R.drawable.ic_right_arrow,
+                leftIcon = TangaIcons.RightArrow,
                 text = stringResource(id = R.string.onboarding_get_started)
             )
         }

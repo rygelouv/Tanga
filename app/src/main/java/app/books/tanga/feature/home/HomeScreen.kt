@@ -38,10 +38,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.common.data.FakeData
-import app.books.tanga.common.ui.components.ProfileImage
+import app.books.tanga.core_ui.R.drawable.ic_search
+import app.books.tanga.data.FakeData
+import app.books.tanga.core_ui.components.ProfileImage
 import app.books.tanga.feature.summary.list.SummaryRow
-import app.books.tanga.ui.theme.LocalSpacing
+import app.books.tanga.core_ui.theme.LocalSpacing
 
 @Composable
 fun HomeScreen(
@@ -98,7 +99,7 @@ fun HomeTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_search),
+            painter = painterResource(id = ic_search),
             contentDescription = "home search icon",
             tint = MaterialTheme.colorScheme.outline,
             modifier = Modifier.clickable { onSearch() }
