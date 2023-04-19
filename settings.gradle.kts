@@ -10,9 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 rootProject.name = "Tanga"
-include ':app'
-include ':core-ui'
+include(":app")
+include(":core-ui")
