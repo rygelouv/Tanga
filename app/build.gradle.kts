@@ -56,13 +56,12 @@ dependencies {
 
     implementation(project(":core-ui"))
 
-    // AndroidX and Compose
-    implementation("androidx.core:core-ktx:${rootProject.extra.get("core_version")}")
-    implementation("androidx.activity:activity-compose:${rootProject.extra.get("activity_version")}")
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    // Core
+    implementation("androidx.core:core-ktx:${rootProject.extra.get("core_version_ktx")}")
+    implementation("androidx.core:core-splashscreen:${rootProject.extra.get("core_splashscreen_version")}")
 
-    // Constrain Layout
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    // Activity Compose
+    implementation("androidx.activity:activity-compose:${rootProject.extra.get("activity_version")}")
 
     //KTX
     implementation("androidx.activity:activity-ktx:${rootProject.extra.get("activity_version")}")
@@ -77,7 +76,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:${rootProject.extra.get("lifecycle_version")}")
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:2.6.0-alpha05")
+    implementation("androidx.navigation:navigation-compose:${rootProject.extra.get("compose_navigation_version")}")
     implementation("androidx.hilt:hilt-navigation-compose:${rootProject.extra.get("hilt_navigation_compose_version")}")
 
     // Hilt
@@ -94,9 +93,9 @@ dependencies {
     // Accompanist
     implementation("com.google.accompanist:accompanist-pager:${rootProject.extra.get("accompanist_version")}")
     implementation("com.google.accompanist:accompanist-pager-indicators:${rootProject.extra.get("accompanist_version")}")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
 
-    // Kotlin
+    // Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra.get("coroutinesVersion")}")
 
     // Play Services
@@ -107,11 +106,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:${rootProject.extra.get("coil_compose_version")}")
 
     // Unit tests
-    testImplementation("junit:junit:4.13.2")
+    testImplementation("junit:junit:${rootProject.extra.get("junit_version")}")
 
     // UI tests
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:${rootProject.extra.get("androidx_test_junit_version")}")
+    androidTestImplementation("androidx.test.espresso:espresso-core:${rootProject.extra.get("espresso_version")}")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra.get("compose_version")}")
 
     // Debug dependencies
