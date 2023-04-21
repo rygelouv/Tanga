@@ -38,9 +38,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.R.drawable.ic_search
 import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.ProfileImage
+import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.core_ui.theme.LocalSpacing
 
@@ -99,9 +99,9 @@ fun HomeTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(id = ic_search),
+            painter = painterResource(id = TangaIcons.Search),
             contentDescription = "home search icon",
-            tint = MaterialTheme.colorScheme.outline,
+            tint = MaterialTheme.colorScheme.onTertiaryContainer,
             modifier = Modifier.clickable { onSearch() }
         )
         Spacer(modifier = Modifier.weight(5f))
