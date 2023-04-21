@@ -8,7 +8,7 @@
 ![tanga_banner_v2_updated](https://user-images.githubusercontent.com/7549316/227764073-7e88f504-710e-46a6-9a43-e18521200f4d.png)
 
 
-## This is a work in progress.
+## 🚧 **This project is still under construction** 🚧
 You can come back in a few months to see considerable progress. 
 In the meantime, We made some progress in the last 7 days! 🙌
 
