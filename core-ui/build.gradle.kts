@@ -34,26 +34,32 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    api("androidx.compose.ui:ui:1.3.3")
-    api("androidx.compose.ui:ui-tooling-preview:1.3.3")
-    api("androidx.compose.material3:material3:1.1.0-beta01")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    // Core https://developer.android.com/jetpack/androidx/releases/core
+    api("androidx.core:core-ktx:${rootProject.extra.get("core_version_ktx")}")
 
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    // Compose https://developer.android.com/jetpack/androidx/releases/compose
+    api("androidx.compose.ui:ui:${rootProject.extra.get("compose_version")}")
+    api("androidx.compose.ui:ui-tooling-preview:${rootProject.extra.get("compose_version")}")
+    api("androidx.compose.material3:material3:${rootProject.extra.get("compose_material_version")}")
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
+    // Accompanist https://google.github.io/accompanist/
+    implementation("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    //Coil https://github.com/coil-kt/coil/releases
+    api("io.coil-kt:coil-compose:2.2.2")
+
+    // Debug dependencies
+    // https://developer.android.com/jetpack/androidx/releases/compose-ui#debugging
+    debugApi("androidx.compose.ui:ui-tooling:${rootProject.extra.get("compose_version")}")
+    debugApi("androidx.compose.ui:ui-test-manifest:${rootProject.extra.get("compose_version")}")
 }

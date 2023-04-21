@@ -33,7 +33,7 @@ fun Tag(
     modifier: Modifier = Modifier,
     text: String,
     icon: Int,
-    shape: RoundedCornerShape = RoundedCornerShape(12.dp),
+    shape: RoundedCornerShape = RoundedCornerShape(14.dp),
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
     tint: Color = LocalTintColor.current.color
 ) {
@@ -41,7 +41,7 @@ fun Tag(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .background(color = backgroundColor, shape = shape)
-            .padding(start = 10.dp, end = 10.dp, bottom = 5.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 3.dp),
     ) {
         Icon(
             modifier = Modifier.size(13.dp),
