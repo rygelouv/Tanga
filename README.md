@@ -10,9 +10,11 @@
 
 ## 🚧 **This project is still under construction** 🚧
 You can come back in a few months to see considerable progress. 
-In the meantime, We made some progress in the last 7 days! 🙌
+WOW – we got two pull requests in the last 7 days! 😲
 
-In the last week, we've been working hard on making our app more usable and visually pleasing by updating some old screens and components to use our new Tanga design system. We've also created some new reusable components that can be used across the app.
+Both of these PRs were related to our build system. We improved the organisation of our dependencies and versions. We also migrated our Gradle files to Kotlin DSL and upgraded our Gradle plugin version.
+
+This will help us keep our project up-to-date and increase our productivity.
 
 # License
 ```xml
