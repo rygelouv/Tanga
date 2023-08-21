@@ -6,9 +6,12 @@ import androidx.navigation.compose.composable
 import app.books.tanga.feature.summary.details.SummaryDetailsScreen
 import app.books.tanga.navigation.NavigationScreen
 
-fun NavGraphBuilder.summaryDetails() {
+fun NavGraphBuilder.summaryDetails(
+    onBackClicked: () -> Unit,
+    onPlayClicked: () -> Unit
+) {
     composable(route = NavigationScreen.SummaryDetails.route) {
-        SummaryDetailsScreen()
+        SummaryDetailsScreen(onBackClicked = onBackClicked, onPlayClicked = onPlayClicked)
     }
 }
 

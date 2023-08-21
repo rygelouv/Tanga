@@ -1,6 +1,8 @@
 package app.books.tanga.core_ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -11,6 +13,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,25 +41,39 @@ fun Tag(
     icon: Int,
     shape: RoundedCornerShape = RoundedCornerShape(14.dp),
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
-    tint: Color = LocalTintColor.current.color
+    tint: Color = LocalTintColor.current.color,
+    hasBorder: Boolean = false,
+    onSelected: () -> Unit = {}
 ) {
+    var selected by remember { mutableStateOf(false) }
+
+    val borderModifier = if (hasBorder) Modifier.border(1.dp, tint, shape) else Modifier
+    val backgroundModifier =
+        Modifier.background(color = if (selected) tint else backgroundColor, shape = shape)
+    val paddingModifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 4.dp)
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .background(color = backgroundColor, shape = shape)
-            .padding(start = 10.dp, end = 10.dp, bottom = 3.dp),
+            .then(backgroundModifier)
+            .then(borderModifier)
+            .then(paddingModifier)
+            .clickable {
+                selected = selected.not()
+                onSelected.invoke()
+            }
     ) {
         Icon(
-            modifier = Modifier.size(13.dp),
+            modifier = Modifier.size(16.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = tint
+            tint = if (selected) Color.White else tint
         )
         Spacer(modifier = Modifier.width(LocalSpacing.current.small))
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium,
-            color = tint,
+            color = if (selected) Color.White else tint,
             modifier = Modifier.padding(top = LocalSpacing.current.extraSmall),
             textAlign = TextAlign.Center
         )

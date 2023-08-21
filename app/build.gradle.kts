@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "app.books.tanga"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "app.books.tanga"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "0.0.1"
 
@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.1"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packagingOptions {
         resources {

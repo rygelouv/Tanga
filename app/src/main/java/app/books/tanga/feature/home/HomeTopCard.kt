@@ -67,7 +67,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
             ) {
-                Tag(text = "Business", icon = TangaIcons.IndicatorMindMap)
+                Tag(text = "Business", icon = TangaIcons.IndicatorGraphic)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier.weight(1f),

@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import app.books.tanga.core_ui.theme.LocalSpacing
 
 @Composable
 fun SummaryGrid(
@@ -16,8 +16,8 @@ fun SummaryGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.extraLarge),
+        verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium)
     ) {
         items(summaries) { summary ->
             SummaryItemBig(

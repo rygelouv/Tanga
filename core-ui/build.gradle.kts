@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "app.books.tanga.core_ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -30,7 +30,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.1"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 
     compileOptions {
