@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 
 /**
@@ -25,7 +24,7 @@ fun LibraryScreen(onExploreButtonClicked: () -> Unit) {
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
+            .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp),
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),

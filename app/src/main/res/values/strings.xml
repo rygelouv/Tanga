@@ -26,4 +26,13 @@
     <string name="home_top_card_action_text">Check It Out Now!</string>
     <string name="onboarding_get_started">Get Started</string>
     <string name="auth_skip">Skip</string>
+    <string name="explore">Explore</string>
+    <string name="explore_search">Search</string>
+    <string name="explore_categories">Categories</string>
+    <string name="business">Business</string>
+    <string name="productivity">Productivity</string>
+    <string name="self_development">Self Development</string>
+    <string name="financial_education">Financial Education</string>
+    <string name="summary_details_introduction">Introduction</string>
+    <string name="summary_details_recommendations">Recommanded summaries</string>
 </resources>

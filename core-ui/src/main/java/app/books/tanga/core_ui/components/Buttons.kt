@@ -1,7 +1,11 @@
 package app.books.tanga.core_ui.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,9 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.core_ui.theme.button
 
 /**
@@ -129,5 +136,35 @@ fun TangaButtonLeftIcon(
                 style = MaterialTheme.typography.button
             )
         }
+    }
+}
+
+
+@Composable
+fun SummaryActionButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    icon: Int,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = modifier.clickable { onClick() },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            tint = LocalTintColor.current.color
+        )
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.SemiBold,
+        )
     }
 }

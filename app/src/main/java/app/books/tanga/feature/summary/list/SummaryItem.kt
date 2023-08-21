@@ -122,7 +122,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
             Spacer(modifier = Modifier.width(5.dp))
             Icon(
                 modifier = Modifier.size(13.dp),
-                painter = painterResource(id = TangaIcons.IndicatorMindMap),
+                painter = painterResource(id = TangaIcons.IndicatorGraphic),
                 contentDescription = null,
                 tint = LocalTintColor.current.color
             )

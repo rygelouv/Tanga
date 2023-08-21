@@ -12,7 +12,7 @@ import app.books.tanga.core_ui.components.Tag
 fun TagPreview() {
     Tag(
         text = "Business",
-        icon = R.drawable.ic_indicator_mindmap,
+        icon = R.drawable.ic_indicator_graphic,
         tint = MaterialTheme.colorScheme.primary
     )
 }

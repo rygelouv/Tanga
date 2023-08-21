@@ -3,9 +3,9 @@ buildscript {
     extra.set("core_version_ktx", "1.10.0")
     extra.set("core_splashscreen_version", "1.0.0")
     // Activity
-    extra.set("activity_version", "1.6.1")
+    extra.set("activity_version", "1.7.2")
     // Compose
-    extra.set("compose_version", "1.4.2")
+    extra.set("compose_version", "1.5.0")
     // Compose Material
     extra.set("compose_material_version", "1.1.0-beta01")
     // Lifecycle
@@ -14,7 +14,7 @@ buildscript {
     extra.set("hilt_navigation_compose_version", "1.0.0")
     extra.set("compose_navigation_version", "2.6.0-alpha09")
     // Hilt
-    extra.set("hilt_version", "2.44.2")
+    extra.set("hilt_version", "2.47")
     // Firebase
     extra.set("firebase_bom_version", "31.2.0")
     // DataStore
@@ -48,7 +48,7 @@ buildscript {
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.0.0" apply false
-    id("com.android.library") version "8.0.0" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.0" apply false
+    id("com.android.application") version "8.0.2" apply false
+    id("com.android.library") version "8.0.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
 }

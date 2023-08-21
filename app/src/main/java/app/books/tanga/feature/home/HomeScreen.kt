@@ -224,7 +224,7 @@ fun HomeSection(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries, onSummaryClicked)
+        SummaryRow(summaries = summaries, onSummaryClicked = onSummaryClicked)
     }
 }
 
