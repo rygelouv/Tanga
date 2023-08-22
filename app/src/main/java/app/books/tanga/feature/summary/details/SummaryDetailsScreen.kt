@@ -1,5 +1,6 @@
 package app.books.tanga.feature.summary.details
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,7 +53,7 @@ fun SummaryDetailsScreen(
     onPlayClicked: () -> Unit
 ) {
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
         topBar = {
             SummaryTopAppBar(onBackClicked)
         },

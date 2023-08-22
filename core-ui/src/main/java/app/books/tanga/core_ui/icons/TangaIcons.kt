@@ -14,4 +14,8 @@ object TangaIcons {
     val FinancialEducation = R.drawable.ic_financial_education
     val SelfDevelopment = R.drawable.ic_self_development
     val Productivity = R.drawable.ic_productivity
+    val Backward = R.drawable.ic_backward
+    val Forward = R.drawable.ic_forward
+    val Play = R.drawable.ic_play
+    val Pause = R.drawable.ic_pause
 }

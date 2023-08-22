@@ -5,9 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
 
-fun NavGraphBuilder.playSummaryAudio() {
+fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
     composable(route = NavigationScreen.PlaySummaryAudio.route) {
-        PlaySummaryAudioScreen()
+        PlaySummaryAudioScreen(onBackClicked = onBackClicked)
     }
 }
 

@@ -28,7 +28,7 @@ fun MainNavigationGraph(
             onPlayClicked = { navController.toPlaySummaryAudio() }
         )
         search()
-        playSummaryAudio()
+        playSummaryAudio { navController.popBackStack()}
     }
 }
 
