@@ -137,11 +137,10 @@ fun HomeContent(
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge,
         )
-        //Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().padding(vertical = 0.dp),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
-            contentPadding = PaddingValues(0.dp)
+            contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp),
         ) {
             item {
                 HomeTopCard(dailySummary, onSummaryClicked)

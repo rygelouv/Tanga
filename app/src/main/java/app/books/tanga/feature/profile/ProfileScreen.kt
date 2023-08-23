@@ -38,8 +38,7 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 10.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(bottom = 10.dp),
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
@@ -50,7 +49,8 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
