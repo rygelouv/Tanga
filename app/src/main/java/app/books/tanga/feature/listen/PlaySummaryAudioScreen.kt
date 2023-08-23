@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,9 +49,7 @@ fun PlaySummaryAudioScreen(onBackClicked: () -> Unit) {
         FakeData.allSummaries().shuffled().last()
     }
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = LocalSpacing.current.large),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             PlaySummaryAudioTopBar(onBackClicked)
         },
@@ -89,14 +89,15 @@ fun PlaySummaryAudioContent(summary: SummaryUi) {
         Surface(
             color = Color.White,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .offset(y = 148.dp),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 10.dp),
+                    .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 10.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
             ) {
@@ -131,74 +132,111 @@ fun PlaySummaryAudioContent(summary: SummaryUi) {
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            modifier = Modifier.size(18.dp),
-                            painter = painterResource(id = TangaIcons.Backward),
-                            tint = MaterialTheme.colorScheme.primary,
-                            contentDescription = "previous"
-                        )
-                    }
-                    Text(
-                        color = MaterialTheme.colorScheme.outline,
-                        text = "-15s",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(64.dp)) {
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.primary
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .padding(14.dp),
-                                painter = painterResource(id = TangaIcons.Pause),
-                                tint = MaterialTheme.colorScheme.onPrimary,
-                                contentDescription = "play"
-                            )
-                        }
-                    }
-                    Text(
-                        color = MaterialTheme.colorScheme.outline,
-                        text = "+15s",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            modifier = Modifier.size(18.dp),
-                            painter = painterResource(id = TangaIcons.Forward),
-                            tint = MaterialTheme.colorScheme.primary,
-                            contentDescription = "next"
-                        )
-                    }
-                }
+                PlaybackControls()
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
-                var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-                Slider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
 
-                    value = sliderPosition, onValueChange = { sliderPosition = it })
+                AudioBar()
             }
         }
         SummaryImage(
             modifier = Modifier
                 .width(154.dp)
-                .align(alignment = Alignment.TopCenter),
+                .align(alignment = Alignment.TopCenter)
+                .offset(y = 4.dp),
             painter = painterResource(id = summary.cover),
             onSummaryClicked = { }
         )
+    }
+}
+
+@Composable
+private fun PlaybackControls() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                modifier = Modifier.size(18.dp),
+                painter = painterResource(id = TangaIcons.Backward),
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = "previous"
+            )
+        }
+        Text(
+            color = MaterialTheme.colorScheme.outline,
+            text = "-15s",
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall,
+        )
+        IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(64.dp)) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                shape = CircleShape,
+                color = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(14.dp),
+                    painter = painterResource(id = TangaIcons.Pause),
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = "play"
+                )
+            }
+        }
+        Text(
+            color = MaterialTheme.colorScheme.outline,
+            text = "+15s",
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall,
+        )
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                modifier = Modifier.size(18.dp),
+                painter = painterResource(id = TangaIcons.Forward),
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = "next"
+            )
+        }
+    }
+}
+
+@Composable
+private fun AudioBar() {
+    var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+    ) {
+        Slider(
+            modifier = Modifier.fillMaxWidth(),
+            value = sliderPosition, onValueChange = { sliderPosition = it }
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+        ) {
+            Text(
+                color = MaterialTheme.colorScheme.outline,
+                text = "00:00",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodySmall,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                color = MaterialTheme.colorScheme.outline,
+                text = "10:35",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
     }
 }
