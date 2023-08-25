@@ -9,6 +9,8 @@ import app.books.tanga.feature.home.HomeScreen
 import app.books.tanga.feature.library.LibraryScreen
 import app.books.tanga.feature.listen.playSummaryAudio
 import app.books.tanga.feature.listen.toPlaySummaryAudio
+import app.books.tanga.feature.pricing.pricingPlan
+import app.books.tanga.feature.pricing.toPricingPlan
 import app.books.tanga.feature.profile.profile
 import app.books.tanga.feature.profile.toProfile
 import app.books.tanga.feature.search.search
@@ -29,6 +31,7 @@ fun MainNavigationGraph(
         )
         search()
         playSummaryAudio { navController.popBackStack()}
+        pricingPlan { navController.popBackStack() }
     }
 }
 
@@ -45,5 +48,5 @@ fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController) {
             onExploreButtonClicked = { navController.toSearch() }
         )
     }
-    profile()
+    profile { navController.toPricingPlan() }
 }

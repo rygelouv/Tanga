@@ -18,4 +18,7 @@ object TangaIcons {
     val Forward = R.drawable.ic_forward
     val Play = R.drawable.ic_play
     val Pause = R.drawable.ic_pause
+    val Close = R.drawable.ic_close
+    val CheckMark = R.drawable.ic_check
+    val GraphicBookLover = R.drawable.graphic_book_lover
 }

@@ -35,4 +35,17 @@
     <string name="financial_education">Financial Education</string>
     <string name="summary_details_introduction">Introduction</string>
     <string name="summary_details_recommendations">Recommanded summaries</string>
+    <string name="pricing_plan_message">Upgrade To Pro And Get The Most Out Of Tanga</string>
+    <string name="pricing_plan_offer_no_ads">No Ads</string>
+    <string name="pricing_plan_offer_unlimited_access">Unlimited Access</string>
+    <string name="pricing_plan_offer_visual_graphic_summaries">Visual Graphic Summaries</string>
+    <string name="pricing_plan_offer_video_summaries">Video Summaries</string>
+    <string name="pricing_plan_offer_offline_audio">Offline Audio</string>
+    <string name="pricing_plan_best_value">Best Value</string>
+    <string name="pricing_plan_monthly">Monthly Plan</string>
+    <string name="pricing_plan_monthly_price">$1.5</string>
+    <string name="pricing_plan_monthly_cadence"> / Month</string>
+    <string name="pricing_plan_yearly_cadence"> / Year</string>
+    <string name="pricing_plan_yearly_price">$12</string>
+    <string name="pricing_plan_yearly">Yearly Plan</string>
 </resources>

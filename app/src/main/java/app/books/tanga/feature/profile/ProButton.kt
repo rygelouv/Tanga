@@ -32,7 +32,7 @@ import app.books.tanga.core_ui.theme.LocalGradientColors
 import app.books.tanga.core_ui.theme.button
 
 @Composable
-fun ProButton() {
+fun ProButton(onClick: () -> Unit = {}) {
     val gradientColors = listOf(
         LocalGradientColors.current.start,
         LocalGradientColors.current.center,
@@ -46,7 +46,7 @@ fun ProButton() {
                 brush = Brush.linearGradient(colors = gradientColors),
                 shape = RoundedCornerShape(40.dp)
             )
-            .clickable { },
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.width(12.dp))
