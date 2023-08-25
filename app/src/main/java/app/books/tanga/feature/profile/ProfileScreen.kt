@@ -33,7 +33,7 @@ import app.books.tanga.R
 import app.books.tanga.core_ui.components.ProfileImage
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
+fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel(), onProClicked: () -> Unit = {}) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = Modifier
@@ -57,7 +57,8 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
                 ProfileHeader(
                     modifier = Modifier,
                     fullName = state.fullName,
-                    photoUrl = state.photoUrl
+                    photoUrl = state.photoUrl,
+                    onProClicked = onProClicked
                 )
                 Spacer(modifier = Modifier.height(70.dp))
                 ProfileScreenContent {
@@ -112,7 +113,12 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
 }
 
 @Composable
-fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
+fun ProfileHeader(
+    fullName: String?,
+    photoUrl: String?,
+    modifier: Modifier,
+    onProClicked: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -135,7 +141,7 @@ fun ProfileHeader(fullName: String?, photoUrl: String?, modifier: Modifier) {
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
         Spacer(modifier = Modifier.height(10.dp))
-        ProButton()
+        ProButton { onProClicked() }
     }
 }
 

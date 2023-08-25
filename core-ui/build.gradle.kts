@@ -53,7 +53,7 @@ dependencies {
     api("androidx.compose.material3:material3:${rootProject.extra.get("compose_material_version")}")
 
     // Accompanist https://google.github.io/accompanist/
-    implementation("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
+    api("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
 
     //Coil https://github.com/coil-kt/coil/releases
     api("io.coil-kt:coil-compose:2.2.2")

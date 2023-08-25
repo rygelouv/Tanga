@@ -45,4 +45,6 @@ sealed class NavigationScreen(val route: String) {
     data object Search : NavigationScreen("search_screen")
 
     data object PlaySummaryAudio : NavigationScreen("play_summary_audio_screen")
+
+    data object PricingPlan : NavigationScreen("pricing_plan_screen")
 }
