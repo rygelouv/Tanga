@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import app.books.tanga.core_ui.R
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 
 /**
@@ -55,6 +57,44 @@ fun SummaryImage(
 }
 
 /**
+ * This is a composable that displays an image of a book summary cover.
+ * It uses Glide to load the image from a URL. If the URL is null, it uses a placeholder image.
+ */
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun GlideSummaryImage(
+    modifier: Modifier = Modifier,
+    model: String? = null,
+    painter: Painter? = null,
+    onSummaryClicked: () -> Unit
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .shadow(elevation = 10.dp)
+            .clickable { onSummaryClicked() },
+        shape = RoundedCornerShape(10.dp),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+    ) {
+        if (model != null) {
+            GlideImage(
+                model = model,
+                contentDescription = "summary cover",
+                modifier = Modifier.fillMaxWidth(),
+            )
+        } else {
+            // TODO we need to remove this condition when we have got rid of FakeData usage
+            Image(
+                painter = painter!!,
+                contentDescription = "summary cover",
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    }
+}
+
+
+/**
  * This is a composable function that displays a profile image with optional border and on-click listener.
  *
  * @param modifier: An instance of [Modifier] that can be used to apply styling to the [Surface] and [Image] composable.
@@ -68,7 +108,7 @@ fun SummaryImage(
 @Composable
 fun ProfileImage(
     modifier: Modifier = Modifier,
-    tag : String = "profile_image",
+    tag: String = "profile_image",
     photoUrl: String?,
     shape: Shape = RoundedCornerShape(30.dp),
     size: Dp = 120.dp,
@@ -76,7 +116,10 @@ fun ProfileImage(
     onClick: () -> Unit = {}
 ) {
     Surface(
-        modifier = modifier.size(size).testTag(tag).clickable { onClick() },
+        modifier = modifier
+            .size(size)
+            .testTag(tag)
+            .clickable { onClick() },
         shape = shape,
         border = if (hasBorder) BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary) else null,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)

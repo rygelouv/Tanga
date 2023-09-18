@@ -43,6 +43,7 @@ import app.books.tanga.core_ui.components.ProfileImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.feature.summary.list.SummaryUi
 
 @Composable
 fun HomeScreen(
@@ -75,12 +76,12 @@ fun HomeScreen(
 @Composable
 fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: () -> Unit) {
 
-    if (state.isLoading) {
+    if (state.sections == null) {
         AnimatedShimmerLoader(modifier)
     } else {
         HomeContent(
             modifier = modifier,
-            userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous),
+            state = state,
             onSummaryClicked = onSummaryClicked
         )
     }
@@ -118,7 +119,7 @@ fun HomeTopBar(
 @Composable
 fun HomeContent(
     modifier: Modifier,
-    userFirstName: String,
+    state: HomeUiState,
     onSummaryClicked: () -> Unit
 ) {
     val dailySummary = remember {
@@ -130,6 +131,7 @@ fun HomeContent(
             .padding(0.dp)
     ) {
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+        val userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous)
         Text(
             color = MaterialTheme.colorScheme.outline,
             text = getWelcomeMessage(firstName = userFirstName),
@@ -145,30 +147,16 @@ fun HomeContent(
             item {
                 HomeTopCard(dailySummary, onSummaryClicked)
             }
-            item {
-                HomeSection(
-                    sectionTitle = "Personal Growth",
-                    isFirst = true,
-                    onSummaryClicked = onSummaryClicked
-                )
-            }
-            item {
-                HomeSection(
-                    sectionTitle = "Financial education",
-                    onSummaryClicked = onSummaryClicked
-                )
-            }
-            item {
-                HomeSection(
-                    sectionTitle = "Business",
-                    onSummaryClicked = onSummaryClicked
-                )
-            }
-            item {
-                HomeSection(
-                    sectionTitle = "Psychology",
-                    onSummaryClicked = onSummaryClicked
-                )
+            state.sections?.let {
+                items(it.size) { index ->
+                    val section = state.sections[index]
+                    HomeSection(
+                        sectionTitle = section.title,
+                        isFirst = index == 0,
+                        summaries = section.summaries,
+                        onSummaryClicked = onSummaryClicked
+                    )
+                }
             }
         }
     }
@@ -193,11 +181,9 @@ fun getWelcomeMessage(firstName: String): AnnotatedString {
 fun HomeSection(
     sectionTitle: String,
     isFirst: Boolean = false,
+    summaries: List<SummaryUi> = emptyList(),
     onSummaryClicked: () -> Unit
 ) {
-    val summaries = remember {
-        FakeData.allSummaries().shuffled().take(4)
-    }
     Column {
         Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))
         Row(
@@ -210,7 +196,7 @@ fun HomeSection(
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -230,7 +216,7 @@ fun HomeSection(
 @Preview(showBackground = true)
 @Composable
 fun HomeSectionPreview() {
-    HomeSection("Personal Growth", true, {})
+    HomeSection("Personal Growth", true) {}
 }
 
 @Preview

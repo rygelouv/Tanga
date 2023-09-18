@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -24,10 +25,13 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
+import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.SummaryImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalTintColor
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
 fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
@@ -61,8 +65,11 @@ fun SummaryItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        SummaryImage(
-            painter = painterResource(id = summaryUi.cover),
+        GlideSummaryImage(
+            model = summaryUi.coverUrl,
+            painter = if (summaryUi.coverUrl == null) {
+                painterResource(id = R.drawable.cover_never_split_difference)
+            } else null,
             onSummaryClicked = onSummaryClicked
         )
         Spacer(modifier = Modifier.height(10.dp))
