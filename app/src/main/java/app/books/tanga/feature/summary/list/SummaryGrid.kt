@@ -10,7 +10,8 @@ import app.books.tanga.core_ui.theme.LocalSpacing
 
 @Composable
 fun SummaryGrid(
-    modifier: Modifier = Modifier, summaries: List<SummaryUi>,
+    modifier: Modifier = Modifier,
+    summaries: List<SummaryUi>,
     onSummaryClicked: () -> Unit
 ) {
     LazyVerticalGrid(

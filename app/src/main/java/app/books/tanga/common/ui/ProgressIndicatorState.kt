@@ -3,11 +3,11 @@ package app.books.tanga.common.ui
 /**
  * Represent a progress/loading operation on the UI
  */
-sealed interface ProgressState {
+sealed interface ProgressIndicatorState {
 
     /** When loading in progress */
-    object Loading: ProgressState
+    data object Show: ProgressIndicatorState
 
     /** When finished loading */
-    object Idle: ProgressState
+    data object Hide: ProgressIndicatorState
 }

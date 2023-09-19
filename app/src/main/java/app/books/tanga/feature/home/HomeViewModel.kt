@@ -3,9 +3,8 @@ package app.books.tanga.feature.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.data.SummaryRepository
 import app.books.tanga.data.UserRepository
-import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.domain.summary.SummaryInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

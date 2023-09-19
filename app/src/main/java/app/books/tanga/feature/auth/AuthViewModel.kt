@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.domain.auth.AuthenticationInteractor
 import app.books.tanga.domain.session.SessionState
-import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.common.ui.ProgressIndicatorState
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,7 +32,7 @@ class AuthViewModel @Inject constructor(
     val events: SharedFlow<AuthUiEvent> = _events.asSharedFlow()
 
     fun onGoogleSignInStarted() {
-        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Loading) }
+        _state.update { it.copy(googleSignInButtonProgressIndicatorState = ProgressIndicatorState.Show) }
         viewModelScope.launch {
             interactor.initGoogleSignIn()
                 .onSuccess { initSignInResult ->
@@ -52,10 +52,10 @@ class AuthViewModel @Inject constructor(
                 .onSuccess { sessionStatus ->
                     if (sessionStatus is SessionState.LoggedIn) {
                         postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
-                        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Idle) }
+                        _state.update { it.copy(googleSignInButtonProgressIndicatorState = ProgressIndicatorState.Hide) }
                     }
                 }.onFailure { error ->
-                    _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Idle) }
+                    _state.update { it.copy(googleSignInButtonProgressIndicatorState = ProgressIndicatorState.Hide) }
                     Log.e("AuthViewModel", "Google sign In failure: ${error.message}")
                     // TODO (Properly track failure )
                     // TODO show failure UI with Retry

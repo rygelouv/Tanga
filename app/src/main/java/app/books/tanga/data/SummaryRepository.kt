@@ -10,16 +10,20 @@ interface SummaryRepository {
     /**
      * Get the list of summaries
      */
-    suspend fun getSummaries(): Result<List<Summary>>
+    suspend fun getAllSummaries(): Result<List<Summary>>
 
-    suspend fun getSummaryByCategory(categoryId: String): Result<List<Summary>>
+    suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>>
+    suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>>
+
+    suspend fun saveSummariesInMemoryCache(summaries: List<Summary>)
 }
 
 class SummaryRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val summaryInMemoryCache: SummaryInMemoryCache
 ) : SummaryRepository {
 
-    override suspend fun getSummaries(): Result<List<Summary>> {
+    override suspend fun getAllSummaries(): Result<List<Summary>> {
         return runCatching {
             val summaries = firestore.summaryCollection.get().await()
 
@@ -31,10 +35,10 @@ class SummaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSummaryByCategory(categoryId: String): Result<List<Summary>> {
+    override suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
         return runCatching {
             val summaries = firestore.summaryCollection
-                .whereEqualTo("categories", categoryId)
+                .whereArrayContains(FirestoreDatabase.Summaries.Fields.CATEGORIES, categoryId)
                 .get()
                 .await()
 
@@ -44,6 +48,26 @@ class SummaryRepositoryImpl @Inject constructor(
         }.onFailure {
             Result.failure<Throwable>(it)
         }
+    }
+
+    /**
+     * Search for summaries by title or author
+     * This is a quick search using the in memory cache
+     */
+    override suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>> {
+        return runCatching {
+            val summaries = summaryInMemoryCache.getAll()
+            summaries.filter { summary ->
+                summary.title.contains(query, ignoreCase = true) ||
+                        summary.author.contains(query, ignoreCase = true)
+            }
+        }.onFailure {
+            Result.failure<Throwable>(it)
+        }
+    }
+
+    override suspend fun saveSummariesInMemoryCache(summaries: List<Summary>) {
+        summaryInMemoryCache.putAll(summaries)
     }
 
     private val FirebaseFirestore.summaryCollection: CollectionReference

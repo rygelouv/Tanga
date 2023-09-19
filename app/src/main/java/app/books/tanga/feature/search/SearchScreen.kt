@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.core_ui.components.Tag
 import app.books.tanga.core_ui.icons.TangaIcons
@@ -34,12 +36,10 @@ import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.list.SummaryGrid
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SearchScreen() {
-    var summaries by remember {
-        mutableStateOf(FakeData.allSummaries().shuffled())
-    }
+fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -54,24 +54,31 @@ fun SearchScreen() {
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
-        SearchBox()
+        SearchBox { viewModel.onSearch(it) }
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
-        CategoriesSection {
-            summaries = FakeData.allSummaries().shuffled()
+        if (state.shouldShowCategories) {
+            state.categories?.let {
+                CategoriesSection(categories = it) { category ->
+                    viewModel.onCategorySelected(category)
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
-        SummaryGrid(Modifier, summaries, {})
+        state.summaries?.let {
+            SummaryGrid(Modifier, it) {}
+        }
     }
 }
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
 private fun CategoriesSection(
-    onCategorySelected: (String) -> Unit = {}
+    categories: List<CategoryUi>,
+    onCategorySelected: (CategoryUi) -> Unit = {}
 ) {
 
     Text(
@@ -88,44 +95,22 @@ private fun CategoriesSection(
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
         verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
     ) {
-        Tag(
-            text = stringResource(id = R.string.business),
-            modifier = Modifier.height(40.dp),
-            shape = RoundedCornerShape(8.dp),
-            hasBorder = true,
-            icon = TangaIcons.Business,
-            onSelected = { onCategorySelected("Business") }
-        )
-        Tag(
-            text = stringResource(id = R.string.productivity),
-            modifier = Modifier.height(40.dp),
-            shape = RoundedCornerShape(8.dp),
-            hasBorder = true,
-            icon = TangaIcons.Productivity,
-            onSelected = { onCategorySelected("Productivity") }
-        )
-        Tag(
-            text = stringResource(id = R.string.self_development),
-            modifier = Modifier.height(40.dp),
-            shape = RoundedCornerShape(8.dp),
-            hasBorder = true,
-            icon = TangaIcons.SelfDevelopment,
-            onSelected = { onCategorySelected("Self Development") }
-        )
-        Tag(
-            text = stringResource(id = R.string.financial_education),
-            modifier = Modifier.height(40.dp),
-            shape = RoundedCornerShape(8.dp),
-            hasBorder = true,
-            icon = TangaIcons.FinancialEducation,
-            onSelected = { onCategorySelected("Financial Education") }
-        )
+        categories.forEach {
+            Tag(
+                text = it.name,
+                modifier = Modifier.height(40.dp),
+                shape = RoundedCornerShape(8.dp),
+                hasBorder = true,
+                icon = it.icon,
+                onSelected = { onCategorySelected(it) }
+            )
+        }
     }
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SearchBox() {
+private fun SearchBox(onSearch: (String) -> Unit) {
     var text by remember {
         mutableStateOf("")
     }
@@ -136,7 +121,10 @@ private fun SearchBox() {
         modifier = Modifier.fillMaxWidth(),
         query = text,
         onQueryChange = { text = it },
-        onSearch = { active = false },
+        onSearch = {
+            active = false
+            onSearch(text)
+        },
         active = active,
         onActiveChange = { active = it },
         placeholder = {
