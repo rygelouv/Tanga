@@ -55,8 +55,17 @@ dependencies {
     // Accompanist https://google.github.io/accompanist/
     api("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
 
+    /************** Image loading *****************
+     * For now we are using both Glide and Coil because Coil still doesn't support
+     * Firebase Cloud Storage Images. Once it does, we can remove Glide.
+     */
     //Coil https://github.com/coil-kt/coil/releases
     api("io.coil-kt:coil-compose:2.2.2")
+    // Glide
+    api("com.github.bumptech.glide:glide:4.16.0")
+    // Glide Compose
+    api("com.github.bumptech.glide:compose:1.0.0-alpha.5")
+    /************** End Image loading *****************/
 
     // Debug dependencies
     // https://developer.android.com/jetpack/androidx/releases/compose-ui#debugging

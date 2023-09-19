@@ -87,6 +87,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:${rootProject.extra.get("firebase_bom_version")}"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    //implementation("com.google.firebase:firebase-storage-ktx")
 
     // Accompanist https://github.com/google/accompanist/releases
     implementation("com.google.accompanist:accompanist-pager:${rootProject.extra.get("accompanist_version")}")
