@@ -7,7 +7,7 @@ import app.books.tanga.domain.summary.Summary
 fun FirestoreData.toCategory(): Category {
     return Category(
         name = this[FirestoreDatabase.Categories.Fields.NAME].toString(),
-        slug = this[FirestoreDatabase.Categories.Fields.SLUG].toString()
+        id = this[FirestoreDatabase.Categories.Fields.SLUG].toString()
     )
 }
 

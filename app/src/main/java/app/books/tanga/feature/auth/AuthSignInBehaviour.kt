@@ -26,7 +26,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.common.ui.ProgressIndicatorState
+import app.books.tanga.common.ui.ProgressState
 
 @Composable
 fun SignIn(
@@ -64,7 +64,7 @@ fun GoogleSignInButton(
     onClick: () -> Unit,
     state: AuthUiState
 ) {
-    val progressState = state.googleSignInButtonProgressIndicatorState
+    val progressState = state.googleSignInButtonProgressState
     Button(
         modifier = Modifier
             .height(55.dp)
@@ -79,11 +79,11 @@ fun GoogleSignInButton(
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-        enabled = progressState != ProgressIndicatorState.Show
+        enabled = progressState != ProgressState.Show
     ) {
         Box {
             when (progressState) {
-                ProgressIndicatorState.Show -> CircularProgressIndicator(
+                ProgressState.Show -> CircularProgressIndicator(
                     modifier = Modifier.size(30.dp),
                     color = Color.White
                 )

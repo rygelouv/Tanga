@@ -30,10 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.core_ui.components.Tag
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.data.FakeData
+import app.books.tanga.feature.home.AnimatedShimmerLoader
 import app.books.tanga.feature.summary.list.SummaryGrid
 
 @Composable
@@ -60,16 +61,32 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
 
         if (state.shouldShowCategories) {
             state.categories?.let {
-                CategoriesSection(categories = it) { category ->
-                    viewModel.onCategorySelected(category)
-                }
+                CategoriesSection(
+                    categories = it,
+                    onCategorySelected = { category ->
+                        viewModel.onCategorySelected(category)
+                    },
+                    onCategoryDeselected = { category ->
+                        viewModel.onCategoryDeselected(category)
+                    }
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
-        state.summaries?.let {
-            SummaryGrid(Modifier, it) {}
+        when (state.progressState) {
+            ProgressState.Show -> AnimatedShimmerLoader(
+                modifier = Modifier.fillMaxWidth()
+            )
+            ProgressState.Hide -> {
+                state.summaries?.let {
+                    SummaryGrid(
+                        modifier = Modifier,
+                        summaries =  it
+                    ) {}
+                }
+            }
         }
     }
 }
@@ -78,9 +95,9 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
 @OptIn(ExperimentalLayoutApi::class)
 private fun CategoriesSection(
     categories: List<CategoryUi>,
+    onCategoryDeselected: (CategoryUi) -> Unit = {},
     onCategorySelected: (CategoryUi) -> Unit = {}
 ) {
-
     Text(
         text = stringResource(id = R.string.explore_categories),
         textAlign = TextAlign.Start,
@@ -102,7 +119,8 @@ private fun CategoriesSection(
                 shape = RoundedCornerShape(8.dp),
                 hasBorder = true,
                 icon = it.icon,
-                onSelected = { onCategorySelected(it) }
+                onSelected = { onCategorySelected(it) },
+                onDeselected = { onCategoryDeselected(it) }
             )
         }
     }

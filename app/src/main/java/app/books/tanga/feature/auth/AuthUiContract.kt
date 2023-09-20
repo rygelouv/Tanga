@@ -1,13 +1,13 @@
 package app.books.tanga.feature.auth
 
-import app.books.tanga.common.ui.ProgressIndicatorState
+import app.books.tanga.common.ui.ProgressState
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 
 data class AuthUiState(
-    val googleSignInButtonProgressIndicatorState: ProgressIndicatorState
+    val googleSignInButtonProgressState: ProgressState
 ) {
     companion object {
-        fun emptyState() = AuthUiState(googleSignInButtonProgressIndicatorState = ProgressIndicatorState.Hide)
+        fun emptyState() = AuthUiState(googleSignInButtonProgressState = ProgressState.Hide)
     }
 }
 

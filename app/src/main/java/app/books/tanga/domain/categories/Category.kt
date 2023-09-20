@@ -6,11 +6,11 @@ import app.books.tanga.domain.summary.Summary
  * Class representing a Category
  */
 data class Category(
-    val slug: String,
+    val id: String,
     val name: String,
 )
 
-enum class PredefinedCategory(val slug: String) {
+enum class PredefinedCategory(val id: String) {
     BUSINESS("business"),
     PERSONAL_DEVELOPMENT("productivity_and_personal_development"),
     PSYCHOLOGY("life_philosophy_psychology"),
