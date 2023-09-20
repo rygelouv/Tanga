@@ -24,7 +24,7 @@ class SummaryInteractor @Inject constructor(
             categories.onSuccess {
                 it.forEach { category ->
                     val summariesByCategory = summaries?.filter { summary ->
-                        summary.categories.contains(category.slug)
+                        summary.categories.contains(category.id)
                     } ?: emptyList()
 
                     sections.add(
@@ -37,6 +37,28 @@ class SummaryInteractor @Inject constructor(
             }
 
             sections
+        }
+    }
+
+    /**
+     * Get the list of summaries for the given category ids
+     * If the list of category ids is empty, return all summaries
+     */
+    suspend fun getSummariesForCategories(categoryIds: List<String>): Result<List<Summary>> {
+        return runCatching {
+            if (categoryIds.isEmpty()) return@runCatching getAllSummaries().getOrThrow()
+
+            val summaries = mutableListOf<Summary>()
+
+            categoryIds.forEach { categoryId ->
+                val summariesByCategory = getSummariesByCategory(categoryId)
+                summariesByCategory.onSuccess {
+                    summaries.addAll(it)
+                }
+            }
+
+            // Remove duplicates
+            summaries.toSet().toList()
         }
     }
 

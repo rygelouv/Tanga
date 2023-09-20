@@ -3,12 +3,12 @@ package app.books.tanga.feature.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.common.ui.ProgressIndicatorState
-import app.books.tanga.data.CategoryRepository
-import app.books.tanga.data.SummaryRepository
+import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.di.DefaultDispatcher
 import app.books.tanga.domain.summary.SummaryInteractor
 import app.books.tanga.feature.summary.list.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,11 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val summaryInteractor: SummaryInteractor
+    private val summaryInteractor: SummaryInteractor,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SearchUiState> =
-        MutableStateFlow(SearchUiState(progressIndicatorState = ProgressIndicatorState.Show))
+        MutableStateFlow(SearchUiState(progressState = ProgressState.Show))
     val state: StateFlow<SearchUiState> = _state.asStateFlow()
 
     init {
@@ -31,6 +32,8 @@ class SearchViewModel @Inject constructor(
 
     private fun loadSearchData() {
         viewModelScope.launch {
+            _state.update { it.copy(progressState = ProgressState.Show) }
+
             loadCategories()
 
             loadSummaries()
@@ -41,7 +44,6 @@ class SearchViewModel @Inject constructor(
         summaryInteractor.getCategories().onSuccess { categories ->
             _state.update {
                 it.copy(
-                    progressIndicatorState = ProgressIndicatorState.Hide,
                     categories = categories.map { category ->
                         category.toCategoryUi()
                     })
@@ -56,7 +58,7 @@ class SearchViewModel @Inject constructor(
         summaryInteractor.getAllSummaries().onSuccess { summaries ->
             _state.update {
                 it.copy(
-                    progressIndicatorState = ProgressIndicatorState.Hide,
+                    progressState = ProgressState.Hide,
                     summaries = summaries.map { summary ->
                         summary.toSummaryUi()
                     })
@@ -69,14 +71,22 @@ class SearchViewModel @Inject constructor(
 
     fun onSearch(query: String) {
         // Only show categories if the query is empty
-        _state.update { it.copy(query = query, shouldShowCategories = query.isEmpty()) }
+        _state.update {
+            it.copy(
+                progressState = ProgressState.Show,
+                query = query,
+                shouldShowCategories = query.isEmpty()
+            )
+        }
 
         viewModelScope.launch {
             summaryInteractor.search(query).onSuccess { summaries ->
                 _state.update {
-                    it.copy(summaries = summaries.map { summary ->
-                        summary.toSummaryUi()
-                    })
+                    it.copy(
+                        progressState = ProgressState.Hide,
+                        summaries = summaries.map { summary ->
+                            summary.toSummaryUi()
+                        })
                 }
             }.onFailure {
                 Log.e("SearchViewModel", "Error searching summaries", it)
@@ -84,15 +94,54 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * When a category is selected, we need add the category to the selected categories list
+     * and load the summaries for the selected categories
+     */
     fun onCategorySelected(category: CategoryUi) {
-        _state.update { it.copy(selectedCategory = category) }
+        val selectedCategories = _state.value.selectedCategories
+        selectedCategories.add(category)
+        _state.update {
+            it.copy(
+                progressState = ProgressState.Show,
+                selectedCategories = selectedCategories
+            )
+        }
+        val categoryIds = selectedCategories.map { it.id }
 
+        loadSummariesForCategories(categoryIds)
+    }
+
+    /**
+     * When a category is deselected, we need remove the category from the selected categories list
+     * and load the summaries for the selected categories
+     */
+    fun onCategoryDeselected(category: CategoryUi) {
+        val selectedCategories = _state.value.selectedCategories
+        selectedCategories.remove(category)
+        _state.update {
+            it.copy(
+                progressState = ProgressState.Show,
+                selectedCategories = selectedCategories
+            )
+        }
+        val categoryIds = selectedCategories.map { it.id }
+
+        loadSummariesForCategories(categoryIds)
+    }
+
+    /**
+     * Load summaries for the given categories
+     */
+    private fun loadSummariesForCategories(categoryIds: List<String>) {
         viewModelScope.launch {
-            summaryInteractor.getSummariesByCategory(category.slug).onSuccess { summaries ->
+            summaryInteractor.getSummariesForCategories(categoryIds).onSuccess { summaries ->
                 _state.update {
-                    it.copy(summaries = summaries.map { summary ->
-                        summary.toSummaryUi()
-                    })
+                    it.copy(
+                        progressState = ProgressState.Hide,
+                        summaries = summaries.map { summary ->
+                            summary.toSummaryUi()
+                        })
                 }
             }.onFailure {
                 Log.e("SearchViewModel", "Error getting summaries by category", it)

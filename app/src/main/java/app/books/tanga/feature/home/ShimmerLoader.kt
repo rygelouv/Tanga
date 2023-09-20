@@ -34,7 +34,7 @@ fun AnimatedShimmerLoader(modifier: Modifier) {
         Color.LightGray.copy(alpha = 0.6f),
     )
 
-    val transition = rememberInfiniteTransition()
+    val transition = rememberInfiniteTransition(label = "Summary list Shimmer transition")
     val translateAnimation = transition.animateFloat(
         initialValue = 0f,
         targetValue = 1000f,
@@ -44,7 +44,7 @@ fun AnimatedShimmerLoader(modifier: Modifier) {
                 easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Restart
-        )
+        ), label = "Summary list Shimmer translate animation"
     )
     
     val brush = Brush.linearGradient(

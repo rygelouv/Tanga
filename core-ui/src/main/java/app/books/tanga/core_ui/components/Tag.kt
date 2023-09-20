@@ -43,7 +43,8 @@ fun Tag(
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
     tint: Color = LocalTintColor.current.color,
     hasBorder: Boolean = false,
-    onSelected: () -> Unit = {}
+    onSelected: () -> Unit = {},
+    onDeselected: () -> Unit = {}
 ) {
     var selected by remember { mutableStateOf(false) }
 
@@ -60,7 +61,7 @@ fun Tag(
             .then(paddingModifier)
             .clickable {
                 selected = selected.not()
-                onSelected.invoke()
+                if (selected) onSelected() else onDeselected()
             }
     ) {
         Icon(
