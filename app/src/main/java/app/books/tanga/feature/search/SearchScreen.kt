@@ -1,6 +1,7 @@
 package app.books.tanga.feature.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -80,11 +81,15 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
                 modifier = Modifier.fillMaxWidth()
             )
             ProgressState.Hide -> {
-                state.summaries?.let {
-                    SummaryGrid(
-                        modifier = Modifier,
-                        summaries =  it
-                    ) {}
+                if (state.summaries.isNullOrEmpty()) {
+                    EmptySearchScreen(query = state.query ?: "")
+                } else {
+                    state.summaries?.let {
+                        SummaryGrid(
+                            modifier = Modifier,
+                            summaries =  it
+                        ) {}
+                    }
                 }
             }
         }
@@ -160,6 +165,20 @@ private fun SearchBox(onSearch: (String) -> Unit) {
                 contentDescription = "Search",
                 tint = MaterialTheme.colorScheme.onTertiaryContainer
             )
+        },
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                Icon(
+                    modifier = Modifier.size(18.dp).clickable {
+                        text = ""
+                        active = false
+                        onSearch(text)
+                    },
+                    painter = painterResource(id = TangaIcons.Close),
+                    contentDescription = "Close",
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
+                )
+            }
         },
         shape = RoundedCornerShape(size = 8.dp)
     ) {
