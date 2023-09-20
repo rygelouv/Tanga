@@ -68,7 +68,6 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-
     fun onSearch(query: String) {
         // Only show categories if the query is empty
         _state.update {

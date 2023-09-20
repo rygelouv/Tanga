@@ -48,4 +48,6 @@
     <string name="pricing_plan_yearly_cadence"> / Year</string>
     <string name="pricing_plan_yearly_price">$12</string>
     <string name="pricing_plan_yearly">Yearly Plan</string>
+    <string name="search_summary_empty_message">No book summary was found with title or author name matching \"%1$s\"</string>
+    <string name="search_summary_empty_title">Oops! Nothing found</string>
 </resources>

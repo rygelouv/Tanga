@@ -21,4 +21,5 @@ object TangaIcons {
     val Close = R.drawable.ic_close
     val CheckMark = R.drawable.ic_check
     val GraphicBookLover = R.drawable.graphic_book_lover
+    val GraphicBookSearch = R.drawable.graphic_book_search
 }
