@@ -66,7 +66,7 @@ fun SummaryImage(
 fun GlideSummaryImage(
     summaryId: String,
     modifier: Modifier = Modifier,
-    model: String? = null,
+    url: String? = null,
     painter: Painter? = null,
     onSummaryClicked: (String) -> Unit
 ) {
@@ -78,9 +78,9 @@ fun GlideSummaryImage(
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
-        if (model != null) {
+        if (url != null) {
             GlideImage(
-                model = model,
+                model = url,
                 contentDescription = "summary cover",
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -107,6 +107,7 @@ fun GlideSummaryImage(
  * @param hasBorder: Whether the [Surface] composable that surrounds the image should have a border.
  * @param onClick: The function to be executed when the image is clicked.
  */
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProfileImage(
     modifier: Modifier = Modifier,
@@ -126,19 +127,11 @@ fun ProfileImage(
         border = if (hasBorder) BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary) else null,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
-        Image(
-            painter = if (photoUrl != null) {
-                rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(photoUrl)
-                        .build()
-                )
-            } else {
-                painterResource(id = R.drawable.profile_placeholder)
-            },
-            contentDescription = "profile picture",
+        GlideImage(
             modifier = modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            model = photoUrl ?: R.drawable.profile_placeholder,
+            contentDescription = "profile picture",
         )
     }
 }
+
