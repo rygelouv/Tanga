@@ -6,6 +6,7 @@ object TangaIcons {
     val Search = R.drawable.ic_search
     val RightArrow = R.drawable.ic_right_arrow
     val LeftArrow = R.drawable.ic_left_arrow_2
+    val DownArrow = R.drawable.ic_keyboard_arrow_down_24
     val IndicatorListen = R.drawable.ic_indicator_listen
     val IndicatorRead = R.drawable.ic_indicator_read
     val IndicatorWatch = R.drawable.ic_indicator_watch
