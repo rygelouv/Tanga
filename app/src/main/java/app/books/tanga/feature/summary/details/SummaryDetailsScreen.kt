@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.core_ui.components.ExpendableText
 import app.books.tanga.core_ui.components.GlideSummaryImage
+import app.books.tanga.core_ui.components.ProfileImage
 import app.books.tanga.core_ui.components.SummaryActionButton
 import app.books.tanga.core_ui.components.TangaButtonLeftIcon
 import app.books.tanga.core_ui.icons.TangaIcons
@@ -83,6 +84,12 @@ fun SummaryDetailsScreen(
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
             SummaryIntroduction(summary = summary)
+
+            SummaryAuthor(
+                modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
+                author = summary.author,
+                authorPictureUrl = summary.authorPictureUrl
+            )
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
             PurchaseButton()
@@ -171,7 +178,7 @@ fun SummaryDetailsHeader(modifier: Modifier, summary: SummaryUi) {
                 GlideSummaryImage(
                     modifier = Modifier.width(128.dp),
                     summaryId = summary.id,
-                    model = summary.coverUrl,
+                    url = summary.coverUrl,
                     painter = if (summary.coverUrl == null) {
                         painterResource(id = R.drawable.cover_never_split_difference)
                     } else null,
@@ -278,10 +285,43 @@ fun SummaryIntroduction(modifier: Modifier = Modifier, summary: SummaryUi) {
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
         summary.synopsis?.let {
             ExpendableText(text = it)
+        }
+    }
+}
+
+@Composable
+fun SummaryAuthor(modifier: Modifier = Modifier, author: String, authorPictureUrl: String?) {
+    Column {
+        Text(
+            modifier = modifier.padding(horizontal = LocalSpacing.current.small),
+            text = stringResource(id = R.string.summary_details_author),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ProfileImage(
+                modifier = Modifier.size(40.dp),
+                photoUrl = authorPictureUrl,
+                onClick = { /*TODO*/ }
+            )
+            Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.outline,
+                text = author,
+                style = MaterialTheme.typography.bodyLarge,
+            )
         }
     }
 }

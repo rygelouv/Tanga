@@ -64,7 +64,7 @@ fun SummaryItem(
     ) {
         GlideSummaryImage(
             summaryId = summary.id,
-            model = summary.coverUrl,
+            url = summary.coverUrl,
             painter = if (summary.coverUrl == null) {
                 painterResource(id = R.drawable.cover_never_split_difference)
             } else null,

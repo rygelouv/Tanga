@@ -54,4 +54,5 @@
     <string name="summary_details_listen">Listen</string>
     <string name="summary_details_watch">Watch</string>
     <string name="summary_details_visualize">Visualize</string>
+    <string name="summary_details_author">Author</string>
 </resources>

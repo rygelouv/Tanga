@@ -13,7 +13,8 @@ object FakeData {
                 title = "It doesn't have to be crazy at work",
                 author = "Jason Fried and David Heinemeir Hannson",
                 duration = "10",
-                hasGraphic = true
+                hasGraphic = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -23,7 +24,8 @@ object FakeData {
                 title = "Atomic Habits",
                 author = "James Clear",
                 duration = "15",
-                hasVideo = true
+                hasVideo = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -33,7 +35,8 @@ object FakeData {
                 title = "Deep Work",
                 author = "Cal Newport",
                 duration = "9",
-                hasGraphic = true
+                hasGraphic = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -43,7 +46,8 @@ object FakeData {
                 title = "Ego is the Enemy",
                 author = "Ryan Holiday",
                 duration = "13",
-                hasVideo = true
+                hasVideo = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -53,6 +57,7 @@ object FakeData {
                 title = "So Good They Can't Ignore You",
                 author = "Cal Newport",
                 duration = "11",
+                authorPictureUrl = null,
             )
         )
         add(
@@ -62,6 +67,7 @@ object FakeData {
                 title = "Good To Great",
                 author = "Jim Collins",
                 duration = "8",
+                authorPictureUrl = null,
             )
         )
         add(
@@ -71,6 +77,7 @@ object FakeData {
                 title = "Never Split The Difference",
                 author = "Chris Voss",
                 duration = "10",
+                authorPictureUrl = null,
             )
         )
         add(
@@ -81,7 +88,8 @@ object FakeData {
                 author = "Ryan Holiday",
                 duration = "10",
                 hasGraphic = true,
-                hasVideo = true
+                hasVideo = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -92,6 +100,7 @@ object FakeData {
                 author = "Morgan Housel",
                 duration = "10",
                 hasGraphic = true,
+                authorPictureUrl = null,
             )
         )
         add(
@@ -102,7 +111,8 @@ object FakeData {
                 author = "Jason Fried and David Heinemeir Hannson",
                 duration = "11",
                 hasGraphic = true,
-                hasVideo = true
+                hasVideo = true,
+                authorPictureUrl = null
             )
         )
         add(
@@ -113,7 +123,8 @@ object FakeData {
                 author = "Mark Manson",
                 duration = "9",
                 hasGraphic = true,
-                hasVideo = true
+                hasVideo = true,
+                authorPictureUrl = null
             )
         )
     }
