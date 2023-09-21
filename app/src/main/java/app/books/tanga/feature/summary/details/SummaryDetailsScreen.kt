@@ -28,7 +28,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -36,12 +35,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.core_ui.components.ExpendableText
 import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.core_ui.components.SummaryActionButton
 import app.books.tanga.core_ui.components.TangaButtonLeftIcon
@@ -49,8 +48,8 @@ import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
-import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.summary.list.SummaryRow
 
 @Composable
 fun SummaryDetailsScreen(
@@ -282,14 +281,7 @@ fun SummaryIntroduction(modifier: Modifier = Modifier, summary: SummaryUi) {
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
         summary.synopsis?.let {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.outline,
-                text = it,
-                maxLines = 6,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            ExpendableText(text = it)
         }
     }
 }
