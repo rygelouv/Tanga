@@ -1,7 +1,5 @@
 package app.books.tanga.domain.summary
 
-import app.books.tanga.domain.categories.Category
-
 typealias CategorySlug = String
 
 /**
@@ -16,6 +14,8 @@ typealias CategorySlug = String
  *  synopsis: the book synopsis
  *  title: the title of the book the summary is about
  *  videoUrl: the link to the summary video
+ *  categories: the list of categories the summary belongs to
+ *  textUrl: the link to the summary text
  */
 data class Summary(
     val audioUrl: String,
@@ -25,7 +25,7 @@ data class Summary(
     val graphicUrl: String,
     val playingLength: String,
     val slug: String,
-    val summaryUrl: String,
+    val textUrl: String,
     val synopsis: String,
     val title: String,
     val videoUrl: String

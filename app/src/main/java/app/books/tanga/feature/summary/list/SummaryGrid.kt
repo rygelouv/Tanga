@@ -7,12 +7,13 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
 fun SummaryGrid(
     modifier: Modifier = Modifier,
     summaries: List<SummaryUi>,
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,

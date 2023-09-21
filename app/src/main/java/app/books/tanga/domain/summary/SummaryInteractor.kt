@@ -10,6 +10,9 @@ class SummaryInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val categoryRepository: CategoryRepository
 ) {
+    suspend fun getSummary(summaryId: String): Result<Summary> {
+        return summaryRepository.getSummary(summaryId)
+    }
 
     /**
      * Get the list of summaries grouped by category
@@ -66,10 +69,29 @@ class SummaryInteractor @Inject constructor(
         return summaryRepository.searchSummaryInMemoryCache(query)
     }
 
-    suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
+    private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
         return summaryRepository.getSummariesByCategory(categoryId)
     }
 
+    /**
+     * Get a list of recommended summaries for the given summary
+     * The recommendations are based on the categories of the summary
+     */
+    suspend fun getRecommendationsForSummary(summary: Summary): Result<List<Summary>> {
+        return runCatching {
+            val recommendedSummaries = mutableListOf<Summary>()
+            summary.categories.forEach {
+                val summaries = getSummariesByCategory(it).getOrThrow()
+                recommendedSummaries.addAll(summaries)
+            }
+            recommendedSummaries.shuffled().take(4)
+        }
+    }
+
+    /**
+     * Get all summaries
+     * Once the summaries are retrieved from the repository, save them in the in memory cache
+     */
     suspend fun getAllSummaries(): Result<List<Summary>> {
         val summaries = summaryRepository.getAllSummaries()
         summaryRepository.saveSummariesInMemoryCache(summaries.getOrNull() ?: emptyList())

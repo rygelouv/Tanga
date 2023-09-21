@@ -1,8 +1,8 @@
 package app.books.tanga.feature.home
 
 import app.books.tanga.domain.categories.Section
-import app.books.tanga.feature.summary.list.SummaryUi
-import app.books.tanga.feature.summary.list.toSummaryUi
+import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.summary.toSummaryUi
 
 data class HomeUiState(
     val userFirstName: String? = null,

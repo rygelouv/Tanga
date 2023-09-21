@@ -40,7 +40,9 @@ sealed class NavigationScreen(val route: String) {
         )
     }
 
-    data object SummaryDetails : NavigationScreen("summary_details_screen")
+    data object SummaryDetails : NavigationScreen("summary_details_screen/summary_id={summaryId}") {
+        const val SUMMARY_ID_KEY = "summaryId"
+    }
 
     data object Search : NavigationScreen("search_screen")
 

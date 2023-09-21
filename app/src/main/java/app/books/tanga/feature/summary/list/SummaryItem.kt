@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,16 +26,14 @@ import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.data.FakeData
-import app.books.tanga.core_ui.components.SummaryImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalTintColor
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
-fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
+fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
     SummaryItem(
-        summaryUi = summaryUi,
+        summary = summaryUi,
         width = 134.dp,
         titleSize = 18.sp,
         onSummaryClicked = onSummaryClicked
@@ -44,9 +41,9 @@ fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
 }
 
 @Composable
-fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
+fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
     SummaryItem(
-        summaryUi = summaryUi,
+        summary = summaryUi,
         width = 120.dp,
         titleSize = 15.sp,
         onSummaryClicked = onSummaryClicked
@@ -55,10 +52,10 @@ fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
 
 @Composable
 fun SummaryItem(
-    summaryUi: SummaryUi,
+    summary: SummaryUi,
     width: Dp,
     titleSize: TextUnit,
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.width(width),
@@ -66,16 +63,17 @@ fun SummaryItem(
         verticalArrangement = Arrangement.Top
     ) {
         GlideSummaryImage(
-            model = summaryUi.coverUrl,
-            painter = if (summaryUi.coverUrl == null) {
+            summaryId = summary.id,
+            model = summary.coverUrl,
+            painter = if (summary.coverUrl == null) {
                 painterResource(id = R.drawable.cover_never_split_difference)
             } else null,
-            onSummaryClicked = onSummaryClicked
+            onSummaryClicked = onSummaryClicked,
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = summaryUi.title,
+            text = summary.title,
             fontSize = titleSize,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -84,12 +82,12 @@ fun SummaryItem(
         Text(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
-            text = summaryUi.author,
+            text = summary.author,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.labelMedium,
         )
-        SummaryIndicators(summaryUi)
+        SummaryIndicators(summary)
     }
 }
 

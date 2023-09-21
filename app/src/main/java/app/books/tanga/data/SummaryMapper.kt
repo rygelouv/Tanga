@@ -1,15 +1,7 @@
 package app.books.tanga.data
 
-import app.books.tanga.domain.categories.Category
 import app.books.tanga.domain.summary.Summary
 
-
-fun FirestoreData.toCategory(): Category {
-    return Category(
-        name = this[FirestoreDatabase.Categories.Fields.NAME].toString(),
-        id = this[FirestoreDatabase.Categories.Fields.SLUG].toString()
-    )
-}
 
 fun FirestoreData.toSummary(): Summary {
     // TODO: 2023-09-14 Wrap this in a try catch block, track error and return null
@@ -21,7 +13,7 @@ fun FirestoreData.toSummary(): Summary {
         graphicUrl = this[FirestoreDatabase.Summaries.Fields.GRAPHIC_URL].toString(),
         playingLength = this[FirestoreDatabase.Summaries.Fields.PLAYING_LENGTH].toString(),
         slug = this[FirestoreDatabase.Summaries.Fields.SLUG].toString(),
-        summaryUrl = this[FirestoreDatabase.Summaries.Fields.SUMMARY_URL].toString(),
+        textUrl = this[FirestoreDatabase.Summaries.Fields.SUMMARY_URL].toString(),
         synopsis = this[FirestoreDatabase.Summaries.Fields.SYNOPSIS].toString(),
         title = this[FirestoreDatabase.Summaries.Fields.TITLE].toString(),
         videoUrl = this[FirestoreDatabase.Summaries.Fields.VIDEO_URL].toString()

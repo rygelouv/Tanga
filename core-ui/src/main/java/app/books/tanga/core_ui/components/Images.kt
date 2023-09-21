@@ -36,15 +36,16 @@ import com.bumptech.glide.integration.compose.GlideImage
  * */
 @Composable
 fun SummaryImage(
+    summaryId: String,
     modifier: Modifier = Modifier,
     painter: Painter,
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked() },
+            .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
@@ -63,16 +64,17 @@ fun SummaryImage(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun GlideSummaryImage(
+    summaryId: String,
     modifier: Modifier = Modifier,
     model: String? = null,
     painter: Painter? = null,
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked() },
+            .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {

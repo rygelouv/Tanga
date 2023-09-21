@@ -6,7 +6,8 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class TintColor(
-    val color: Color = Color.Unspecified
+    val color: Color = Color.Unspecified,
+    val disabled: Color = Color.Unspecified
 )
 
 /**

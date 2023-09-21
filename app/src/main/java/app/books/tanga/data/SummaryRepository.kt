@@ -7,6 +7,9 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 interface SummaryRepository {
+
+    suspend fun getSummary(summaryId: String): Result<Summary>
+
     /**
      * Get the list of summaries
      */
@@ -22,6 +25,15 @@ class SummaryRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val summaryInMemoryCache: SummaryInMemoryCache
 ) : SummaryRepository {
+    override suspend fun getSummary(summaryId: String): Result<Summary> {
+        return runCatching {
+            val summary = firestore.summaryCollection.document(summaryId).get().await()
+
+            summary.data?.toSummary() ?: throw Exception("Summary not found")
+        }.onFailure {
+            Result.failure<Throwable>(it)
+        }
+    }
 
     override suspend fun getAllSummaries(): Result<List<Summary>> {
         return runCatching {
