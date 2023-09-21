@@ -1,5 +1,7 @@
 package app.books.tanga.feature.summary.details
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,16 +29,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
@@ -51,6 +56,7 @@ import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.shareSummary
 
 @Composable
 fun SummaryDetailsScreen(
@@ -70,7 +76,7 @@ fun SummaryDetailsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         topBar = {
-            SummaryTopAppBar(onBackClicked)
+            SummaryTopAppBar(onBackClicked, summary = state.summary)
         },
         floatingActionButton = { PlayFloatingActionButton(onClick = onPlayClicked) }
     ) {
@@ -105,7 +111,7 @@ fun SummaryDetailsScreen(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SummaryTopAppBar(onBackClicked: () -> Unit) {
+private fun SummaryTopAppBar(onBackClicked: () -> Unit, summary: SummaryUi?) {
     TopAppBar(
         title = {},
         navigationIcon = {
@@ -129,7 +135,10 @@ private fun SummaryTopAppBar(onBackClicked: () -> Unit) {
                     contentDescription = "save summary"
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            val context = LocalContext.current
+            IconButton(onClick = {
+                summary?.let { shareSummary(summary = it, context = context)  }
+            }) {
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = painterResource(id = R.drawable.ic_share_2),
