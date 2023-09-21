@@ -41,7 +41,7 @@ import app.books.tanga.core_ui.components.SummaryImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.data.FakeData
-import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
 fun PlaySummaryAudioScreen(onBackClicked: () -> Unit) {
@@ -139,6 +139,7 @@ fun PlaySummaryAudioContent(summary: SummaryUi) {
             }
         }
         SummaryImage(
+            summaryId = summary.id,
             modifier = Modifier
                 .width(154.dp)
                 .align(alignment = Alignment.TopCenter)

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.di.DefaultDispatcher
 import app.books.tanga.domain.summary.SummaryInteractor
-import app.books.tanga.feature.summary.list.toSummaryUi
+import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow

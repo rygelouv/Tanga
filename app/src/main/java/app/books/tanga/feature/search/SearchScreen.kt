@@ -169,7 +169,7 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         trailingIcon = {
             if (text.isNotEmpty()) {
                 Icon(
-                    modifier = Modifier.size(18.dp).clickable {
+                    modifier = Modifier.size(16.dp).clickable {
                         text = ""
                         active = false
                         onSearch(text)

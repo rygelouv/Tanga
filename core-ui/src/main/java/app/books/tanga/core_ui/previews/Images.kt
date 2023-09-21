@@ -18,9 +18,10 @@ import app.books.tanga.core_ui.components.SummaryImage
 @Composable
 fun SummaryImagePreview() {
     SummaryImage(
+        summaryId = "1",
         modifier = Modifier.size(64.dp),
         painter = painterResource(id = R.drawable.profile_placeholder),
-        onSummaryClicked = { /*TODO*/ }
+        onSummaryClicked = {}
     )
 }
 

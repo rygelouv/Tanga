@@ -36,11 +36,11 @@ import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.SummaryImage
 import app.books.tanga.core_ui.components.Tag
 import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.core_ui.theme.LocalGradientColors
 
 @Composable
-fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
+fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
     val gradientColors = listOf(
         LocalGradientColors.current.start,
         LocalGradientColors.current.center,
@@ -50,7 +50,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(170.dp)
-            .clickable { onSummaryClicked() },
+            .clickable { onSummaryClicked(summaryUi.id) },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)
@@ -99,6 +99,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: () -> Unit) {
             }
 
             SummaryImage(
+                summaryId = summaryUi.id,
                 modifier = Modifier.width(90.dp),
                 painter = painterResource(id = summaryUi.cover),
                 onSummaryClicked = onSummaryClicked

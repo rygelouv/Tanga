@@ -43,13 +43,13 @@ import app.books.tanga.core_ui.components.ProfileImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
 fun HomeScreen(
     onSearch: () -> Unit,
     onProfilePictureClicked: () -> Unit,
-    onSummaryClicked: () -> Unit,
+    onSummaryClicked: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -74,7 +74,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: () -> Unit) {
+fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: (String) -> Unit) {
 
     if (state.sections == null) {
         AnimatedShimmerLoader(modifier)
@@ -120,7 +120,7 @@ fun HomeTopBar(
 fun HomeContent(
     modifier: Modifier,
     state: HomeUiState,
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     val dailySummary = remember {
         FakeData.allSummaries().first()
@@ -182,7 +182,7 @@ fun HomeSection(
     sectionTitle: String,
     isFirst: Boolean = false,
     summaries: List<SummaryUi> = emptyList(),
-    onSummaryClicked: () -> Unit
+    onSummaryClicked: (String) -> Unit
 ) {
     Column {
         Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))

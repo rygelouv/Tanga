@@ -5,7 +5,7 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.domain.categories.Category
 import app.books.tanga.domain.categories.PredefinedCategory
-import app.books.tanga.feature.summary.list.SummaryUi
+import app.books.tanga.feature.summary.SummaryUi
 
 data class SearchUiState(
     val progressState: ProgressState,

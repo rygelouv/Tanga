@@ -50,4 +50,8 @@
     <string name="pricing_plan_yearly">Yearly Plan</string>
     <string name="search_summary_empty_message">No book summary was found with title or author name matching \"%1$s\"</string>
     <string name="search_summary_empty_title">Oops! Nothing found</string>
+    <string name="summary_details_read">Read</string>
+    <string name="summary_details_listen">Listen</string>
+    <string name="summary_details_watch">Watch</string>
+    <string name="summary_details_visualize">Visualize</string>
 </resources>

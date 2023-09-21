@@ -139,23 +139,31 @@ fun TangaButtonLeftIcon(
     }
 }
 
-
+/**
+ * This is a composable function that displays a button with icon and text at the bottom.
+ * @param text: The text to be displayed on the button.
+ * @param icon: The resource id of the icon to be displayed on the button.
+ * @param onClick: The function to be executed when the button is clicked.
+ * @param enabled : Whether the button is enabled or not. Default value is true.
+ * When the button is disabled, it is not clickable and the icon and text are grayed out.
+ */
 @Composable
 fun SummaryActionButton(
     modifier: Modifier = Modifier,
     text: String,
     icon: Int,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier.clickable { onClick() },
+        modifier = if (enabled) modifier.clickable { onClick() } else modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = LocalTintColor.current.color
+            tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
@@ -163,7 +171,7 @@ fun SummaryActionButton(
         Text(
             text = text,
             style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
+            color = if (enabled) MaterialTheme.colorScheme.primary else LocalTintColor.current.disabled,
             fontWeight = FontWeight.SemiBold,
         )
     }

@@ -26,6 +26,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,23 +39,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.core_ui.components.SummaryActionButton
-import app.books.tanga.core_ui.components.SummaryImage
 import app.books.tanga.core_ui.components.TangaButtonLeftIcon
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
 fun SummaryDetailsScreen(
+    summaryId: String,
+    viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
     onPlayClicked: () -> Unit
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        viewModel.loadSummary(summaryId)
+    }
+
     Scaffold(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         topBar = {
             SummaryTopAppBar(onBackClicked)
         },
@@ -64,11 +78,15 @@ fun SummaryDetailsScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            SummaryDetailsHeader(Modifier.padding(it))
+            val summary = state.summary ?: return@Column // Show error
+            SummaryDetailsHeader(modifier = Modifier.padding(it), summary = summary)
+
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
-            SummaryIntroduction()
+            SummaryIntroduction(summary = summary)
+
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
             PurchaseButton()
+
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
             Recommendations()
         }
@@ -132,7 +150,7 @@ fun PlayFloatingActionButton(modifier: Modifier = Modifier, onClick: () -> Unit)
 }
 
 @Composable
-fun SummaryDetailsHeader(modifier: Modifier) {
+fun SummaryDetailsHeader(modifier: Modifier, summary: SummaryUi) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,12 +165,20 @@ fun SummaryDetailsHeader(modifier: Modifier) {
                 modifier = modifier.padding(LocalSpacing.current.medium),
                 horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large)
             ) {
-                SummaryImage(
+                GlideSummaryImage(
                     modifier = Modifier.width(128.dp),
-                    painter = painterResource(id = R.drawable.cover_ego_is_enemy)
-                ) {}
-
-                SummaryBasicInfo()
+                    summaryId = summary.id,
+                    model = summary.coverUrl,
+                    painter = if (summary.coverUrl == null) {
+                        painterResource(id = R.drawable.cover_never_split_difference)
+                    } else null,
+                    onSummaryClicked = {},
+                )
+                SummaryBasicInfo(
+                    title = summary.title,
+                    author = summary.author,
+                    duration = summary.duration
+                )
             }
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -161,10 +187,26 @@ fun SummaryDetailsHeader(modifier: Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                SummaryActionButton(text = "Read", icon = TangaIcons.IndicatorRead) {}
-                SummaryActionButton(text = "Listen", icon = TangaIcons.IndicatorListen) {}
-                SummaryActionButton(text = "Watch", icon = TangaIcons.IndicatorWatch) {}
-                SummaryActionButton(text = "Visualize", icon = TangaIcons.IndicatorGraphic) {}
+                SummaryActionButton(
+                    text = stringResource(id = R.string.summary_details_read),
+                    icon = TangaIcons.IndicatorRead,
+                    enabled = summary.textUrl?.isNotEmpty() == true
+                ) {}
+                SummaryActionButton(
+                    text = stringResource(id = R.string.summary_details_listen),
+                    icon = TangaIcons.IndicatorListen,
+                    enabled = summary.audioUrl?.isNotEmpty() == true
+                ) {}
+                SummaryActionButton(
+                    text = stringResource(id = R.string.summary_details_watch),
+                    icon = TangaIcons.IndicatorWatch,
+                    enabled = summary.videoUrl?.isNotEmpty() == true
+                ) {}
+                SummaryActionButton(
+                    text = stringResource(id = R.string.summary_details_visualize),
+                    icon = TangaIcons.IndicatorGraphic,
+                    enabled = summary.graphicUrl?.isNotEmpty() == true
+                ) {}
             }
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -173,16 +215,18 @@ fun SummaryDetailsHeader(modifier: Modifier) {
 }
 
 @Composable
-private fun SummaryBasicInfo() {
+private fun SummaryBasicInfo(
+    title: String,
+    author: String,
+    duration: String,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Ego is the Enemy",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            text = title,
             style = MaterialTheme.typography.titleLarge,
         )
 
@@ -191,10 +235,9 @@ private fun SummaryBasicInfo() {
         Text(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
-            text = "Ryan Holliday",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            text = author,
             style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -212,7 +255,7 @@ private fun SummaryBasicInfo() {
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = stringResource(id = R.string.summary_duration, "10"),
+                text = stringResource(id = R.string.summary_duration, duration),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
@@ -222,7 +265,7 @@ private fun SummaryBasicInfo() {
 }
 
 @Composable
-fun SummaryIntroduction(modifier: Modifier = Modifier) {
+fun SummaryIntroduction(modifier: Modifier = Modifier, summary: SummaryUi) {
     Column(modifier = modifier.padding(horizontal = LocalSpacing.current.medium)) {
         Text(
             text = stringResource(id = R.string.summary_details_introduction),
@@ -233,14 +276,16 @@ fun SummaryIntroduction(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.outline,
-            text = "Ego Is the Enemy puts forth the argument that often our biggest problems are not caused by external factors such as other people or circumstances. Instead, our problems stem from our own attitude, selfishness and self-absorption. In other words, introducing ego into a situation often prevents us from being rational, objective and clear headed.[9] The book does not discuss Freud's ego or egotism as a clinical term but rather ego in a colloquial sense, defined as \"an unhealthy belief in your own importance.\"[10] The book also discusses the difference between ego and confidence, and argues that the solution to the problem of ego is humility, self-awareness, purpose and realism.[5][11][12] Ego Is the Enemy provides both cautionary tales as well as positive anecdotes about ego, citing numerous historical and contemporary figures including Christopher McCandless, George Marshall, John DeLorean, Larry Page, Paul Graham, Steve Jobs and William Tecumseh Sherman",
-            maxLines = 6,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        summary.synopsis?.let {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.outline,
+                text = it,
+                maxLines = 6,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
     }
 }
 
@@ -283,5 +328,5 @@ fun Recommendations(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun SummaryHeaderPreview() {
-    SummaryDetailsHeader(modifier = Modifier)
+    SummaryDetailsHeader(modifier = Modifier, FakeData.allSummaries().first())
 }
