@@ -84,7 +84,12 @@ class SummaryInteractor @Inject constructor(
                 val summaries = getSummariesByCategory(it).getOrThrow()
                 recommendedSummaries.addAll(summaries)
             }
-            recommendedSummaries.shuffled().take(4)
+            // Remove duplicates and shuffle the list then take only 4 summaries
+            recommendedSummaries
+                .toSet()
+                .toList()
+                .shuffled()
+                .take(4)
         }
     }
 

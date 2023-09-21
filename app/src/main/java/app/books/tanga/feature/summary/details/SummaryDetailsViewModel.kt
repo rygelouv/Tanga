@@ -23,6 +23,9 @@ class SummaryDetailsViewModel @Inject constructor(
         MutableStateFlow(SummaryDetailsUiState())
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
 
+    /**
+     * Load the summary with the given id then load the recommendations for this summary
+     */
     fun loadSummary(summaryId: String) {
         viewModelScope.launch {
             summaryInteractor.getSummary(summaryId).onSuccess { summary ->

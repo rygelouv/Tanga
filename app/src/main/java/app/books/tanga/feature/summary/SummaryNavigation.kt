@@ -9,7 +9,9 @@ import app.books.tanga.feature.summary.details.SummaryDetailsScreen
 import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.summaryDetails(
-    onBackClicked: () -> Unit, onPlayClicked: () -> Unit
+    onBackClicked: () -> Unit,
+    onPlayClicked: () -> Unit,
+    onRecommendationClicked: (String) -> Unit
 ) {
     composable(
         route = NavigationScreen.SummaryDetails.route,
@@ -22,7 +24,8 @@ fun NavGraphBuilder.summaryDetails(
                 .arguments
                 ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
             onBackClicked = onBackClicked,
-            onPlayClicked = onPlayClicked
+            onPlayClicked = onPlayClicked,
+            onRecommendationClicked = onRecommendationClicked
         )
     }
 }

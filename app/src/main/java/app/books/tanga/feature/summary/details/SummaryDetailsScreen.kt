@@ -57,7 +57,8 @@ fun SummaryDetailsScreen(
     summaryId: String,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
-    onPlayClicked: () -> Unit
+    onPlayClicked: () -> Unit,
+    onRecommendationClicked: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
@@ -88,7 +89,10 @@ fun SummaryDetailsScreen(
             PurchaseButton()
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
-            Recommendations()
+            Recommendations(
+                recommendations = state.recommendations,
+                onRecommendationClicked = onRecommendationClicked
+            )
         }
     }
 }
@@ -255,10 +259,11 @@ private fun SummaryBasicInfo(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
+                modifier = Modifier.padding(top = 4.dp),
                 text = stringResource(id = R.string.summary_duration, duration),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = 4.dp)
+                fontWeight = FontWeight.SemiBold,
             )
         }
     }
@@ -306,10 +311,11 @@ private fun PurchaseButton() {
 
 
 @Composable
-fun Recommendations(modifier: Modifier = Modifier) {
-    val recommendedSummaries = remember {
-        FakeData.allSummaries().shuffled().take(4)
-    }
+fun Recommendations(
+    modifier: Modifier = Modifier,
+    recommendations: List<SummaryUi>,
+    onRecommendationClicked: (String) -> Unit
+) {
     Column(modifier = modifier.padding(LocalSpacing.current.medium)) {
         Text(
             text = stringResource(id = R.string.summary_details_recommendations),
@@ -320,8 +326,10 @@ fun Recommendations(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         SummaryRow(
-            summaries = recommendedSummaries
-        ) { /*TODO*/ }
+            summaries = recommendations
+        ) { summaryId ->
+            onRecommendationClicked(summaryId)
+        }
     }
 }
 
