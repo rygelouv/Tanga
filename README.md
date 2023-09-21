@@ -10,11 +10,11 @@
 
 ## 🚧 **This project is still under construction** 🚧
 You can come back in a few months to see considerable progress. 
-WOW – we got two pull requests in the last 7 days! 😲
-
-Both of these PRs were related to our build system. We improved the organisation of our dependencies and versions. We also migrated our Gradle files to Kotlin DSL and upgraded our Gradle plugin version.
-
-This will help us keep our project up-to-date and increase our productivity.
+We finished implementing most screen from the design with dummy data. We are now making it functional by working with real data from firebase firestore and cloud storage.
+So far we have done:
+- Home screen: now shows real summaries broken by sections based on categories
+- Search screen: now allows you to search for summaries and filter by category
+- Summary Details screen (in progress): so far show the basic information of the summary
 
 # License
 ```xml
