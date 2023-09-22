@@ -2,6 +2,7 @@ package app.books.tanga
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 
 /**
  * Utility function to share a summary
@@ -26,4 +27,18 @@ fun shareSummary(
 
     val shareIntent = Intent.createChooser(sendIntent, null)
     context.startActivity(shareIntent)
+}
+
+/**
+ * Utility function to open a link in a browser
+ */
+fun openLink(
+    context: Context,
+    url: String
+) {
+    val openLinkIntent: Intent = Intent().apply {
+        action = Intent.ACTION_VIEW
+        data = Uri.parse(url)
+    }
+    context.startActivity(openLinkIntent)
 }

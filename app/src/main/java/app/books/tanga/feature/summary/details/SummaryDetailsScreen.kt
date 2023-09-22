@@ -54,6 +54,7 @@ import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.openLink
 import app.books.tanga.shareSummary
 
 @Composable
@@ -109,7 +110,7 @@ private fun SummaryDetailsContent(
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-        PurchaseButton()
+        state.summary.purchaseBookUrl?.let { PurchaseButton(it) }
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Recommendations(
@@ -355,16 +356,17 @@ fun SummaryAuthor(modifier: Modifier = Modifier, author: String, authorPictureUr
 }
 
 @Composable
-private fun PurchaseButton() {
+private fun PurchaseButton(url: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = LocalSpacing.current.medium)
     ) {
+        val context = LocalContext.current
         TangaButtonLeftIcon(
             text = "Purchase Book",
             rightIcon = app.books.tanga.core_ui.R.drawable.ic_trolley,
-            onClick = { /*TODO*/ }
+            onClick = { openLink(context = context, url= url) }
         )
     }
 }

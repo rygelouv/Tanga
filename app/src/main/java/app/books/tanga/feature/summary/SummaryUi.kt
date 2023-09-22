@@ -11,11 +11,12 @@ data class SummaryUi(
     val author: String,
     val duration: String,
     val synopsis: String? = "", // TODO: 2023-09-21 make this non-nullable after FakeData is removed
-    val authorPictureUrl: String? = null,
     val textUrl: String? = null,
     val audioUrl: String? = null,
     val graphicUrl: String? = null,
     val videoUrl: String? = null,
+    val authorPictureUrl: String? = null,
+    val purchaseBookUrl: String? = null,
     val hasGraphic: Boolean = false, // TODO: 2023-09-21 Remove this after FakeData is removed
     val hasVideo: Boolean = false // TODO: 2023-09-21 Remove this after FakeData is removed
 )
@@ -32,6 +33,7 @@ fun Summary.toSummaryUi(): SummaryUi {
         audioUrl = audioUrl,
         graphicUrl = graphicUrl,
         videoUrl = videoUrl,
-        authorPictureUrl = null,
+        authorPictureUrl = authorPictureUrl,
+        purchaseBookUrl = purchaseBookUrl,
     )
 }
