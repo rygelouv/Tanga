@@ -18,15 +18,17 @@ typealias CategorySlug = String
  *  textUrl: the link to the summary text
  */
 data class Summary(
-    val audioUrl: String,
-    val author: String,
-    val categories: List<CategorySlug>,
-    val coverImageUrl: String,
-    val graphicUrl: String,
-    val playingLength: String,
     val slug: String,
-    val textUrl: String,
-    val synopsis: String,
     val title: String,
-    val videoUrl: String
+    val author: String,
+    val synopsis: String,
+    val coverImageUrl: String,
+    val categories: List<CategorySlug>,
+    val textUrl: String,
+    val audioUrl: String,
+    val graphicUrl: String,
+    val videoUrl: String,
+    val playingLength: String,
+    val authorPictureUrl: String,
+    val purchaseBookUrl: String,
 )
