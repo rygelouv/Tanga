@@ -75,11 +75,14 @@ fun SummaryDetailsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         topBar = {
-            SummaryTopAppBar(onBackClicked, summary = state.summary)
+            SummaryTopAppBar(summary = state.summary,
+                onBackClicked = onBackClicked,
+                onSaveClicked = { viewModel.toggleFavorite() }
+            )
         },
         floatingActionButton = { PlayFloatingActionButton(onClick = onPlayClicked) }
     ) {
-        when(state.progressState) {
+        when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
             ProgressState.Hide -> SummaryDetailsContent(state, it, onRecommendationClicked)
         }
@@ -122,7 +125,11 @@ private fun SummaryDetailsContent(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SummaryTopAppBar(onBackClicked: () -> Unit, summary: SummaryUi?) {
+private fun SummaryTopAppBar(
+    summary: SummaryUi?,
+    onSaveClicked: () -> Unit,
+    onBackClicked: () -> Unit
+) {
     TopAppBar(
         title = {},
         navigationIcon = {
@@ -138,7 +145,7 @@ private fun SummaryTopAppBar(onBackClicked: () -> Unit, summary: SummaryUi?) {
             }
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { onSaveClicked() }) {
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = painterResource(id = R.drawable.ic_save),
@@ -148,11 +155,13 @@ private fun SummaryTopAppBar(onBackClicked: () -> Unit, summary: SummaryUi?) {
             }
             val context = LocalContext.current
             IconButton(onClick = {
-                summary?.let { shareSummary(
-                    context = context,
-                    summaryTitle = it.title,
-                    summaryAuthor = it.author
-                )}
+                summary?.let {
+                    shareSummary(
+                        context = context,
+                        summaryTitle = it.title,
+                        summaryAuthor = it.author
+                    )
+                }
             }) {
                 Icon(
                     modifier = Modifier.size(24.dp),
@@ -366,7 +375,7 @@ private fun PurchaseButton(url: String) {
         TangaButtonLeftIcon(
             text = "Purchase Book",
             rightIcon = app.books.tanga.core_ui.R.drawable.ic_trolley,
-            onClick = { openLink(context = context, url= url) }
+            onClick = { openLink(context = context, url = url) }
         )
     }
 }
