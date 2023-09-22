@@ -3,6 +3,7 @@ package app.books.tanga.feature.summary.details
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.domain.summary.Summary
 import app.books.tanga.domain.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
@@ -20,7 +21,7 @@ class SummaryDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SummaryDetailsUiState> =
-        MutableStateFlow(SummaryDetailsUiState())
+        MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
 
     /**
@@ -31,6 +32,7 @@ class SummaryDetailsViewModel @Inject constructor(
             summaryInteractor.getSummary(summaryId).onSuccess { summary ->
                 _state.update {
                     it.copy(
+                        progressState = ProgressState.Hide,
                         summary = summary.toSummaryUi(),
                     )
                 }

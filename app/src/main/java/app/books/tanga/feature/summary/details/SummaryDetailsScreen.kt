@@ -1,10 +1,9 @@
 package app.books.tanga.feature.summary.details
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,10 +39,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.core_ui.components.ExpendableText
 import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.core_ui.components.ProfileImage
@@ -80,32 +78,44 @@ fun SummaryDetailsScreen(
         },
         floatingActionButton = { PlayFloatingActionButton(onClick = onPlayClicked) }
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            val summary = state.summary ?: return@Column // Show error
-            SummaryDetailsHeader(modifier = Modifier.padding(it), summary = summary)
-
-            Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
-            SummaryIntroduction(summary = summary)
-
-            SummaryAuthor(
-                modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
-                author = summary.author,
-                authorPictureUrl = summary.authorPictureUrl
-            )
-
-            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-            PurchaseButton()
-
-            Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
-            Recommendations(
-                recommendations = state.recommendations,
-                onRecommendationClicked = onRecommendationClicked
-            )
+        when(state.progressState) {
+            ProgressState.Show -> SummaryDetailsShimmerLoader()
+            ProgressState.Hide -> SummaryDetailsContent(state, it, onRecommendationClicked)
         }
+    }
+}
+
+@Composable
+private fun SummaryDetailsContent(
+    state: SummaryDetailsUiState,
+    it: PaddingValues,
+    onRecommendationClicked: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        val summary = state.summary ?: return@Column // Show error
+        SummaryDetailsHeader(modifier = Modifier.padding(it), summary = summary)
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+        SummaryIntroduction(summary = summary)
+
+        SummaryAuthor(
+            modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
+            author = summary.author,
+            authorPictureUrl = summary.authorPictureUrl
+        )
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+        PurchaseButton()
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+        Recommendations(
+            recommendations = state.recommendations,
+            onRecommendationClicked = onRecommendationClicked
+        )
     }
 }
 
@@ -137,7 +147,11 @@ private fun SummaryTopAppBar(onBackClicked: () -> Unit, summary: SummaryUi?) {
             }
             val context = LocalContext.current
             IconButton(onClick = {
-                summary?.let { shareSummary(summary = it, context = context)  }
+                summary?.let { shareSummary(
+                    context = context,
+                    summaryTitle = it.title,
+                    summaryAuthor = it.author
+                )}
             }) {
                 Icon(
                     modifier = Modifier.size(24.dp),
@@ -202,34 +216,39 @@ fun SummaryDetailsHeader(modifier: Modifier, summary: SummaryUi) {
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                SummaryActionButton(
-                    text = stringResource(id = R.string.summary_details_read),
-                    icon = TangaIcons.IndicatorRead,
-                    enabled = summary.textUrl?.isNotEmpty() == true
-                ) {}
-                SummaryActionButton(
-                    text = stringResource(id = R.string.summary_details_listen),
-                    icon = TangaIcons.IndicatorListen,
-                    enabled = summary.audioUrl?.isNotEmpty() == true
-                ) {}
-                SummaryActionButton(
-                    text = stringResource(id = R.string.summary_details_watch),
-                    icon = TangaIcons.IndicatorWatch,
-                    enabled = summary.videoUrl?.isNotEmpty() == true
-                ) {}
-                SummaryActionButton(
-                    text = stringResource(id = R.string.summary_details_visualize),
-                    icon = TangaIcons.IndicatorGraphic,
-                    enabled = summary.graphicUrl?.isNotEmpty() == true
-                ) {}
-            }
+            SummaryActionButtonsSection(summary)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         }
+    }
+}
+
+@Composable
+private fun SummaryActionButtonsSection(summary: SummaryUi) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        SummaryActionButton(
+            text = stringResource(id = R.string.summary_details_read),
+            icon = TangaIcons.IndicatorRead,
+            enabled = summary.textUrl?.isNotEmpty() == true
+        ) {}
+        SummaryActionButton(
+            text = stringResource(id = R.string.summary_details_listen),
+            icon = TangaIcons.IndicatorListen,
+            enabled = summary.audioUrl?.isNotEmpty() == true
+        ) {}
+        SummaryActionButton(
+            text = stringResource(id = R.string.summary_details_watch),
+            icon = TangaIcons.IndicatorWatch,
+            enabled = summary.videoUrl?.isNotEmpty() == true
+        ) {}
+        SummaryActionButton(
+            text = stringResource(id = R.string.summary_details_visualize),
+            icon = TangaIcons.IndicatorGraphic,
+            enabled = summary.graphicUrl?.isNotEmpty() == true
+        ) {}
     }
 }
 
