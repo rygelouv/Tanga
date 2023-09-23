@@ -49,4 +49,20 @@ object FirestoreDatabase {
             const val SLUG = "slug"
         }
     }
+
+    object Favorites {
+        //Collection Reference
+        const val COLLECTION_NAME = "favorites"
+
+        //Fields
+        object Fields {
+            const val UID = "uid"
+            const val TITLE = "title"
+            const val AUTHOR = "author"
+            const val COVER_URL = "coverUrl"
+            const val USER_ID = "userId"
+            const val SUMMARY_ID = "summaryId"
+            const val PLAYING_LENGTH = "playingLength"
+        }
+    }
 }

@@ -3,7 +3,7 @@ package app.books.tanga.domain.session
 sealed class SessionState {
     data class LoggedIn(val sessionId: SessionId): SessionState()
 
-    object LoggedOut: SessionState()
+    data object LoggedOut: SessionState()
 }
 
 @JvmInline

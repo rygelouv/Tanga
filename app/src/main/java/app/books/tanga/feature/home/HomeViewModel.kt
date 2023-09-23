@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.data.UserRepository
+import app.books.tanga.domain.favorites.FavoriteInteractor
 import app.books.tanga.domain.summary.SummaryInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,19 +17,20 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val summaryInteractor: SummaryInteractor
+    private val summaryInteractor: SummaryInteractor,
+    private val favoriteInteractor: FavoriteInteractor
 ) : ViewModel() {
     private val _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
 
     init {
         loadHomeData()
+        loadFavoritesInBackground()
     }
 
     private fun loadHomeData() {
         viewModelScope.launch {
             loadUserInfo()
-
             loadSections()
         }
     }
@@ -57,6 +59,17 @@ class HomeViewModel @Inject constructor(
                     userPhotoUrl = user.photoUrl
                 )
             }
+        }
+    }
+
+    private fun loadFavoritesInBackground() {
+        viewModelScope.launch {
+            favoriteInteractor.getFavorites()
+                .onSuccess { favorites ->
+                    Log.i("HomeViewModel", "Favorites loaded: $favorites")
+                }.onFailure {
+                    Log.e("HomeViewModel", "Error loading favorites", it)
+                }
         }
     }
 }

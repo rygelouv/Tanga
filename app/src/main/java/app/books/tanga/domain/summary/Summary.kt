@@ -22,7 +22,7 @@ data class Summary(
     val title: String,
     val author: String,
     val synopsis: String,
-    val coverImageUrl: String,
+    val coverImageUrl: String, // TODO: 2023-09-22 Change to coverUrl
     val categories: List<CategorySlug>,
     val textUrl: String,
     val audioUrl: String,

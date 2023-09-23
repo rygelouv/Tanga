@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.domain.favorites.FavoriteInteractor
 import app.books.tanga.domain.summary.Summary
 import app.books.tanga.domain.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
@@ -17,29 +18,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SummaryDetailsViewModel @Inject constructor(
-    private val summaryInteractor: SummaryInteractor
+    private val summaryInteractor: SummaryInteractor,
+    private val favoriteInteractor: FavoriteInteractor
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SummaryDetailsUiState> =
         MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
 
+    lateinit var summary: Summary
+
     /**
      * Load the summary with the given id then load the recommendations for this summary
+     * and the favorite status
      */
     fun loadSummary(summaryId: String) {
         viewModelScope.launch {
-            summaryInteractor.getSummary(summaryId).onSuccess { summary ->
-                _state.update {
-                    it.copy(
+            summaryInteractor.getSummary(summaryId).onSuccess {
+                summary = it
+                _state.update { state ->
+                    state.copy(
                         progressState = ProgressState.Hide,
                         summary = summary.toSummaryUi(),
                     )
                 }
+                loadFavoriteStatus(summaryId)
                 loadRecommendations(summary)
             }.onFailure {
                 Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
             }
+        }
+    }
+
+    /**
+     * Load the favorite status for the given summary id
+     */
+    private suspend fun loadFavoriteStatus(summaryId: String) {
+        favoriteInteractor.isFavorite(summaryId).onSuccess { isFavorite ->
+            _state.update { it.copy(isFavorite = isFavorite) }
+        }.onFailure { error ->
+            Log.e("SummaryDetailsViewModel", "Error loading favorite status", error)
         }
     }
 
@@ -48,6 +66,58 @@ class SummaryDetailsViewModel @Inject constructor(
             summaryInteractor.getRecommendationsForSummary(summary).onSuccess { recommendations ->
                 _state.update { it.copy(recommendations = recommendations.map { it.toSummaryUi() }) }
             }
+        }
+    }
+
+    /**
+     * When user clicks on the favorite button, show the progress indicator and
+     * toggle the favorite status
+     */
+    fun toggleFavorite() {
+        // Do nothing if the summary is not initialized
+        if (this::summary.isInitialized.not()) return
+        Log.d("SummaryDetailsViewModel", "toggleFavorite")
+
+        // Show saving progress
+        _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
+
+        // Get the current favorite status
+        val isFavorite = _state.value.isFavorite
+
+        viewModelScope.launch {
+            if (isFavorite) {
+                removeFavorite()
+            } else {
+                saveFavorite()
+            }
+        }
+    }
+
+    private suspend fun saveFavorite() {
+        favoriteInteractor.createFavorite(summary).onSuccess {
+            _state.update {
+                it.copy(
+                    isFavorite = true,
+                    favoriteProgressState = ProgressState.Hide
+                )
+            }
+        }.onFailure { error ->
+            _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
+            Log.e("SummaryDetailsViewModel", "Error creating favorite", error)
+        }
+    }
+
+    private suspend fun removeFavorite() {
+        favoriteInteractor.deleteFavoriteBySummaryId(summary.slug).onSuccess {
+            _state.update {
+                it.copy(
+                    isFavorite = false,
+                    favoriteProgressState = ProgressState.Hide
+                )
+            }
+        }.onFailure { error ->
+            _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
+            Log.e("SummaryDetailsViewModel", "Error deleting favorite", error)
         }
     }
 }

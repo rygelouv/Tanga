@@ -2,6 +2,8 @@ package app.books.tanga.di
 
 import app.books.tanga.data.CategoryRepository
 import app.books.tanga.data.CategoryRepositoryImpl
+import app.books.tanga.data.FavoriteRepository
+import app.books.tanga.data.FavoriteRepositoryImpl
 import app.books.tanga.data.SummaryRepository
 import app.books.tanga.data.SummaryRepositoryImpl
 import app.books.tanga.data.UserRepository
@@ -23,4 +25,7 @@ interface RepositoriesModule {
 
     @Binds
     fun CategoryRepositoryImpl.provideCategoryRepository(): CategoryRepository
+
+    @Binds
+    fun FavoriteRepositoryImpl.provideFavoriteRepository(): FavoriteRepository
 }
