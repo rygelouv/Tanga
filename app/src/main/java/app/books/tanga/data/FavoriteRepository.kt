@@ -25,7 +25,7 @@ interface FavoriteRepository {
     /**
      * Get a favorite by its summary id
      */
-    suspend fun getFavoriteBySummaryId(summaryId: String): Result<Favorite?>
+    suspend fun getFavoriteBySummaryId(summaryId: String, userId: String): Result<Favorite?>
 }
 
 /**
@@ -71,10 +71,16 @@ class FavoriteRepositoryImpl @Inject constructor(
     /**
      * Get the favorite from the cache if it exists, otherwise get it from Firestore
      */
-    override suspend fun getFavoriteBySummaryId(summaryId: String): Result<Favorite?> {
+    override suspend fun getFavoriteBySummaryId(
+        summaryId: String,
+        userId: String
+    ): Result<Favorite?> {
         return runCatching {
             if (cache.isEmpty()) {
-                getFavoriteBySummaryIdFromFirestore(summaryId).getOrThrow()
+                getFavoriteBySummaryIdFromFirestore(
+                    summaryId = summaryId,
+                    userId = userId
+                ).getOrThrow()
             } else {
                 cache.getBySummaryId(summaryId)
             }
@@ -86,10 +92,14 @@ class FavoriteRepositoryImpl @Inject constructor(
     /**
      * Get the favorite from Firestore by its summary id
      */
-    private suspend fun getFavoriteBySummaryIdFromFirestore(summaryId: String): Result<Favorite?> {
+    private suspend fun getFavoriteBySummaryIdFromFirestore(
+        summaryId: String,
+        userId: String
+    ): Result<Favorite?> {
         return runCatching {
             val favorite = firestore.favoriteCollection
                 .whereEqualTo(FirestoreDatabase.Favorites.Fields.SUMMARY_ID, summaryId)
+                .whereEqualTo(FirestoreDatabase.Favorites.Fields.USER_ID, userId)
                 .get()
                 .await()
                 .firstOrNull()
