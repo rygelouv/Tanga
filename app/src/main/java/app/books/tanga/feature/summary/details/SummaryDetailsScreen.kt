@@ -75,7 +75,10 @@ fun SummaryDetailsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         topBar = {
-            SummaryTopAppBar(summary = state.summary,
+            SummaryTopAppBar(
+                summary = state.summary,
+                isFavorite = state.isFavorite,
+                favoriteProgressState = state.favoriteProgressState,
                 onBackClicked = onBackClicked,
                 onSaveClicked = { viewModel.toggleFavorite() }
             )
@@ -127,6 +130,8 @@ private fun SummaryDetailsContent(
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SummaryTopAppBar(
     summary: SummaryUi?,
+    isFavorite: Boolean,
+    favoriteProgressState: ProgressState,
     onSaveClicked: () -> Unit,
     onBackClicked: () -> Unit
 ) {
@@ -145,14 +150,11 @@ private fun SummaryTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClicked() }) {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    painter = painterResource(id = R.drawable.ic_save),
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                    contentDescription = "save summary"
-                )
-            }
+            SaveButton(
+                isSaved = isFavorite,
+                progressState = favoriteProgressState,
+                onClick = { onSaveClicked() }
+            )
             val context = LocalContext.current
             IconButton(onClick = {
                 summary?.let {

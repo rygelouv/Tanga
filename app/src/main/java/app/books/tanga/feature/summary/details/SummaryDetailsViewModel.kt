@@ -30,6 +30,7 @@ class SummaryDetailsViewModel @Inject constructor(
 
     /**
      * Load the summary with the given id then load the recommendations for this summary
+     * and the favorite status
      */
     fun loadSummary(summaryId: String) {
         viewModelScope.launch {
@@ -49,6 +50,9 @@ class SummaryDetailsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Load the favorite status for the given summary id
+     */
     private suspend fun loadFavoriteStatus(summaryId: String) {
         favoriteInteractor.isFavorite(summaryId).onSuccess { isFavorite ->
             _state.update { it.copy(isFavorite = isFavorite) }
@@ -65,24 +69,55 @@ class SummaryDetailsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * When user clicks on the favorite button, show the progress indicator and
+     * toggle the favorite status
+     */
     fun toggleFavorite() {
+        // Do nothing if the summary is not initialized
         if (this::summary.isInitialized.not()) return
         Log.d("SummaryDetailsViewModel", "toggleFavorite")
+
+        // Show saving progress
+        _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
+
+        // Get the current favorite status
         val isFavorite = _state.value.isFavorite
+
         viewModelScope.launch {
             if (isFavorite) {
-                favoriteInteractor.deleteFavoriteBySummaryId(summary.slug).onSuccess {
-                    _state.update { it.copy(isFavorite = false) }
-                }.onFailure {
-                    Log.e("SummaryDetailsViewModel", "Error deleting favorite", it)
-                }
+                removeFavorite()
             } else {
-                favoriteInteractor.createFavorite(summary).onSuccess {
-                    _state.update { it.copy(isFavorite = true) }
-                }.onFailure {
-                    Log.e("SummaryDetailsViewModel", "Error creating favorite", it)
-                }
+                saveFavorite()
             }
+        }
+    }
+
+    private suspend fun saveFavorite() {
+        favoriteInteractor.createFavorite(summary).onSuccess {
+            _state.update {
+                it.copy(
+                    isFavorite = true,
+                    favoriteProgressState = ProgressState.Hide
+                )
+            }
+        }.onFailure { error ->
+            _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
+            Log.e("SummaryDetailsViewModel", "Error creating favorite", error)
+        }
+    }
+
+    private suspend fun removeFavorite() {
+        favoriteInteractor.deleteFavoriteBySummaryId(summary.slug).onSuccess {
+            _state.update {
+                it.copy(
+                    isFavorite = false,
+                    favoriteProgressState = ProgressState.Hide
+                )
+            }
+        }.onFailure { error ->
+            _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
+            Log.e("SummaryDetailsViewModel", "Error deleting favorite", error)
         }
     }
 }
