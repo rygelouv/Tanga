@@ -46,7 +46,8 @@ fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController) {
     }
     composable(route = NavigationScreen.BottomBarScreen.Library.route) {
         LibraryScreen(
-            onExploreButtonClicked = { navController.toSearch() }
+            onExploreButtonClicked = { navController.toSearch() },
+            onFavoriteClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
     }
     profile { navController.toPricingPlan() }

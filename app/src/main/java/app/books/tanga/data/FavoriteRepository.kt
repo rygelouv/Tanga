@@ -3,6 +3,11 @@ package app.books.tanga.data
 import android.util.Log
 import app.books.tanga.domain.favorites.Favorite
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.snapshots
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -26,6 +31,11 @@ interface FavoriteRepository {
      * Get a favorite by its summary id
      */
     suspend fun getFavoriteBySummaryId(summaryId: String, userId: String): Result<Favorite?>
+
+    /**
+     * Get a stream of favorites for a given user
+     */
+    suspend fun getFavoritesStream(userId: String): Flow<List<Favorite>>
 }
 
 /**
@@ -90,6 +100,23 @@ class FavoriteRepositoryImpl @Inject constructor(
     }
 
     /**
+     * Get a stream of favorites for a given user
+     * First get the favorites from the cache, then get the favorites from Firestore
+     */
+    override suspend fun getFavoritesStream(userId: String): Flow<List<Favorite>> {
+        val cacheStream =  flowOf(getFavoritesFromCache())
+        val firestoreStream = firestore.favoriteCollection.whereEqualTo(
+            FirestoreDatabase.Favorites.Fields.USER_ID,
+            userId
+        ).snapshots().map { querySnapshot ->
+            querySnapshot.map { it.data.toFavorite() }.also { favorites ->
+                cache.putAll(favorites)
+            }
+        }
+        return merge(cacheStream, firestoreStream)
+    }
+
+    /**
      * Get the favorite from Firestore by its summary id
      */
     private suspend fun getFavoriteBySummaryIdFromFirestore(
@@ -138,6 +165,7 @@ class FavoriteRepositoryImpl @Inject constructor(
     }
 
     private fun getFavoritesFromCache(): List<Favorite> {
+        Log.d("FavoriteRepositoryImpl", "getFavoritesFromCache")
         return cache.getAll()
     }
 

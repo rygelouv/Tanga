@@ -3,7 +3,9 @@ package app.books.tanga.domain.favorites
 import app.books.tanga.data.FavoriteRepository
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.domain.summary.Summary
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class FavoriteInteractor @Inject constructor(
@@ -17,6 +19,14 @@ class FavoriteInteractor @Inject constructor(
         }.onFailure {
             Result.failure<Throwable>(it)
         }
+    }
+
+    /**
+     * Observe changes to the favorites for the current user
+     */
+    suspend fun observeFavorites(): Flow<List<Favorite>> {
+        val userId = getUserId() ?: return flowOf(emptyList())
+        return favoriteRepository.getFavoritesStream(userId)
     }
 
     /**

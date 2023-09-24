@@ -31,9 +31,15 @@ import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
-fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
+fun SummaryItemBig(summary: SummaryUi, onSummaryClicked: (String) -> Unit) {
     SummaryItem(
-        summary = summaryUi,
+        summaryId = summary.id,
+        title = summary.title,
+        author = summary.author,
+        coverUrl = summary.coverUrl,
+        duration = summary.duration,
+        hasVideo = summary.hasVideo,
+        hasGraphic = summary.hasGraphic,
         width = 134.dp,
         titleSize = 18.sp,
         onSummaryClicked = onSummaryClicked
@@ -41,9 +47,15 @@ fun SummaryItemBig(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
 }
 
 @Composable
-fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
+fun SummaryItemSmall(summary: SummaryUi, onSummaryClicked: (String) -> Unit) {
     SummaryItem(
-        summary = summaryUi,
+        summaryId = summary.id,
+        title = summary.title,
+        author = summary.author,
+        coverUrl = summary.coverUrl,
+        duration = summary.duration,
+        hasVideo = summary.hasVideo,
+        hasGraphic = summary.hasGraphic,
         width = 120.dp,
         titleSize = 15.sp,
         onSummaryClicked = onSummaryClicked
@@ -52,7 +64,13 @@ fun SummaryItemSmall(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
 
 @Composable
 fun SummaryItem(
-    summary: SummaryUi,
+    summaryId: String,
+    title: String,
+    author: String,
+    coverUrl: String?,
+    duration: String,
+    hasVideo: Boolean,
+    hasGraphic: Boolean,
     width: Dp,
     titleSize: TextUnit,
     onSummaryClicked: (String) -> Unit
@@ -63,9 +81,9 @@ fun SummaryItem(
         verticalArrangement = Arrangement.Top
     ) {
         GlideSummaryImage(
-            summaryId = summary.id,
-            url = summary.coverUrl,
-            painter = if (summary.coverUrl == null) {
+            summaryId = summaryId,
+            url = coverUrl,
+            painter = if (coverUrl == null) {
                 painterResource(id = R.drawable.cover_never_split_difference)
             } else null,
             onSummaryClicked = onSummaryClicked,
@@ -73,7 +91,7 @@ fun SummaryItem(
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = summary.title,
+            text = title,
             fontSize = titleSize,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -82,17 +100,25 @@ fun SummaryItem(
         Text(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
-            text = summary.author,
+            text = author,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.labelMedium,
         )
-        SummaryIndicators(summary)
+        SummaryIndicators(
+            duration = duration,
+            hasVideo = hasVideo,
+            hasGraphic = hasGraphic
+        )
     }
 }
 
 @Composable
-fun SummaryIndicators(summaryUi: SummaryUi) {
+fun SummaryIndicators(
+    duration: String,
+    hasVideo: Boolean,
+    hasGraphic: Boolean,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -108,14 +134,14 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = stringResource(id = R.string.summary_duration, summaryUi.duration),
+                text = stringResource(id = R.string.summary_duration, duration),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
 
-        if (summaryUi.hasVideo) {
+        if (hasVideo) {
             Icon(
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = TangaIcons.IndicatorWatch),
@@ -123,7 +149,7 @@ fun SummaryIndicators(summaryUi: SummaryUi) {
                 tint = LocalTintColor.current.color
             )
         }
-        if (summaryUi.hasGraphic) {
+        if (hasGraphic) {
             Spacer(modifier = Modifier.width(5.dp))
             Icon(
                 modifier = Modifier.size(13.dp),

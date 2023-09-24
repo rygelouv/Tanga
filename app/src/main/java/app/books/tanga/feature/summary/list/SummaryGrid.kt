@@ -23,7 +23,7 @@ fun SummaryGrid(
     ) {
         items(summaries) { summary ->
             SummaryItemBig(
-                summaryUi = summary,
+                summary = summary,
                 onSummaryClicked = onSummaryClicked
             )
         }

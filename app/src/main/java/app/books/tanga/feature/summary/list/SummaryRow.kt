@@ -19,7 +19,7 @@ fun SummaryRow(
         horizontalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         items(summaries) { summary ->
-            SummaryItemSmall(summaryUi = summary, onSummaryClicked = onSummaryClicked)
+            SummaryItemSmall(summary = summary, onSummaryClicked = onSummaryClicked)
         }
     }
 }
