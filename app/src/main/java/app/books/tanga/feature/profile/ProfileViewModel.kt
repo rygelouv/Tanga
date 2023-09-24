@@ -2,8 +2,8 @@ package app.books.tanga.feature.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.data.UserRepository
-import app.books.tanga.domain.auth.AuthenticationInteractor
+import app.books.tanga.data.user.UserRepository
+import app.books.tanga.feature.auth.AuthenticationInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

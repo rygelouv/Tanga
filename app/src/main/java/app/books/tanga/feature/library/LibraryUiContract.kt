@@ -1,7 +1,7 @@
 package app.books.tanga.feature.library
 
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.domain.favorites.Favorite
+import app.books.tanga.entity.Favorite
 
 data class LibraryUiState(
     val progressState: ProgressState = ProgressState.Hide,

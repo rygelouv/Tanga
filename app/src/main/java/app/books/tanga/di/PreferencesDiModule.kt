@@ -1,6 +1,7 @@
-package app.books.tanga.data.preferences
+package app.books.tanga.di
 
 import android.content.Context
+import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,9 +1,10 @@
-package app.books.tanga.domain.summary
+package app.books.tanga.feature.summary
 
-import app.books.tanga.data.CategoryRepository
-import app.books.tanga.data.SummaryRepository
-import app.books.tanga.domain.categories.Category
-import app.books.tanga.domain.categories.Section
+import app.books.tanga.data.category.CategoryRepository
+import app.books.tanga.data.summary.SummaryRepository
+import app.books.tanga.entity.Category
+import app.books.tanga.entity.Section
+import app.books.tanga.entity.Summary
 import javax.inject.Inject
 
 class SummaryInteractor @Inject constructor(

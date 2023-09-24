@@ -1,7 +1,8 @@
-package app.books.tanga.data
+package app.books.tanga.data.favorite
 
 import android.util.Log
-import app.books.tanga.domain.favorites.Favorite
+import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.Favorite
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
 import kotlinx.coroutines.flow.Flow

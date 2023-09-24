@@ -1,6 +1,4 @@
-package app.books.tanga.domain.categories
-
-import app.books.tanga.domain.summary.Summary
+package app.books.tanga.entity
 
 /**
  * Class representing a Category

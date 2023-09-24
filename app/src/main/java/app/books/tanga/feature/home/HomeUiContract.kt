@@ -1,6 +1,6 @@
 package app.books.tanga.feature.home
 
-import app.books.tanga.domain.categories.Section
+import app.books.tanga.entity.Section
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.toSummaryUi
 

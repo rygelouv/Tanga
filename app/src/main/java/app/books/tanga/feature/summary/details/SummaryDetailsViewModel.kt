@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.domain.favorites.FavoriteInteractor
-import app.books.tanga.domain.summary.Summary
-import app.books.tanga.domain.summary.SummaryInteractor
+import app.books.tanga.feature.library.FavoriteInteractor
+import app.books.tanga.entity.Summary
+import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

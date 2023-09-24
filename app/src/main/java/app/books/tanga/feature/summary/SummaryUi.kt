@@ -1,7 +1,7 @@
 package app.books.tanga.feature.summary
 
 import androidx.annotation.DrawableRes
-import app.books.tanga.domain.summary.Summary
+import app.books.tanga.entity.Summary
 
 data class SummaryUi(
     val id: String,

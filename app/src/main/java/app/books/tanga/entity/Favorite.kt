@@ -1,4 +1,4 @@
-package app.books.tanga.domain.favorites
+package app.books.tanga.entity
 
 /**
  * A favorite is a summary that the user has saved in his library.

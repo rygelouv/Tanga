@@ -1,13 +1,13 @@
-package app.books.tanga.domain.auth
+package app.books.tanga.feature.auth
 
 import android.util.Log
-import app.books.tanga.data.UserRepository
-import app.books.tanga.data.toUser
+import app.books.tanga.data.user.UserRepository
+import app.books.tanga.data.user.toUser
 import app.books.tanga.di.GoogleSignInModule.Companion.GOOGLE_SIGN_IN_REQUEST
 import app.books.tanga.di.GoogleSignInModule.Companion.GOOGLE_SIGN_UP_REQUEST
-import app.books.tanga.domain.session.SessionId
-import app.books.tanga.domain.session.SessionManager
-import app.books.tanga.domain.session.SessionState
+import app.books.tanga.session.SessionId
+import app.books.tanga.session.SessionManager
+import app.books.tanga.session.SessionState
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInClient

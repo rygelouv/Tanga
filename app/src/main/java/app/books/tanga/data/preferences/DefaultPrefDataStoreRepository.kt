@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import app.books.tanga.domain.session.SessionId
+import app.books.tanga.session.SessionId
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

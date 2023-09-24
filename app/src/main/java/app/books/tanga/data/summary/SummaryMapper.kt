@@ -1,6 +1,8 @@
-package app.books.tanga.data
+package app.books.tanga.data.summary
 
-import app.books.tanga.domain.summary.Summary
+import app.books.tanga.data.FirestoreData
+import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.Summary
 
 
 fun FirestoreData.toSummary(): Summary {

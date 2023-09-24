@@ -2,8 +2,8 @@ package app.books.tanga.feature.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.domain.session.SessionManager
-import app.books.tanga.domain.session.SessionState
+import app.books.tanga.session.SessionManager
+import app.books.tanga.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

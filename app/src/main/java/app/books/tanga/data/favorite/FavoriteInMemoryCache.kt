@@ -1,6 +1,6 @@
-package app.books.tanga.data
+package app.books.tanga.data.favorite
 
-import app.books.tanga.domain.favorites.Favorite
+import app.books.tanga.entity.Favorite
 import javax.inject.Inject
 import javax.inject.Singleton
 

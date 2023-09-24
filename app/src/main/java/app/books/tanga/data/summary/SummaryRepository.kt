@@ -1,6 +1,7 @@
-package app.books.tanga.data
+package app.books.tanga.data.summary
 
-import app.books.tanga.domain.summary.Summary
+import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.Summary
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await

@@ -1,8 +1,9 @@
-package app.books.tanga.domain.favorites
+package app.books.tanga.feature.library
 
-import app.books.tanga.data.FavoriteRepository
+import app.books.tanga.data.favorite.FavoriteRepository
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
-import app.books.tanga.domain.summary.Summary
+import app.books.tanga.entity.Favorite
+import app.books.tanga.entity.Summary
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf

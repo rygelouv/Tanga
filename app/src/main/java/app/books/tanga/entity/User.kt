@@ -1,4 +1,4 @@
-package app.books.tanga.domain.user
+package app.books.tanga.entity
 
 data class User(
     val uid: String,
