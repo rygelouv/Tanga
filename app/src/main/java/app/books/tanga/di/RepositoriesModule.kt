@@ -1,13 +1,13 @@
 package app.books.tanga.di
 
-import app.books.tanga.data.CategoryRepository
-import app.books.tanga.data.CategoryRepositoryImpl
-import app.books.tanga.data.FavoriteRepository
-import app.books.tanga.data.FavoriteRepositoryImpl
-import app.books.tanga.data.SummaryRepository
-import app.books.tanga.data.SummaryRepositoryImpl
-import app.books.tanga.data.UserRepository
-import app.books.tanga.data.UserRepositoryImpl
+import app.books.tanga.data.category.CategoryRepository
+import app.books.tanga.data.category.CategoryRepositoryImpl
+import app.books.tanga.data.favorite.FavoriteRepository
+import app.books.tanga.data.favorite.FavoriteRepositoryImpl
+import app.books.tanga.data.summary.SummaryRepository
+import app.books.tanga.data.summary.SummaryRepositoryImpl
+import app.books.tanga.data.user.UserRepository
+import app.books.tanga.data.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,6 +1,6 @@
-package app.books.tanga.data
+package app.books.tanga.data.summary
 
-import app.books.tanga.domain.summary.Summary
+import app.books.tanga.entity.Summary
 import javax.inject.Inject
 
 /**

@@ -1,4 +1,4 @@
-package app.books.tanga.domain.summary
+package app.books.tanga.entity
 
 typealias CategorySlug = String
 

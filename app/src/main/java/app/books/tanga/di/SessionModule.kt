@@ -1,7 +1,7 @@
 package app.books.tanga.di
 
-import app.books.tanga.data.PrefSessionManager
-import app.books.tanga.domain.session.SessionManager
+import app.books.tanga.session.PrefSessionManager
+import app.books.tanga.session.SessionManager
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

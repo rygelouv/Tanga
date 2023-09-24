@@ -1,6 +1,8 @@
-package app.books.tanga.data
+package app.books.tanga.data.category
 
-import app.books.tanga.domain.categories.Category
+import app.books.tanga.data.FirestoreData
+import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.Category
 
 fun FirestoreData.toCategory(): Category {
     return Category(

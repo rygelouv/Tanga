@@ -1,10 +1,10 @@
-package app.books.tanga.data
+package app.books.tanga.session
 
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.di.IoDispatcher
-import app.books.tanga.domain.session.SessionId
-import app.books.tanga.domain.session.SessionManager
-import app.books.tanga.domain.session.SessionState
+import app.books.tanga.session.SessionId
+import app.books.tanga.session.SessionManager
+import app.books.tanga.session.SessionState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

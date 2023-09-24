@@ -1,8 +1,9 @@
-package app.books.tanga.data
+package app.books.tanga.data.user
 
+import app.books.tanga.data.FirestoreDatabase
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
-import app.books.tanga.domain.OperationError
-import app.books.tanga.domain.user.User
+import app.books.tanga.entity.OperationError
+import app.books.tanga.entity.User
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.first

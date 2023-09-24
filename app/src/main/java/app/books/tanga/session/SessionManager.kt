@@ -1,4 +1,4 @@
-package app.books.tanga.domain.session
+package app.books.tanga.session
 
 import kotlinx.coroutines.flow.Flow
 

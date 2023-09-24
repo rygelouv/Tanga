@@ -4,8 +4,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.domain.auth.AuthenticationInteractor
-import app.books.tanga.domain.session.SessionState
+import app.books.tanga.session.SessionState
 import app.books.tanga.common.ui.ProgressState
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel

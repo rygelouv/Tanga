@@ -1,6 +1,8 @@
-package app.books.tanga.data
+package app.books.tanga.data.user
 
-import app.books.tanga.domain.user.User
+import app.books.tanga.data.FirestoreData
+import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
 
