@@ -26,6 +26,9 @@ class SummaryDetailsViewModel @Inject constructor(
         MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
 
+    /**
+     * Holding the domain summary object to help perform future operations
+     */
     lateinit var summary: Summary
 
     /**

@@ -24,7 +24,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import app.books.tanga.common.ui.ShimmerSummaryItemSmall
+import app.books.tanga.common.ui.ShimmerSummaryItem
 import app.books.tanga.common.ui.ShimmerSummaryListRow
 import app.books.tanga.core_ui.theme.LocalSpacing
 
@@ -64,7 +64,7 @@ fun SummaryDetailsShimmerLoader() {
 
         /* Start header zone (image + title + author) */
         Row {
-            ShimmerSummaryItemSmall(modifier = Modifier, brush = brush)
+            ShimmerSummaryItem(modifier = Modifier, brush = brush)
 
             Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
             Column(
