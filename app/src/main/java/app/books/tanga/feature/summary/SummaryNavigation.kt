@@ -10,7 +10,7 @@ import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.summaryDetails(
     onBackClicked: () -> Unit,
-    onPlayClicked: () -> Unit,
+    onPlayClicked: (String) -> Unit,
     onRecommendationClicked: (String) -> Unit
 ) {
     composable(
@@ -24,7 +24,7 @@ fun NavGraphBuilder.summaryDetails(
                 .arguments
                 ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
             onBackClicked = onBackClicked,
-            onPlayClicked = onPlayClicked,
+            onPlayClicked = { summaryId -> onPlayClicked(summaryId) },
             onRecommendationClicked = onRecommendationClicked
         )
     }
@@ -39,7 +39,7 @@ fun NavController.toSummaryDetails(
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
                 newValue = summaryId
-            ),
+            )
     ) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }
     }

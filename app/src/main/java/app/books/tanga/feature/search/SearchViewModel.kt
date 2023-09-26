@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val summaryInteractor: SummaryInteractor,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    private val summaryInteractor: SummaryInteractor
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SearchUiState> =

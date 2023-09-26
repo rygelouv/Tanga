@@ -62,7 +62,7 @@ fun SummaryDetailsScreen(
     summaryId: String,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
-    onPlayClicked: () -> Unit,
+    onPlayClicked: (String) -> Unit,
     onRecommendationClicked: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -83,7 +83,12 @@ fun SummaryDetailsScreen(
                 onSaveClicked = { viewModel.toggleFavorite() }
             )
         },
-        floatingActionButton = { PlayFloatingActionButton(onClick = onPlayClicked) }
+        floatingActionButton = {
+            PlayFloatingActionButton(
+                summaryId = summaryId,
+                onClick = onPlayClicked
+            )
+        }
     ) {
         when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
@@ -177,10 +182,14 @@ private fun SummaryTopAppBar(
 }
 
 @Composable
-fun PlayFloatingActionButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun PlayFloatingActionButton(
+    modifier: Modifier = Modifier,
+    summaryId: String,
+    onClick: (String) -> Unit
+) {
     FloatingActionButton(
         modifier = modifier,
-        onClick = { onClick() },
+        onClick = { onClick(summaryId) },
         containerColor = MaterialTheme.colorScheme.tertiary,
         shape = CircleShape,
         elevation = FloatingActionButtonDefaults.elevation(18.dp),

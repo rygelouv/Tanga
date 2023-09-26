@@ -27,7 +27,7 @@ fun MainNavigationGraph(
         bottomBarNavGraph(navController = navController)
         summaryDetails(
             onBackClicked = { navController.popBackStack() },
-            onPlayClicked = { navController.toPlaySummaryAudio() },
+            onPlayClicked = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onRecommendationClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
         search()
