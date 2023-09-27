@@ -39,6 +39,8 @@ buildscript {
     // Google Services
     extra.set("google_services", "4.3.15")
 
+    extra.set("exoplayer_media3_version", "1.1.1")
+
     dependencies {
         // Google Play Services
         classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")

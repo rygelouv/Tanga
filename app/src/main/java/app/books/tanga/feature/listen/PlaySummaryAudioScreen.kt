@@ -27,8 +27,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,17 +39,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.components.SummaryImage
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.books.tanga.R
+import app.books.tanga.core_ui.components.GlideSummaryImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.data.FakeData
-import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.audioplayer.PlaybackState
+import app.books.tanga.feature.audioplayer.PlayerActions
+import app.books.tanga.feature.audioplayer.PlayerState
+import app.books.tanga.toTimeFormat
 
 @Composable
-fun PlaySummaryAudioScreen(onBackClicked: () -> Unit) {
-    val summary = remember {
-        FakeData.allSummaries().shuffled().last()
+fun PlaySummaryAudioScreen(
+    summaryId: String,
+    onBackClicked: () -> Unit, viewModel: PlaySummaryAudioViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val actions: PlayerActions = viewModel
+
+    LaunchedEffect(Unit) {
+        viewModel.loadSummary(summaryId)
     }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -60,7 +74,14 @@ fun PlaySummaryAudioScreen(onBackClicked: () -> Unit) {
                 .fillMaxSize()
                 .padding(it)
         ) {
-            PlaySummaryAudioContent(summary)
+            PlaySummaryAudioContent(
+                summaryId = state.summaryId,
+                title = state.title,
+                author = state.author,
+                coverUrl = state.coverUrl,
+                playbackState = state.playbackState,
+                actions = actions
+            )
         }
     }
 }
@@ -68,23 +89,27 @@ fun PlaySummaryAudioScreen(onBackClicked: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlaySummaryAudioTopBar(onBackClicked: () -> Unit) {
-    TopAppBar(
-        title = {},
-        navigationIcon = {
-            IconButton(onClick = { onBackClicked() }) {
-                Icon(
-                    modifier = Modifier.size(26.dp),
-                    painter = painterResource(id = TangaIcons.LeftArrow),
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                    contentDescription = "back navigation"
-                )
-            }
+    TopAppBar(title = {}, navigationIcon = {
+        IconButton(onClick = { onBackClicked() }) {
+            Icon(
+                modifier = Modifier.size(26.dp),
+                painter = painterResource(id = TangaIcons.LeftArrow),
+                tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                contentDescription = "back navigation"
+            )
         }
-    )
+    })
 }
 
 @Composable
-fun PlaySummaryAudioContent(summary: SummaryUi) {
+fun PlaySummaryAudioContent(
+    summaryId: String? = null,
+    title: String? = null,
+    author: String? = null,
+    coverUrl: String? = null,
+    playbackState: PlaybackState? = null,
+    actions: PlayerActions
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Surface(
             color = Color.White,
@@ -113,51 +138,57 @@ fun PlaySummaryAudioContent(summary: SummaryUi) {
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
-                Text(
-                    text = "Ego is the Enemy",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleLarge,
-                )
+                title?.let {
+                    Text(
+                        text = it,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
-                Text(
-                    color = MaterialTheme.colorScheme.outline,
-                    text = "Ryan Holliday",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+                author?.let {
+                    Text(
+                        color = MaterialTheme.colorScheme.outline,
+                        text = it,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-                PlaybackControls()
+                PlaybackControls(playbackState = playbackState, actions = actions)
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-                AudioBar()
+                AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
             }
         }
-        SummaryImage(
-            summaryId = summary.id,
+        GlideSummaryImage(summaryId = summaryId ?: "",
             modifier = Modifier
                 .width(154.dp)
                 .align(alignment = Alignment.TopCenter)
                 .offset(y = 4.dp),
-            painter = painterResource(id = summary.cover),
+            url = coverUrl,
+            painter = if (coverUrl == null) {
+                painterResource(id = R.drawable.cover_never_split_difference)
+            } else null,
             onSummaryClicked = { }
         )
     }
 }
 
 @Composable
-private fun PlaybackControls() {
+private fun PlaybackControls(playbackState: PlaybackState? = null, actions: PlayerActions) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { actions.onBackward() }) {
             Icon(
                 modifier = Modifier.size(18.dp),
                 painter = painterResource(id = TangaIcons.Backward),
@@ -172,19 +203,20 @@ private fun PlaybackControls() {
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodySmall,
         )
-        IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(64.dp)) {
+        IconButton(onClick = { actions.onPlayPause() }, modifier = Modifier.size(64.dp)) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             ) {
                 Icon(
                     modifier = Modifier
-                        .size(24.dp)
-                        .padding(14.dp),
-                    painter = painterResource(id = TangaIcons.Pause),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    contentDescription = "play"
+                        .size(18.dp)
+                        .padding(18.dp),
+                    painter = painterResource(
+                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
+                    ),
+                    tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "play/pause"
                 )
             }
         }
@@ -195,7 +227,7 @@ private fun PlaybackControls() {
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodySmall,
         )
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { actions.onForward() }) {
             Icon(
                 modifier = Modifier.size(18.dp),
                 painter = painterResource(id = TangaIcons.Forward),
@@ -207,17 +239,13 @@ private fun PlaybackControls() {
 }
 
 @Composable
-private fun AudioBar() {
-    var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Long) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     ) {
-        Slider(
-            modifier = Modifier.fillMaxWidth(),
-            value = sliderPosition, onValueChange = { sliderPosition = it }
-        )
+        MediaSlider(playbackState, onSliderPositionChanged)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -225,7 +253,7 @@ private fun AudioBar() {
         ) {
             Text(
                 color = MaterialTheme.colorScheme.outline,
-                text = "00:00",
+                text = playbackState?.position?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall,
@@ -233,11 +261,46 @@ private fun AudioBar() {
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 color = MaterialTheme.colorScheme.outline,
-                text = "10:35",
+                text = playbackState?.duration?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall,
             )
         }
     }
+}
+
+@Composable
+private fun MediaSlider(
+    playbackState: PlaybackState?,
+    onSliderPositionChanged: (Long) -> Unit
+) {
+    // State variable to track whether the user is currently dragging the slider.
+    var isDragging by remember { mutableStateOf(false) }
+
+    // State variable to hold the value while the user is dragging.
+    var dragValue by remember { mutableFloatStateOf(0f) }
+
+    // Determine the current value for the slider, based on whether it's being dragged or not.
+    val sliderValue: Float = if (isDragging) {
+        dragValue
+    } else {
+        playbackState?.position?.toFloat() ?: 0f
+    }
+
+    Slider(
+        modifier = Modifier.fillMaxWidth(),
+        value = sliderValue,
+        onValueChange = {
+            // Update the state to indicate the slider is being dragged and store the current drag value.
+            isDragging = true
+            dragValue = it
+        },
+        onValueChangeFinished = {
+            // Once the user stops dragging, update the playback position and reset the dragging state.
+            isDragging = false
+            onSliderPositionChanged(dragValue.toLong())
+        },
+        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f),
+    )
 }

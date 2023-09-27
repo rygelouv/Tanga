@@ -100,8 +100,8 @@ dependencies {
     // Play Services https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:${rootProject.extra.get("play_services_auth_version")}")
 
-    //Coil https://github.com/coil-kt/coil/releases
-    //implementation("io.coil-kt:coil-compose:${rootProject.extra.get("coil_compose_version")}")
+    // ExoPlayer Media3 https://developer.android.com/guide/topics/media/exoplayer
+    implementation("androidx.media3:media3-exoplayer:${rootProject.extra.get("exoplayer_media3_version")}")
 
     // Unit tests https://junit.org/junit4/
     testImplementation("junit:junit:${rootProject.extra.get("junit_version")}")
