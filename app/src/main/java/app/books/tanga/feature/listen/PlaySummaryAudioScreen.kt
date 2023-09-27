@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -78,7 +79,6 @@ fun PlaySummaryAudioScreen(
                 title = state.title,
                 author = state.author,
                 coverUrl = state.coverUrl,
-                totalDuration = state.duration,
                 playbackState = state.playbackState,
                 actions = actions
             )
@@ -107,7 +107,6 @@ fun PlaySummaryAudioContent(
     title: String? = null,
     author: String? = null,
     coverUrl: String? = null,
-    totalDuration: String? = null,
     playbackState: PlaybackState? = null,
     actions: PlayerActions
 ) {
@@ -165,10 +164,7 @@ fun PlaySummaryAudioContent(
                 PlaybackControls(playbackState = playbackState, actions = actions)
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-                AudioBar(
-                    playbackState = playbackState,
-                    totalDuration = totalDuration
-                )
+                AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
             }
         }
         GlideSummaryImage(summaryId = summaryId ?: "",
@@ -211,14 +207,16 @@ private fun PlaybackControls(playbackState: PlaybackState? = null, actions: Play
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             ) {
                 Icon(
                     modifier = Modifier
-                        .size(24.dp)
-                        .padding(14.dp), painter = painterResource(
+                        .size(18.dp)
+                        .padding(18.dp),
+                    painter = painterResource(
                         id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
-                    ), tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "play/pause"
+                    ),
+                    tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "play/pause"
                 )
             }
         }
@@ -241,16 +239,13 @@ private fun PlaybackControls(playbackState: PlaybackState? = null, actions: Play
 }
 
 @Composable
-private fun AudioBar(playbackState: PlaybackState?, totalDuration: String?) {
-    var sliderPosition = playbackState?.position?.toFloat() ?: 0f
+private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Long) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     ) {
-        Slider(modifier = Modifier.fillMaxWidth(),
-            value = sliderPosition,
-            onValueChange = { sliderPosition = it })
+        MediaSlider(playbackState, onSliderPositionChanged)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -258,7 +253,7 @@ private fun AudioBar(playbackState: PlaybackState?, totalDuration: String?) {
         ) {
             Text(
                 color = MaterialTheme.colorScheme.outline,
-                text = playbackState?.duration?.toTimeFormat() ?: "00:00",
+                text = playbackState?.position?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall,
@@ -266,11 +261,46 @@ private fun AudioBar(playbackState: PlaybackState?, totalDuration: String?) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 color = MaterialTheme.colorScheme.outline,
-                text = totalDuration ?: "00:00",
+                text = playbackState?.duration?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall,
             )
         }
     }
+}
+
+@Composable
+private fun MediaSlider(
+    playbackState: PlaybackState?,
+    onSliderPositionChanged: (Long) -> Unit
+) {
+    // State variable to track whether the user is currently dragging the slider.
+    var isDragging by remember { mutableStateOf(false) }
+
+    // State variable to hold the value while the user is dragging.
+    var dragValue by remember { mutableFloatStateOf(0f) }
+
+    // Determine the current value for the slider, based on whether it's being dragged or not.
+    val sliderValue: Float = if (isDragging) {
+        dragValue
+    } else {
+        playbackState?.position?.toFloat() ?: 0f
+    }
+
+    Slider(
+        modifier = Modifier.fillMaxWidth(),
+        value = sliderValue,
+        onValueChange = {
+            // Update the state to indicate the slider is being dragged and store the current drag value.
+            isDragging = true
+            dragValue = it
+        },
+        onValueChangeFinished = {
+            // Once the user stops dragging, update the playback position and reset the dragging state.
+            isDragging = false
+            onSliderPositionChanged(dragValue.toLong())
+        },
+        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f),
+    )
 }

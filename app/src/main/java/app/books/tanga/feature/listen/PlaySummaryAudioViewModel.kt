@@ -24,6 +24,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
     val state: StateFlow<PlaySummaryAudioUiState> = _state
 
     init {
+        // Observe the playback state and update the UI accordingly.
         viewModelScope.launch {
             playerController.playbackState.collect { playbackState ->
                 _state.update {
