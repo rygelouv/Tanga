@@ -1,7 +1,10 @@
 package app.books.tanga.entity
 
+@JvmInline
+value class UserId(val value: String)
+
 data class User(
-    val uid: String,
+    val id: UserId,
     val fullName: String,
     val email: String,
     val photoUrl: String?,
