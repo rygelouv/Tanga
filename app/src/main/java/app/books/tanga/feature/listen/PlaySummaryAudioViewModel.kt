@@ -39,14 +39,14 @@ class PlaySummaryAudioViewModel @Inject constructor(
             summaryInteractor.getSummary(summaryId).onSuccess { summary ->
                 _state.update {
                     it.copy(
-                        summaryId = summary.slug,
+                        summaryId = summary.id.value,
                         title = summary.title,
                         author = summary.author,
                         duration = summary.playingLength,
                         coverUrl = summary.coverImageUrl
                     )
                 }
-                val audioTrack = AudioTrack(id = summary.slug, url = summary.audioUrl)
+                val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
                 playerController.initPlayer(audioTrack, viewModelScope)
             }
         }

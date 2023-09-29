@@ -1,6 +1,7 @@
 package app.books.tanga.data.summary
 
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 import javax.inject.Inject
 
 /**
@@ -11,7 +12,7 @@ import javax.inject.Inject
  * This cache is volatile and will be cleared as soon as the component using it is destroyed.
  */
 class SummaryInMemoryCache @Inject constructor() {
-    private val cache = HashMap<String, Summary>()
+    private val cache = HashMap<SummaryId, Summary>()
 
     fun getAll(): List<Summary> {
         return cache.values.toList()
@@ -19,7 +20,7 @@ class SummaryInMemoryCache @Inject constructor() {
 
     fun putAll(summaries: List<Summary>) {
         summaries.forEach { summary ->
-            cache[summary.slug] = summary
+            cache[summary.id] = summary
         }
     }
 }

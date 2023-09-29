@@ -111,7 +111,7 @@ class SummaryDetailsViewModel @Inject constructor(
     }
 
     private suspend fun removeFavorite() {
-        favoriteInteractor.deleteFavoriteBySummaryId(summary.slug).onSuccess {
+        favoriteInteractor.deleteFavoriteBySummaryId(summary.id.value).onSuccess {
             _state.update {
                 it.copy(
                     isFavorite = false,

@@ -3,10 +3,11 @@ package app.books.tanga.data.favorite
 import app.books.tanga.data.FirestoreData
 import app.books.tanga.data.FirestoreDatabase
 import app.books.tanga.entity.Favorite
+import app.books.tanga.entity.FavoriteId
 
 fun FirestoreData.toFavorite(): Favorite {
     return Favorite(
-        uid = this[FirestoreDatabase.Favorites.Fields.UID].toString(),
+        id = FavoriteId(this[FirestoreDatabase.Favorites.Fields.UID].toString()),
         title = this[FirestoreDatabase.Favorites.Fields.TITLE].toString(),
         author = this[FirestoreDatabase.Favorites.Fields.AUTHOR].toString(),
         coverUrl = this[FirestoreDatabase.Favorites.Fields.COVER_URL].toString(),

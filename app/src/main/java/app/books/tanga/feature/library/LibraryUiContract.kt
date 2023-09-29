@@ -19,7 +19,7 @@ data class FavoriteUi(
 
 fun Favorite.toFavoriteUi(): FavoriteUi {
     return FavoriteUi(
-        uid = uid,
+        uid = id.value,
         summaryId = summaryId,
         title = title,
         author = author,

@@ -1,6 +1,7 @@
 package app.books.tanga.entity
 
-typealias CategorySlug = String
+@JvmInline
+value class SummaryId(val value: String)
 
 /**
  *  Class representing a Summary
@@ -18,12 +19,12 @@ typealias CategorySlug = String
  *  textUrl: the link to the summary text
  */
 data class Summary(
-    val slug: String,
+    val id: SummaryId,
     val title: String,
     val author: String,
     val synopsis: String,
     val coverImageUrl: String, // TODO: 2023-09-22 Change to coverUrl
-    val categories: List<CategorySlug>,
+    val categories: List<CategoryId>,
     val textUrl: String,
     val audioUrl: String,
     val graphicUrl: String,

@@ -39,14 +39,14 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun createUser(user: User) {
         val userMap = user.toFireStoreUserData()
         firestore.userCollection
-            .document(user.uid)
+            .document(user.id.value)
             .set(userMap).await()
     }
 
     override suspend fun deleteUser(user: User) {
         firestore
             .userCollection
-            .document(user.uid)
+            .document(user.id.value)
             .delete()
     }
 

@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val summaryInteractor: SummaryInteractor,
+    private val homeInteractor: HomeInteractor,
     private val favoriteInteractor: FavoriteInteractor
 ) : ViewModel() {
     private val _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
@@ -36,7 +35,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadSections() {
-        summaryInteractor.getSummarySections()
+        homeInteractor.getSummarySections()
             .onSuccess { sections ->
                 _state.update {
                     it.copy(
@@ -51,7 +50,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadUserInfo() {
-        userRepository.getUser().onSuccess { result ->
+        homeInteractor.getUserInfo().onSuccess { result ->
             val user = result ?: return@onSuccess
             _state.update {
                 it.copy(
