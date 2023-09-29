@@ -23,7 +23,7 @@ data class SummaryUi(
 
 fun Summary.toSummaryUi(): SummaryUi {
     return SummaryUi(
-        id = slug,
+        id = id.value,
         coverUrl = coverImageUrl,
         title = title,
         author = author,

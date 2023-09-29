@@ -25,9 +25,9 @@ data class CategoryUi(
 
 fun Category.toCategoryUi(): CategoryUi {
     return CategoryUi(
-        id = id,
+        id = id.value,
         name = name,
-        icon = when (id) {
+        icon = when (id.value) {
             PredefinedCategory.BUSINESS.id -> TangaIcons.Business
             PredefinedCategory.PERSONAL_DEVELOPMENT.id -> TangaIcons.SelfDevelopment
             PredefinedCategory.PSYCHOLOGY.id -> TangaIcons.Productivity

@@ -16,35 +16,6 @@ class SummaryInteractor @Inject constructor(
     }
 
     /**
-     * Get the list of summaries grouped by category
-     */
-    suspend fun getSummarySections(): Result<List<Section>> {
-        return runCatching {
-            val categories = categoryRepository.getCategories()
-            val summaries = summaryRepository.getAllSummaries().getOrNull()
-
-            val sections = mutableListOf<Section>()
-
-            categories.onSuccess {
-                it.forEach { category ->
-                    val summariesByCategory = summaries?.filter { summary ->
-                        summary.categories.contains(category.id)
-                    } ?: emptyList()
-
-                    sections.add(
-                        Section(
-                            category = category,
-                            summaries = summariesByCategory
-                        )
-                    )
-                }
-            }
-
-            sections
-        }
-    }
-
-    /**
      * Get the list of summaries for the given category ids
      * If the list of category ids is empty, return all summaries
      */
@@ -82,7 +53,7 @@ class SummaryInteractor @Inject constructor(
         return runCatching {
             val recommendedSummaries = mutableListOf<Summary>()
             summary.categories.forEach {
-                val summaries = getSummariesByCategory(it).getOrThrow()
+                val summaries = getSummariesByCategory(it.value).getOrThrow()
                 recommendedSummaries.addAll(summaries)
             }
             // Remove duplicates and shuffle the list then take only 4 summaries

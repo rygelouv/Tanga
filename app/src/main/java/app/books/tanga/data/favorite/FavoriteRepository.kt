@@ -3,6 +3,7 @@ package app.books.tanga.data.favorite
 import android.util.Log
 import app.books.tanga.data.FirestoreDatabase
 import app.books.tanga.entity.Favorite
+import app.books.tanga.entity.FavoriteId
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +51,7 @@ class FavoriteRepositoryImpl @Inject constructor(
 
     /**
      * Create the favorite on Firestore, get the [DocumentReference] and update the field
-     * [Favorite.uid] with the [DocumentReference.id]
+     * [Favorite.id] with the [DocumentReference.id]
      * Then update the cache
      */
     override suspend fun createFavorite(favorite: Favorite): Result<Unit> {
@@ -59,7 +60,7 @@ class FavoriteRepositoryImpl @Inject constructor(
             firestore.favoriteCollection.document(documentReference.id)
                 .update(FirestoreDatabase.Favorites.Fields.UID, documentReference.id).await()
             // Update cache
-            cache.add(favorite = favorite.copy(uid = documentReference.id))
+            cache.add(favorite = favorite.copy(id = FavoriteId(documentReference.id)))
         }.onFailure {
             Result.failure<Throwable>(it)
         }
@@ -70,7 +71,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      */
     override suspend fun deleteFavorite(favorite: Favorite): Result<Unit> {
         return runCatching {
-            firestore.favoriteCollection.document(favorite.uid).delete().await()
+            firestore.favoriteCollection.document(favorite.id.value).delete().await()
             // Update cache
             cache.remove(favorite = favorite)
         }.onFailure {

@@ -1,6 +1,7 @@
 package app.books.tanga.data.favorite
 
 import app.books.tanga.entity.Favorite
+import app.books.tanga.entity.FavoriteId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,14 +14,14 @@ import javax.inject.Singleton
  */
 @Singleton
 class FavoriteInMemoryCache @Inject constructor() {
-    private val cache = HashMap<String, Favorite>()
+    private val cache = HashMap<FavoriteId, Favorite>()
 
     fun add(favorite: Favorite) {
-        cache[favorite.uid] = favorite
+        cache[favorite.id] = favorite
     }
 
     fun remove(favorite: Favorite) {
-        cache.remove(favorite.uid)
+        cache.remove(favorite.id)
     }
 
     fun getBySummaryId(summaryId: String): Favorite? {
@@ -33,7 +34,7 @@ class FavoriteInMemoryCache @Inject constructor() {
 
     fun putAll(favorites: List<Favorite>) {
         favorites.forEach { favorite ->
-            cache[favorite.uid] = favorite
+            cache[favorite.id] = favorite
         }
     }
 

@@ -2,17 +2,23 @@ package app.books.tanga.data.summary
 
 import app.books.tanga.data.FirestoreData
 import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 
+
+private fun Any?.toCategoryIds(): List<CategoryId> {
+    return (this as List<String>).map { CategoryId(it) }
+}
 
 fun FirestoreData.toSummary(): Summary {
     // TODO: 2023-09-14 Wrap this in a try catch block, track error and return null
     return Summary(
-        slug = this[FirestoreDatabase.Summaries.Fields.SLUG].toString(),
+        id = SummaryId(this[FirestoreDatabase.Summaries.Fields.SLUG].toString()),
         title = this[FirestoreDatabase.Summaries.Fields.TITLE].toString(),
         author = this[FirestoreDatabase.Summaries.Fields.AUTHOR].toString(),
         synopsis = this[FirestoreDatabase.Summaries.Fields.SYNOPSIS].toString(),
-        categories = this[FirestoreDatabase.Summaries.Fields.CATEGORIES] as List<String>,
+        categories = this[FirestoreDatabase.Summaries.Fields.CATEGORIES].toCategoryIds(),
         coverImageUrl = this[FirestoreDatabase.Summaries.Fields.COVER_IMAGE_URL].toString(),
         audioUrl = this[FirestoreDatabase.Summaries.Fields.AUDIO_URL].toString(),
         graphicUrl = this[FirestoreDatabase.Summaries.Fields.GRAPHIC_URL].toString(),
