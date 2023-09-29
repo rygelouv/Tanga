@@ -14,8 +14,24 @@ We finished implementing most screen from the design with dummy data. We are now
 So far we have done:
 - Home screen: now shows real summaries broken by sections based on categories
 - Search screen: now allows you to search for summaries and filter by category
-- Summary Details screen (in progress): so far show the basic information of the summary
+- Summary Details screen: show the real detailed information of the summary selected
+- Audio Player: now the screen can play the audio of the summary selected
 
+## Next steps:
+- We need to activate the remaning buttons on Summary details screen. Those are "Read", "Watch" and "Visualize"
+- We need to enable the "see all" buttons on home screen. Clicking on them opens up a new screen with all summaries for the category selected
+- We need to work on the "daily summary" logic for the home screen
+- We need to enable click on summary from the search screen
+- Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
+
+## Infrastructure work
+- Add a CI (Bitrise)
+- Add ktlint
+- Add Detekt
+- Add error tracking system
+- More...
+
+  
 # License
 ```xml
  Copyright 2023 Rygel Louv
