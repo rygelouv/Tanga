@@ -1,6 +1,6 @@
 package app.books.tanga.data.user
 
-import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.entity.OperationError
 import app.books.tanga.entity.User
