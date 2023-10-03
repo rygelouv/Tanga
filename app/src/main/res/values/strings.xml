@@ -34,7 +34,7 @@
     <string name="self_development">Self Development</string>
     <string name="financial_education">Financial Education</string>
     <string name="summary_details_introduction">Introduction</string>
-    <string name="summary_details_recommendations">Recommanded summaries</string>
+    <string name="summary_details_recommendations">Recommended summaries</string>
     <string name="pricing_plan_message">Upgrade To Pro And Get The Most Out Of Tanga</string>
     <string name="pricing_plan_offer_no_ads">No Ads</string>
     <string name="pricing_plan_offer_unlimited_access">Unlimited Access</string>
@@ -60,4 +60,15 @@
     <string name="close">Close</string>
     <string name="error">Error!</string>
     <string name="error_message_default">Sorry, something went wrong. Please try again</string>
+    <string name="error_no_internet_message">Please check your internet connection and try again</string>
+    <string name="error_no_internet_title">No internet connection</string>
+    <string name="error_unauthorized_operation_title">Unauthorized operation</string>
+    <string name="error_maintenance_title">Service on Maintenance</string>
+    <string name="error_resource_not_found_title">Not Found!</string>
+    <string name="error_unknown_title">Unknown error</string>
+    <string name="error_user_not_authenticated_title">User Not Signed In</string>
+    <string name="error_unauthorized_operation_message">You are not authorized to perform this operation. Make sure you are signed in and try again.</string>
+    <string name="error_maintenance_message">Sorry, it seems like our system is either unavailable at the moment or under maintenance. Please try again later.</string>
+    <string name="error_resource_not_found_message">"Sorry, not sure what happened but the resource you are trying to access was not found. "</string>
+    <string name="error_user_not_authenticated_message">To continue this operation, you need to be signed In. Please sign in to continue. If you don\'t have an account yet you can create one quickly, it take 10 seconds</string>
 </resources>

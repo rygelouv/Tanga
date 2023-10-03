@@ -1,6 +1,7 @@
 package app.books.tanga.data
 
 import app.books.tanga.R
+import app.books.tanga.core_ui.resources.TextResource
 import app.books.tanga.errors.UiErrorInfo
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
@@ -132,8 +133,8 @@ object FakeData {
 
     fun errorInfo(): UiErrorInfo {
         return UiErrorInfo(
-            title = "Unable to share summary",
-            message = "Unfortunately, we haven't been able to create a sharing link for your summary. Please try again later"
+            title = TextResource.fromText("Unable to share summary"),
+            message = TextResource.fromText("Unfortunately, we haven't been able to create a sharing link for your summary. Please try again later")
         )
     }
 }
