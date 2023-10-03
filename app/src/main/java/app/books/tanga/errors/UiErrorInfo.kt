@@ -1,6 +1,7 @@
 package app.books.tanga.errors
 
 import androidx.annotation.DrawableRes
+import app.books.tanga.core_ui.resources.TextResource
 
 /**
  * Represents user-friendly error information to be displayed on the UI.
@@ -15,7 +16,7 @@ import androidx.annotation.DrawableRes
  * @property icon An optional drawable resource identifier pointing to an icon representing the error visually.
  */
 data class UiErrorInfo(
-    val title: String? = null,
-    val message: String? = null,
+    val title: TextResource? = null,
+    val message: TextResource? = null,
     @DrawableRes val icon: Int? = null
 )

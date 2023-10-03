@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.core_ui.components.TangaButton
+import app.books.tanga.core_ui.resources.TextResource
+import app.books.tanga.core_ui.resources.asString
 import app.books.tanga.core_ui.theme.LocalSpacing
 import kotlinx.coroutines.launch
 
@@ -97,6 +100,7 @@ private fun ErrorContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+        val context = LocalContext.current
         Image(
             modifier = Modifier
                 .size(230.dp)
@@ -106,7 +110,7 @@ private fun ErrorContent(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.title ?: stringResource(id = R.string.error),
+            text = errorInfo.title?.asString(context.resources) ?: stringResource(id = R.string.error),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center
@@ -114,7 +118,7 @@ private fun ErrorContent(
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.message ?: stringResource(id = R.string.error_message_default),
+            text = errorInfo.message?.asString(context.resources) ?: stringResource(id = R.string.error_message_default),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             textAlign = TextAlign.Center
@@ -129,8 +133,8 @@ private fun ErrorContent(
 fun ErrorContentPreview() {
     val errorInfo =
         UiErrorInfo(
-            title = "Error!",
-            message = "Something went wrong. Please try again",
+            title = TextResource.fromText("Error!"),
+            message = TextResource.fromText("Something went wrong. Please try again"),
             icon = R.drawable.graphic_oops_error
         )
     ErrorContent(errorInfo = errorInfo) {}
@@ -141,8 +145,8 @@ fun ErrorContentPreview() {
 fun ErrorBottomSheetModalPreview() {
     val errorInfo =
         UiErrorInfo(
-            title = "Error!",
-            message = "Something went wrong. Please try again",
+            title = TextResource.fromText("Error!"),
+            message = TextResource.fromText("Something went wrong. Please try again"),
             icon = R.drawable.graphic_oops_error
         )
     ErrorBottomSheetModal(errorInfo = errorInfo) {}

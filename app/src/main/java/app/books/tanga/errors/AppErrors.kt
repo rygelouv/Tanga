@@ -1,5 +1,8 @@
 package app.books.tanga.errors
 
+import app.books.tanga.R
+import app.books.tanga.core_ui.resources.TextResource
+import app.books.tanga.core_ui.resources.asStringOrEmpty
 import kotlin.Exception
 
 /**
@@ -8,12 +11,15 @@ import kotlin.Exception
  * This is a sealed class hierarchy, allowing for a controlled set of subclasses that represent
  * specific types of errors throughout the application.
  *
- * @property message The detail message, which can later be retrieved by the [Throwable.message] property.
+ * @property appMessage The user-friendly message to be displayed to the user.
+ * @property exceptionMessage The detail message, which can later be retrieved by the [Throwable.message] property.
  * @property cause The cause of this error, which can later be retrieved by the [Throwable.cause] property.
  */
 sealed class AppError(
-    message: String? = null, cause: Throwable? = null
-) : Exception(message, cause)
+    val appMessage: TextResource? = null,
+    val exceptionMessage: String? = null,
+    cause: Throwable? = null
+) : Exception(exceptionMessage, cause)
 
 /**
  * Represents errors that are related to operations, such as network operations, database operations, etc.
@@ -21,28 +27,50 @@ sealed class AppError(
  * These errors are typically encountered when performing tasks and need to be conveyed to the user.
  */
 sealed class OperationError(
-    message: String? = null, cause: Throwable? = null
-) : AppError(message = message, cause = cause) {
+    appMessage: TextResource? = null,
+    exceptionMessage: String? = null,
+    cause: Throwable? = null
+) : AppError(appMessage = appMessage, exceptionMessage = exceptionMessage, cause = cause) {
 
     /** Represents an error due to no internet connectivity. */
     data class NoInternetConnectionError(val throwable: Throwable? = null) :
-        OperationError(message = "No internet connection", cause = throwable)
+        OperationError(
+            appMessage = TextResource.fromStringId(R.string.error_no_internet_title),
+            exceptionMessage = "No internet connection",
+            cause = throwable
+        )
 
     /** Represents an error where an unauthorized operation was attempted. */
     data class UnauthorizedOperationError(val throwable: Throwable? = null) :
-        OperationError(message = "Unauthorized operation", cause = throwable)
+        OperationError(
+            appMessage = TextResource.fromStringId(R.string.error_unauthorized_operation_title),
+            exceptionMessage = "Unauthorized operation",
+            cause = throwable
+        )
 
     /** Represents an error indicating that the service is currently on maintenance. */
     data class MaintenanceError(val throwable: Throwable? = null) :
-        OperationError(message = "Service on Maintenance", cause = throwable)
+        OperationError(
+            appMessage = TextResource.fromStringId(R.string.error_maintenance_title),
+            exceptionMessage = "Service on Maintenance",
+            cause = throwable
+        )
 
     /** Represents an error indicating that a resource was not found. */
     data class ResourceNotFoundError(val throwable: Throwable? = null) :
-        OperationError(message = "Resource not found", cause = throwable)
+        OperationError(
+            appMessage = TextResource.fromStringId(R.string.error_resource_not_found_title),
+            exceptionMessage = "Resource not found",
+            cause = throwable
+        )
 
     /** Represents any error that doesn't fall under other predefined categories. */
     data class UnknownError(val throwable: Throwable) :
-        OperationError(message = "Unknown error", cause = throwable)
+        OperationError(
+            appMessage = TextResource.fromStringId(R.string.error_unknown_title),
+            exceptionMessage = "Unknown error",
+            cause = throwable
+        )
 }
 
 /**
@@ -51,12 +79,18 @@ sealed class OperationError(
  * These errors are usually encountered during business rule validation or checks.
  */
 sealed class DomainError(
-    message: String? = null, cause: Throwable? = null
-) : AppError(message = message, cause = cause) {
+    appMessage: TextResource,
+    exceptionMessage: String? = null,
+    cause: Throwable? = null
+) : AppError(appMessage = appMessage, exceptionMessage = exceptionMessage, cause = cause) {
 
     /** Represents an error indicating that a user is not authenticated. */
     data class UserNotAuthenticatedError(val throwable: Throwable? = null) :
-        DomainError(message = "User not authenticated", cause = throwable)
+        DomainError(
+            appMessage = TextResource.fromStringId(R.string.error_user_not_authenticated_title),
+            exceptionMessage = "User not authenticated",
+            cause = throwable
+        )
 }
 
 /**
@@ -70,4 +104,4 @@ sealed class DomainError(
 data class UiError(
     val info: UiErrorInfo,
     val throwable: Throwable? = null
-) : AppError(message = info.message, cause = throwable)
+) : AppError(appMessage = info.title, exceptionMessage = info.message?.asStringOrEmpty(), cause = throwable)
