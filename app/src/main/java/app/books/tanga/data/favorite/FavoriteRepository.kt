@@ -1,7 +1,7 @@
 package app.books.tanga.data.favorite
 
 import android.util.Log
-import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
 import com.google.firebase.firestore.FirebaseFirestore

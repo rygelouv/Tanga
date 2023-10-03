@@ -1,5 +1,8 @@
 package app.books.tanga.feature.audioplayer
 
+/**
+ * Interface that defines actions that can be performed on the player.
+ */
 interface PlayerActions {
 
     /**

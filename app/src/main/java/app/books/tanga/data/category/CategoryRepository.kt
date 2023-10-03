@@ -1,6 +1,6 @@
 package app.books.tanga.data.category
 
-import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Category
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await

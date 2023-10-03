@@ -31,6 +31,47 @@ import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.core_ui.theme.button
 
 /**
+ * This is a composable that displays a button with text.
+ *
+ * @param text: The text to be displayed on the button.
+ * @param onClick: The function to be executed when the button is clicked.
+ * @param height: The height of the button. Default value is 64dp.
+ * @param elevation: The elevation of the button. Default value is 0dp.
+ * @param endPadding: The padding on the right side of the button. Default value is 30dp.
+ * @param shape: The shape of the button. Default value is RoundedCornerShape(16.dp).
+ */
+@Composable
+fun TangaButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    height: Dp = 64.dp,
+    elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
+    endPadding: Dp = 30.dp,
+    shape: RoundedCornerShape = RoundedCornerShape(16.dp)
+) {
+    Button(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            contentColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.primary,
+        ),
+        shape = shape,
+        elevation = elevation
+    ) {
+        Text(
+            modifier = Modifier.fillMaxWidth().padding(end = endPadding),
+            text = text,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.button
+        )
+    }
+}
+
+/**
  * This is a composable that displays a button with text and an icon on the right side.
  * The button has a rounded corner shape and a height of 64dp. When clicked, it triggers the onClick function.
  *

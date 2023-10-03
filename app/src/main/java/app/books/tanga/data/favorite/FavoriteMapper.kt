@@ -1,9 +1,9 @@
 package app.books.tanga.data.favorite
 
-import app.books.tanga.data.FirestoreData
-import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.firestore.FirestoreData
 
 fun FirestoreData.toFavorite(): Favorite {
     return Favorite(

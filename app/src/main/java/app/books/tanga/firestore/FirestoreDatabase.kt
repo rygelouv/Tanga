@@ -1,4 +1,4 @@
-package app.books.tanga.data
+package app.books.tanga.firestore
 
 typealias FirestoreData = Map<String, Any?>
 

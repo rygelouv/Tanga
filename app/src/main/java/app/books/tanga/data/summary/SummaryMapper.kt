@@ -1,10 +1,10 @@
 package app.books.tanga.data.summary
 
-import app.books.tanga.data.FirestoreData
-import app.books.tanga.data.FirestoreDatabase
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.firestore.FirestoreData
 
 
 private fun Any?.toCategoryIds(): List<CategoryId> {
