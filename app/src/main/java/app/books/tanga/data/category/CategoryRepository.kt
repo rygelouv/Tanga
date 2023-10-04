@@ -2,6 +2,7 @@ package app.books.tanga.data.category
 
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Category
+import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -12,16 +13,17 @@ interface CategoryRepository {
 }
 
 class CategoryRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val operationHandler: FirestoreOperationHandler
 ) : CategoryRepository {
 
     override suspend fun getCategories(): Result<List<Category>> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val categories = firestore.categoryCollection.get().await()
             categories.map {
                 it.data.toCategory()
             }
-        }.onFailure { Result.failure<Throwable>(it) }
+        }
     }
 
     private val FirebaseFirestore.categoryCollection

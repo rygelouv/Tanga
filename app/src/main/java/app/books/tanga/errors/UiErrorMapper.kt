@@ -3,6 +3,22 @@ package app.books.tanga.errors
 import app.books.tanga.R
 import app.books.tanga.core_ui.resources.TextResource
 
+
+/**
+ * Converts a [Throwable] into a [UiError].
+ *
+ * This function translates known application-specific error types into their corresponding UI errors.
+ * If the error type isn't recognized as one of the domain-specific errors, it defaults to an unknown operation error.
+ *
+ */
+fun Throwable.toUiError(): UiError {
+    return when(this) {
+        is OperationError -> this.toUiError()
+        is DomainError -> this.toUiError()
+        else -> OperationError.UnknownError(this).toUiError()
+    }
+}
+
 /**
  * Convert an [OperationError] to a [UiError].
  *
@@ -18,6 +34,7 @@ fun OperationError.toUiError(): UiError {
             ),
             throwable = throwable
         )
+
         is OperationError.UnauthorizedOperationError -> UiError(
             info = UiErrorInfo(
                 title = appMessage,
@@ -26,6 +43,7 @@ fun OperationError.toUiError(): UiError {
             ),
             throwable = throwable
         )
+
         is OperationError.MaintenanceError -> UiError(
             info = UiErrorInfo(
                 title = appMessage,
@@ -34,6 +52,7 @@ fun OperationError.toUiError(): UiError {
             ),
             throwable = throwable
         )
+
         is OperationError.ResourceNotFoundError -> UiError(
             info = UiErrorInfo(
                 title = appMessage,
@@ -42,6 +61,7 @@ fun OperationError.toUiError(): UiError {
             ),
             throwable = throwable
         )
+
         is OperationError.UnknownError -> UiError(
             info = UiErrorInfo(),
             throwable = throwable
@@ -60,6 +80,15 @@ fun DomainError.toUiError(): UiError {
             info = UiErrorInfo(
                 title = appMessage,
                 message = TextResource.fromStringId(R.string.error_user_not_authenticated_message),
+                icon = null
+            ),
+            throwable = throwable
+        )
+
+        is DomainError.FavoriteNotFoundError -> UiError(
+            info = UiErrorInfo(
+                title = appMessage,
+                message = TextResource.fromStringId(R.string.error_favorite_not_found_message),
                 icon = null
             ),
             throwable = throwable

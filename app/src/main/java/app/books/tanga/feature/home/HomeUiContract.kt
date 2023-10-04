@@ -1,6 +1,7 @@
 package app.books.tanga.feature.home
 
 import app.books.tanga.entity.Section
+import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.toSummaryUi
 
@@ -8,7 +9,7 @@ data class HomeUiState(
     val userFirstName: String? = null,
     val userPhotoUrl: String? = null,
     val sections: List<HomeSectionUi>? = null,
-    val error: Throwable? = null
+    val error: UiError? = null
 )
 
 /**

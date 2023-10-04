@@ -47,7 +47,7 @@ class InternetConnectivityMonitorImpl @Inject constructor(
     override val isInternetAvailable: StateFlow<Boolean> by lazy {
         observeConnectivity().stateIn(
             scope = coroutineScope,
-            started = SharingStarted.WhileSubscribed(),
+            started = SharingStarted.Eagerly,
             initialValue = connectivityManager
                 .activeNetworkCapabilities()
                 ?.hasInternetConnection() ?: false
