@@ -4,6 +4,7 @@ import android.util.Log
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
 import kotlinx.coroutines.flow.Flow
@@ -46,7 +47,8 @@ interface FavoriteRepository {
  */
 class FavoriteRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val cache: FavoriteInMemoryCache
+    private val cache: FavoriteInMemoryCache,
+    private val operationHandler: FirestoreOperationHandler
 ) : FavoriteRepository {
 
     /**
@@ -55,14 +57,12 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Then update the cache
      */
     override suspend fun createFavorite(favorite: Favorite): Result<Unit> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val documentReference = firestore.favoriteCollection.add(favorite).await()
             firestore.favoriteCollection.document(documentReference.id)
                 .update(FirestoreDatabase.Favorites.Fields.UID, documentReference.id).await()
             // Update cache
             cache.add(favorite = favorite.copy(id = FavoriteId(documentReference.id)))
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
@@ -70,13 +70,10 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Delete the favorite from Firestore and update the cache
      */
     override suspend fun deleteFavorite(favorite: Favorite): Result<Unit> {
-        return runCatching {
+        return operationHandler.executeOperation {
             firestore.favoriteCollection.document(favorite.id.value).delete().await()
             // Update cache
             cache.remove(favorite = favorite)
-        }.onFailure {
-            Log.e("FavoriteRepositoryImpl", "Error deleting favorite", it)
-            Result.failure<Throwable>(it)
         }
     }
 
@@ -87,7 +84,7 @@ class FavoriteRepositoryImpl @Inject constructor(
         summaryId: String,
         userId: String
     ): Result<Favorite?> {
-        return runCatching {
+        return operationHandler.executeOperation {
             if (cache.isEmpty()) {
                 getFavoriteBySummaryIdFromFirestore(
                     summaryId = summaryId,
@@ -96,8 +93,6 @@ class FavoriteRepositoryImpl @Inject constructor(
             } else {
                 cache.getBySummaryId(summaryId)
             }
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
@@ -125,7 +120,7 @@ class FavoriteRepositoryImpl @Inject constructor(
         summaryId: String,
         userId: String
     ): Result<Favorite?> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val favorite = firestore.favoriteCollection
                 .whereEqualTo(FirestoreDatabase.Favorites.Fields.SUMMARY_ID, summaryId)
                 .whereEqualTo(FirestoreDatabase.Favorites.Fields.USER_ID, userId)
@@ -133,8 +128,6 @@ class FavoriteRepositoryImpl @Inject constructor(
                 .await()
                 .firstOrNull()
             favorite?.data?.toFavorite()
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
@@ -153,16 +146,14 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Get the favorites from Firestore for a user, then save them to the cache
      */
     private suspend fun getFavoritesFromFirestore(userId: String): Result<List<Favorite>> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val favorites = firestore.favoriteCollection.whereEqualTo(
                 FirestoreDatabase.Favorites.Fields.USER_ID,
                 userId
             ).get().await()
             favorites.map {
                 it.data.toFavorite()
-            }.also { cache.putAll(it) } // Save to cache
-        }.onFailure {
-            Result.failure<Throwable>(it)
+            }.also { cache.putAll(it) }
         }
     }
 

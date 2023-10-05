@@ -5,6 +5,8 @@ import app.books.tanga.data.summary.SummaryRepository
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.User
+import app.books.tanga.errors.DomainError
 import javax.inject.Inject
 
 class HomeInteractor @Inject constructor(
@@ -16,32 +18,36 @@ class HomeInteractor @Inject constructor(
      * Get the list of summaries grouped by category
      */
     suspend fun getSummarySections(): Result<List<Section>> {
-        return runCatching {
-            val categories = categoryRepository.getCategories()
-            val summaries = summaryRepository.getAllSummaries().getOrNull()
+        val categories = categoryRepository.getCategories()
+        val summaries = summaryRepository.getAllSummaries().getOrNull()
 
-            val sections = mutableListOf<Section>()
+        val sections = mutableListOf<Section>()
 
-            categories.onSuccess {
-                it.forEach { category ->
-                    val summariesByCategory = summaries?.filter { summary ->
-                        summary.categories.contains(category.id)
-                    } ?: emptyList()
+        categories.map {
+            it.forEach { category ->
+                val summariesByCategory = summaries?.filter { summary ->
+                    summary.categories.contains(category.id)
+                } ?: emptyList()
 
-                    sections.add(
-                        Section(
-                            category = category,
-                            summaries = summariesByCategory
-                        )
+                sections.add(
+                    Section(
+                        category = category,
+                        summaries = summariesByCategory
                     )
-                }
+                )
             }
-
-            sections
+        }.onFailure {
+            return Result.failure(it)
         }
+
+        return Result.success(sections)
     }
 
     suspend fun getDailySummary(): Result<Summary> = TODO("Not yet implemented")
 
-    suspend fun getUserInfo() = userRepository.getUser() // TODO think about error handling
+    suspend fun getUserInfo(): Result<User> {
+        val user = userRepository.getUser().getOrThrow()
+        return user?.let { Result.success(it) }
+            ?: Result.failure(DomainError.UserNotAuthenticatedError())
+    }
 }

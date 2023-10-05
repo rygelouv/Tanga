@@ -3,9 +3,8 @@ package app.books.tanga.feature.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.data.user.UserRepository
+import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
-import app.books.tanga.feature.summary.SummaryInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,6 +45,9 @@ class HomeViewModel @Inject constructor(
                 }
             }.onFailure {
                 Log.e("HomeViewModel", "Error loading home sections", it)
+                _state.update { state ->
+                    state.copy(error = it.toUiError())
+                }
             }
     }
 
@@ -57,6 +59,11 @@ class HomeViewModel @Inject constructor(
                     userFirstName = user.firsName,
                     userPhotoUrl = user.photoUrl
                 )
+            }
+        }.onFailure {
+            Log.e("HomeViewModel", "Error loading user info", it)
+            _state.update { state ->
+                state.copy(error = it.toUiError())
             }
         }
     }

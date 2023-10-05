@@ -71,4 +71,6 @@
     <string name="error_maintenance_message">Sorry, it seems like our system is either unavailable at the moment or under maintenance. Please try again later.</string>
     <string name="error_resource_not_found_message">"Sorry, not sure what happened but the resource you are trying to access was not found. "</string>
     <string name="error_user_not_authenticated_message">To continue this operation, you need to be signed In. Please sign in to continue. If you don\'t have an account yet you can create one quickly, it take 10 seconds</string>
+    <string name="error_favorite_not_found_title">Favorite Not Found</string>
+    <string name="error_favorite_not_found_message">The summary was not found in your library of favorites</string>
 </resources>

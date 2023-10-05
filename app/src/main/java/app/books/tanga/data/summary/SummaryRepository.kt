@@ -2,6 +2,7 @@ package app.books.tanga.data.summary
 
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Summary
+import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -24,32 +25,29 @@ interface SummaryRepository {
 
 class SummaryRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val summaryInMemoryCache: SummaryInMemoryCache
+    private val summaryInMemoryCache: SummaryInMemoryCache,
+    private val operationHandler: FirestoreOperationHandler
 ) : SummaryRepository {
     override suspend fun getSummary(summaryId: String): Result<Summary> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val summary = firestore.summaryCollection.document(summaryId).get().await()
 
             summary.data?.toSummary() ?: throw Exception("Summary not found")
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
     override suspend fun getAllSummaries(): Result<List<Summary>> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val summaries = firestore.summaryCollection.get().await()
 
             summaries.map {
                 it.data.toSummary()
             }
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
     override suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
-        return runCatching {
+        return operationHandler.executeOperation {
             val summaries = firestore.summaryCollection
                 .whereArrayContains(FirestoreDatabase.Summaries.Fields.CATEGORIES, categoryId)
                 .get()
@@ -58,8 +56,6 @@ class SummaryRepositoryImpl @Inject constructor(
             summaries.map {
                 it.data.toSummary()
             }
-        }.onFailure {
-            Result.failure<Throwable>(it)
         }
     }
 
@@ -68,15 +64,12 @@ class SummaryRepositoryImpl @Inject constructor(
      * This is a quick search using the in memory cache
      */
     override suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>> {
-        return runCatching {
-            val summaries = summaryInMemoryCache.getAll()
-            summaries.filter { summary ->
-                summary.title.contains(query, ignoreCase = true) ||
-                        summary.author.contains(query, ignoreCase = true)
-            }
-        }.onFailure {
-            Result.failure<Throwable>(it)
+        val summaries = summaryInMemoryCache.getAll()
+        val filteredSummaries = summaries.filter { summary ->
+            summary.title.contains(query, ignoreCase = true) ||
+                    summary.author.contains(query, ignoreCase = true)
         }
+        return Result.success(filteredSummaries)
     }
 
     override suspend fun saveSummariesInMemoryCache(summaries: List<Summary>) {

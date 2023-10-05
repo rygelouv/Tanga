@@ -17,11 +17,3 @@ enum class PredefinedCategory(val id: String) {
     PSYCHOLOGY("life_philosophy_psychology"),
     FINANCIAL_EDUCATION("financial_education"),
 }
-
-/**
- * Represents a combination of a category and its summaries
- */
-data class Section(
-    val category: Category,
-    val summaries: List<Summary>
-)
