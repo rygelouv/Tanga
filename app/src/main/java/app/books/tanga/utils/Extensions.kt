@@ -1,4 +1,4 @@
-package app.books.tanga
+package app.books.tanga.utils
 
 /**
  * Formats a long duration value (in milliseconds) into a time string in the format "MM:SS".

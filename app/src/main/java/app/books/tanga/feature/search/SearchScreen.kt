@@ -15,9 +15,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,64 +39,98 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.core_ui.components.Tag
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.errors.ErrorContent
+import app.books.tanga.errors.ShowSnackbarError
 import app.books.tanga.feature.home.AnimatedShimmerLoader
+import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.list.SummaryGrid
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
 
-    Column(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
-    ) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.explore),
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
-
-        SearchBox { viewModel.onSearch(it) }
-
-        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-
-        if (state.shouldShowCategories) {
-            state.categories?.let {
-                CategoriesSection(
-                    categories = it,
-                    onCategorySelected = { category ->
-                        viewModel.onCategorySelected(category)
-                    },
-                    onCategoryDeselected = { category ->
-                        viewModel.onCategoryDeselected(category)
-                    }
-                )
-            }
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
+    ) { paddingValues ->
 
-        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+        HandleEvents(event = event, snackbarHostState = snackbarHostState)
 
-        when (state.progressState) {
-            ProgressState.Show -> AnimatedShimmerLoader(
-                modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .background(color = MaterialTheme.colorScheme.background)
+                .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.explore),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.Bold
             )
-            ProgressState.Hide -> {
-                if (state.summaries.isNullOrEmpty()) {
-                    EmptySearchScreen(query = state.query ?: "")
-                } else {
-                    state.summaries?.let {
-                        SummaryGrid(
-                            modifier = Modifier,
-                            summaries =  it
-                        ) {}
+            Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+
+            SearchBox { viewModel.onSearch(it) }
+
+            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+
+            if (state.shouldShowCategories) {
+                state.categories?.let {
+                    CategoriesSection(
+                        categories = it,
+                        onCategorySelected = { category ->
+                            viewModel.onCategorySelected(category)
+                        },
+                        onCategoryDeselected = { category ->
+                            viewModel.onCategoryDeselected(category)
+                        }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+
+            when (state.progressState) {
+                ProgressState.Show -> LibraryShimmerLoader(
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                ProgressState.Hide -> {
+                    if (state.summaries.isNullOrEmpty()) {
+                        EmptySearchScreen(query = state.query ?: "")
+                    } else {
+                        state.summaries?.let {
+                            SummaryGrid(
+                                modifier = Modifier,
+                                summaries = it
+                            ) {}
+                        }
+                    }
+                    state.error?.let {
+                        ErrorContent(
+                            errorInfo = it.info,
+                            canRetry = true,
+                            onClick = { viewModel.onRetry() }
+                        )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun HandleEvents(event: SearchUiEvent?, snackbarHostState: SnackbarHostState) {
+    when (event) {
+        is SearchUiEvent.ShowSnackError -> {
+            ShowSnackbarError(errorInfo = event.error.info, snackbarHostState = snackbarHostState)
+        }
+        null -> Unit
     }
 }
 
@@ -169,11 +207,13 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         trailingIcon = {
             if (text.isNotEmpty()) {
                 Icon(
-                    modifier = Modifier.size(16.dp).clickable {
-                        text = ""
-                        active = false
-                        onSearch(text)
-                    },
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clickable {
+                            text = ""
+                            active = false
+                            onSearch(text)
+                        },
                     painter = painterResource(id = TangaIcons.Close),
                     contentDescription = "Close",
                     tint = MaterialTheme.colorScheme.onTertiaryContainer
