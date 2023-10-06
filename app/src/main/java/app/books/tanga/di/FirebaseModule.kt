@@ -5,6 +5,7 @@ import app.books.tanga.firestore.FirestoreOperationHandlerImpl
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,6 @@ class FirebaseModule {
 @InstallIn(SingletonComponent::class)
 interface FirestoreOperationHandlerModule {
 
-    @Provides
+    @Binds
     fun FirestoreOperationHandlerImpl.provideFirestoreOperationHandler(): FirestoreOperationHandler
 }

@@ -5,6 +5,7 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.entity.Category
 import app.books.tanga.entity.PredefinedCategory
+import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
 
 data class SearchUiState(
@@ -14,7 +15,7 @@ data class SearchUiState(
     val shouldShowCategories: Boolean = true,
     val selectedCategories: MutableList<CategoryUi> = mutableListOf(),
     val summaries: List<SummaryUi>? = null,
-    val error: Throwable? = null
+    val error: UiError? = null
 )
 
 data class CategoryUi(
@@ -35,4 +36,8 @@ fun Category.toCategoryUi(): CategoryUi {
             else -> TangaIcons.SelfDevelopment
         }
     )
+}
+
+sealed class SearchUiEvent {
+    data class ShowSnackError(val error: UiError) : SearchUiEvent()
 }

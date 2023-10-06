@@ -1,8 +1,9 @@
-package app.books.tanga
+package app.books.tanga.utils
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import app.books.tanga.R
 
 /**
  * Utility function to share a summary

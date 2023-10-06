@@ -52,10 +52,11 @@ import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.core_ui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
+import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
-import app.books.tanga.openLink
-import app.books.tanga.shareSummary
+import app.books.tanga.utils.openLink
+import app.books.tanga.utils.shareSummary
 
 @Composable
 fun SummaryDetailsScreen(
@@ -92,7 +93,12 @@ fun SummaryDetailsScreen(
     ) {
         when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
-            ProgressState.Hide -> SummaryDetailsContent(state, it, onRecommendationClicked)
+            ProgressState.Hide -> SummaryDetailsContent(
+                state = state,
+                paddingValues = it,
+                onRecommendationClicked = onRecommendationClicked,
+                onErrorButtonClicked = { viewModel.loadSummary(summaryId) }
+            )
         }
     }
 }
@@ -100,33 +106,43 @@ fun SummaryDetailsScreen(
 @Composable
 private fun SummaryDetailsContent(
     state: SummaryDetailsUiState,
-    it: PaddingValues,
-    onRecommendationClicked: (String) -> Unit
+    paddingValues: PaddingValues,
+    onRecommendationClicked: (String) -> Unit,
+    onErrorButtonClicked: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        val summary = state.summary ?: return@Column // Show error
-        SummaryDetailsHeader(modifier = Modifier.padding(it), summary = summary)
+    state.summary?.let { summary ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            SummaryDetailsHeader(modifier = Modifier.padding(paddingValues), summary = summary)
 
-        Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
-        SummaryIntroduction(summary = summary)
+            Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+            SummaryIntroduction(summary = summary)
 
-        SummaryAuthor(
-            modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
-            author = summary.author,
-            authorPictureUrl = summary.authorPictureUrl
-        )
+            SummaryAuthor(
+                modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
+                author = summary.author,
+                authorPictureUrl = summary.authorPictureUrl
+            )
 
-        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-        state.summary.purchaseBookUrl?.let { PurchaseButton(it) }
+            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+            state.summary.purchaseBookUrl?.let { PurchaseButton(it) }
 
-        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
-        Recommendations(
-            recommendations = state.recommendations,
-            onRecommendationClicked = onRecommendationClicked
+            Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+            Recommendations(
+                recommendations = state.recommendations,
+                onRecommendationClicked = onRecommendationClicked
+            )
+        }
+    }
+
+    state.error?.let {
+        ErrorContent(
+            errorInfo = it.info,
+            canRetry = true,
+            onClick = { onErrorButtonClicked() }
         )
     }
 }

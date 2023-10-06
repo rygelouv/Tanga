@@ -5,15 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import app.books.tanga.core_ui.theme.TangaTheme
 import app.books.tanga.feature.splash.SplashViewModel
 import app.books.tanga.navigation.NavigationGraph
-import app.books.tanga.core_ui.theme.TangaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,17 +31,22 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TangaTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    val state by splashViewModel.state
-                    state.startDestination?.let { destination ->
-                        val navController = rememberNavController()
-                        NavigationGraph(
-                            navController = navController,
-                            startDestination = destination
-                        )
+                    Surface(
+                        modifier = Modifier.fillMaxSize().padding(it),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        val state by splashViewModel.state
+                        state.startDestination?.let { destination ->
+                            val navController = rememberNavController()
+                            NavigationGraph(
+                                navController = navController,
+                                startDestination = destination
+                            )
+                        }
                     }
                 }
             }

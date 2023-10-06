@@ -38,11 +38,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.components.ProfileImage
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
@@ -68,22 +70,32 @@ fun HomeScreen(
     ) {
         LoadHomeContent(
             modifier = Modifier.padding(it),
-            state = state, onSummaryClicked = onSummaryClicked
+            state = state,
+            onSummaryClicked = onSummaryClicked,
+            onErrorButtonClicked = { viewModel.onRetry() }
         )
     }
 }
 
 @Composable
-fun LoadHomeContent(modifier: Modifier, state: HomeUiState, onSummaryClicked: (String) -> Unit) {
+fun LoadHomeContent(
+    modifier: Modifier,
+    state: HomeUiState,
+    onSummaryClicked: (String) -> Unit,
+    onErrorButtonClicked: () -> Unit = {}
+) {
 
-    if (state.sections == null) {
+    if (state.progressState == ProgressState.Show) {
         AnimatedShimmerLoader(modifier)
     } else {
-        HomeContent(
-            modifier = modifier,
-            state = state,
-            onSummaryClicked = onSummaryClicked
-        )
+        state.sections?.let {
+            HomeContent(
+                modifier = modifier,
+                state = state,
+                onSummaryClicked = onSummaryClicked,
+                onErrorButtonClicked = onErrorButtonClicked
+            )
+        }
     }
 }
 
@@ -120,7 +132,8 @@ fun HomeTopBar(
 fun HomeContent(
     modifier: Modifier,
     state: HomeUiState,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClicked: (String) -> Unit,
+    onErrorButtonClicked: () -> Unit = {}
 ) {
     val dailySummary = remember {
         FakeData.allSummaries().first()
@@ -140,7 +153,9 @@ fun HomeContent(
             style = MaterialTheme.typography.bodyLarge,
         )
         LazyColumn(
-            modifier = modifier.fillMaxSize().padding(vertical = 0.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(vertical = 0.dp),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp),
         ) {
@@ -155,6 +170,15 @@ fun HomeContent(
                         isFirst = index == 0,
                         summaries = section.summaries,
                         onSummaryClicked = onSummaryClicked
+                    )
+                }
+            }
+            state.error?.let {
+                item {
+                    ErrorContent(
+                        errorInfo = it.info,
+                        canRetry = true,
+                        onClick = onErrorButtonClicked
                     )
                 }
             }

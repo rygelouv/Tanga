@@ -5,19 +5,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +40,38 @@ import app.books.tanga.core_ui.components.TangaButton
 import app.books.tanga.core_ui.resources.TextResource
 import app.books.tanga.core_ui.resources.asString
 import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.feature.search.SearchUiEvent
 import kotlinx.coroutines.launch
+
+/**
+ * Displays an error message inside a snackbar.
+ *
+ * This Composable presents an error to the user using a snackbar. The snackbar is displayed for a short duration and
+ * then dismissed automatically. The provided `errorInfo` is used to determine the message to display.
+ *
+ * @param errorInfo The [UiErrorInfo] model containing details about the error to display.
+ * @param snackbarHostState The [SnackbarHostState] used to display the snackbar.
+ */
+@Composable
+fun ShowSnackbarError(
+    errorInfo: UiErrorInfo,
+    snackbarHostState: SnackbarHostState,
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val message = errorInfo.message?.asString(LocalContext.current.resources)
+        ?: stringResource(id = R.string.error_message_default)
+    val actionLabel = stringResource(id = R.string.ok)
+
+    LaunchedEffect(errorInfo) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel,
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+}
 
 /**
  * Displays an error message inside a modal bottom sheet.
@@ -86,8 +120,9 @@ fun ErrorBottomSheetModal(errorInfo: UiErrorInfo, onDismiss: () -> Unit) {
  * @param onClick: The function to be executed when the button is clicked.
  */
 @Composable
-private fun ErrorContent(
+fun ErrorContent(
     errorInfo: UiErrorInfo,
+    canRetry: Boolean = false,
     onClick: () -> Unit
 ) {
     Column(
@@ -110,7 +145,8 @@ private fun ErrorContent(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.title?.asString(context.resources) ?: stringResource(id = R.string.error),
+            text = errorInfo.title?.asString(context.resources)
+                ?: stringResource(id = R.string.error),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center
@@ -118,13 +154,17 @@ private fun ErrorContent(
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.message?.asString(context.resources) ?: stringResource(id = R.string.error_message_default),
+            text = errorInfo.message?.asString(context.resources)
+                ?: stringResource(id = R.string.error_message_default),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
-        TangaButton(text = stringResource(id = R.string.close), onClick = onClick)
+        TangaButton(
+            text = stringResource(id = if (canRetry) R.string.retry else R.string.close),
+            onClick = onClick
+        )
     }
 }
 
@@ -150,4 +190,27 @@ fun ErrorBottomSheetModalPreview() {
             icon = R.drawable.graphic_oops_error
         )
     ErrorBottomSheetModal(errorInfo = errorInfo) {}
+}
+
+@Preview
+@Composable
+fun ShowSnackbarErrorPreview() {
+    val errorInfo =
+        UiErrorInfo(
+            title = TextResource.fromText("Error!"),
+            message = TextResource.fromText("Something went wrong. Please try again"),
+            icon = R.drawable.graphic_oops_error
+        )
+    val snackbarHostState = SnackbarHostState()
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+        ) {
+            ShowSnackbarError(errorInfo = errorInfo, snackbarHostState = snackbarHostState)
+        }
+    }
 }

@@ -48,7 +48,7 @@ import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.feature.audioplayer.PlaybackState
 import app.books.tanga.feature.audioplayer.PlayerActions
 import app.books.tanga.feature.audioplayer.PlayerState
-import app.books.tanga.toTimeFormat
+import app.books.tanga.utils.toTimeFormat
 
 @Composable
 fun PlaySummaryAudioScreen(
@@ -268,39 +268,4 @@ private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Lo
             )
         }
     }
-}
-
-@Composable
-private fun MediaSlider(
-    playbackState: PlaybackState?,
-    onSliderPositionChanged: (Long) -> Unit
-) {
-    // State variable to track whether the user is currently dragging the slider.
-    var isDragging by remember { mutableStateOf(false) }
-
-    // State variable to hold the value while the user is dragging.
-    var dragValue by remember { mutableFloatStateOf(0f) }
-
-    // Determine the current value for the slider, based on whether it's being dragged or not.
-    val sliderValue: Float = if (isDragging) {
-        dragValue
-    } else {
-        playbackState?.position?.toFloat() ?: 0f
-    }
-
-    Slider(
-        modifier = Modifier.fillMaxWidth(),
-        value = sliderValue,
-        onValueChange = {
-            // Update the state to indicate the slider is being dragged and store the current drag value.
-            isDragging = true
-            dragValue = it
-        },
-        onValueChangeFinished = {
-            // Once the user stops dragging, update the playback position and reset the dragging state.
-            isDragging = false
-            onSliderPositionChanged(dragValue.toLong())
-        },
-        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f),
-    )
 }

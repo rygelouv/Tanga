@@ -7,12 +7,13 @@ import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.User
 import app.books.tanga.errors.DomainError
+import app.books.tanga.feature.profile.ProfileInteractor
 import javax.inject.Inject
 
 class HomeInteractor @Inject constructor(
-    private val userRepository: UserRepository,
     private val summaryRepository: SummaryRepository,
-    private val categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository,
+    private val profileInteractor: ProfileInteractor
 ) {
     /**
      * Get the list of summaries grouped by category
@@ -45,9 +46,5 @@ class HomeInteractor @Inject constructor(
 
     suspend fun getDailySummary(): Result<Summary> = TODO("Not yet implemented")
 
-    suspend fun getUserInfo(): Result<User> {
-        val user = userRepository.getUser().getOrThrow()
-        return user?.let { Result.success(it) }
-            ?: Result.failure(DomainError.UserNotAuthenticatedError())
-    }
+    suspend fun getUserInfo(): Result<User?> = profileInteractor.getUserInfo()
 }

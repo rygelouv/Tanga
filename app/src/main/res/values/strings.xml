@@ -58,6 +58,7 @@
     <string name="summary_details_share_message">Read, list or watch a summary of the book \"%1$s\" by %2$s on Tanga App.\n %3$s</string>
     <string name="ok">OK</string>
     <string name="close">Close</string>
+    <string name="retry">Retry</string>
     <string name="error">Error!</string>
     <string name="error_message_default">Sorry, something went wrong. Please try again</string>
     <string name="error_no_internet_message">Please check your internet connection and try again</string>

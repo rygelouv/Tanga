@@ -1,6 +1,7 @@
 package app.books.tanga.feature.summary.details
 
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
 
 /**
@@ -15,6 +16,7 @@ data class SummaryDetailsUiState(
     val summary: SummaryUi? = null,
     val isFavorite: Boolean = false,
     val favoriteProgressState: ProgressState = ProgressState.Hide,
-    val recommendations: List<SummaryUi> = emptyList()
+    val recommendations: List<SummaryUi> = emptyList(),
+    val error: UiError? = null
 )
 

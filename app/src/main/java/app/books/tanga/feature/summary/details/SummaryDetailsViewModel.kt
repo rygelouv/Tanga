@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.entity.Summary
+import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,6 +50,12 @@ class SummaryDetailsViewModel @Inject constructor(
                 loadRecommendations(summary)
             }.onFailure {
                 Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
+                _state.update { state ->
+                    state.copy(
+                        progressState = ProgressState.Hide,
+                        error = it.toUiError()
+                    )
+                }
             }
         }
     }
@@ -68,6 +75,9 @@ class SummaryDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             summaryInteractor.getRecommendationsForSummary(summary).onSuccess { recommendations ->
                 _state.update { it.copy(recommendations = recommendations.map { it.toSummaryUi() }) }
+            }.onFailure {
+                Log.e("SummaryDetailsViewModel", "Error loading recommendations", it)
+                // TODO Post snackbar error event
             }
         }
     }
@@ -79,7 +89,6 @@ class SummaryDetailsViewModel @Inject constructor(
     fun toggleFavorite() {
         // Do nothing if the summary is not initialized
         if (this::summary.isInitialized.not()) return
-        Log.d("SummaryDetailsViewModel", "toggleFavorite")
 
         // Show saving progress
         _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
@@ -104,6 +113,7 @@ class SummaryDetailsViewModel @Inject constructor(
                     favoriteProgressState = ProgressState.Hide
                 )
             }
+            // TODO: Show a snackbar to notify the user that the summary is added to favorites
         }.onFailure { error ->
             _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
             Log.e("SummaryDetailsViewModel", "Error creating favorite", error)
@@ -118,6 +128,7 @@ class SummaryDetailsViewModel @Inject constructor(
                     favoriteProgressState = ProgressState.Hide
                 )
             }
+            // TODO: Show a snackbar to notify the user that the summary is removed from favorites
         }.onFailure { error ->
             _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
             Log.e("SummaryDetailsViewModel", "Error deleting favorite", error)

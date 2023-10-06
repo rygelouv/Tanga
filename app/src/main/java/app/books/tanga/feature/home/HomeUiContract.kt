@@ -1,11 +1,13 @@
 package app.books.tanga.feature.home
 
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.Section
 import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.toSummaryUi
 
 data class HomeUiState(
+    val progressState: ProgressState = ProgressState.Hide,
     val userFirstName: String? = null,
     val userPhotoUrl: String? = null,
     val sections: List<HomeSectionUi>? = null,
