@@ -99,6 +99,13 @@ sealed class DomainError(
             exceptionMessage = "Favorite not found",
             cause = throwable
         )
+    /** Represents an error indicating that Google sign-in launch has failed */
+    data class UnableToSignInWithGoogleError(val throwable: Throwable? = null) :
+        DomainError(
+            appMessage = TextResource.fromStringId(R.string.error_unable_to_sign_in_with_google_title),
+            exceptionMessage = "User to launch Google sign in",
+            cause = throwable
+        )
 }
 
 /**

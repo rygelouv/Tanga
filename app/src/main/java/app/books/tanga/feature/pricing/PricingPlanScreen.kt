@@ -36,6 +36,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.core_ui.icons.TangaIcons
+import app.books.tanga.core_ui.theme.Cerulean
+import app.books.tanga.core_ui.theme.Cultured
 import app.books.tanga.core_ui.theme.LocalGradientColors
 import app.books.tanga.core_ui.theme.LocalSpacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -72,9 +74,18 @@ private fun SystemBarsVisibility() {
     val systemUiController = rememberSystemUiController()
 
     DisposableEffect(key1 = true) {
-        systemUiController.isSystemBarsVisible = false // Status & Navigation bars are hidden
+        // Navigation bar id hidden
+        systemUiController.isNavigationBarVisible = false
+        // Status bar color is changed to get the same color as the screen background
+        systemUiController.setStatusBarColor(
+            color = Cerulean
+        )
         onDispose {
-            systemUiController.isSystemBarsVisible = true // Status & Navigation bars are visible
+            systemUiController.isNavigationBarVisible = true // Navigation bar is visible
+            // put back original status bar color
+            systemUiController.setStatusBarColor(
+                color = Cultured
+            )
         }
     }
 }
@@ -237,59 +248,3 @@ private fun BestValueLabel() {
     }
 }
 
-@Composable
-fun PricingPlanItem(
-    modifier: Modifier = Modifier,
-    title: String,
-    price: String,
-    cadence: String,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.secondary,
-                shape = MaterialTheme.shapes.large
-            )
-            .background(
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                shape = MaterialTheme.shapes.large
-            )
-            .padding(
-                horizontal = LocalSpacing.current.medium,
-                vertical = LocalSpacing.current.medium
-            )
-            .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = title,
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.SemiBold
-        )
-        Spacer(
-            modifier = Modifier
-                .width(LocalSpacing.current.medium)
-                .weight(1f)
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = price,
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.width(LocalSpacing.current.extraSmall))
-            Text(
-                text = cadence,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Light
-            )
-        }
-    }
-}

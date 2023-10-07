@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(private val sessionManager: SessionManag
     init {
         viewModelScope.launch {
             sessionManager.sessionState()
-                .filterIsInstance<SessionState.LoggedOut>()
+                .filterIsInstance<SessionState.SignedOut>()
                 .collect {
                     _event.emit(MainUiEvent.NavigateTo.ToAuth)
                 }
