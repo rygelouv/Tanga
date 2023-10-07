@@ -29,10 +29,10 @@ class SplashViewModel @Inject constructor(
             val completionState = repository.getOnboardingCompletionState()
             if (completionState) {
                 when (sessionManager.sessionState().first()) {
-                    SessionState.LoggedOut -> {
+                    SessionState.SignedOut -> {
                         _state.value = SplashState(false, NavigationScreen.Authentication)
                     }
-                    is SessionState.LoggedIn -> {
+                    is SessionState.SignedIn -> {
                         _state.value = SplashState(false, NavigationScreen.Main)
                     }
                 }

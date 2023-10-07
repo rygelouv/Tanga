@@ -3,9 +3,12 @@ package app.books.tanga.di
 import android.app.Application
 import android.content.Context
 import app.books.tanga.R
+import app.books.tanga.feature.auth.GoogleAuthService
+import app.books.tanga.feature.auth.GoogleAuthServiceImpl
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,4 +60,11 @@ class GoogleSignInModule {
         const val GOOGLE_SIGN_IN_REQUEST = "GoogleSignInRequest"
         const val GOOGLE_SIGN_UP_REQUEST = "GoogleSignUpRequest"
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface GoogleAuthServiceModule {
+    @Binds
+    fun GoogleAuthServiceImpl.provideGoogleAuthService(): GoogleAuthService
 }

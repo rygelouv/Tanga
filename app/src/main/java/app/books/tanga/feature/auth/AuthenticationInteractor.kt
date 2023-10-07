@@ -1,105 +1,80 @@
 package app.books.tanga.feature.auth
 
-import android.util.Log
 import app.books.tanga.data.user.UserRepository
-import app.books.tanga.data.user.toUser
-import app.books.tanga.di.GoogleSignInModule.Companion.GOOGLE_SIGN_IN_REQUEST
-import app.books.tanga.di.GoogleSignInModule.Companion.GOOGLE_SIGN_UP_REQUEST
+import app.books.tanga.entity.User
+import app.books.tanga.errors.DomainError
 import app.books.tanga.session.SessionId
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import app.books.tanga.utils.resultOf
 import com.google.android.gms.auth.api.identity.BeginSignInResult
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.identity.SignInCredential
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import javax.inject.Named
 
-interface AuthenticationInteractor {
+/**
+ * Represents the result of a sign-in operation.
+ */
+data class AuthResult(
+    val user: User,
+    val isNewUser: Boolean
+)
 
-    suspend fun initGoogleSignIn(): Result<BeginSignInResult>
-
-    suspend fun launchGoogleSignIn(credentials: SignInCredential): Result<SessionState>
-
-    suspend fun signOut(): Result<SessionState>
-}
-
-class AuthenticationInteractorImpl @Inject constructor(
+class AuthenticationInteractor @Inject constructor(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
-    private val auth: FirebaseAuth,
-    private val signInClient: SignInClient,
-    @Named(GOOGLE_SIGN_IN_REQUEST)
-    private var signInRequest: BeginSignInRequest,
-    @Named(GOOGLE_SIGN_UP_REQUEST)
-    private var signUpRequest: BeginSignInRequest,
-) : AuthenticationInteractor {
+    private val googleAuthService: GoogleAuthService
+) {
 
     /**
-     * If initialization of Sign in request fails, then try sign up request, then only return
-     * failure if sign up fails as well
+     * Initializes the Google sign-in process.
      */
-    override suspend fun initGoogleSignIn(): Result<BeginSignInResult> {
-        return runCatching {
-            signInClient.beginSignIn(signInRequest).await()
-        }.onFailure {
-            Log.d("AuthenticationInteractor","Unable to get sign in result. Attempt sign up")
-            runCatching {
-                signInClient.beginSignIn(signUpRequest).await()
-            }.onFailure { failure ->
-                Log.d("AuthenticationInteractor","Unable to get sign up result")
-                // TODO do proper error creation
-                Result.failure<Throwable>(failure)
-            }
+    suspend fun initGoogleSignIn(): Result<BeginSignInResult> {
+        val result = resultOf {
+            googleAuthService.initSignIn()
+        }
+
+        return if (result.isSuccess) {
+            result
+        } else {
+            Result.failure(DomainError.UnableToSignInWithGoogleError(result.exceptionOrNull()))
         }
     }
 
-    override suspend fun launchGoogleSignIn(credentials: SignInCredential): Result<SessionState> {
-        return runCatching {
-            val googleCredentials = GoogleAuthProvider.getCredential(credentials.googleIdToken, null)
-            val authResult = auth.signInWithCredential(googleCredentials).await()
-            val isNewUser = authResult.additionalUserInfo?.isNewUser == true
-            if (isNewUser) {
-                auth.currentUser?.let { firebaseUser ->
-                    userRepository.createUser(user = firebaseUser.toUser())
-                }
+    /**
+     * Completes the Google sign-in process.
+     *
+     * Create the user in the database if it doesn't exist.
+     * Then Open a new session for the user.
+     */
+    suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<SessionState> {
+        return resultOf {
+            val authResult = googleAuthService.completeSignIn(credentials)
+            if (authResult.isNewUser) {
+                userRepository.createUser(user = authResult.user)
             }
-            auth.currentUser?.uid?.let {
-                val sessionId = SessionId(it)
+            authResult.user.id.let {
+                val sessionId = SessionId(it.value)
                 sessionManager.openSession(sessionId)
-                SessionState.LoggedIn(sessionId)
-            } ?: SessionState.LoggedOut
-        }.onFailure {
-            Log.d("AuthenticationInteractor","Unable to authenticate with Firebase auth using Google credentials")
-            val error = (it as? ApiException) ?: return@onFailure
-            when (error.statusCode) {
-                CommonStatusCodes.CANCELED -> {
-                    Log.d("AuthenticationInteractor","CommonStatusCodes.CANCELED")
-                }
-                CommonStatusCodes.NETWORK_ERROR -> {
-                    Log.d("AuthenticationInteractor","CommonStatusCodes.NETWORK_ERROR")
-                }
-                else -> Log.d("AuthenticationInteractor","Unknown error")
+                SessionState.SignedIn(sessionId)
             }
-            // TODO do proper error creation
-            Result.failure<Throwable>(it)
+        }.onFailure {
+            return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
         }
     }
 
-    override suspend fun signOut(): Result<SessionState> {
-        return runCatching {
-            signInClient.signOut().await()
-            auth.signOut()
+    suspend fun signOut(): Result<SessionState> {
+        return resultOf {
+            googleAuthService.signOut()
             sessionManager.closeSession()
-            SessionState.LoggedOut
-        }.onFailure {
-            Log.d("AuthenticationInteractor","Unable to sign user out")
-            Result.failure<Throwable>(it)
+            SessionState.SignedOut
+        }
+    }
+
+    suspend fun deleteUser(user: User): Result<SessionState> {
+        return resultOf {
+            signOut()
+            userRepository.deleteUser(user)
+            SessionState.SignedOut
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.session.SessionState
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.errors.toUiError
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,10 +37,10 @@ class AuthViewModel @Inject constructor(
             interactor.initGoogleSignIn()
                 .onSuccess { initSignInResult ->
                     postEvent(AuthUiEvent.LaunchGoogleSignIn(signInResult = initSignInResult))
-                }.onFailure {
-                    Log.e("AuthViewModel", "Init sign In failure: ${it.message}")
-                    // TODO (Properly track failure )
-                    // TODO show failure UI with Retry
+                }.onFailure { error ->
+                    Log.e("AuthViewModel", "Init Google sign In failure: ${error.message}")
+                    _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
+                    postEvent(AuthUiEvent.Error(error.toUiError()))
                 }
         }
     }
@@ -47,17 +48,16 @@ class AuthViewModel @Inject constructor(
     fun onGoogleSignInCompleted(intent: Intent) {
         viewModelScope.launch {
             val credentials = signInClient.getSignInCredentialFromIntent(intent)
-            interactor.launchGoogleSignIn(credentials)
+            interactor.completeGoogleSignIn(credentials)
                 .onSuccess { sessionStatus ->
-                    if (sessionStatus is SessionState.LoggedIn) {
+                    if (sessionStatus is SessionState.SignedIn) {
                         postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                         _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     }
                 }.onFailure { error ->
+                    Log.e("AuthViewModel", "Complete Google sign In failure: ${error.message}")
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
-                    Log.e("AuthViewModel", "Google sign In failure: ${error.message}")
-                    // TODO (Properly track failure )
-                    // TODO show failure UI with Retry
+                    postEvent(AuthUiEvent.Error(error.toUiError()))
                 }
         }
     }

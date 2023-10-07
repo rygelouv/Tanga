@@ -93,5 +93,13 @@ fun DomainError.toUiError(): UiError {
             ),
             throwable = throwable
         )
+        is DomainError.UnableToSignInWithGoogleError -> UiError(
+            info = UiErrorInfo(
+                title = appMessage,
+                message = TextResource.fromStringId(R.string.error_unable_to_sign_in_with_google_message),
+                icon = null
+            ),
+            throwable = throwable
+        )
     }
 }

@@ -2,9 +2,6 @@ package app.books.tanga.session
 
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.di.IoDispatcher
-import app.books.tanga.session.SessionId
-import app.books.tanga.session.SessionManager
-import app.books.tanga.session.SessionState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -28,8 +25,8 @@ class PrefSessionManager @Inject constructor(
         prefRepository.getSessionId()
             .map { sessionId ->
                 when(sessionId) {
-                    null -> SessionState.LoggedOut
-                    else -> SessionState.LoggedIn(sessionId)
+                    null -> SessionState.SignedOut
+                    else -> SessionState.SignedIn(sessionId)
                 }
             }
     }
