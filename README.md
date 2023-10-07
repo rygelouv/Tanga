@@ -30,15 +30,15 @@ So far we have done:
 - [ ] Add Spotless and ktlint
 - [ ] Add Detekt
 - [ ] Add SonarCloud
-- [ ] Add error tracking system
-- More...
+- [x] Add error tracking system
 
 ## Testing
 We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
-- We need to add JUnit 5
+- [ ] Add JUnit 5
+- [ ] Add Codecov 
 - We need to add unit tests for most repositories, interactors, viewmodels and other components
 - We need to UI test the screen composables
-  
+
 # License
 ```xml
  Copyright 2023 Rygel Louv
