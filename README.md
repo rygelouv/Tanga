@@ -26,11 +26,11 @@ So far we have done:
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
 
 ## Infrastructure work
-[] Add a CI (Bitrise)
-[] Add Spotless and ktlint
-[] Add Detekt
-[] Add SonarCloud
-[] Add error tracking system
+- [ ] Add a CI (Bitrise)
+- [ ] Add Spotless and ktlint
+- [ ] Add Detekt
+- [ ] Add SonarCloud
+- [ ] Add error tracking system
 - More...
 
 ## Testing
