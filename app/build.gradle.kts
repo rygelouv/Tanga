@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -87,6 +88,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:${rootProject.extra.get("firebase_bom_version")}"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
     //implementation("com.google.firebase:firebase-storage-ktx")
 
     // Accompanist https://github.com/google/accompanist/releases
@@ -102,6 +105,9 @@ dependencies {
 
     // ExoPlayer Media3 https://developer.android.com/guide/topics/media/exoplayer
     implementation("androidx.media3:media3-exoplayer:${rootProject.extra.get("exoplayer_media3_version")}")
+
+    // Timber https://github.com/JakeWharton/timber/releases
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Unit tests https://junit.org/junit4/
     testImplementation("junit:junit:${rootProject.extra.get("junit_version")}")

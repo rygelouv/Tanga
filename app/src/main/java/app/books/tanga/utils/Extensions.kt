@@ -1,5 +1,9 @@
 package app.books.tanga.utils
 
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 /**
  * Formats a long duration value (in milliseconds) into a time string in the format "MM:SS".
  *
@@ -20,4 +24,15 @@ fun Long.toTimeFormat(): String {
  */
 fun Long.toTwoDigitFormat(): String {
     return if (this < 10) "0${this}" else this.toString()
+}
+
+/**
+ * Converts the [Date] object into a formatted string.
+ *
+ * @param format The pattern describing the date and time format. Defaults to "yyyy-MM-dd HH:mm:ss".
+ * @return A string representation of the date.
+ */
+fun Date.toFormattedString(format: String = "yyyy-MM-dd HH:mm:ss"): String {
+    val formatter = SimpleDateFormat(format, Locale.getDefault())
+    return formatter.format(this)
 }

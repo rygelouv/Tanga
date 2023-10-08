@@ -1,16 +1,20 @@
 package app.books.tanga
 
 import android.app.Application
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.util.DebugLogger
+import app.books.tanga.di.TimberTrees
+import app.books.tanga.di.plantAll
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class TangaApp: Application(), ImageLoaderFactory {
+class TangaApp : Application() {
 
-        override fun newImageLoader() = ImageLoader.Builder(this)
-            .logger(DebugLogger())
-            .crossfade(true)
-            .build()
+    @Inject
+    lateinit var timberTrees: TimberTrees
+
+    override fun onCreate() {
+        super.onCreate()
+        // Plant all the Timber trees add to Timber
+        timberTrees.plantAll()
+    }
 }
