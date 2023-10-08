@@ -4,8 +4,8 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.session.SessionState
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.errors.FirebaseCrashlyticsUserTracker
 import app.books.tanga.errors.toUiError
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +23,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val interactor: AuthenticationInteractor,
     private val signInClient: SignInClient,
+    private val crashlyticsUserTracker: FirebaseCrashlyticsUserTracker
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState.emptyState())
@@ -49,11 +50,13 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val credentials = signInClient.getSignInCredentialFromIntent(intent)
             interactor.completeGoogleSignIn(credentials)
-                .onSuccess { sessionStatus ->
-                    if (sessionStatus is SessionState.SignedIn) {
-                        postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
-                        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
-                    }
+                .onSuccess { user ->
+                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                    _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
+                    crashlyticsUserTracker.setUserDetails(
+                        userId = user.id,
+                        createdAt = user.createdAt
+                    )
                 }.onFailure { error ->
                     Log.e("AuthViewModel", "Complete Google sign In failure: ${error.message}")
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }

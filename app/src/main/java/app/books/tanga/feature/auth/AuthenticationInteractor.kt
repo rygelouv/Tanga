@@ -46,7 +46,7 @@ class AuthenticationInteractor @Inject constructor(
      * Create the user in the database if it doesn't exist.
      * Then Open a new session for the user.
      */
-    suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<SessionState> {
+    suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<User> {
         return resultOf {
             val authResult = googleAuthService.completeSignIn(credentials)
             if (authResult.isNewUser) {
@@ -55,7 +55,7 @@ class AuthenticationInteractor @Inject constructor(
             authResult.user.id.let {
                 val sessionId = SessionId(it.value)
                 sessionManager.openSession(sessionId)
-                SessionState.SignedIn(sessionId)
+                authResult.user
             }
         }.onFailure {
             return Result.failure(DomainError.UnableToSignInWithGoogleError(it))

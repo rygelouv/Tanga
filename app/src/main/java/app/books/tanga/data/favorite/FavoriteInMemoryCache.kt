@@ -41,4 +41,8 @@ class FavoriteInMemoryCache @Inject constructor() {
     fun isEmpty(): Boolean {
         return cache.isEmpty()
     }
+
+    fun clear() {
+        cache.clear()
+    }
 }

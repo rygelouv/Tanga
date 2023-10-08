@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 class PrefSessionManager @Inject constructor(
     private val prefRepository: DefaultPrefDataStoreRepository,
+    private val sessionDataCleaner: SessionDataCleaner,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : SessionManager {
 
@@ -18,6 +19,7 @@ class PrefSessionManager @Inject constructor(
     }
 
     override suspend fun closeSession() {
+        sessionDataCleaner()
         prefRepository.removeSessionId()
     }
 
