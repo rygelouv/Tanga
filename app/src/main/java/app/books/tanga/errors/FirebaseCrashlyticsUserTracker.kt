@@ -6,7 +6,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import java.util.Date
 import javax.inject.Inject
 
-private const val USER_CREATED_AT_KEY = "createdAt"
+private const val USER_CREATED_AT_KEY = "userCreationDate"
 
 /**
  * Manages user-specific tracking in Firebase Crashlytics.

@@ -50,7 +50,9 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(170.dp)
-            .clickable { onSummaryClicked(summaryUi.id) },
+            .clickable {
+                onSummaryClicked(summaryUi.id)
+            },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)
