@@ -113,3 +113,6 @@ Pods/
 
 # iOS Google Services (ex. APIs and Firebase)
 GoogleService-Info.plist
+
+# Sentry Auth Token
+sentry.properties

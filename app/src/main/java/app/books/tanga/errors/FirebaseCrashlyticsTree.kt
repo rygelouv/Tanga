@@ -40,5 +40,5 @@ class FirebaseCrashlyticsTree @Inject constructor(private val crashlytics: Fireb
     }
 }
 
-/** Helps tracking non-fatal exception in Crashlytics */
+/** Helps tracking non-fatal exceptions in Crashlytics */
 private class CrashlyticsNonFatalException(override val message: String?) : Exception(message)
