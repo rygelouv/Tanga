@@ -35,9 +35,6 @@ class TangaErrorTracker @Inject constructor(
     /**
      * Sets the user details for the error trackers.
      * Both Firebase Crashlytics and Sentry will be updated with the provided user details.
-     *
-     * @param userId The unique identifier of the user.
-     * @param userCreationDate The creation date of the user.
      */
     fun setUserDetails(userId: UserId, userCreationDate: Date) {
         firebaseCrashlyticsUserTracker.setUserDetails(userId, userCreationDate)
