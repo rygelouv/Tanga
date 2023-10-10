@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.theme
+package app.books.tanga.coreui.theme
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
@@ -83,7 +83,7 @@ val LightColors =
         inversePrimary = BabyBlueEyes,
         surfaceTint = YaleBlue,
         outlineVariant = Cultured,
-        scrim = Black,
+        scrim = Black
     )
 
 /********************************* End light color scheme *********************************/
@@ -162,7 +162,7 @@ private val DarkColors =
         inversePrimary = md_theme_dark_inversePrimary,
         surfaceTint = md_theme_dark_surfaceTint,
         outlineVariant = md_theme_dark_outlineVariant,
-        scrim = md_theme_dark_scrim,
+        scrim = md_theme_dark_scrim
     )
 
 /********************************* End Dark color *********************************/

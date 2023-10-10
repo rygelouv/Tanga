@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "app.books.tanga.core_ui"
+    namespace = "app.books.tanga.coreui"
     compileSdk = 34
 
     defaultConfig {

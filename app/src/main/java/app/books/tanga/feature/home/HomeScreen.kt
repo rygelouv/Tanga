@@ -39,9 +39,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.core_ui.components.ProfileImage
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.data.FakeData
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi

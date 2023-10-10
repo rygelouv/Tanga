@@ -28,7 +28,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.GlideSummaryImage
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.feature.audioplayer.PlaybackState
 import app.books.tanga.feature.audioplayer.PlayerActions
 import app.books.tanga.feature.audioplayer.PlayerState

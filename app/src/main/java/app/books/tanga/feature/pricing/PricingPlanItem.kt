@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun PricingPlanItem(

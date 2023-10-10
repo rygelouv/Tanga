@@ -1,10 +1,10 @@
-package app.books.tanga.core_ui.previews
+package app.books.tanga.coreui.previews
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import app.books.tanga.core_ui.R
-import app.books.tanga.core_ui.components.Tag
+import app.books.tanga.coreui.R
+import app.books.tanga.coreui.components.Tag
 
 @Preview
 @Composable
@@ -12,6 +12,6 @@ fun TagPreview() {
     Tag(
         text = "Business",
         icon = R.drawable.ic_indicator_graphic,
-        tint = MaterialTheme.colorScheme.primary,
+        tint = MaterialTheme.colorScheme.primary
     )
 }

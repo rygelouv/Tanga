@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.theme
+package app.books.tanga.coreui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 data class GradientColors(
     val start: Color = Color.Unspecified,
     val center: Color = Color.Unspecified,
-    val end: Color = Color.Unspecified,
+    val end: Color = Color.Unspecified
 )
 
 /**

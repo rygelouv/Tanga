@@ -1,7 +1,7 @@
 package app.books.tanga.errors
 
 import app.books.tanga.R
-import app.books.tanga.core_ui.resources.TextResource
+import app.books.tanga.coreui.resources.TextResource
 
 /**
  * Converts a [Throwable] into a [UiError].

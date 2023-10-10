@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.TangaDescriptionText
+import app.books.tanga.coreui.components.TangaDescriptionText
 
 sealed class OnboardingPage(
     @DrawableRes val image: Int,

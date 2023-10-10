@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.R
+import app.books.tanga.coreui.R
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -33,21 +33,21 @@ fun SummaryImage(
     summaryId: String,
     modifier: Modifier = Modifier,
     painter: Painter,
-    onSummaryClicked: (String) -> Unit,
+    onSummaryClicked: (String) -> Unit
 ) {
     Surface(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .shadow(elevation = 10.dp)
-                .clickable { onSummaryClicked(summaryId) },
+        modifier
+            .fillMaxWidth()
+            .shadow(elevation = 10.dp)
+            .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         Image(
             painter = painter,
             contentDescription = "summary cover",
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -63,29 +63,29 @@ fun GlideSummaryImage(
     modifier: Modifier = Modifier,
     url: String? = null,
     painter: Painter? = null,
-    onSummaryClicked: (String) -> Unit,
+    onSummaryClicked: (String) -> Unit
 ) {
     Surface(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .shadow(elevation = 10.dp)
-                .clickable { onSummaryClicked(summaryId) },
+        modifier
+            .fillMaxWidth()
+            .shadow(elevation = 10.dp)
+            .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         if (url != null) {
             GlideImage(
                 model = url,
                 contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             )
         } else {
             // TODO we need to remove this condition when we have got rid of FakeData usage
             Image(
                 painter = painter!!,
                 contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
@@ -111,22 +111,22 @@ fun ProfileImage(
     shape: Shape = RoundedCornerShape(30.dp),
     size: Dp = 120.dp,
     hasBorder: Boolean = false,
-    onClick: () -> Unit = {},
+    onClick: () -> Unit = {}
 ) {
     Surface(
         modifier =
-            modifier
-                .size(size)
-                .testTag(tag)
-                .clickable { onClick() },
+        modifier
+            .size(size)
+            .testTag(tag)
+            .clickable { onClick() },
         shape = shape,
         border = if (hasBorder) BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary) else null,
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         GlideImage(
             modifier = modifier.fillMaxSize(),
             model = photoUrl ?: R.drawable.profile_placeholder,
-            contentDescription = "profile picture",
+            contentDescription = "profile picture"
         )
     }
 }

@@ -2,7 +2,7 @@ package app.books.tanga.feature.search
 
 import androidx.annotation.DrawableRes
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.core_ui.icons.TangaIcons
+import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.entity.Category
 import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.UiError

@@ -1,6 +1,6 @@
-package app.books.tanga.core_ui.icons
+package app.books.tanga.coreui.icons
 
-import app.books.tanga.core_ui.R
+import app.books.tanga.coreui.R
 
 object TangaIcons {
     val Search = R.drawable.ic_search

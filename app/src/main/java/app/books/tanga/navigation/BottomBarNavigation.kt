@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.LocalTintColor
 
 @Composable
 fun BottomBarNavigation(navController: NavController) {

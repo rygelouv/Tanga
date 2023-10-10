@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.GlideSummaryImage
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 

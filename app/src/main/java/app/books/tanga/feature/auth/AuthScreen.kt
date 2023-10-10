@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun AuthScreen(

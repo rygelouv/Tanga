@@ -26,8 +26,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.TangaButtonRightIcon
-import app.books.tanga.core_ui.icons.TangaIcons
+import app.books.tanga.coreui.components.TangaButtonRightIcon
+import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager

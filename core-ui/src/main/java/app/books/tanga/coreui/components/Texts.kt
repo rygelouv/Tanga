@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
@@ -31,7 +31,7 @@ fun TangaDescriptionText(
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = 50,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
-    textAlign: TextAlign = TextAlign.Center,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     Text(
         modifier = modifier,
@@ -40,7 +40,7 @@ fun TangaDescriptionText(
         style = style,
         overflow = overflow,
         maxLines = maxLines,
-        textAlign = textAlign,
+        textAlign = textAlign
     )
 }
 
@@ -51,7 +51,7 @@ fun TangaDescriptionText(
 @Composable
 fun ExpendableText(
     modifier: Modifier = Modifier,
-    text: String,
+    text: String
 ) {
     var isExpandable by remember { mutableStateOf(false) }
     var isExpended by remember { mutableStateOf(false) }
@@ -66,7 +66,7 @@ fun ExpendableText(
             style = MaterialTheme.typography.bodyMedium,
             onTextLayout = { textLayoutResult ->
                 isExpandable = textLayoutResult.hasVisualOverflow
-            },
+            }
         )
         if (isExpandable || isExpended) {
             TextButton(modifier = Modifier.padding(0.dp), onClick = { isExpended = isExpended.not() }) {
@@ -75,7 +75,7 @@ fun ExpendableText(
                     textAlign = TextAlign.Center,
                     text = if (isExpandable) "Show more" else "Show less",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }

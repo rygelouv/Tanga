@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.books.tanga.common.ui.ShimmerSummaryItem
 import app.books.tanga.common.ui.ShimmerSummaryListRow
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun SummaryDetailsShimmerLoader() {

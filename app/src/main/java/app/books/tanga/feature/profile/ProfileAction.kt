@@ -28,15 +28,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.theme.ProfileGreen
-import app.books.tanga.core_ui.theme.ProfileGreenBackground
-import app.books.tanga.core_ui.theme.ProfilePurple
-import app.books.tanga.core_ui.theme.ProfilePurpleBackground
-import app.books.tanga.core_ui.theme.ProfileRed
-import app.books.tanga.core_ui.theme.ProfileRedBackground
-import app.books.tanga.core_ui.theme.ProfileYellow
-import app.books.tanga.core_ui.theme.ProfileYellowBackground
-import app.books.tanga.core_ui.theme.navyTransparent
+import app.books.tanga.coreui.theme.ProfileGreen
+import app.books.tanga.coreui.theme.ProfileGreenBackground
+import app.books.tanga.coreui.theme.ProfilePurple
+import app.books.tanga.coreui.theme.ProfilePurpleBackground
+import app.books.tanga.coreui.theme.ProfileRed
+import app.books.tanga.coreui.theme.ProfileRedBackground
+import app.books.tanga.coreui.theme.ProfileYellow
+import app.books.tanga.coreui.theme.ProfileYellowBackground
+import app.books.tanga.coreui.theme.navyTransparent
 
 enum class ProfileAction(
     @DrawableRes val icon: Int,

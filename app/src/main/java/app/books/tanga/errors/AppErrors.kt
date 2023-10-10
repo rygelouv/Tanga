@@ -1,8 +1,8 @@
 package app.books.tanga.errors
 
 import app.books.tanga.R
-import app.books.tanga.core_ui.resources.TextResource
-import app.books.tanga.core_ui.resources.asStringOrEmpty
+import app.books.tanga.coreui.resources.TextResource
+import app.books.tanga.coreui.resources.asStringOrEmpty
 import kotlin.Exception
 
 /**

@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.theme
+package app.books.tanga.coreui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -23,7 +23,7 @@ data class Spacing(
     val large: Dp = 24.dp,
     val extraLarge: Dp = 32.dp,
     val extraMediumLarge: Dp = 48.dp,
-    val extraExtraLarge: Dp = 64.dp,
+    val extraExtraLarge: Dp = 64.dp
 )
 
 /**

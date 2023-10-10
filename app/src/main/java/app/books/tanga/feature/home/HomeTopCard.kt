@@ -31,11 +31,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.R.drawable.ic_right_arrow
-import app.books.tanga.core_ui.components.SummaryImage
-import app.books.tanga.core_ui.components.Tag
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalGradientColors
+import app.books.tanga.coreui.R.drawable.ic_right_arrow
+import app.books.tanga.coreui.components.SummaryImage
+import app.books.tanga.coreui.components.Tag
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 

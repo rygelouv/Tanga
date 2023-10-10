@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.core_ui.theme.LocalTintColor
-import app.books.tanga.core_ui.theme.button
+import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.button
 
 /**
  * This is a composable that displays a button with text.
@@ -48,27 +48,26 @@ fun TangaButton(
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     endPadding: Dp = 30.dp,
-    shape: RoundedCornerShape = RoundedCornerShape(16.dp),
+    shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
     Button(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .height(height),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
         onClick = onClick,
         colors =
-            ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
+        ButtonDefaults.buttonColors(
+            contentColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
         shape = shape,
-        elevation = elevation,
+        elevation = elevation
     ) {
         Text(
             modifier = Modifier.fillMaxWidth().padding(end = endPadding),
             text = text,
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.button,
+            style = MaterialTheme.typography.button
         )
     }
 }
@@ -96,36 +95,35 @@ fun TangaButtonRightIcon(
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     endPadding: Dp = 30.dp,
     iconSize: Dp = 26.dp,
-    shape: RoundedCornerShape = RoundedCornerShape(16.dp),
+    shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
     Button(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .height(height),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
         onClick = onClick,
         colors =
-            ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
+        ButtonDefaults.buttonColors(
+            contentColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
         shape = shape,
-        elevation = elevation,
+        elevation = elevation
     ) {
         Row(
             modifier = Modifier.padding(end = endPadding),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = text,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.button
             )
             Icon(
                 modifier = Modifier.size(iconSize),
                 painter = painterResource(id = leftIcon),
-                contentDescription = "explore summaries icon",
+                contentDescription = "explore summaries icon"
             )
         }
     }
@@ -154,33 +152,32 @@ fun TangaButtonLeftIcon(
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     startPadding: Dp = 30.dp,
     iconSize: Dp = 26.dp,
-    shape: RoundedCornerShape = RoundedCornerShape(16.dp),
+    shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
     Button(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .height(height),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
         onClick = onClick,
         colors =
-            ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
+        ButtonDefaults.buttonColors(
+            contentColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
         shape = shape,
-        elevation = elevation,
+        elevation = elevation
     ) {
         Box(modifier = Modifier.padding(start = startPadding)) {
             Icon(
                 modifier = Modifier.size(iconSize),
                 painter = painterResource(id = rightIcon),
-                contentDescription = null,
+                contentDescription = null
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = text,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.button
             )
         }
     }
@@ -200,17 +197,17 @@ fun SummaryActionButton(
     text: String,
     icon: Int,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = if (enabled) modifier.clickable { onClick() } else modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         Icon(
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled,
+            tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
@@ -219,7 +216,7 @@ fun SummaryActionButton(
             text = text,
             style = MaterialTheme.typography.labelLarge,
             color = if (enabled) MaterialTheme.colorScheme.primary else LocalTintColor.current.disabled,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

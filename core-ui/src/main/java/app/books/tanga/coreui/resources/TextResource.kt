@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.resources
+package app.books.tanga.coreui.resources
 
 import android.content.res.Resources
 import androidx.annotation.StringRes
@@ -29,7 +29,7 @@ sealed class TextResource {
  * Represents a [TextResource] holding a string resource ID.
  */
 class IdTextResource(
-    @StringRes val id: Int,
+    @StringRes val id: Int
 ) : TextResource()
 
 /**

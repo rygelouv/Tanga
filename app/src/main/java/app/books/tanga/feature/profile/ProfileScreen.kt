@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.ProfileImage
+import app.books.tanga.coreui.components.ProfileImage
 
 @Composable
 fun ProfileScreen(

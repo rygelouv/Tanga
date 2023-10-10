@@ -36,10 +36,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.TangaButton
-import app.books.tanga.core_ui.resources.TextResource
-import app.books.tanga.core_ui.resources.asString
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.components.TangaButton
+import app.books.tanga.coreui.resources.TextResource
+import app.books.tanga.coreui.resources.asString
+import app.books.tanga.coreui.theme.LocalSpacing
 import kotlinx.coroutines.launch
 
 /**

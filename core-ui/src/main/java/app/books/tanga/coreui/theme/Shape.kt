@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.theme
+package app.books.tanga.coreui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
@@ -9,5 +9,5 @@ val Shapes =
         small = RoundedCornerShape(4.dp),
         medium = RoundedCornerShape(8.dp),
         large = RoundedCornerShape(10.dp),
-        extraLarge = RoundedCornerShape(12.dp),
+        extraLarge = RoundedCornerShape(12.dp)
     )

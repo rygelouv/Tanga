@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun EmptySearchScreen(query: String) {

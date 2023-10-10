@@ -34,11 +34,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.Cerulean
-import app.books.tanga.core_ui.theme.Cultured
-import app.books.tanga.core_ui.theme.LocalGradientColors
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.Cerulean
+import app.books.tanga.coreui.theme.Cultured
+import app.books.tanga.coreui.theme.LocalGradientColors
+import app.books.tanga.coreui.theme.LocalSpacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable

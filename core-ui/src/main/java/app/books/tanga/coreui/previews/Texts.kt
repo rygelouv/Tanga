@@ -1,9 +1,9 @@
-package app.books.tanga.core_ui.previews
+package app.books.tanga.coreui.previews
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import app.books.tanga.core_ui.components.TangaDescriptionText
+import app.books.tanga.coreui.components.TangaDescriptionText
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
@@ -29,7 +29,7 @@ fun TangaDescriptionTexPreviewLong() {
                 " nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
                 "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod," +
                 " nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
-                "eu nisl. Sed euismod, nunc sit amet ultricies",
+                "eu nisl. Sed euismod, nunc sit amet ultricies"
     )
 }
 
@@ -37,7 +37,7 @@ fun TangaDescriptionTexPreviewLong() {
     showBackground = true,
     backgroundColor = 0xFFFFFFFF,
     showSystemUi = true,
-    device = "id:pixel_4a",
+    device = "id:pixel_4a"
 )
 @Composable
 fun TangaDescriptionTexPreview() {
@@ -48,6 +48,6 @@ fun TangaDescriptionTexPreview() {
                 "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
                 "lacinia, nisl nisl lacinia nisl",
         textAlign = TextAlign.Start,
-        maxLines = 3,
+        maxLines = 3
     )
 }
