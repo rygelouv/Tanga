@@ -1,8 +1,6 @@
 package app.books.tanga.data
 
 import app.books.tanga.R
-import app.books.tanga.coreui.resources.TextResource
-import app.books.tanga.errors.UiErrorInfo
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
