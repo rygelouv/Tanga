@@ -16,8 +16,7 @@ class SessionDataCleaner @Inject constructor(
     private val favoriteInMemoryCache: FavoriteInMemoryCache,
     private val errorTracker: TangaErrorTracker,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-): suspend () -> Unit {
-
+) : suspend () -> Unit {
     override suspend fun invoke() {
         withContext(ioDispatcher + NonCancellable) {
             favoriteInMemoryCache.clear()

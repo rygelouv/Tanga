@@ -8,14 +8,14 @@ import javax.inject.Inject
 /**
  * A [Timber.Tree] that logs to Crashlytics.
  */
-class FirebaseCrashlyticsTree @Inject constructor(private val crashlytics: FirebaseCrashlytics) :
-    Timber.Tree() {
-
+class FirebaseCrashlyticsTree @Inject constructor(
+    private val crashlytics: FirebaseCrashlytics,
+) : Timber.Tree() {
     override fun log(
         priority: Int,
         tag: String?,
         message: String,
-        t: Throwable?
+        t: Throwable?,
     ) {
         // Ignore VERBOSE and DEBUG logs to prevent noise in Crashlytics
         if (priority == Log.VERBOSE || priority == Log.DEBUG) {
@@ -41,4 +41,6 @@ class FirebaseCrashlyticsTree @Inject constructor(private val crashlytics: Fireb
 }
 
 /** Helps tracking non-fatal exceptions in Crashlytics */
-private class CrashlyticsNonFatalException(override val message: String?) : Exception(message)
+private class CrashlyticsNonFatalException(
+    override val message: String?,
+) : Exception(message)

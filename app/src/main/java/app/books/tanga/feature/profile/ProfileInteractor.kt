@@ -8,11 +8,9 @@ import javax.inject.Inject
 class ProfileInteractor @Inject constructor(
     private val userRepository: UserRepository
 ) {
-
-    suspend fun getUserInfo(): Result<User?> {
-        return resultOf {
+    suspend fun getUserInfo(): Result<User?> =
+        resultOf {
             val user = userRepository.getUser().getOrThrow()
             user
         }
-    }
 }

@@ -1,0 +1,24 @@
+root = true
+
+[*]
+max_line_length=120
+
+[*.{kt,kts}]
+indent_size = 4
+ktlint_standard = enabled
+ktlint_experimental = enabled
+ktlint_code_style = ktlint_official
+ktlint_standard_filename = disabled
+ktlint_standard_function-naming = disabled
+trailing-comma-on-declaration-site = disabled
+trailing-comma-on-call-site = disabled
+
+
+[**/test/**.kt]
+ktlint_ignore_back_ticked_identifier = true
+
+# Avoid wildcard imports (replace them with named imports)
+import_statements_order = alphabetically
+
+# For Android, it's common to exclude generated files from lint checks
+ktlint.exclude = **/gen/**,**/build/**,**/out/**

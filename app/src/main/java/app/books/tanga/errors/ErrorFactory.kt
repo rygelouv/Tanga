@@ -9,20 +9,22 @@ import com.google.firebase.firestore.FirebaseFirestoreException
  * For more information on the error codes, see: https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestoreException.Code
  */
 object FirestoreErrorFactory {
-    fun createError(exception: FirebaseFirestoreException): AppError {
-        return when (exception.code) {
+    fun createError(exception: FirebaseFirestoreException): AppError =
+        when (exception.code) {
             FirebaseFirestoreException.Code.PERMISSION_DENIED -> {
                 OperationError.UnauthorizedOperationError(exception)
             }
+
             FirebaseFirestoreException.Code.UNAVAILABLE -> {
                 OperationError.MaintenanceError(exception)
             }
+
             FirebaseFirestoreException.Code.NOT_FOUND -> {
                 OperationError.ResourceNotFoundError(exception)
             }
+
             else -> {
                 OperationError.UnknownError(exception)
             }
         }
-    }
 }

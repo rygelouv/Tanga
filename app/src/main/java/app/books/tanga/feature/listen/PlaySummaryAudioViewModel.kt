@@ -3,7 +3,6 @@ package app.books.tanga.feature.listen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlayerActions
@@ -20,8 +19,8 @@ import javax.inject.Inject
 class PlaySummaryAudioViewModel @Inject constructor(
     private val playerController: PlayerController,
     private val summaryInteractor: SummaryInteractor
-): ViewModel(), PlayerActions by playerController {
-
+) : ViewModel(),
+    PlayerActions by playerController {
     private val _state: MutableStateFlow<PlaySummaryAudioUiState> =
         MutableStateFlow(PlaySummaryAudioUiState())
     val state: StateFlow<PlaySummaryAudioUiState> = _state
@@ -39,24 +38,26 @@ class PlaySummaryAudioViewModel @Inject constructor(
 
     fun loadSummary(summaryId: String) {
         viewModelScope.launch {
-            summaryInteractor.getSummary(summaryId).onSuccess { summary ->
-                _state.update {
-                    it.copy(
-                        summaryId = summary.id.value,
-                        title = summary.title,
-                        author = summary.author,
-                        duration = summary.playingLength,
-                        coverUrl = summary.coverImageUrl
-                    )
+            summaryInteractor
+                .getSummary(summaryId)
+                .onSuccess { summary ->
+                    _state.update {
+                        it.copy(
+                            summaryId = summary.id.value,
+                            title = summary.title,
+                            author = summary.author,
+                            duration = summary.playingLength,
+                            coverUrl = summary.coverImageUrl
+                        )
+                    }
+                    val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
+                    playerController.initPlayer(audioTrack, viewModelScope)
+                }.onFailure {
+                    Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
+                    _state.update { state ->
+                        state.copy(error = it.toUiError())
+                    }
                 }
-                val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
-                playerController.initPlayer(audioTrack, viewModelScope)
-            }.onFailure {
-                Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
-                _state.update { state ->
-                    state.copy(error = it.toUiError())
-                }
-            }
         }
     }
 

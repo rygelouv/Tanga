@@ -15,12 +15,16 @@ private const val USER_CREATED_AT_KEY = "userCreationDate"
  * in Firebase Crashlytics. By doing so, it aids in filtering and understanding crash reports
  * on a per-user basis.
  */
-class FirebaseCrashlyticsUserTracker @Inject constructor (private val crashlytics: FirebaseCrashlytics) {
-
+class FirebaseCrashlyticsUserTracker @Inject constructor(
+    private val crashlytics: FirebaseCrashlytics,
+) {
     /**
      * Set user-specific details (ID and creation date) to Firebase Crashlytics.
      */
-    fun setUserDetails(userId: UserId, createdAt: Date) {
+    fun setUserDetails(
+        userId: UserId,
+        createdAt: Date,
+    ) {
         crashlytics.setUserId(userId.value)
         crashlytics.setCustomKey(USER_CREATED_AT_KEY, createdAt.toFormattedString())
     }

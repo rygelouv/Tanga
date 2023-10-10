@@ -9,9 +9,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val repository: DefaultPrefDataStoreRepository
+    private val repository: DefaultPrefDataStoreRepository,
 ) : ViewModel() {
-
     fun onOnboardingCompleted() {
         viewModelScope.launch {
             repository.saveOnboardingCompletionState(true)

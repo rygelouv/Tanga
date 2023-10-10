@@ -40,7 +40,6 @@ import app.books.tanga.core_ui.components.TangaButton
 import app.books.tanga.core_ui.resources.TextResource
 import app.books.tanga.core_ui.resources.asString
 import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.feature.search.SearchUiEvent
 import kotlinx.coroutines.launch
 
 /**
@@ -55,11 +54,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun ShowSnackbarError(
     errorInfo: UiErrorInfo,
-    snackbarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val message = errorInfo.message?.asString(LocalContext.current.resources)
-        ?: stringResource(id = R.string.error_message_default)
+    val message =
+        errorInfo.message?.asString(LocalContext.current.resources)
+            ?: stringResource(id = R.string.error_message_default)
     val actionLabel = stringResource(id = R.string.ok)
 
     LaunchedEffect(errorInfo) {
@@ -84,11 +84,16 @@ fun ShowSnackbarError(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ErrorBottomSheetModal(errorInfo: UiErrorInfo, onDismiss: () -> Unit) {
+fun ErrorBottomSheetModal(
+    errorInfo: UiErrorInfo,
+    onDismiss: () -> Unit
+) {
     var openBottomSheet by remember { mutableStateOf(true) }
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true // Show the full sheet when expanded
-    )
+    val bottomSheetState =
+        rememberModalBottomSheetState(
+            // Show the full sheet when expanded
+            skipPartiallyExpanded = true
+        )
     val coroutineScope = rememberCoroutineScope()
 
     if (openBottomSheet) {
@@ -130,7 +135,7 @@ fun ErrorContent(
             .background(Color.White)
             .padding(
                 horizontal = LocalSpacing.current.medium,
-                vertical = LocalSpacing.current.small
+                vertical = LocalSpacing.current.small,
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -145,7 +150,8 @@ fun ErrorContent(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.title?.asString(context.resources)
+            text =
+            errorInfo.title?.asString(context.resources)
                 ?: stringResource(id = R.string.error),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.error,
@@ -154,7 +160,8 @@ fun ErrorContent(
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = errorInfo.message?.asString(context.resources)
+            text =
+            errorInfo.message?.asString(context.resources)
                 ?: stringResource(id = R.string.error_message_default),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -206,7 +213,8 @@ fun ShowSnackbarErrorPreview() {
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(it),
         ) {

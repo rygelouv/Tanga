@@ -25,13 +25,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.core_ui.components.GlideSummaryImage
-import app.books.tanga.data.FakeData
 import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
-fun SummaryItemBig(summary: SummaryUi, onSummaryClicked: (String) -> Unit) {
+fun SummaryItemBig(
+    summary: SummaryUi,
+    onSummaryClicked: (String) -> Unit
+) {
     SummaryItem(
         summaryId = summary.id,
         title = summary.title,
@@ -47,7 +50,10 @@ fun SummaryItemBig(summary: SummaryUi, onSummaryClicked: (String) -> Unit) {
 }
 
 @Composable
-fun SummaryItemSmall(summary: SummaryUi, onSummaryClicked: (String) -> Unit) {
+fun SummaryItemSmall(
+    summary: SummaryUi,
+    onSummaryClicked: (String) -> Unit
+) {
     SummaryItem(
         summaryId = summary.id,
         title = summary.title,
@@ -85,8 +91,10 @@ fun SummaryItem(
             url = coverUrl,
             painter = if (coverUrl == null) {
                 painterResource(id = R.drawable.cover_never_split_difference)
-            } else null,
-            onSummaryClicked = onSummaryClicked,
+            } else {
+                null
+            },
+            onSummaryClicked = onSummaryClicked
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
@@ -95,7 +103,7 @@ fun SummaryItem(
             fontSize = titleSize,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -103,7 +111,7 @@ fun SummaryItem(
             text = author,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelMedium
         )
         SummaryIndicators(
             duration = duration,
@@ -117,14 +125,14 @@ fun SummaryItem(
 fun SummaryIndicators(
     duration: String,
     hasVideo: Boolean,
-    hasGraphic: Boolean,
+    hasGraphic: Boolean
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.weight(2f),
+            modifier = Modifier.weight(2f)
         ) {
             Icon(
                 modifier = Modifier.size(13.dp),
@@ -146,7 +154,7 @@ fun SummaryIndicators(
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = TangaIcons.IndicatorWatch),
                 contentDescription = null,
-                tint = LocalTintColor.current.color
+                tint = LocalTintColor.current.color,
             )
         }
         if (hasGraphic) {

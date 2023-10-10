@@ -9,7 +9,8 @@ import app.books.tanga.core_ui.components.TangaDescriptionText
 @Composable
 fun TangaDescriptionTexPreviewLong() {
     TangaDescriptionText(
-        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+        text =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                 "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
                 "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
                 "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. " +
@@ -28,23 +29,25 @@ fun TangaDescriptionTexPreviewLong() {
                 " nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
                 "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod," +
                 " nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
-                "eu nisl. Sed euismod, nunc sit amet ultricies"
+                "eu nisl. Sed euismod, nunc sit amet ultricies",
     )
 }
 
 @Preview(
     showBackground = true,
     backgroundColor = 0xFFFFFFFF,
-    showSystemUi = true, device = "id:pixel_4a"
+    showSystemUi = true,
+    device = "id:pixel_4a",
 )
 @Composable
 fun TangaDescriptionTexPreview() {
     TangaDescriptionText(
-        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+        text =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                 "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
                 "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
                 "lacinia, nisl nisl lacinia nisl",
         textAlign = TextAlign.Start,
-        maxLines = 3
+        maxLines = 3,
     )
 }

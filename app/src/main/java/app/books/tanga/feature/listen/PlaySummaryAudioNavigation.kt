@@ -10,15 +10,17 @@ import app.books.tanga.navigation.NavigationScreen
 fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
     composable(
         route = NavigationScreen.PlaySummaryAudio.route,
-        arguments = listOf(navArgument(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY) {
-            type = NavType.StringType
-        })
+        arguments = listOf(
+            navArgument(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY) {
+                type = NavType.StringType
+            },
+        )
     ) { backStackEntry ->
         PlaySummaryAudioScreen(
             summaryId = backStackEntry
                 .arguments
                 ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
-            onBackClicked = onBackClicked
+            onBackClicked = onBackClicked,
         )
     }
 }
@@ -26,14 +28,16 @@ fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
 fun NavController.toPlaySummaryAudio(
     summaryId: String,
     screenToPopUpTo: NavigationScreen? = null,
-    isInclusive: Boolean = true
+    isInclusive: Boolean = true,
 ) {
     navigate(
-        route = NavigationScreen.PlaySummaryAudio.route
+        route = NavigationScreen
+            .PlaySummaryAudio
+            .route
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
-                newValue = summaryId
-            )
+                newValue = summaryId,
+            ),
     ) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }
     }

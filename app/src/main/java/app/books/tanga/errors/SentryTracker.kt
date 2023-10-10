@@ -26,9 +26,8 @@ private const val USER_CREATED_AT_KEY = "user_creation_date"
  * other functionalities specifically tailored for Sentry.
  */
 class SentryTracker @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-
     /**
      * Initializes the Sentry SDK with specified configurations.
      *
@@ -37,20 +36,25 @@ class SentryTracker @Inject constructor(
      */
     fun init(context: Context) {
         SentryAndroid.init(
-            context
+            context,
         ) { options ->
             // Filtering out DEBUG level events
-            options.beforeSend = SentryOptions.BeforeSendCallback { event, _ ->
-                if (event.level == SentryLevel.DEBUG) null else {
-                    event
+            options.beforeSend =
+                SentryOptions.BeforeSendCallback { event, _ ->
+                    if (event.level == SentryLevel.DEBUG) {
+                        null
+                    } else {
+                        event
+                    }
                 }
-            }
 
             // Adding Timber integration for non-debug builds
             if (BuildConfig.DEBUG.not()) {
-                options.addIntegration(SentryTimberIntegration(
-                    minBreadcrumbLevel = SentryLevel.WARNING,
-                ))
+                options.addIntegration(
+                    SentryTimberIntegration(
+                        minBreadcrumbLevel = SentryLevel.WARNING,
+                    ),
+                )
             }
         }
     }
@@ -61,7 +65,10 @@ class SentryTracker @Inject constructor(
      * This will allow Sentry to associate subsequent events and errors
      * with the specified user.
      */
-    fun setUserDetails(userId: UserId, userCreationDate: Date) {
+    fun setUserDetails(
+        userId: UserId,
+        userCreationDate: Date,
+    ) {
         CoroutineScope(ioDispatcher).launch {
             val user = io.sentry.protocol.User().apply { id = userId.value }
             Sentry.setUser(user)

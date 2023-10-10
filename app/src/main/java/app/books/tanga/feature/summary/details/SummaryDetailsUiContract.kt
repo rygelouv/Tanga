@@ -19,4 +19,3 @@ data class SummaryDetailsUiState(
     val recommendations: List<SummaryUi> = emptyList(),
     val error: UiError? = null
 )
-

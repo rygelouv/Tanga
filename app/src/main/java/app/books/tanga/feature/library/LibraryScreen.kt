@@ -39,9 +39,10 @@ fun LibraryScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp),
+            .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -51,7 +52,7 @@ fun LibraryScreen(
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(22.dp))
-        when(state.progressState) {
+        when (state.progressState) {
             ProgressState.Show -> {
                 LibraryShimmerLoader()
             }
@@ -89,8 +90,10 @@ fun FavoriteGrid(
                 author = favorite.author,
                 coverUrl = favorite.coverUrl,
                 duration = favorite.playingLength,
-                hasVideo = false, // TODO: Add video indicator support
-                hasGraphic = false, // TODO: Add graphic indicator support
+                // TODO: Add video indicator support
+                hasVideo = false,
+                // TODO: Add graphic indicator support
+                hasGraphic = false,
                 width = 134.dp,
                 titleSize = 18.sp,
                 onSummaryClicked = onFavoriteClicked

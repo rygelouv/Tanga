@@ -14,18 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.books.tanga.core_ui.R
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-
 
 /**
  * This is a composable that displays an image of a book summary cover.
@@ -39,15 +33,16 @@ fun SummaryImage(
     summaryId: String,
     modifier: Modifier = Modifier,
     painter: Painter,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClicked: (String) -> Unit,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked(summaryId) },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .shadow(elevation = 10.dp)
+                .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
     ) {
         Image(
             painter = painter,
@@ -68,15 +63,16 @@ fun GlideSummaryImage(
     modifier: Modifier = Modifier,
     url: String? = null,
     painter: Painter? = null,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClicked: (String) -> Unit,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked(summaryId) },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .shadow(elevation = 10.dp)
+                .clickable { onSummaryClicked(summaryId) },
         shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
     ) {
         if (url != null) {
             GlideImage(
@@ -94,7 +90,6 @@ fun GlideSummaryImage(
         }
     }
 }
-
 
 /**
  * This is a composable function that displays a profile image with optional border and on-click listener.
@@ -116,16 +111,17 @@ fun ProfileImage(
     shape: Shape = RoundedCornerShape(30.dp),
     size: Dp = 120.dp,
     hasBorder: Boolean = false,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Surface(
-        modifier = modifier
-            .size(size)
-            .testTag(tag)
-            .clickable { onClick() },
+        modifier =
+            modifier
+                .size(size)
+                .testTag(tag)
+                .clickable { onClick() },
         shape = shape,
         border = if (hasBorder) BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary) else null,
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
     ) {
         GlideImage(
             modifier = modifier.fillMaxSize(),
@@ -134,4 +130,3 @@ fun ProfileImage(
         )
     }
 }
-

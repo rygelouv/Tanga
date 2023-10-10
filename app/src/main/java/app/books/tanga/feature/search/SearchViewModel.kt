@@ -1,16 +1,13 @@
 package app.books.tanga.feature.search
 
 import android.util.Log
-import android.widget.ProgressBar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.di.DefaultDispatcher
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +22,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor
 ) : ViewModel() {
-
     private val _state: MutableStateFlow<SearchUiState> =
         MutableStateFlow(SearchUiState(progressState = ProgressState.Show))
     val state: StateFlow<SearchUiState> = _state.asStateFlow()
@@ -47,37 +43,45 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun loadCategories() {
-        summaryInteractor.getCategories().onSuccess { categories ->
-            _state.update {
-                it.copy(
-                    categories = categories.map { category ->
-                        category.toCategoryUi()
-                    })
+        summaryInteractor
+            .getCategories()
+            .onSuccess { categories ->
+                _state.update {
+                    it.copy(
+                        categories =
+                        categories.map { category ->
+                            category.toCategoryUi()
+                        }
+                    )
+                }
+            }.onFailure { error ->
+                Log.e("SearchViewModel", "Error loading categories", error)
+                postEvent(SearchUiEvent.ShowSnackError(error.toUiError()))
             }
-        }.onFailure { error ->
-            Log.e("SearchViewModel", "Error loading categories", error)
-            postEvent(SearchUiEvent.ShowSnackError(error.toUiError()))
-        }
     }
 
     private suspend fun loadSummaries() {
-        summaryInteractor.getAllSummaries().onSuccess { summaries ->
-            _state.update {
-                it.copy(
-                    progressState = ProgressState.Hide,
-                    summaries = summaries.map { summary ->
-                        summary.toSummaryUi()
-                    })
+        summaryInteractor
+            .getAllSummaries()
+            .onSuccess { summaries ->
+                _state.update {
+                    it.copy(
+                        progressState = ProgressState.Hide,
+                        summaries =
+                        summaries.map { summary ->
+                            summary.toSummaryUi()
+                        }
+                    )
+                }
+            }.onFailure { error ->
+                Log.e("SearchViewModel", "Error loading summaries", error)
+                _state.update {
+                    it.copy(
+                        progressState = ProgressState.Hide,
+                        error = error.toUiError()
+                    )
+                }
             }
-        }.onFailure { error ->
-            Log.e("SearchViewModel", "Error loading summaries", error)
-            _state.update {
-                it.copy(
-                    progressState = ProgressState.Hide,
-                    error = error.toUiError()
-                )
-            }
-        }
     }
 
     fun onRetry() {
@@ -96,17 +100,21 @@ class SearchViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            summaryInteractor.search(query).onSuccess { summaries ->
-                _state.update {
-                    it.copy(
-                        progressState = ProgressState.Hide,
-                        summaries = summaries.map { summary ->
-                            summary.toSummaryUi()
-                        })
+            summaryInteractor
+                .search(query)
+                .onSuccess { summaries ->
+                    _state.update {
+                        it.copy(
+                            progressState = ProgressState.Hide,
+                            summaries =
+                            summaries.map { summary ->
+                                summary.toSummaryUi()
+                            }
+                        )
+                    }
+                }.onFailure {
+                    Log.e("SearchViewModel", "Error searching summaries", it)
                 }
-            }.onFailure {
-                Log.e("SearchViewModel", "Error searching summaries", it)
-            }
         }
     }
 
@@ -126,9 +134,7 @@ class SearchViewModel @Inject constructor(
         updateSelectedCategoriesAndLoadSummaries { it.remove(category) }
     }
 
-    private fun updateSelectedCategoriesAndLoadSummaries(
-        addOrRemoveAction: (MutableList<CategoryUi>) -> Unit
-    ) {
+    private fun updateSelectedCategoriesAndLoadSummaries(addOrRemoveAction: (MutableList<CategoryUi>) -> Unit) {
         val selectedCategories = _state.value.selectedCategories
         addOrRemoveAction(selectedCategories)
         _state.update {
@@ -141,26 +147,29 @@ class SearchViewModel @Inject constructor(
         loadSummariesForCategories(categoryIds)
     }
 
-
     /**
      * Load summaries for the given categories
      */
     private fun loadSummariesForCategories(categoryIds: List<String>) {
         viewModelScope.launch {
-            summaryInteractor.getSummariesForCategories(categoryIds).onSuccess { summaries ->
-                _state.update {
-                    it.copy(
-                        progressState = ProgressState.Hide,
-                        summaries = summaries.map { summary ->
-                            summary.toSummaryUi()
-                        })
+            summaryInteractor
+                .getSummariesForCategories(categoryIds)
+                .onSuccess { summaries ->
+                    _state.update {
+                        it.copy(
+                            progressState = ProgressState.Hide,
+                            summaries =
+                            summaries.map { summary ->
+                                summary.toSummaryUi()
+                            }
+                        )
+                    }
+                }.onFailure {
+                    Log.e("SearchViewModel", "Error getting summaries by category", it)
+                    _state.update { state ->
+                        state.copy(error = it.toUiError())
+                    }
                 }
-            }.onFailure {
-                Log.e("SearchViewModel", "Error getting summaries by category", it)
-                _state.update { state ->
-                    state.copy(error = it.toUiError())
-                }
-            }
         }
     }
 
@@ -169,5 +178,4 @@ class SearchViewModel @Inject constructor(
             _events.send(event)
         }
     }
-
 }

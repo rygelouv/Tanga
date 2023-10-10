@@ -44,7 +44,7 @@ fun Tag(
     tint: Color = LocalTintColor.current.color,
     hasBorder: Boolean = false,
     onSelected: () -> Unit = {},
-    onDeselected: () -> Unit = {}
+    onDeselected: () -> Unit = {},
 ) {
     var selected by remember { mutableStateOf(false) }
 
@@ -55,20 +55,21 @@ fun Tag(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .then(backgroundModifier)
-            .then(borderModifier)
-            .then(paddingModifier)
-            .clickable {
-                selected = selected.not()
-                if (selected) onSelected() else onDeselected()
-            }
+        modifier =
+            modifier
+                .then(backgroundModifier)
+                .then(borderModifier)
+                .then(paddingModifier)
+                .clickable {
+                    selected = selected.not()
+                    if (selected) onSelected() else onDeselected()
+                },
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = if (selected) Color.White else tint
+            tint = if (selected) Color.White else tint,
         )
         Spacer(modifier = Modifier.width(LocalSpacing.current.small))
         Text(
@@ -76,8 +77,7 @@ fun Tag(
             style = MaterialTheme.typography.labelMedium,
             color = if (selected) Color.White else tint,
             modifier = Modifier.padding(top = LocalSpacing.current.extraSmall),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
-

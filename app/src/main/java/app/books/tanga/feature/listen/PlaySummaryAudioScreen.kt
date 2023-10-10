@@ -23,15 +23,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,7 +49,8 @@ import app.books.tanga.utils.toTimeFormat
 @Composable
 fun PlaySummaryAudioScreen(
     summaryId: String,
-    onBackClicked: () -> Unit, viewModel: PlaySummaryAudioViewModel = hiltViewModel()
+    onBackClicked: () -> Unit,
+    viewModel: PlaySummaryAudioViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions: PlayerActions = viewModel
@@ -70,7 +67,8 @@ fun PlaySummaryAudioScreen(
     ) {
         Surface(
             color = MaterialTheme.colorScheme.background,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
@@ -113,24 +111,27 @@ fun PlaySummaryAudioContent(
     Box(modifier = Modifier.fillMaxSize()) {
         Surface(
             color = Color.White,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .offset(y = 148.dp),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
         ) {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 10.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.Top
             ) {
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
                 Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .width(34.dp)
                         .height(4.dp)
                         .background(MaterialTheme.colorScheme.onTertiaryContainer)
@@ -143,7 +144,7 @@ fun PlaySummaryAudioContent(
                         text = it,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
 
@@ -155,7 +156,7 @@ fun PlaySummaryAudioContent(
                         text = it,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
 
@@ -167,33 +168,41 @@ fun PlaySummaryAudioContent(
                 AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
             }
         }
-        GlideSummaryImage(summaryId = summaryId ?: "",
-            modifier = Modifier
+        GlideSummaryImage(
+            summaryId = summaryId ?: "",
+            modifier =
+            Modifier
                 .width(154.dp)
                 .align(alignment = Alignment.TopCenter)
                 .offset(y = 4.dp),
             url = coverUrl,
-            painter = if (coverUrl == null) {
+            painter =
+            if (coverUrl == null) {
                 painterResource(id = R.drawable.cover_never_split_difference)
-            } else null,
+            } else {
+                null
+            },
             onSummaryClicked = { }
         )
     }
 }
 
 @Composable
-private fun PlaybackControls(playbackState: PlaybackState? = null, actions: PlayerActions) {
+private fun PlaybackControls(
+    playbackState: PlaybackState? = null,
+    actions: PlayerActions
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(onClick = { actions.onBackward() }) {
             Icon(
                 modifier = Modifier.size(18.dp),
                 painter = painterResource(id = TangaIcons.Backward),
                 tint = MaterialTheme.colorScheme.primary,
-                contentDescription = "previous"
+                contentDescription = "previous",
             )
         }
         Text(
@@ -201,22 +210,25 @@ private fun PlaybackControls(playbackState: PlaybackState? = null, actions: Play
             text = "-15s",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodySmall
         )
         IconButton(onClick = { actions.onPlayPause() }, modifier = Modifier.size(64.dp)) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.primary
             ) {
                 Icon(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(18.dp)
                         .padding(18.dp),
-                    painter = painterResource(
-                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
+                    painter =
+                    painterResource(
+                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play,
                     ),
-                    tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "play/pause"
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = "play/pause"
                 )
             }
         }
@@ -225,7 +237,7 @@ private fun PlaybackControls(playbackState: PlaybackState? = null, actions: Play
             text = "+15s",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodySmall
         )
         IconButton(onClick = { actions.onForward() }) {
             Icon(
@@ -239,15 +251,20 @@ private fun PlaybackControls(playbackState: PlaybackState? = null, actions: Play
 }
 
 @Composable
-private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Long) -> Unit) {
+private fun AudioBar(
+    playbackState: PlaybackState?,
+    onSliderPositionChanged: (Long) -> Unit
+) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp),
     ) {
         MediaSlider(playbackState, onSliderPositionChanged)
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp)
         ) {
@@ -256,7 +273,7 @@ private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Lo
                 text = playbackState?.position?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -264,7 +281,7 @@ private fun AudioBar(playbackState: PlaybackState?, onSliderPositionChanged: (Lo
                 text = playbackState?.duration?.toTimeFormat() ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }

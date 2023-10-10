@@ -15,6 +15,6 @@ class PreferencesDiModule {
     @Provides
     @Singleton
     fun provideDefaultPreDataStoreModule(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ) = DefaultPrefDataStoreRepository(context = context)
 }

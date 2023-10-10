@@ -33,30 +33,32 @@ import app.books.tanga.core_ui.theme.button
 
 @Composable
 fun ProButton(onClick: () -> Unit = {}) {
-    val gradientColors = listOf(
-        LocalGradientColors.current.start,
-        LocalGradientColors.current.center,
-        LocalGradientColors.current.end
-    )
+    val gradientColors =
+        listOf(
+            LocalGradientColors.current.start,
+            LocalGradientColors.current.center,
+            LocalGradientColors.current.end
+        )
 
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(70.dp)
             .background(
                 brush = Brush.linearGradient(colors = gradientColors),
-                shape = RoundedCornerShape(40.dp)
-            )
-            .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically,
+                shape = RoundedCornerShape(40.dp),
+            ).clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(12.dp))
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(52.dp)
                 .clip(CircleShape)
                 .background(color = Color.White)
-                .padding(all = 10.dp),
+                .padding(all = 10.dp)
         ) {
             Icon(
                 modifier = Modifier.size(36.dp),

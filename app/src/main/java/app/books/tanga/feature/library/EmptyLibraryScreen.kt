@@ -46,7 +46,7 @@ fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
                 .height(64.dp),
             onClick = onExploreButtonClicked,
             rightIcon = TangaIcons.Search,
-            text = stringResource(id = R.string.library_explore_summaries),
+            text = stringResource(id = R.string.library_explore_summaries)
         )
     }
 }

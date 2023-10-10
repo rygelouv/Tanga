@@ -11,14 +11,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class AudioPlayerModule {
+    @Provides
+    fun provideExoPlayer(
+        @ApplicationContext context: Context,
+    ): ExoPlayer = ExoPlayer.Builder(context).build()
 
     @Provides
-    fun provideExoPlayer(@ApplicationContext context: Context): ExoPlayer {
-        return ExoPlayer.Builder(context).build()
-    }
-
-    @Provides
-    fun providePlayerController(exoPlayerController: ExoPlayerController): PlayerController {
-        return exoPlayerController
-    }
+    fun providePlayerController(exoPlayerController: ExoPlayerController): PlayerController = exoPlayerController
 }

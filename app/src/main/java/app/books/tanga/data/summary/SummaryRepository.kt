@@ -1,7 +1,7 @@
 package app.books.tanga.data.summary
 
-import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.Summary
+import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,7 +9,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 interface SummaryRepository {
-
     suspend fun getSummary(summaryId: String): Result<Summary>
 
     /**
@@ -18,6 +17,7 @@ interface SummaryRepository {
     suspend fun getAllSummaries(): Result<List<Summary>>
 
     suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>>
+
     suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>>
 
     suspend fun saveSummariesInMemoryCache(summaries: List<Summary>)
@@ -28,36 +28,40 @@ class SummaryRepositoryImpl @Inject constructor(
     private val summaryInMemoryCache: SummaryInMemoryCache,
     private val operationHandler: FirestoreOperationHandler
 ) : SummaryRepository {
-    override suspend fun getSummary(summaryId: String): Result<Summary> {
-        return operationHandler.executeOperation {
-            val summary = firestore.summaryCollection.document(summaryId).get().await()
+    override suspend fun getSummary(summaryId: String): Result<Summary> =
+        operationHandler.executeOperation {
+            val summary =
+                firestore
+                    .summaryCollection
+                    .document(summaryId)
+                    .get()
+                    .await()
 
             summary.data?.toSummary() ?: throw Exception("Summary not found")
         }
-    }
 
-    override suspend fun getAllSummaries(): Result<List<Summary>> {
-        return operationHandler.executeOperation {
+    override suspend fun getAllSummaries(): Result<List<Summary>> =
+        operationHandler.executeOperation {
             val summaries = firestore.summaryCollection.get().await()
 
             summaries.map {
                 it.data.toSummary()
             }
         }
-    }
 
-    override suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
-        return operationHandler.executeOperation {
-            val summaries = firestore.summaryCollection
-                .whereArrayContains(FirestoreDatabase.Summaries.Fields.CATEGORIES, categoryId)
-                .get()
-                .await()
+    override suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
+        operationHandler.executeOperation {
+            val summaries =
+                firestore
+                    .summaryCollection
+                    .whereArrayContains(FirestoreDatabase.Summaries.Fields.CATEGORIES, categoryId)
+                    .get()
+                    .await()
 
             summaries.map {
                 it.data.toSummary()
             }
         }
-    }
 
     /**
      * Search for summaries by title or author
@@ -65,10 +69,11 @@ class SummaryRepositoryImpl @Inject constructor(
      */
     override suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>> {
         val summaries = summaryInMemoryCache.getAll()
-        val filteredSummaries = summaries.filter { summary ->
-            summary.title.contains(query, ignoreCase = true) ||
+        val filteredSummaries =
+            summaries.filter { summary ->
+                summary.title.contains(query, ignoreCase = true) ||
                     summary.author.contains(query, ignoreCase = true)
-        }
+            }
         return Result.success(filteredSummaries)
     }
 

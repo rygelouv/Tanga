@@ -6,11 +6,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,13 +34,14 @@ fun SignIn(
     event: AuthUiEvent,
     onGoogleSignInCompleted: (Intent) -> Unit
 ) {
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartIntentSenderForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            result.data?.let(onGoogleSignInCompleted)
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartIntentSenderForResult(),
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.let(onGoogleSignInCompleted)
+            }
         }
-    }
 
     when (event) {
         is AuthUiEvent.LaunchGoogleSignIn -> {
@@ -79,26 +80,27 @@ fun GoogleSignInButton(
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-        enabled = progressState != ProgressState.Show
+        enabled = progressState != ProgressState.Show,
     ) {
         Box {
             when (progressState) {
-                ProgressState.Show -> CircularProgressIndicator(
-                    modifier = Modifier.size(30.dp),
-                    color = Color.White
-                )
+                ProgressState.Show ->
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(30.dp),
+                        color = Color.White,
+                    )
                 else -> {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),
                         contentDescription = "google logo",
-                        modifier = Modifier.size(22.dp)
+                        modifier = Modifier.size(22.dp),
                     )
 
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.auth_sign_in_with_google),
                         textAlign = TextAlign.Center,
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
             }

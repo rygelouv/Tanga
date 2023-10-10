@@ -9,35 +9,37 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun TangaTheme(content: @Composable () -> Unit) {
     val colors = LightColors
-    val gradientColors = GradientColors(
-        start = colors.onPrimaryContainer,
-        center = colors.primary,
-        end = colors.secondary
-    )
-    val tintColor = TintColor(
-        color = colors.primary,
-        disabled = colors.onSurfaceVariant.copy(alpha = 0.38f)
-    )
+    val gradientColors =
+        GradientColors(
+            start = colors.onPrimaryContainer,
+            center = colors.primary,
+            end = colors.secondary,
+        )
+    val tintColor =
+        TintColor(
+            color = colors.primary,
+            disabled = colors.onSurfaceVariant.copy(alpha = 0.38f),
+        )
     val spacing = Spacing()
 
     CompositionLocalProvider(
         LocalTintColor provides tintColor,
         LocalGradientColors provides gradientColors,
-        LocalSpacing provides spacing
+        LocalSpacing provides spacing,
     ) {
         MaterialTheme(
             colorScheme = colors,
             typography = Typography,
             shapes = Shapes,
-            content = content
+            content = content,
         )
     }
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
-        color = Cultured
+        color = Cultured,
     )
     systemUiController.setNavigationBarColor(
-        color = Color.White
+        color = Color.White,
     )
 }

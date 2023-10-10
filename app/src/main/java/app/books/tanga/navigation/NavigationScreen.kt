@@ -3,7 +3,9 @@ package app.books.tanga.navigation
 import androidx.annotation.DrawableRes
 import app.books.tanga.R
 
-sealed class NavigationScreen(val route: String) {
+sealed class NavigationScreen(
+    val route: String
+) {
     data object Onboarding : NavigationScreen("onboarding_screen")
 
     data object Authentication : NavigationScreen("authentication_screen")

@@ -10,9 +10,8 @@ package app.books.tanga.feature.audioplayer
 data class PlaybackState(
     val state: PlayerState = PlayerState.IDLE,
     val position: Long = 0,
-    val duration: Long = 0,
+    val duration: Long = 0
 )
-
 
 /**
  * Represents the current state of the player.
@@ -51,5 +50,5 @@ enum class PlayerState {
     /**
      * State when the playback has ended.
      */
-    ENDED,
+    ENDED
 }

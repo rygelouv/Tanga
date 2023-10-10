@@ -1,15 +1,9 @@
 package app.books.tanga.core_ui.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -18,17 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalTintColor
 
 /**
  * This is a composable function that displays a description text with centered alignment and padding.
@@ -43,7 +31,7 @@ fun TangaDescriptionText(
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = 50,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
-    textAlign: TextAlign = TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
 ) {
     Text(
         modifier = modifier,
@@ -52,7 +40,7 @@ fun TangaDescriptionText(
         style = style,
         overflow = overflow,
         maxLines = maxLines,
-        textAlign = textAlign
+        textAlign = textAlign,
     )
 }
 
@@ -61,7 +49,10 @@ fun TangaDescriptionText(
  * Show the "Show more" button only if the text is more than 3 lines
  */
 @Composable
-fun ExpendableText(modifier: Modifier = Modifier, text: String) {
+fun ExpendableText(
+    modifier: Modifier = Modifier,
+    text: String,
+) {
     var isExpandable by remember { mutableStateOf(false) }
     var isExpended by remember { mutableStateOf(false) }
 
@@ -75,7 +66,7 @@ fun ExpendableText(modifier: Modifier = Modifier, text: String) {
             style = MaterialTheme.typography.bodyMedium,
             onTextLayout = { textLayoutResult ->
                 isExpandable = textLayoutResult.hasVisualOverflow
-            }
+            },
         )
         if (isExpandable || isExpended) {
             TextButton(modifier = Modifier.padding(0.dp), onClick = { isExpended = isExpended.not() }) {

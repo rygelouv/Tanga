@@ -17,7 +17,6 @@ class ProfileViewModel @Inject constructor(
     private val authInteractor: AuthenticationInteractor,
     private val userRepository: UserRepository
 ) : ViewModel() {
-
     private val _state: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState())
     val state: StateFlow<ProfileUiState> = _state.asStateFlow()
 

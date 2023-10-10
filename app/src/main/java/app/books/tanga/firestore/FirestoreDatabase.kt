@@ -4,10 +4,10 @@ typealias FirestoreData = Map<String, Any?>
 
 object FirestoreDatabase {
     object Users {
-        //Collection Reference
+        // Collection Reference
         const val COLLECTION_NAME = "users"
 
-        //Fields
+        // Fields
         object Fields {
             const val UID = "uid"
             const val FULL_NAME = "fullName"
@@ -18,16 +18,16 @@ object FirestoreDatabase {
     }
 
     object Summaries {
-        //Collection Reference
+        // Collection Reference
         const val COLLECTION_NAME = "summaries"
 
-        //Fields
+        // Fields
         object Fields {
             const val SLUG = "slug"
             const val TITLE = "title"
             const val AUTHOR = "author"
             const val SYNOPSIS = "synopsis"
-            const val CATEGORIES= "categories"
+            const val CATEGORIES = "categories"
             const val COVER_IMAGE_URL = "coverImageUrl"
             const val AUDIO_URL = "audioUrl"
             const val GRAPHIC_URL = "graphicUrl"
@@ -40,10 +40,10 @@ object FirestoreDatabase {
     }
 
     object Categories {
-        //Collection Reference
+        // Collection Reference
         const val COLLECTION_NAME = "categories"
 
-        //Fields
+        // Fields
         object Fields {
             const val NAME = "name"
             const val SLUG = "slug"
@@ -51,10 +51,10 @@ object FirestoreDatabase {
     }
 
     object Favorites {
-        //Collection Reference
+        // Collection Reference
         const val COLLECTION_NAME = "favorites"
 
-        //Fields
+        // Fields
         object Fields {
             const val UID = "uid"
             const val TITLE = "title"

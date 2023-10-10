@@ -2,8 +2,8 @@ package app.books.tanga.di
 
 import android.content.Context
 import app.books.tanga.BuildConfig
-import app.books.tanga.errors.FirebaseCrashlyticsUserTracker
 import app.books.tanga.errors.FirebaseCrashlyticsTree
+import app.books.tanga.errors.FirebaseCrashlyticsUserTracker
 import app.books.tanga.errors.SentryTracker
 import app.books.tanga.errors.TangaErrorTracker
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -22,7 +22,6 @@ fun TimberTrees.plantAll() = forEach { Timber.plant(it) }
 @Module
 @InstallIn(SingletonComponent::class)
 class DiagnosticModule {
-
     @Singleton
     @Provides
     fun provideFirebaseCrashlytics() = FirebaseCrashlytics.getInstance()
@@ -42,12 +41,12 @@ class DiagnosticModule {
     fun provideTangaErrorTracker(
         firebaseCrashlyticsUserTracker: FirebaseCrashlyticsUserTracker,
         sentryTracker: SentryTracker,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ) = TangaErrorTracker(firebaseCrashlyticsUserTracker, sentryTracker, context)
 
     @Singleton
     @Provides
-    fun provideTimberTrees(firebaseCrashlyticsTree: FirebaseCrashlyticsTree) : TimberTrees {
+    fun provideTimberTrees(firebaseCrashlyticsTree: FirebaseCrashlyticsTree): TimberTrees {
         val trees = TimberTrees()
         when {
             BuildConfig.DEBUG -> trees.add(Timber.DebugTree())

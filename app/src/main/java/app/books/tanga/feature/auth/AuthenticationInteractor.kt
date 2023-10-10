@@ -24,7 +24,6 @@ class AuthenticationInteractor @Inject constructor(
     private val sessionManager: SessionManager,
     private val googleAuthService: GoogleAuthService
 ) {
-
     /**
      * Initializes the Google sign-in process.
      */
@@ -46,8 +45,8 @@ class AuthenticationInteractor @Inject constructor(
      * Create the user in the database if it doesn't exist.
      * Then Open a new session for the user.
      */
-    suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<User> {
-        return resultOf {
+    suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<User> =
+        resultOf {
             val authResult = googleAuthService.completeSignIn(credentials)
             if (authResult.isNewUser) {
                 userRepository.createUser(user = authResult.user)
@@ -60,21 +59,18 @@ class AuthenticationInteractor @Inject constructor(
         }.onFailure {
             return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
         }
-    }
 
-    suspend fun signOut(): Result<SessionState> {
-        return resultOf {
+    suspend fun signOut(): Result<SessionState> =
+        resultOf {
             googleAuthService.signOut()
             sessionManager.closeSession()
             SessionState.SignedOut
         }
-    }
 
-    suspend fun deleteUser(user: User): Result<SessionState> {
-        return resultOf {
+    suspend fun deleteUser(user: User): Result<SessionState> =
+        resultOf {
             signOut()
             userRepository.deleteUser(user)
             SessionState.SignedOut
         }
-    }
 }

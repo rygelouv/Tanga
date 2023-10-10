@@ -13,7 +13,7 @@ fun Long.toTimeFormat(): String {
     val totalSeconds = this / 1000
     val minutes = (totalSeconds / 60).toTwoDigitFormat()
     val remainingSeconds = (totalSeconds % 60).toTwoDigitFormat()
-    return "${minutes}:${remainingSeconds}"
+    return "$minutes:$remainingSeconds"
 }
 
 /**
@@ -22,9 +22,7 @@ fun Long.toTimeFormat(): String {
  *
  * @return The formatted string.
  */
-fun Long.toTwoDigitFormat(): String {
-    return if (this < 10) "0${this}" else this.toString()
-}
+fun Long.toTwoDigitFormat(): String = if (this < 10) "0$this" else this.toString()
 
 /**
  * Converts the [Date] object into a formatted string.

@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class TangaApp : Application() {
-
     @Inject
     lateinit var timberTrees: TimberTrees
 

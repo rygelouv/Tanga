@@ -3,7 +3,9 @@ package app.books.tanga.entity
 import java.util.Date
 
 @JvmInline
-value class UserId(val value: String)
+value class UserId(
+    val value: String,
+)
 
 data class User(
     val id: UserId,

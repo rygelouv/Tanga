@@ -1,7 +1,9 @@
 package app.books.tanga.entity
 
 @JvmInline
-value class FavoriteId(val value: String)
+value class FavoriteId(
+    val value: String
+)
 
 /**
  * A favorite is a summary that the user has saved in his library.

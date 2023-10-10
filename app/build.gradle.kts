@@ -30,7 +30,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -66,11 +66,21 @@ dependencies {
     implementation("androidx.activity:activity-ktx:${rootProject.extra.get("activity_version")}")
 
     // Lifecycle and ViewModel https://developer.android.com/jetpack/androidx/releases/lifecycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.extra.get("lifecycle_version")}") // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.extra.get("lifecycle_version")}") // ViewModel with Compose
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.extra.get("lifecycle_version")}") // optional - LiveData
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra.get("lifecycle_version")}") // Lifecycles only (without ViewModel or LiveData)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:${rootProject.extra.get("lifecycle_version")}") // Saved state module for ViewModel
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.extra.get("lifecycle_version")}",
+    ) // ViewModel
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.extra.get("lifecycle_version")}",
+    ) // ViewModel with Compose
+    implementation(
+        "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.extra.get("lifecycle_version")}",
+    ) // optional - LiveData
+    implementation(
+        "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra.get("lifecycle_version")}",
+    ) // Lifecycles only (without ViewModel or LiveData)
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${rootProject.extra.get("lifecycle_version")}",
+    ) // Saved state module for ViewModel
     implementation("androidx.lifecycle:lifecycle-common-java8:${rootProject.extra.get("lifecycle_version")}")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:${rootProject.extra.get("lifecycle_version")}")
 
@@ -91,15 +101,19 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
-    //implementation("com.google.firebase:firebase-storage-ktx")
+    // implementation("com.google.firebase:firebase-storage-ktx")
 
     // Accompanist https://github.com/google/accompanist/releases
     implementation("com.google.accompanist:accompanist-pager:${rootProject.extra.get("accompanist_version")}")
-    implementation("com.google.accompanist:accompanist-pager-indicators:${rootProject.extra.get("accompanist_version")}")
+    implementation(
+        "com.google.accompanist:accompanist-pager-indicators:${rootProject.extra.get("accompanist_version")}",
+    )
 
     // Kotlin Coroutines https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra.get("coroutines_version")}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${rootProject.extra.get("coroutines_version")}")
+    implementation(
+        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${rootProject.extra.get("coroutines_version")}",
+    )
 
     // Play Services https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:${rootProject.extra.get("play_services_auth_version")}")

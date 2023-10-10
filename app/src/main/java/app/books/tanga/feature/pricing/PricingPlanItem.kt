@@ -26,23 +26,21 @@ fun PricingPlanItem(
     onClick: () -> Unit
 ) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.secondary,
                 shape = MaterialTheme.shapes.large
-            )
-            .background(
+            ).background(
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 shape = MaterialTheme.shapes.large
-            )
-            .padding(
+            ).padding(
                 horizontal = LocalSpacing.current.medium,
-                vertical = LocalSpacing.current.medium
-            )
-            .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically,
+                vertical = LocalSpacing.current.medium,
+            ).clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = title,
@@ -51,12 +49,13 @@ fun PricingPlanItem(
             fontWeight = FontWeight.SemiBold
         )
         Spacer(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .width(LocalSpacing.current.medium)
                 .weight(1f)
         )
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = price,

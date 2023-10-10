@@ -21,11 +21,11 @@ data class SearchUiState(
 data class CategoryUi(
     val id: String,
     val name: String,
-    @DrawableRes val icon: Int
+    @DrawableRes val icon: Int,
 )
 
-fun Category.toCategoryUi(): CategoryUi {
-    return CategoryUi(
+fun Category.toCategoryUi(): CategoryUi =
+    CategoryUi(
         id = id.value,
         name = name,
         icon = when (id.value) {
@@ -36,8 +36,9 @@ fun Category.toCategoryUi(): CategoryUi {
             else -> TangaIcons.SelfDevelopment
         }
     )
-}
 
 sealed class SearchUiEvent {
-    data class ShowSnackError(val error: UiError) : SearchUiEvent()
+    data class ShowSnackError(
+        val error: UiError
+    ) : SearchUiEvent()
 }

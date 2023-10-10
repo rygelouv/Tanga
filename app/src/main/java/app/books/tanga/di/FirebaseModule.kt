@@ -14,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class FirebaseModule {
-
     @Provides
     fun provideFirebaseAuth() = Firebase.auth
 
@@ -25,7 +24,6 @@ class FirebaseModule {
 @Module
 @InstallIn(SingletonComponent::class)
 interface FirestoreOperationHandlerModule {
-
     @Binds
     fun FirestoreOperationHandlerImpl.provideFirestoreOperationHandler(): FirestoreOperationHandler
 }

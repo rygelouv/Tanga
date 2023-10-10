@@ -11,8 +11,8 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object AndroidSystemsModule {
-
     @Provides
-    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun provideConnectivityManager(
+        @ApplicationContext context: Context,
+    ): ConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 }

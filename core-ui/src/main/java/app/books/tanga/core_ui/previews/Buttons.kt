@@ -14,7 +14,7 @@ fun TangaButtonLeftIconPreview() {
     TangaButtonRightIcon(
         text = "Get Started",
         leftIcon = R.drawable.ic_right_arrow,
-        onClick = { /*TODO*/ }
+        onClick = { /*TODO*/ },
     )
 }
 
@@ -24,7 +24,7 @@ fun TangaButtonRightIconPreview() {
     TangaButtonLeftIcon(
         text = "Explore summaries",
         rightIcon = R.drawable.ic_search,
-        onClick = { /*TODO*/ }
+        onClick = { /*TODO*/ },
     )
 }
 

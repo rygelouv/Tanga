@@ -26,11 +26,12 @@ fun MediaSlider(
     var dragValue by remember { mutableFloatStateOf(0f) }
 
     // Determine the current value for the slider, based on whether it's being dragged or not.
-    val sliderValue: Float = if (isDragging) {
-        dragValue
-    } else {
-        playbackState?.position?.toFloat() ?: 0f
-    }
+    val sliderValue: Float =
+        if (isDragging) {
+            dragValue
+        } else {
+            playbackState?.position?.toFloat() ?: 0f
+        }
 
     Slider(
         modifier = Modifier.fillMaxWidth(),
@@ -45,6 +46,6 @@ fun MediaSlider(
             isDragging = false
             onSliderPositionChanged(dragValue.toLong())
         },
-        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f),
+        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f)
     )
 }

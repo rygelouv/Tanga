@@ -14,9 +14,7 @@ import javax.inject.Inject
 class SummaryInMemoryCache @Inject constructor() {
     private val cache = HashMap<SummaryId, Summary>()
 
-    fun getAll(): List<Summary> {
-        return cache.values.toList()
-    }
+    fun getAll(): List<Summary> = cache.values.toList()
 
     fun putAll(summaries: List<Summary>) {
         summaries.forEach { summary ->

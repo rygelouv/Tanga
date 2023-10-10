@@ -14,8 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
     private val favoriteInteractor: FavoriteInteractor
-): ViewModel() {
-
+) : ViewModel() {
     private val _state: MutableStateFlow<LibraryUiState> =
         MutableStateFlow(LibraryUiState(progressState = ProgressState.Show))
     val state: StateFlow<LibraryUiState> = _state.asStateFlow()

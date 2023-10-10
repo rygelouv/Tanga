@@ -17,8 +17,8 @@ data class FavoriteUi(
     val playingLength: String
 )
 
-fun Favorite.toFavoriteUi(): FavoriteUi {
-    return FavoriteUi(
+fun Favorite.toFavoriteUi(): FavoriteUi =
+    FavoriteUi(
         uid = id.value,
         summaryId = summaryId,
         title = title,
@@ -26,4 +26,3 @@ fun Favorite.toFavoriteUi(): FavoriteUi {
         coverUrl = coverUrl,
         playingLength = playingLength
     )
-}

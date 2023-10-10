@@ -34,19 +34,18 @@ interface FirestoreOperationHandler {
 class FirestoreOperationHandlerImpl @Inject constructor(
     private val internetConnectivityMonitor: InternetConnectivityMonitor
 ) : FirestoreOperationHandler {
-    override suspend fun <T> executeOperation(operation: suspend () -> T): Result<T> {
-        return try {
+    override suspend fun <T> executeOperation(operation: suspend () -> T): Result<T> =
+        try {
             Result.success(operation())
         } catch (exception: FirebaseFirestoreException) {
             val error = FirestoreErrorFactory.createError(exception)
-            return Result.failure(error)
+            Result.failure(error)
         } catch (exception: Exception) {
             // Check if there is internet connection
             if (internetConnectivityMonitor.isInternetAvailable.value) {
-                return Result.failure(OperationError.NoInternetConnectionError(exception))
+                Result.failure(OperationError.NoInternetConnectionError(exception))
             } else {
-                return Result.failure(OperationError.UnknownError(exception))
+                Result.failure(OperationError.UnknownError(exception))
             }
         }
-    }
 }

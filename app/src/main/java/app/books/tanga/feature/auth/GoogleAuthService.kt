@@ -19,7 +19,6 @@ import javax.inject.Named
  * An interface for Google sign-in operations.
  */
 interface GoogleAuthService {
-
     suspend fun initSignIn(): BeginSignInResult
 
     suspend fun completeSignIn(credentials: SignInCredential): AuthResult
@@ -33,21 +32,19 @@ class GoogleAuthServiceImpl @Inject constructor(
     @Named(GoogleSignInModule.GOOGLE_SIGN_IN_REQUEST)
     private var signInRequest: BeginSignInRequest,
     @Named(GoogleSignInModule.GOOGLE_SIGN_UP_REQUEST)
-    private var signUpRequest: BeginSignInRequest,
+    private var signUpRequest: BeginSignInRequest
 ) : GoogleAuthService {
-
     /**
      * If initialization of Sign in request fails, then try sign up request
      */
-    override suspend fun initSignIn(): BeginSignInResult {
-        return try {
+    override suspend fun initSignIn(): BeginSignInResult =
+        try {
             signInClient.beginSignIn(signInRequest).await()
         } catch (e: Exception) {
             Log.d("AuthenticationInteractor", "Unable to get sign in result. Attempt sign up")
             logGoogleError(e)
             signInClient.beginSignIn(signUpRequest).await()
         }
-    }
 
     /**
      * Use the Google credentials to sign-in with Firebase Auth.

@@ -13,7 +13,6 @@ class PrefSessionManager @Inject constructor(
     private val sessionDataCleaner: SessionDataCleaner,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : SessionManager {
-
     override suspend fun openSession(sessionId: SessionId) {
         prefRepository.saveSessionId(sessionId)
     }
@@ -23,13 +22,15 @@ class PrefSessionManager @Inject constructor(
         prefRepository.removeSessionId()
     }
 
-    override suspend fun sessionState(): Flow<SessionState> = withContext(ioDispatcher) {
-        prefRepository.getSessionId()
-            .map { sessionId ->
-                when(sessionId) {
-                    null -> SessionState.SignedOut
-                    else -> SessionState.SignedIn(sessionId)
+    override suspend fun sessionState(): Flow<SessionState> =
+        withContext(ioDispatcher) {
+            prefRepository
+                .getSessionId()
+                .map { sessionId ->
+                    when (sessionId) {
+                        null -> SessionState.SignedOut
+                        else -> SessionState.SignedIn(sessionId)
+                    }
                 }
-            }
-    }
+        }
 }
