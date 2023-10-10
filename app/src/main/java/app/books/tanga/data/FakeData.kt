@@ -131,13 +131,4 @@ object FakeData {
                 ),
             )
         }
-
-    fun errorInfo(): UiErrorInfo =
-        UiErrorInfo(
-            title = TextResource.fromText("Unable to share summary"),
-            message =
-            TextResource.fromText(
-                "Unfortunately, we haven't been able to create a sharing link for your summary. Please try again later",
-            ),
-        )
 }

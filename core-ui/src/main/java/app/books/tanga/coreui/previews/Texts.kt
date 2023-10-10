@@ -10,26 +10,26 @@ import app.books.tanga.coreui.components.TangaDescriptionText
 fun TangaDescriptionTexPreviewLong() {
     TangaDescriptionText(
         text =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
-                "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
-                "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. " +
-                "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
-                "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia," +
-                " nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, " +
-                "nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam " +
-                "nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl " +
-                "nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit " +
-                "amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
-                "eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
-                "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, " +
-                "nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, " +
-                "nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl " +
-                "nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia" +
-                " nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
-                "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod," +
-                " nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
-                "eu nisl. Sed euismod, nunc sit amet ultricies"
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
+            "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
+            "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. " +
+            "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
+            "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia," +
+            " nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, " +
+            "nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam " +
+            "nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl " +
+            "nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit " +
+            "amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
+            "eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
+            "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, " +
+            "nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod, " +
+            "nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl " +
+            "nisl eu nisl. Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia" +
+            " nisl, nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
+            "lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl eu nisl. Sed euismod," +
+            " nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, nec aliquam nisl nisl " +
+            "eu nisl. Sed euismod, nunc sit amet ultricies"
     )
 }
 
@@ -43,10 +43,10 @@ fun TangaDescriptionTexPreviewLong() {
 fun TangaDescriptionTexPreview() {
     TangaDescriptionText(
         text =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
-                "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
-                "lacinia, nisl nisl lacinia nisl",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Sed euismod, nunc sit amet ultricies lacinia, nisl nisl lacinia nisl, " +
+            "nec aliquam nisl nisl eu nisl. Sed euismod, nunc sit amet ultricies " +
+            "lacinia, nisl nisl lacinia nisl",
         textAlign = TextAlign.Start,
         maxLines = 3
     )

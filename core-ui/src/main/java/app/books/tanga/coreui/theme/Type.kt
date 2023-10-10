@@ -152,13 +152,3 @@ val Typography =
             letterSpacing = 0.sp
         ),
     )
-
-val Typography.button: TextStyle
-    get() =
-        TextStyle(
-            fontFamily = Poppins,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp,
-            lineHeight = 20.sp,
-            letterSpacing = 0.5.sp
-        )
