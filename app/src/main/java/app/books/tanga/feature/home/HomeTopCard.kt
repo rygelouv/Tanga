@@ -42,6 +42,7 @@ import app.books.tanga.feature.summary.SummaryUi
 @Composable
 fun HomeTopCard(
     summaryUi: SummaryUi,
+    modifier: Modifier = Modifier,
     onSummaryClicked: (String) -> Unit
 ) {
     val gradientColors =
@@ -51,7 +52,7 @@ fun HomeTopCard(
             LocalGradientColors.current.end
         )
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(170.dp)
             .clickable {
@@ -116,5 +117,5 @@ fun HomeTopCard(
 @Preview(showBackground = true)
 @Composable
 fun HomeTopCardPreview() {
-    HomeTopCard(summaryUi = FakeData.allSummaries().first(), {})
+    HomeTopCard(summaryUi = FakeData.allSummaries().first(), onSummaryClicked = {})
 }

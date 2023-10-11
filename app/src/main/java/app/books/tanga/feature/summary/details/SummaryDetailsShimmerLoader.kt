@@ -29,7 +29,7 @@ import app.books.tanga.common.ui.ShimmerSummaryListRow
 import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
-fun SummaryDetailsShimmerLoader() {
+fun SummaryDetailsShimmerLoader(modifier: Modifier = Modifier) {
     val shimmerColors =
         listOf(
             Color.LightGray.copy(alpha = 0.6f),
@@ -59,8 +59,7 @@ fun SummaryDetailsShimmerLoader() {
         )
 
     Column(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(LocalSpacing.current.medium)
     ) {

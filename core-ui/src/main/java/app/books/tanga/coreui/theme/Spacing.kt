@@ -1,5 +1,6 @@
 package app.books.tanga.coreui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -28,5 +29,7 @@ data class Spacing(
 
 /**
  * A composition local for [Spacing].
+ * See the reason for SuppressLint here: https://developer.android.com/jetpack/compose/compositionlocal#deciding
  */
+@SuppressLint("ComposeCompositionLocalUsage")
 val LocalSpacing = staticCompositionLocalOf { Spacing() }

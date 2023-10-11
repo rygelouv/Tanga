@@ -36,9 +36,9 @@ import app.books.tanga.coreui.theme.LocalTintColor
  */
 @Composable
 fun Tag(
-    modifier: Modifier = Modifier,
     text: String,
     icon: Int,
+    modifier: Modifier = Modifier,
     shape: RoundedCornerShape = RoundedCornerShape(14.dp),
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
     tint: Color = LocalTintColor.current.color,

@@ -127,11 +127,12 @@ fun ErrorBottomSheetModal(
 @Composable
 fun ErrorContent(
     errorInfo: UiErrorInfo,
+    modifier: Modifier = Modifier,
     canRetry: Boolean = false,
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(Color.White)
             .padding(
                 horizontal = LocalSpacing.current.medium,

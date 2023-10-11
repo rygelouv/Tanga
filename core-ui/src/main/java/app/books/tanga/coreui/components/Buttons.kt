@@ -42,9 +42,9 @@ import app.books.tanga.coreui.theme.button
  */
 @Composable
 fun TangaButton(
-    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     endPadding: Dp = 30.dp,
@@ -87,10 +87,10 @@ fun TangaButton(
  * */
 @Composable
 fun TangaButtonRightIcon(
-    modifier: Modifier = Modifier,
     text: String,
     leftIcon: Int,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     endPadding: Dp = 30.dp,
@@ -144,10 +144,10 @@ fun TangaButtonRightIcon(
  * */
 @Composable
 fun TangaButtonLeftIcon(
-    modifier: Modifier = Modifier,
     text: String,
     rightIcon: Int,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     startPadding: Dp = 30.dp,
@@ -193,9 +193,9 @@ fun TangaButtonLeftIcon(
  */
 @Composable
 fun SummaryActionButton(
-    modifier: Modifier = Modifier,
     text: String,
     icon: Int,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {

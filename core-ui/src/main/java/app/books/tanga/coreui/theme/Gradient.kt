@@ -1,5 +1,6 @@
 package app.books.tanga.coreui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -21,4 +22,5 @@ data class GradientColors(
 /**
  * A composition local for [GradientColors].
  */
+@SuppressLint("ComposeCompositionLocalUsage")
 val LocalGradientColors = staticCompositionLocalOf { GradientColors() }

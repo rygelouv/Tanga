@@ -24,7 +24,7 @@ import app.books.tanga.common.ui.ShimmerSummaryItem
 import app.books.tanga.common.ui.ShimmerSummaryListRow
 
 @Composable
-fun AnimatedShimmerLoader(modifier: Modifier) {
+fun AnimatedShimmerLoader(modifier: Modifier = Modifier) {
     val shimmerColors =
         listOf(
             Color.LightGray.copy(alpha = 0.6f),

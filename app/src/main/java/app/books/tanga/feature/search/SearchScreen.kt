@@ -42,9 +42,11 @@ import app.books.tanga.errors.ErrorContent
 import app.books.tanga.errors.ShowSnackbarError
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.list.SummaryGrid
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hiltViewModel()) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -59,8 +61,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
         HandleEvents(event = event, snackbarHostState = snackbarHostState)
 
         Column(
-            modifier =
-            Modifier
+            modifier = modifier
                 .padding(paddingValues)
                 .background(color = MaterialTheme.colorScheme.background)
                 .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
@@ -81,7 +82,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
             if (state.shouldShowCategories) {
                 state.categories?.let {
                     CategoriesSection(
-                        categories = it,
+                        categories = it.toImmutableList(),
                         onCategorySelected = { category ->
                             viewModel.onCategorySelected(category)
                         },
@@ -107,7 +108,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
                         state.summaries?.let {
                             SummaryGrid(
                                 modifier = Modifier,
-                                summaries = it
+                                summaries = it.toImmutableList()
                             ) {}
                         }
                     }
@@ -124,6 +125,44 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun CategoriesSection(
+    categories: ImmutableList<CategoryUi>,
+    modifier: Modifier = Modifier,
+    onCategoryDeselected: (CategoryUi) -> Unit = {},
+    onCategorySelected: (CategoryUi) -> Unit = {}
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(id = R.string.explore_categories),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
+            verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small)
+        ) {
+            categories.forEach {
+                Tag(
+                    text = it.name,
+                    modifier = Modifier.height(40.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    hasBorder = true,
+                    icon = it.icon,
+                    onSelected = { onCategorySelected(it) },
+                    onDeselected = { onCategoryDeselected(it) }
+                )
+            }
+        }
+    }
+}
+
 @Composable
 private fun HandleEvents(
     event: SearchUiEvent?,
@@ -135,41 +174,6 @@ private fun HandleEvents(
         }
 
         null -> Unit
-    }
-}
-
-@Composable
-@OptIn(ExperimentalLayoutApi::class)
-private fun CategoriesSection(
-    categories: List<CategoryUi>,
-    onCategoryDeselected: (CategoryUi) -> Unit = {},
-    onCategorySelected: (CategoryUi) -> Unit = {}
-) {
-    Text(
-        text = stringResource(id = R.string.explore_categories),
-        textAlign = TextAlign.Start,
-        style = MaterialTheme.typography.labelLarge,
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
-        fontWeight = FontWeight.Bold
-    )
-
-    Spacer(modifier = Modifier.height(LocalSpacing.current.small))
-
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
-        verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small)
-    ) {
-        categories.forEach {
-            Tag(
-                text = it.name,
-                modifier = Modifier.height(40.dp),
-                shape = RoundedCornerShape(8.dp),
-                hasBorder = true,
-                icon = it.icon,
-                onSelected = { onCategorySelected(it) },
-                onDeselected = { onCategoryDeselected(it) }
-            )
-        }
     }
 }
 

@@ -22,9 +22,12 @@ import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
-fun EmptySearchScreen(query: String) {
+fun EmptySearchScreen(
+    query: String,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier,
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {

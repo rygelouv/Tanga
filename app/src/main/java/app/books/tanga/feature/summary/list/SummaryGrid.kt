@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.feature.summary.SummaryUi
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SummaryGrid(
+    summaries: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    summaries: List<SummaryUi>,
     onSummaryClicked: (String) -> Unit
 ) {
     LazyVerticalGrid(

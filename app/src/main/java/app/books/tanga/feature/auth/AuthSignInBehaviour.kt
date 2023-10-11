@@ -62,12 +62,13 @@ fun SignIn(
 
 @Composable
 fun GoogleSignInButton(
-    onClick: () -> Unit,
-    state: AuthUiState
+    state: AuthUiState,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     val progressState = state.googleSignInButtonProgressState
     Button(
-        modifier = Modifier
+        modifier = modifier
             .height(55.dp)
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp),

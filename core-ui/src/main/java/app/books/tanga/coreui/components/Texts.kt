@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun TangaDescriptionText(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = 50,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
@@ -50,8 +50,8 @@ fun TangaDescriptionText(
  */
 @Composable
 fun ExpendableText(
-    modifier: Modifier = Modifier,
-    text: String
+    text: String,
+    modifier: Modifier = Modifier
 ) {
     var isExpandable by remember { mutableStateOf(false) }
     var isExpended by remember { mutableStateOf(false) }

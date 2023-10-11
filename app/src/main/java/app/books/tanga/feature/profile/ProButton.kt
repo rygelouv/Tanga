@@ -32,7 +32,7 @@ import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.button
 
 @Composable
-fun ProButton(onClick: () -> Unit = {}) {
+fun ProButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     val gradientColors =
         listOf(
             LocalGradientColors.current.start,
@@ -41,8 +41,7 @@ fun ProButton(onClick: () -> Unit = {}) {
         )
 
     Row(
-        modifier =
-        Modifier
+        modifier = modifier
             .height(70.dp)
             .background(
                 brush = Brush.linearGradient(colors = gradientColors),

@@ -20,9 +20,9 @@ import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.icons.TangaIcons
 
 @Composable
-fun EmptyLibraryScreen(onExploreButtonClicked: () -> Unit) {
+fun EmptyLibraryScreen(modifier: Modifier = Modifier, onExploreButtonClicked: () -> Unit) {
     Column(
-        modifier = Modifier.padding(top = 64.dp, bottom = 34.dp),
+        modifier = modifier.padding(top = 64.dp, bottom = 34.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {

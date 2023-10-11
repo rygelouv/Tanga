@@ -19,11 +19,11 @@ import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun PricingPlanItem(
-    modifier: Modifier = Modifier,
     title: String,
     price: String,
     cadence: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier =

@@ -48,9 +48,12 @@ sealed class OnboardingPage(
 }
 
 @Composable
-fun PagerScreen(onBoardingPage: OnboardingPage) {
+fun PagerScreen(
+    onBoardingPage: OnboardingPage,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {

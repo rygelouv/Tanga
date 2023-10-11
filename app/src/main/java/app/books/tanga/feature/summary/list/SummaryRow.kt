@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.books.tanga.feature.summary.SummaryUi
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SummaryRow(
+    summaries: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    summaries: List<SummaryUi>,
     onSummaryClicked: (String) -> Unit
 ) {
     LazyRow(

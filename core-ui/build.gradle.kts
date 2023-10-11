@@ -71,8 +71,20 @@ dependencies {
     api("com.github.bumptech.glide:compose:1.0.0-alpha.5")
     /************** End Image loading *****************/
 
+    // Kotlin Immutable Collections: https://github.com/Kotlin/kotlinx.collections.immutable/releases
+    implementation(
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${rootProject.extra.get(
+            "kotlin_immutable_collections_version"
+        )}"
+    )
+
     // Debug dependencies
     // https://developer.android.com/jetpack/androidx/releases/compose-ui#debugging
     debugApi("androidx.compose.ui:ui-tooling:${rootProject.extra.get("compose_version")}")
     debugApi("androidx.compose.ui:ui-test-manifest:${rootProject.extra.get("compose_version")}")
+
+    // Slack Compose Lint Rule set https://github.com/slackhq/compose-lints/releases
+    lintChecks(
+        "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
+    )
 }

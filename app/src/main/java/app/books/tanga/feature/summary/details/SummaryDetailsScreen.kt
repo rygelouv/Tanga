@@ -57,13 +57,16 @@ import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.utils.openLink
 import app.books.tanga.utils.shareSummary
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun SummaryDetailsScreen(
     summaryId: String,
-    viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
     onPlayClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onRecommendationClicked: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -72,7 +75,7 @@ fun SummaryDetailsScreen(
     }
 
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         topBar = {
@@ -134,7 +137,7 @@ private fun SummaryDetailsContent(
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
             Recommendations(
-                recommendations = state.recommendations,
+                recommendations = state.recommendations.toImmutableList(),
                 onRecommendationClicked = onRecommendationClicked
             )
         }
@@ -201,8 +204,8 @@ private fun SummaryTopAppBar(
 
 @Composable
 fun PlayFloatingActionButton(
-    modifier: Modifier = Modifier,
     summaryId: String,
+    modifier: Modifier = Modifier,
     onClick: (String) -> Unit
 ) {
     FloatingActionButton(
@@ -216,14 +219,7 @@ fun PlayFloatingActionButton(
             modifier = Modifier.size(24.dp),
             painter =
             painterResource(
-                id =
-                app
-                    .books
-                    .tanga
-                    .coreui
-                    .R
-                    .drawable
-                    .ic_indicator_listen
+                id = app.books.tanga.coreui.R.drawable.ic_indicator_listen
             ),
             tint = MaterialTheme.colorScheme.onPrimary,
             contentDescription = "play summary"
@@ -233,8 +229,8 @@ fun PlayFloatingActionButton(
 
 @Composable
 fun SummaryDetailsHeader(
-    modifier: Modifier,
-    summary: SummaryUi
+    summary: SummaryUi,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier =
@@ -361,8 +357,8 @@ private fun SummaryBasicInfo(
 
 @Composable
 fun SummaryIntroduction(
-    modifier: Modifier = Modifier,
-    summary: SummaryUi
+    summary: SummaryUi,
+    modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(horizontal = LocalSpacing.current.medium)) {
         Text(
@@ -382,13 +378,15 @@ fun SummaryIntroduction(
 
 @Composable
 fun SummaryAuthor(
-    modifier: Modifier = Modifier,
     author: String,
-    authorPictureUrl: String?
+    authorPictureUrl: String?,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Text(
-            modifier = modifier.padding(horizontal = LocalSpacing.current.small),
+            modifier = Modifier.padding(horizontal = LocalSpacing.current.small),
             text = stringResource(id = R.string.summary_details_author),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge,
@@ -398,7 +396,7 @@ fun SummaryAuthor(
         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProfileImage(
@@ -443,8 +441,8 @@ private fun PurchaseButton(url: String) {
 
 @Composable
 fun Recommendations(
+    recommendations: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    recommendations: List<SummaryUi>,
     onRecommendationClicked: (String) -> Unit
 ) {
     Column(modifier = modifier.padding(LocalSpacing.current.medium)) {
@@ -467,5 +465,5 @@ fun Recommendations(
 @Preview
 @Composable
 fun SummaryHeaderPreview() {
-    SummaryDetailsHeader(modifier = Modifier, FakeData.allSummaries().first())
+    SummaryDetailsHeader(modifier = Modifier, summary = FakeData.allSummaries().first())
 }
