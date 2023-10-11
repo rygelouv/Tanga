@@ -13,15 +13,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.LocalTintColor
 
 @Composable
 fun BottomBarNavigation(navController: NavController) {
-    val items = listOf(
-        NavigationScreen.BottomBarScreen.Home,
-        NavigationScreen.BottomBarScreen.Library,
-        NavigationScreen.BottomBarScreen.Profile,
-    )
+    val items =
+        listOf(
+            NavigationScreen.BottomBarScreen.Home,
+            NavigationScreen.BottomBarScreen.Library,
+            NavigationScreen.BottomBarScreen.Profile
+        )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -51,12 +52,18 @@ fun RowScope.AddItem(
         icon = {
             Icon(
                 painter = painterResource(
-                    id = if (currentRoute == item.route) item.selectedIcon
-                    else item.unselectedIcon
+                    id = if (currentRoute == item.route) {
+                        item.selectedIcon
+                    } else {
+                        item.unselectedIcon
+                    }
                 ),
                 contentDescription = "bottom bar item",
-                tint = if (currentRoute == item.route) LocalTintColor.current.color
-                else MaterialTheme.colorScheme.onTertiaryContainer
+                tint = if (currentRoute == item.route) {
+                    LocalTintColor.current.color
+                } else {
+                    MaterialTheme.colorScheme.onTertiaryContainer
+                }
             )
         },
         selected = currentRoute == item.route,

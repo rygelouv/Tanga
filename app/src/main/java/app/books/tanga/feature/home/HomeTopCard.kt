@@ -31,21 +31,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.R.drawable.ic_right_arrow
+import app.books.tanga.coreui.R.drawable.ic_right_arrow
+import app.books.tanga.coreui.components.SummaryImage
+import app.books.tanga.coreui.components.Tag
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.data.FakeData
-import app.books.tanga.core_ui.components.SummaryImage
-import app.books.tanga.core_ui.components.Tag
-import app.books.tanga.core_ui.icons.TangaIcons
 import app.books.tanga.feature.summary.SummaryUi
-import app.books.tanga.core_ui.theme.LocalGradientColors
 
 @Composable
-fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
-    val gradientColors = listOf(
-        LocalGradientColors.current.start,
-        LocalGradientColors.current.center,
-        LocalGradientColors.current.end
-    )
+fun HomeTopCard(
+    summaryUi: SummaryUi,
+    onSummaryClicked: (String) -> Unit
+) {
+    val gradientColors =
+        listOf(
+            LocalGradientColors.current.start,
+            LocalGradientColors.current.center,
+            LocalGradientColors.current.end
+        )
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,12 +66,11 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
                 .fillMaxWidth()
                 .background(
                     brush = Brush.linearGradient(colors = gradientColors)
-                )
-                .padding(20.dp),
+                ).padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier.fillMaxHeight()
             ) {
                 Tag(text = "Business", icon = TangaIcons.IndicatorGraphic)
                 Spacer(modifier = Modifier.height(10.dp))
@@ -78,7 +81,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    maxLines = 2,
+                    maxLines = 2
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -88,7 +91,7 @@ fun HomeTopCard(summaryUi: SummaryUi, onSummaryClicked: (String) -> Unit) {
                         text = stringResource(id = R.string.home_top_card_action_text),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodySmall
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Icon(

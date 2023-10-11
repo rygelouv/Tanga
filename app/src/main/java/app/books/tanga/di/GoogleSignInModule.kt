@@ -21,7 +21,6 @@ private const val WEB_CLIENT_ID = "webClientId"
 @Module
 @InstallIn(SingletonComponent::class)
 class GoogleSignInModule {
-
     @Provides
     fun provideSignInClient(
         @ApplicationContext context: Context
@@ -29,28 +28,36 @@ class GoogleSignInModule {
 
     @Provides
     @Named(GOOGLE_SIGN_IN_REQUEST)
-    fun provideSignInRequest(@Named(WEB_CLIENT_ID) clientId: String): BeginSignInRequest {
-        return BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+    fun provideSignInRequest(
+        @Named(WEB_CLIENT_ID) clientId: String
+    ): BeginSignInRequest = BeginSignInRequest
+        .builder()
+        .setGoogleIdTokenRequestOptions(
+            BeginSignInRequest
+                .GoogleIdTokenRequestOptions
+                .builder()
                 .setSupported(true)
                 .setServerClientId(clientId)
                 .setFilterByAuthorizedAccounts(true)
-                .build())
-            .setAutoSelectEnabled(true)
-            .build()
-    }
+                .build()
+        ).setAutoSelectEnabled(true)
+        .build()
 
     @Provides
     @Named(GOOGLE_SIGN_UP_REQUEST)
-    fun provideSignUpRequest(@Named(WEB_CLIENT_ID) clientId: String): BeginSignInRequest {
-        return BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+    fun provideSignUpRequest(
+        @Named(WEB_CLIENT_ID) clientId: String
+    ): BeginSignInRequest = BeginSignInRequest
+        .builder()
+        .setGoogleIdTokenRequestOptions(
+            BeginSignInRequest
+                .GoogleIdTokenRequestOptions
+                .builder()
                 .setSupported(true)
                 .setServerClientId(clientId)
                 .setFilterByAuthorizedAccounts(true)
                 .build()
         ).build()
-    }
 
     @Provides
     @Named(WEB_CLIENT_ID)

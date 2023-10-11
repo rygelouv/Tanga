@@ -1,15 +1,12 @@
 package app.books.tanga.data.summary
 
-import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.firestore.FirestoreData
+import app.books.tanga.firestore.FirestoreDatabase
 
-
-private fun Any?.toCategoryIds(): List<CategoryId> {
-    return (this as List<String>).map { CategoryId(it) }
-}
+private fun Any?.toCategoryIds(): List<CategoryId> = (this as List<String>).map { CategoryId(it) }
 
 fun FirestoreData.toSummary(): Summary {
     // TODO: 2023-09-14 Wrap this in a try catch block, track error and return null

@@ -21,7 +21,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,12 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.core_ui.components.Tag
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.components.Tag
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.errors.ShowSnackbarError
-import app.books.tanga.feature.home.AnimatedShimmerLoader
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.list.SummaryGrid
 
@@ -61,7 +59,8 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
         HandleEvents(event = event, snackbarHostState = snackbarHostState)
 
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(paddingValues)
                 .background(color = MaterialTheme.colorScheme.background)
                 .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
@@ -96,9 +95,10 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
             when (state.progressState) {
-                ProgressState.Show -> LibraryShimmerLoader(
-                    modifier = Modifier.fillMaxWidth()
-                )
+                ProgressState.Show ->
+                    LibraryShimmerLoader(
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
                 ProgressState.Hide -> {
                     if (state.summaries.isNullOrEmpty()) {
@@ -125,11 +125,15 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
 }
 
 @Composable
-private fun HandleEvents(event: SearchUiEvent?, snackbarHostState: SnackbarHostState) {
+private fun HandleEvents(
+    event: SearchUiEvent?,
+    snackbarHostState: SnackbarHostState
+) {
     when (event) {
         is SearchUiEvent.ShowSnackError -> {
             ShowSnackbarError(errorInfo = event.error.info, snackbarHostState = snackbarHostState)
         }
+
         null -> Unit
     }
 }
@@ -153,7 +157,7 @@ private fun CategoriesSection(
 
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
-        verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
+        verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small)
     ) {
         categories.forEach {
             Tag(
@@ -207,7 +211,8 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         trailingIcon = {
             if (text.isNotEmpty()) {
                 Icon(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(16.dp)
                         .clickable {
                             text = ""
@@ -222,6 +227,5 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         },
         shape = RoundedCornerShape(size = 8.dp)
     ) {
-
     }
 }

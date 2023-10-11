@@ -30,29 +30,35 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.ProfileImage
+import app.books.tanga.coreui.components.ProfileImage
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel(), onProClicked: () -> Unit = {}) {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel(),
+    onProClicked: () -> Unit = {}
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(bottom = 10.dp),
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
             color = MaterialTheme.colorScheme.background,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 ProfileHeader(
                     modifier = Modifier,
@@ -73,16 +79,18 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel(), onProClicked: (
 fun ProfileScreenContent(onLogout: () -> Unit) {
     Surface(
         color = Color.White,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp),
+        shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.Top
         ) {
             val openDialogState = remember { mutableStateOf(false) }
             val logout = remember { mutableStateOf(false) }
@@ -120,16 +128,17 @@ fun ProfileHeader(
     onProClicked: () -> Unit = {}
 ) {
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(horizontal = 44.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.height(80.dp))
         ProfileImage(
             photoUrl = photoUrl,
-            onClick = { /*TODO*/ },
+            onClick = { }
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -138,7 +147,7 @@ fun ProfileHeader(
             text = fullName ?: stringResource(id = R.string.anonymous),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Spacer(modifier = Modifier.height(10.dp))
         ProButton { onProClicked() }
@@ -148,6 +157,6 @@ fun ProfileHeader(
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    //val navController = rememberNavController()
+    // val navController = rememberNavController()
     ProfileScreen()
 }

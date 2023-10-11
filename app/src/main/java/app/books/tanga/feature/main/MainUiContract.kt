@@ -1,10 +1,9 @@
 package app.books.tanga.feature.main
 
 sealed interface MainUiEvent {
+    data object Empty : MainUiEvent
 
-    object Empty: MainUiEvent
-
-    sealed interface NavigateTo: MainUiEvent {
-        object ToAuth: NavigateTo
+    sealed interface NavigateTo : MainUiEvent {
+        data object ToAuth : NavigateTo
     }
 }

@@ -24,7 +24,6 @@ class TangaErrorTracker @Inject constructor(
     private val sentryTracker: SentryTracker,
     private val context: Context
 ) {
-
     /**
      * Initializes the error trackers.
      */
@@ -36,7 +35,10 @@ class TangaErrorTracker @Inject constructor(
      * Sets the user details for the error trackers.
      * Both Firebase Crashlytics and Sentry will be updated with the provided user details.
      */
-    fun setUserDetails(userId: UserId, userCreationDate: Date) {
+    fun setUserDetails(
+        userId: UserId,
+        userCreationDate: Date
+    ) {
         firebaseCrashlyticsUserTracker.setUserDetails(userId, userCreationDate)
         sentryTracker.setUserDetails(userId, userCreationDate)
     }

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun AuthScreen(
@@ -54,9 +54,10 @@ fun AuthScreen(
                     modifier = Modifier
                         .width(120.dp)
                         .weight(3f),
-                    colors = ButtonDefaults.buttonColors(
+                    colors =
+                    ButtonDefaults.buttonColors(
                         contentColor = MaterialTheme.colorScheme.tertiary,
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
                     ),
                     shape = RoundedCornerShape(20.dp),
                     elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
@@ -71,7 +72,8 @@ fun AuthScreen(
                     )
                 }
             }
-        }) {
+        }
+    ) {
         val state by viewModel.state.collectAsStateWithLifecycle()
         val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
         AuthContent(
@@ -101,31 +103,34 @@ fun AuthContent(
     )
 
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxSize()
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Image(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(3f)
                 .padding(horizontal = 10.dp),
             painter = painterResource(id = R.drawable.graphic_pricing),
             contentDescription = "app icon"
         )
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.auth_welcome_to_tanga),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Text(
                 modifier = Modifier

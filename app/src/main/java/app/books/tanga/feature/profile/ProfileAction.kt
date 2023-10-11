@@ -28,15 +28,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.theme.ProfileYellow
-import app.books.tanga.core_ui.theme.ProfileYellowBackground
-import app.books.tanga.core_ui.theme.ProfileGreen
-import app.books.tanga.core_ui.theme.ProfileGreenBackground
-import app.books.tanga.core_ui.theme.ProfilePurple
-import app.books.tanga.core_ui.theme.ProfilePurpleBackground
-import app.books.tanga.core_ui.theme.ProfileRed
-import app.books.tanga.core_ui.theme.ProfileRedBackground
-import app.books.tanga.core_ui.theme.navyTransparent
+import app.books.tanga.coreui.theme.ProfileGreen
+import app.books.tanga.coreui.theme.ProfileGreenBackground
+import app.books.tanga.coreui.theme.ProfilePurple
+import app.books.tanga.coreui.theme.ProfilePurpleBackground
+import app.books.tanga.coreui.theme.ProfileRed
+import app.books.tanga.coreui.theme.ProfileRedBackground
+import app.books.tanga.coreui.theme.ProfileYellow
+import app.books.tanga.coreui.theme.ProfileYellowBackground
+import app.books.tanga.coreui.theme.navyTransparent
 
 enum class ProfileAction(
     @DrawableRes val icon: Int,
@@ -69,25 +69,30 @@ enum class ProfileAction(
         iconBackgroundColor = ProfileRedBackground,
         text = R.string.logout,
         shouldTint = true
-    )
+    ),
 }
 
-
 @Composable
-fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () -> Unit = {}) {
+fun ProfileContentAction(
+    modifier: Modifier,
+    action: ProfileAction,
+    onClick: () -> Unit = {}
+) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(bounded = true, color = MaterialTheme.colorScheme.navyTransparent),
+                indication = rememberRipple(bounded = true, color = MaterialTheme.colorScheme.navyTransparent)
             ) { onClick() }
             .padding(horizontal = 30.dp, vertical = 15.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(50.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(color = action.iconBackgroundColor)
@@ -105,7 +110,7 @@ fun ProfileContentAction(modifier: Modifier, action: ProfileAction, onClick: () 
             modifier = Modifier.weight(5f),
             text = stringResource(id = action.text),
             style = MaterialTheme.typography.bodyLarge,
-            color = if (action.shouldTint) action.color else MaterialTheme.colorScheme.onPrimaryContainer,
+            color = if (action.shouldTint) action.color else MaterialTheme.colorScheme.onPrimaryContainer
         )
         Icon(
             modifier = Modifier.size(20.dp),

@@ -26,8 +26,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.TangaButtonRightIcon
-import app.books.tanga.core_ui.icons.TangaIcons
+import app.books.tanga.coreui.components.TangaButtonRightIcon
+import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -51,18 +51,20 @@ fun OnboardingScreen(
     navController: NavController,
     onboardingViewModel: OnboardingViewModel = hiltViewModel()
 ) {
-    val pages = listOf(
-        OnboardingPage.Read,
-        OnboardingPage.Listen,
-        OnboardingPage.Watch,
-        OnboardingPage.Visualize,
-    )
+    val pages =
+        listOf(
+            OnboardingPage.Read,
+            OnboardingPage.Listen,
+            OnboardingPage.Watch,
+            OnboardingPage.Visualize
+        )
 
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(bottom = 20.dp)
     ) {
@@ -70,14 +72,15 @@ fun OnboardingScreen(
             modifier = Modifier.weight(10f),
             count = 4,
             state = pagerState,
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.Top
         ) {
             PagerScreen(onBoardingPage = pages[it])
         }
 
         HorizontalPagerIndicator(
             pagerState = pagerState,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.CenterHorizontally)
                 .weight(1f),
             activeColor = MaterialTheme.colorScheme.secondary,
@@ -107,26 +110,29 @@ fun FinishOnboardingButton(
     modifier: Modifier,
     pagerState: PagerState,
     onNextClick: () -> Unit,
-    onFinishClick: () -> Unit,
+    onFinishClick: () -> Unit
 ) {
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(horizontal = 40.dp),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         AnimatedVisibility(
             visible = pagerState.currentPage != MAX_PAGER_INDEX,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center)
         ) {
             Button(
-                modifier = modifier
+                modifier =
+                modifier
                     .size(70.dp)
                     .align(Alignment.Center),
                 onClick = onNextClick,
-                colors = ButtonDefaults.buttonColors(
+                colors =
+                ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primary
                 ),
                 shape = CircleShape,
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)

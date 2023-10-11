@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -14,18 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.R
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import app.books.tanga.coreui.R
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-
 
 /**
  * This is a composable that displays an image of a book summary cover.
@@ -42,7 +36,8 @@ fun SummaryImage(
     onSummaryClicked: (String) -> Unit
 ) {
     Surface(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
             .clickable { onSummaryClicked(summaryId) },
@@ -52,7 +47,7 @@ fun SummaryImage(
         Image(
             painter = painter,
             contentDescription = "summary cover",
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -71,7 +66,8 @@ fun GlideSummaryImage(
     onSummaryClicked: (String) -> Unit
 ) {
     Surface(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
             .clickable { onSummaryClicked(summaryId) },
@@ -82,19 +78,18 @@ fun GlideSummaryImage(
             GlideImage(
                 model = url,
                 contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             )
         } else {
             // TODO we need to remove this condition when we have got rid of FakeData usage
             Image(
                 painter = painter!!,
                 contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
 }
-
 
 /**
  * This is a composable function that displays a profile image with optional border and on-click listener.
@@ -119,7 +114,8 @@ fun ProfileImage(
     onClick: () -> Unit = {}
 ) {
     Surface(
-        modifier = modifier
+        modifier =
+        modifier
             .size(size)
             .testTag(tag)
             .clickable { onClick() },
@@ -130,8 +126,7 @@ fun ProfileImage(
         GlideImage(
             modifier = modifier.fillMaxSize(),
             model = photoUrl ?: R.drawable.profile_placeholder,
-            contentDescription = "profile picture",
+            contentDescription = "profile picture"
         )
     }
 }
-

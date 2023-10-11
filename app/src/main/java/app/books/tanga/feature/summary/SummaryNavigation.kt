@@ -15,9 +15,11 @@ fun NavGraphBuilder.summaryDetails(
 ) {
     composable(
         route = NavigationScreen.SummaryDetails.route,
-        arguments = listOf(navArgument(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY) {
-            type = NavType.StringType
-        })
+        arguments = listOf(
+            navArgument(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY) {
+                type = NavType.StringType
+            }
+        )
     ) { backStackEntry ->
         SummaryDetailsScreen(
             summaryId = backStackEntry
@@ -32,10 +34,13 @@ fun NavGraphBuilder.summaryDetails(
 
 fun NavController.toSummaryDetails(
     summaryId: String,
-    screenToPopUpTo: NavigationScreen? = null, isInclusive: Boolean = true
+    screenToPopUpTo: NavigationScreen? = null,
+    isInclusive: Boolean = true
 ) {
     navigate(
-        route = NavigationScreen.SummaryDetails.route
+        route = NavigationScreen
+            .SummaryDetails
+            .route
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
                 newValue = summaryId

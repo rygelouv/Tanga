@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.resources
+package app.books.tanga.coreui.resources
 
 import android.content.res.Resources
 import androidx.annotation.StringRes
@@ -10,9 +10,7 @@ import androidx.annotation.StringRes
  * See: https://hannesdorfmann.com/abstraction-text-resource/
  */
 sealed class TextResource {
-
     companion object {
-
         /**
          * Create a [TextResource] instance from a given text.
          */
@@ -21,19 +19,25 @@ sealed class TextResource {
         /**
          * Create a [TextResource] instance from a string resource ID.
          */
-        fun fromStringId(@StringRes id: Int): TextResource = IdTextResource(id)
+        fun fromStringId(
+            @StringRes id: Int
+        ): TextResource = IdTextResource(id)
     }
 }
 
 /**
  * Represents a [TextResource] holding a string resource ID.
  */
-class IdTextResource(@StringRes val id: Int) : TextResource()
+class IdTextResource(
+    @StringRes val id: Int
+) : TextResource()
 
 /**
  * Represents a [TextResource] holding a direct text string.
  */
-private data class SimpleTextResource(val text: String) : TextResource()
+private data class SimpleTextResource(
+    val text: String
+) : TextResource()
 
 /**
  * Extension function to get the string representation of [TextResource].

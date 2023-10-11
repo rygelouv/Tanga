@@ -33,7 +33,10 @@ fun ShimmerSummaryListRow(brush: Brush) {
  * A summary shimmer item placeholder
  */
 @Composable
-fun ShimmerSummaryItem(modifier: Modifier, brush: Brush) {
+fun ShimmerSummaryItem(
+    modifier: Modifier,
+    brush: Brush
+) {
     Column(
         modifier = modifier
             .width(134.dp)
@@ -51,18 +54,22 @@ fun ShimmerSummaryItem(modifier: Modifier, brush: Brush) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(20.dp)
-            .clip(RoundedCornerShape(5.dp))
-            .background(brush))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier
-            .fillMaxWidth(fraction = 0.7f)
-            .height(20.dp)
-            .clip(RoundedCornerShape(5.dp))
-            .background(brush))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth(fraction = 0.7f)
+                .height(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
     }
 }

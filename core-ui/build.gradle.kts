@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "app.books.tanga.core_ui"
+    namespace = "app.books.tanga.coreui"
     compileSdk = 34
 
     defaultConfig {
@@ -53,13 +53,17 @@ dependencies {
     api("androidx.compose.material3:material3:${rootProject.extra.get("compose_material_version")}")
 
     // Accompanist https://google.github.io/accompanist/
-    api("com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get("accompanist_systemuicontroller_version")}")
+    api(
+        "com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get(
+            "accompanist_systemuicontroller_version"
+        )}"
+    )
 
     /************** Image loading *****************
      * For now we are using both Glide and Coil because Coil still doesn't support
      * Firebase Cloud Storage Images. Once it does, we can remove Glide.
      */
-    //Coil https://github.com/coil-kt/coil/releases
+    // Coil https://github.com/coil-kt/coil/releases
     api("io.coil-kt:coil-compose:2.2.2")
     // Glide
     api("com.github.bumptech.glide:glide:4.16.0")

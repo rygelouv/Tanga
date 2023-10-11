@@ -15,39 +15,37 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.components.TangaDescriptionText
+import app.books.tanga.coreui.components.TangaDescriptionText
 
 sealed class OnboardingPage(
     @DrawableRes val image: Int,
     val title: String,
     val description: String
 ) {
-
     data object Read : OnboardingPage(
         image = R.drawable.graphic_reading,
         title = "Read",
         description = "A maximum of 5 minutes read of book summaries"
     )
 
-    data object Listen: OnboardingPage(
+    data object Listen : OnboardingPage(
         image = R.drawable.graphic_listening,
         title = "Listen",
         description = "You don't have time to read? Fine, you can listen to book summaries in 10 min"
     )
 
-    data object Watch: OnboardingPage(
+    data object Watch : OnboardingPage(
         image = R.drawable.graphic_watching,
         title = "Watch",
         description = "The ultimate content format is video, get book summaries through books"
     )
 
-    data object Visualize: OnboardingPage(
+    data object Visualize : OnboardingPage(
         image = R.drawable.graphic_visualizing,
         title = "Visualize",
-        description = "One image is worth a thousand words they. Summarize books through graphics",
+        description = "One image is worth a thousand words they. Summarize books through graphics"
     )
 }
-
 
 @Composable
 fun PagerScreen(onBoardingPage: OnboardingPage) {
@@ -57,14 +55,16 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
         verticalArrangement = Arrangement.Top
     ) {
         Image(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(3f)
                 .padding(horizontal = 28.dp),
             painter = painterResource(id = onBoardingPage.image),
             contentDescription = "Pager image"
         )
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -75,15 +75,16 @@ fun PagerScreen(onBoardingPage: OnboardingPage) {
                 text = onBoardingPage.title,
                 style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             TangaDescriptionText(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 41.dp)
                     .padding(top = 20.dp)
                     .weight(1f),
-                text = onBoardingPage.description,
+                text = onBoardingPage.description
             )
         }
     }

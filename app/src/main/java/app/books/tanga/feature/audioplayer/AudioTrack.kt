@@ -2,7 +2,6 @@ package app.books.tanga.feature.audioplayer
 
 import androidx.media3.common.MediaItem
 
-
 /**
  * Represents an audio track.
  *
@@ -17,6 +16,4 @@ data class AudioTrack(
 /**
  * Converts an [AudioTrack] to a [MediaItem].
  */
-fun AudioTrack.toMediaItem(): MediaItem {
-    return MediaItem.fromUri(url)
-}
+fun AudioTrack.toMediaItem(): MediaItem = MediaItem.fromUri(url)

@@ -26,15 +26,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.books.tanga.common.ui.ShimmerSummaryItem
 import app.books.tanga.common.ui.ShimmerSummaryListRow
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun SummaryDetailsShimmerLoader() {
-    val shimmerColors = listOf(
-        Color.LightGray.copy(alpha = 0.6f),
-        Color.LightGray.copy(alpha = 0.2f),
-        Color.LightGray.copy(alpha = 0.6f),
-    )
+    val shimmerColors =
+        listOf(
+            Color.LightGray.copy(alpha = 0.6f),
+            Color.LightGray.copy(alpha = 0.2f),
+            Color.LightGray.copy(alpha = 0.6f)
+        )
 
     val transition = rememberInfiniteTransition(label = "Summary list Shimmer transition")
     val translateAnimation = transition.animateFloat(
@@ -46,29 +47,32 @@ fun SummaryDetailsShimmerLoader() {
                 easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Restart
-        ), label = "Summary list Shimmer translate animation"
+        ),
+        label = "Summary list Shimmer translate animation"
     )
 
-    val brush = Brush.linearGradient(
-        colors = shimmerColors,
-        start = Offset.Zero,
-        end = Offset(x = translateAnimation.value, y = translateAnimation.value)
-    )
+    val brush =
+        Brush.linearGradient(
+            colors = shimmerColors,
+            start = Offset.Zero,
+            end = Offset(x = translateAnimation.value, y = translateAnimation.value)
+        )
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(LocalSpacing.current.medium)
     ) {
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-        /* Start header zone (image + title + author) */
+        // Start header zone (image + title + author)
         Row {
             ShimmerSummaryItem(modifier = Modifier, brush = brush)
 
             Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
             Column(
-                verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium),
+                verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium)
             ) {
                 Spacer(
                     modifier = Modifier
@@ -88,11 +92,11 @@ fun SummaryDetailsShimmerLoader() {
                 )
             }
         }
-        /* End header zone */
+        // End header zone
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
-        /* Start introduction zone */
+        // Start introduction zone
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,12 +122,12 @@ fun SummaryDetailsShimmerLoader() {
                 .clip(RoundedCornerShape(5.dp))
                 .background(brush)
         )
-        /* End introduction zone */
+        // End introduction zone
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
-        /* Start recommendations zone */
+        // Start recommendations zone
         ShimmerSummaryListRow(brush)
-        /* End recommendations zone */
+        // End recommendations zone
     }
 }

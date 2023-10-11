@@ -13,15 +13,18 @@ data class AuthUiState(
 }
 
 sealed interface AuthUiEvent {
+    data object Empty : AuthUiEvent
 
-    data object Empty: AuthUiEvent
-
-    data class Error(val error: UiError): AuthUiEvent
+    data class Error(
+        val error: UiError
+    ) : AuthUiEvent
 
     @JvmInline
-    value class LaunchGoogleSignIn(val signInResult: BeginSignInResult): AuthUiEvent
+    value class LaunchGoogleSignIn(
+        val signInResult: BeginSignInResult
+    ) : AuthUiEvent
 
-    sealed interface NavigateTo: AuthUiEvent {
-        data object ToHomeScreen: NavigateTo
+    sealed interface NavigateTo : AuthUiEvent {
+        data object ToHomeScreen : NavigateTo
     }
 }

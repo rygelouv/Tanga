@@ -13,16 +13,14 @@ class SummaryInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val categoryRepository: CategoryRepository
 ) {
-    suspend fun getSummary(summaryId: String): Result<Summary> {
-        return summaryRepository.getSummary(summaryId)
-    }
+    suspend fun getSummary(summaryId: String): Result<Summary> = summaryRepository.getSummary(summaryId)
 
     /**
      * Get the list of summaries for the given category ids
      * If the list of category ids is empty, return all summaries
      */
-    suspend fun getSummariesForCategories(categoryIds: List<String>): Result<List<Summary>> {
-        return resultOf {
+    suspend fun getSummariesForCategories(categoryIds: List<String>): Result<List<Summary>> =
+        resultOf {
             if (categoryIds.isEmpty()) return Result.success(getAllSummaries().getOrThrow())
 
             val summaries = mutableListOf<Summary>()
@@ -37,22 +35,21 @@ class SummaryInteractor @Inject constructor(
             // Remove duplicates
             summaries.toSet().toList()
         }
-    }
 
-    suspend fun search(query: String): Result<List<Summary>> {
-        return summaryRepository.searchSummaryInMemoryCache(query)
-    }
+    suspend fun search(query: String): Result<List<Summary>> = summaryRepository.searchSummaryInMemoryCache(query)
 
-    private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> {
-        return summaryRepository.getSummariesByCategory(categoryId)
-    }
+    private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
+        summaryRepository
+            .getSummariesByCategory(
+                categoryId
+            )
 
     /**
      * Get a list of recommended summaries for the given summary
      * The recommendations are based on the categories of the summary
      */
-    suspend fun getRecommendationsForSummary(summary: Summary): Result<List<Summary>> {
-        return resultOf {
+    suspend fun getRecommendationsForSummary(summary: Summary): Result<List<Summary>> =
+        resultOf {
             val recommendedSummaries = mutableListOf<Summary>()
             summary.categories.forEach {
                 val summaries = getSummariesByCategory(it.value).getOrThrow()
@@ -68,7 +65,6 @@ class SummaryInteractor @Inject constructor(
                 .take(RECOMMENDED_SUMMARIES_COUNT)
             return Result.success(recommendedSummaries)
         }
-    }
 
     /**
      * Get all summaries
@@ -80,9 +76,7 @@ class SummaryInteractor @Inject constructor(
         return summaries
     }
 
-    suspend fun getCategories(): Result<List<Category>> {
-        return categoryRepository.getCategories()
-    }
+    suspend fun getCategories(): Result<List<Category>> = categoryRepository.getCategories()
 
     private fun MutableList<Summary>.removeSummary(summary: Summary): MutableList<Summary> {
         this.remove(summary)

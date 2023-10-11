@@ -16,11 +16,14 @@ import app.books.tanga.navigation.MainNavigationGraph
 import app.books.tanga.navigation.NavigationScreen
 
 @Composable
-fun MainScreen(onLogout: () -> Unit, viewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(
+    onLogout: () -> Unit,
+    viewModel: MainViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     val event by viewModel.event.collectAsStateWithLifecycle(initialValue = MainUiEvent.Empty)
 
-    when(event) {
+    when (event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
             LaunchedEffect(Unit) {
                 onLogout()

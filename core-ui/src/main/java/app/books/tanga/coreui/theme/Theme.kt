@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.theme
+package app.books.tanga.coreui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -9,15 +9,17 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun TangaTheme(content: @Composable () -> Unit) {
     val colors = LightColors
-    val gradientColors = GradientColors(
-        start = colors.onPrimaryContainer,
-        center = colors.primary,
-        end = colors.secondary
-    )
-    val tintColor = TintColor(
-        color = colors.primary,
-        disabled = colors.onSurfaceVariant.copy(alpha = 0.38f)
-    )
+    val gradientColors =
+        GradientColors(
+            start = colors.onPrimaryContainer,
+            center = colors.primary,
+            end = colors.secondary
+        )
+    val tintColor =
+        TintColor(
+            color = colors.primary,
+            disabled = colors.onSurfaceVariant.copy(alpha = 0.38f)
+        )
     val spacing = Spacing()
 
     CompositionLocalProvider(

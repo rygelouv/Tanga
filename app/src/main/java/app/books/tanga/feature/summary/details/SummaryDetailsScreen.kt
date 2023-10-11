@@ -43,14 +43,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.core_ui.components.ExpendableText
-import app.books.tanga.core_ui.components.GlideSummaryImage
-import app.books.tanga.core_ui.components.ProfileImage
-import app.books.tanga.core_ui.components.SummaryActionButton
-import app.books.tanga.core_ui.components.TangaButtonLeftIcon
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.coreui.components.ExpendableText
+import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.components.SummaryActionButton
+import app.books.tanga.coreui.components.TangaButtonLeftIcon
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
@@ -93,12 +93,13 @@ fun SummaryDetailsScreen(
     ) {
         when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
-            ProgressState.Hide -> SummaryDetailsContent(
-                state = state,
-                paddingValues = it,
-                onRecommendationClicked = onRecommendationClicked,
-                onErrorButtonClicked = { viewModel.loadSummary(summaryId) }
-            )
+            ProgressState.Hide ->
+                SummaryDetailsContent(
+                    state = state,
+                    paddingValues = it,
+                    onRecommendationClicked = onRecommendationClicked,
+                    onErrorButtonClicked = { viewModel.loadSummary(summaryId) }
+                )
         }
     }
 }
@@ -112,7 +113,8 @@ private fun SummaryDetailsContent(
 ) {
     state.summary?.let { summary ->
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -208,11 +210,21 @@ fun PlayFloatingActionButton(
         onClick = { onClick(summaryId) },
         containerColor = MaterialTheme.colorScheme.tertiary,
         shape = CircleShape,
-        elevation = FloatingActionButtonDefaults.elevation(18.dp),
+        elevation = FloatingActionButtonDefaults.elevation(18.dp)
     ) {
         Icon(
             modifier = Modifier.size(24.dp),
-            painter = painterResource(id = app.books.tanga.core_ui.R.drawable.ic_indicator_listen),
+            painter =
+            painterResource(
+                id =
+                app
+                    .books
+                    .tanga
+                    .coreui
+                    .R
+                    .drawable
+                    .ic_indicator_listen
+            ),
             tint = MaterialTheme.colorScheme.onPrimary,
             contentDescription = "play summary"
         )
@@ -220,16 +232,20 @@ fun PlayFloatingActionButton(
 }
 
 @Composable
-fun SummaryDetailsHeader(modifier: Modifier, summary: SummaryUi) {
+fun SummaryDetailsHeader(
+    modifier: Modifier,
+    summary: SummaryUi
+) {
     Surface(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .shadow(elevation = 8.dp),
-        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
+        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = modifier.padding(LocalSpacing.current.medium),
@@ -239,10 +255,13 @@ fun SummaryDetailsHeader(modifier: Modifier, summary: SummaryUi) {
                     modifier = Modifier.width(128.dp),
                     summaryId = summary.id,
                     url = summary.coverUrl,
-                    painter = if (summary.coverUrl == null) {
+                    painter =
+                    if (summary.coverUrl == null) {
                         painterResource(id = R.drawable.cover_never_split_difference)
-                    } else null,
-                    onSummaryClicked = {},
+                    } else {
+                        null
+                    },
+                    onSummaryClicked = {}
                 )
                 SummaryBasicInfo(
                     title = summary.title,
@@ -293,7 +312,7 @@ private fun SummaryActionButtonsSection(summary: SummaryUi) {
 private fun SummaryBasicInfo(
     title: String,
     author: String,
-    duration: String,
+    duration: String
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -302,7 +321,7 @@ private fun SummaryBasicInfo(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = title,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -312,7 +331,7 @@ private fun SummaryBasicInfo(
             color = MaterialTheme.colorScheme.outline,
             text = author,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.SemiBold
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -334,14 +353,17 @@ private fun SummaryBasicInfo(
                 text = stringResource(id = R.string.summary_duration, duration),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.SemiBold
             )
         }
     }
 }
 
 @Composable
-fun SummaryIntroduction(modifier: Modifier = Modifier, summary: SummaryUi) {
+fun SummaryIntroduction(
+    modifier: Modifier = Modifier,
+    summary: SummaryUi
+) {
     Column(modifier = modifier.padding(horizontal = LocalSpacing.current.medium)) {
         Text(
             text = stringResource(id = R.string.summary_details_introduction),
@@ -359,7 +381,11 @@ fun SummaryIntroduction(modifier: Modifier = Modifier, summary: SummaryUi) {
 }
 
 @Composable
-fun SummaryAuthor(modifier: Modifier = Modifier, author: String, authorPictureUrl: String?) {
+fun SummaryAuthor(
+    modifier: Modifier = Modifier,
+    author: String,
+    authorPictureUrl: String?
+) {
     Column {
         Text(
             modifier = modifier.padding(horizontal = LocalSpacing.current.small),
@@ -373,19 +399,19 @@ fun SummaryAuthor(modifier: Modifier = Modifier, author: String, authorPictureUr
 
         Row(
             modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             ProfileImage(
                 modifier = Modifier.size(40.dp),
                 photoUrl = authorPictureUrl,
-                onClick = { /*TODO*/ }
+                onClick = { }
             )
             Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.outline,
                 text = author,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -394,19 +420,26 @@ fun SummaryAuthor(modifier: Modifier = Modifier, author: String, authorPictureUr
 @Composable
 private fun PurchaseButton(url: String) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(horizontal = LocalSpacing.current.medium)
     ) {
         val context = LocalContext.current
         TangaButtonLeftIcon(
             text = "Purchase Book",
-            rightIcon = app.books.tanga.core_ui.R.drawable.ic_trolley,
+            rightIcon =
+            app
+                .books
+                .tanga
+                .coreui
+                .R
+                .drawable
+                .ic_trolley,
             onClick = { openLink(context = context, url = url) }
         )
     }
 }
-
 
 @Composable
 fun Recommendations(

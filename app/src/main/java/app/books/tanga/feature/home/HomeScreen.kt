@@ -39,13 +39,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.data.FakeData
-import app.books.tanga.core_ui.components.ProfileImage
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.feature.summary.list.SummaryRow
-import app.books.tanga.core_ui.theme.LocalSpacing
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.feature.summary.list.SummaryRow
 
 @Composable
 fun HomeScreen(
@@ -66,7 +66,7 @@ fun HomeScreen(
                 onProfilePictureClicked = onProfilePictureClicked,
                 state.userPhotoUrl
             )
-        },
+        }
     ) {
         LoadHomeContent(
             modifier = Modifier.padding(it),
@@ -84,7 +84,6 @@ fun LoadHomeContent(
     onSummaryClicked: (String) -> Unit,
     onErrorButtonClicked: () -> Unit = {}
 ) {
-
     if (state.progressState == ProgressState.Show) {
         AnimatedShimmerLoader(modifier)
     } else {
@@ -106,7 +105,8 @@ fun HomeTopBar(
     photoUrl: String?
 ) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
@@ -123,7 +123,7 @@ fun HomeTopBar(
             shape = CircleShape,
             size = 40.dp,
             hasBorder = true,
-            onClick = onProfilePictureClicked,
+            onClick = onProfilePictureClicked
         )
     }
 }
@@ -135,11 +135,13 @@ fun HomeContent(
     onSummaryClicked: (String) -> Unit,
     onErrorButtonClicked: () -> Unit = {}
 ) {
-    val dailySummary = remember {
-        FakeData.allSummaries().first()
-    }
+    val dailySummary =
+        remember {
+            FakeData.allSummaries().first()
+        }
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .background(color = MaterialTheme.colorScheme.background)
             .padding(0.dp)
     ) {
@@ -150,14 +152,15 @@ fun HomeContent(
             text = getWelcomeMessage(firstName = userFirstName),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge
         )
         LazyColumn(
-            modifier = modifier
+            modifier =
+            modifier
                 .fillMaxSize()
                 .padding(vertical = 0.dp),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
-            contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp),
+            contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
             item {
                 HomeTopCard(dailySummary, onSummaryClicked)

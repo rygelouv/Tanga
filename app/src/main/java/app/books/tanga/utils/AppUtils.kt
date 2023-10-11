@@ -14,17 +14,20 @@ fun shareSummary(
     summaryAuthor: String,
     url: String = "https://ibb.co/bKn9yf6"
 ) {
-    val sendIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(
-            Intent.EXTRA_TEXT,
-            context.getString(
-                R.string.summary_details_share_message,
-                summaryTitle, summaryAuthor, url
+    val sendIntent: Intent =
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                context.getString(
+                    R.string.summary_details_share_message,
+                    summaryTitle,
+                    summaryAuthor,
+                    url
+                )
             )
-        )
-        type = "text/plain"
-    }
+            type = "text/plain"
+        }
 
     val shareIntent = Intent.createChooser(sendIntent, null)
     context.startActivity(shareIntent)
@@ -37,9 +40,10 @@ fun openLink(
     context: Context,
     url: String
 ) {
-    val openLinkIntent: Intent = Intent().apply {
-        action = Intent.ACTION_VIEW
-        data = Uri.parse(url)
-    }
+    val openLinkIntent: Intent =
+        Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(url)
+        }
     context.startActivity(openLinkIntent)
 }

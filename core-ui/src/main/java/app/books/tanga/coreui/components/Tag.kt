@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,8 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.core_ui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalTintColor
 
 /**
  * This is a composable function that displays a tag with an icon and text.
@@ -55,7 +55,8 @@ fun Tag(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier =
+        modifier
             .then(backgroundModifier)
             .then(borderModifier)
             .then(paddingModifier)
@@ -80,4 +81,3 @@ fun Tag(
         )
     }
 }
-

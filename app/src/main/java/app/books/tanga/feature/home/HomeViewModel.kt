@@ -7,17 +7,18 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeInteractor: HomeInteractor,
-    private val favoriteInteractor: FavoriteInteractor // This will be removed once the favorites are loaded on app start up
+    // This will be removed once the favorites are loaded on app start up
+    private val favoriteInteractor: FavoriteInteractor
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeUiState(progressState = ProgressState.Show))
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
@@ -36,12 +37,14 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadSections() {
-        homeInteractor.getSummarySections()
+        homeInteractor
+            .getSummarySections()
             .onSuccess { sections ->
                 _state.update {
                     it.copy(
                         progressState = ProgressState.Hide,
-                        sections = sections.map { section ->
+                        sections =
+                        sections.map { section ->
                             section.toHomeSectionUi()
                         }
                     )
@@ -60,22 +63,25 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadUserInfo() {
-        homeInteractor.getUserInfo().onSuccess { result ->
-            val user = result ?: return@onSuccess
-            _state.update {
-                it.copy(
-                    userFirstName = user.firsName,
-                    userPhotoUrl = user.photoUrl
-                )
+        homeInteractor
+            .getUserInfo()
+            .onSuccess { result ->
+                val user = result ?: return@onSuccess
+                _state.update {
+                    it.copy(
+                        userFirstName = user.firsName,
+                        userPhotoUrl = user.photoUrl
+                    )
+                }
+            }.onFailure {
+                Log.e("HomeViewModel", "Error loading user info", it)
             }
-        }.onFailure {
-            Log.e("HomeViewModel", "Error loading user info", it)
-        }
     }
 
     private fun loadFavoritesInBackground() {
         viewModelScope.launch {
-            favoriteInteractor.getFavorites()
+            favoriteInteractor
+                .getFavorites()
                 .onSuccess { favorites ->
                     Log.i("HomeViewModel", "Favorites loaded: $favorites")
                 }.onFailure {

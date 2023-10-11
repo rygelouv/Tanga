@@ -1,4 +1,4 @@
-package app.books.tanga.core_ui.components
+package app.books.tanga.coreui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.books.tanga.core_ui.theme.LocalSpacing
-import app.books.tanga.core_ui.theme.LocalTintColor
-import app.books.tanga.core_ui.theme.button
+import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.button
 
 /**
  * This is a composable that displays a button with text.
@@ -55,9 +55,10 @@ fun TangaButton(
             .fillMaxWidth()
             .height(height),
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
+        colors =
+        ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         shape = shape,
         elevation = elevation
@@ -101,9 +102,10 @@ fun TangaButtonRightIcon(
             .fillMaxWidth()
             .height(height),
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
+        colors =
+        ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         shape = shape,
         elevation = elevation
@@ -157,9 +159,10 @@ fun TangaButtonLeftIcon(
             .fillMaxWidth()
             .height(height),
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
+        colors =
+        ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         shape = shape,
         elevation = elevation
@@ -194,7 +197,7 @@ fun SummaryActionButton(
     text: String,
     icon: Int,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = if (enabled) modifier.clickable { onClick() } else modifier,
@@ -213,7 +216,7 @@ fun SummaryActionButton(
             text = text,
             style = MaterialTheme.typography.labelLarge,
             color = if (enabled) MaterialTheme.colorScheme.primary else LocalTintColor.current.disabled,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

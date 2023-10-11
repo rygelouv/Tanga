@@ -2,11 +2,9 @@ package app.books.tanga.feature.home
 
 import app.books.tanga.data.category.CategoryRepository
 import app.books.tanga.data.summary.SummaryRepository
-import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.User
-import app.books.tanga.errors.DomainError
 import app.books.tanga.feature.profile.ProfileInteractor
 import javax.inject.Inject
 
@@ -24,22 +22,24 @@ class HomeInteractor @Inject constructor(
 
         val sections = mutableListOf<Section>()
 
-        categories.map {
-            it.forEach { category ->
-                val summariesByCategory = summaries?.filter { summary ->
-                    summary.categories.contains(category.id)
-                } ?: emptyList()
+        categories
+            .map {
+                it.forEach { category ->
+                    val summariesByCategory =
+                        summaries?.filter { summary ->
+                            summary.categories.contains(category.id)
+                        } ?: emptyList()
 
-                sections.add(
-                    Section(
-                        category = category,
-                        summaries = summariesByCategory
+                    sections.add(
+                        Section(
+                            category = category,
+                            summaries = summariesByCategory
+                        )
                     )
-                )
+                }
+            }.onFailure {
+                return Result.failure(it)
             }
-        }.onFailure {
-            return Result.failure(it)
-        }
 
         return Result.success(sections)
     }

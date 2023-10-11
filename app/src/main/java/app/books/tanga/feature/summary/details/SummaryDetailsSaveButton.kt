@@ -44,7 +44,7 @@ fun SaveButton(
                 CircularProgressIndicator(
                     modifier = Modifier.width(24.dp),
                     color = MaterialTheme.colorScheme.surfaceVariant,
-                    trackColor = MaterialTheme.colorScheme.secondary,
+                    trackColor = MaterialTheme.colorScheme.secondary
                 )
             }
         }

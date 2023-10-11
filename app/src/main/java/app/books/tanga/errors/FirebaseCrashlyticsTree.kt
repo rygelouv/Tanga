@@ -2,15 +2,15 @@ package app.books.tanga.errors
 
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * A [Timber.Tree] that logs to Crashlytics.
  */
-class FirebaseCrashlyticsTree @Inject constructor(private val crashlytics: FirebaseCrashlytics) :
-    Timber.Tree() {
-
+class FirebaseCrashlyticsTree @Inject constructor(
+    private val crashlytics: FirebaseCrashlytics
+) : Timber.Tree() {
     override fun log(
         priority: Int,
         tag: String?,
@@ -41,4 +41,6 @@ class FirebaseCrashlyticsTree @Inject constructor(private val crashlytics: Fireb
 }
 
 /** Helps tracking non-fatal exceptions in Crashlytics */
-private class CrashlyticsNonFatalException(override val message: String?) : Exception(message)
+private class CrashlyticsNonFatalException(
+    override val message: String?
+) : Exception(message)

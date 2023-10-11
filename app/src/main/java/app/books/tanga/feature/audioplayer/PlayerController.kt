@@ -3,6 +3,7 @@ package app.books.tanga.feature.audioplayer
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -11,13 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Interface that defines the primary actions and states for a media player controller.
  */
 interface PlayerController : PlayerActions {
-
     /** Observable state of the playback (e.g., current position, duration). */
     val playbackState: StateFlow<PlaybackState>
 
@@ -27,7 +26,10 @@ interface PlayerController : PlayerActions {
      * @param track The audio track to be played.
      * @param scope The coroutine scope for launching player-related coroutines.
      */
-    fun initPlayer(track: AudioTrack, scope: CoroutineScope)
+    fun initPlayer(
+        track: AudioTrack,
+        scope: CoroutineScope
+    )
 
     /** Releases any resources associated with the player. */
     fun releasePlayer()
@@ -43,8 +45,8 @@ interface PlayerController : PlayerActions {
  */
 class ExoPlayerController @Inject constructor(
     private val player: ExoPlayer
-) : PlayerController, Player.Listener {
-
+) : PlayerController,
+    Player.Listener {
     /** A state flow that emits the current playback state of the player. */
     private val _playbackState = MutableStateFlow(PlaybackState())
     override val playbackState: StateFlow<PlaybackState> = _playbackState.asStateFlow()
@@ -63,25 +65,29 @@ class ExoPlayerController @Inject constructor(
      * Starts a coroutine that updates the playback state at regular intervals.
      */
     private fun startPeriodicPlaybackUpdates() {
-        playbackStateUpdateJob = scope?.launch {
-            do {
-                _playbackState.update {
-                    it.copy(position = player.currentPosition, duration = player.duration)
-                }
-                // Calculate delay to the next second boundary
-                val delayMillis = 1000 - (player.currentPosition % 1000)
-                delay(delayMillis)
-            } while (playbackStateUpdateJob?.isActive == true
-                && playbackState.value.state == PlayerState.PLAYING
-            )
-        }
+        playbackStateUpdateJob =
+            scope?.launch {
+                do {
+                    _playbackState.update {
+                        it.copy(position = player.currentPosition, duration = player.duration)
+                    }
+                    // Calculate delay to the next second boundary
+                    val delayMillis = 1000 - (player.currentPosition % 1000)
+                    delay(delayMillis)
+                } while (playbackStateUpdateJob?.isActive == true &&
+                    playbackState.value.state == PlayerState.PLAYING
+                )
+            }
     }
 
     private fun stopPeriodicPlaybackUpdates() {
         playbackStateUpdateJob?.cancel()
     }
 
-    override fun initPlayer(track: AudioTrack, scope: CoroutineScope) {
+    override fun initPlayer(
+        track: AudioTrack,
+        scope: CoroutineScope
+    ) {
         this.scope = scope
         player.setMediaItem(track.toMediaItem())
         player.prepare()
@@ -114,7 +120,10 @@ class ExoPlayerController @Inject constructor(
         updatePlaybackStateBasedOnPlayer(playbackState)
     }
 
-    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+    override fun onPlayWhenReadyChanged(
+        playWhenReady: Boolean,
+        reason: Int
+    ) {
         super.onPlayWhenReadyChanged(playWhenReady, reason)
         updatePlaybackStateBasedOnPlayer(player.playbackState)
     }
@@ -129,6 +138,7 @@ class ExoPlayerController @Inject constructor(
                 _playbackState.update { it.copy(state = PlayerState.ENDED) }
                 stopPeriodicPlaybackUpdates()
             }
+
             Player.STATE_IDLE -> _playbackState.update { it.copy(state = PlayerState.IDLE) }
             Player.STATE_READY -> {
                 if (player.playWhenReady) {

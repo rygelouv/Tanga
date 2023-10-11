@@ -9,15 +9,15 @@ import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -25,7 +25,6 @@ class AuthViewModel @Inject constructor(
     private val signInClient: SignInClient,
     private val errorTracker: TangaErrorTracker
 ) : ViewModel() {
-
     private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState.emptyState())
     val state: StateFlow<AuthUiState> = _state.asStateFlow()
 
@@ -35,7 +34,8 @@ class AuthViewModel @Inject constructor(
     fun onGoogleSignInStarted() {
         _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Show) }
         viewModelScope.launch {
-            interactor.initGoogleSignIn()
+            interactor
+                .initGoogleSignIn()
                 .onSuccess { initSignInResult ->
                     postEvent(AuthUiEvent.LaunchGoogleSignIn(signInResult = initSignInResult))
                 }.onFailure { error ->
@@ -49,7 +49,8 @@ class AuthViewModel @Inject constructor(
     fun onGoogleSignInCompleted(intent: Intent) {
         viewModelScope.launch {
             val credentials = signInClient.getSignInCredentialFromIntent(intent)
-            interactor.completeGoogleSignIn(credentials)
+            interactor
+                .completeGoogleSignIn(credentials)
                 .onSuccess { user ->
                     postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }

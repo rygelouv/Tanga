@@ -24,9 +24,8 @@ data class HomeSectionUi(
     val summaries: List<SummaryUi>
 )
 
-fun Section.toHomeSectionUi(): HomeSectionUi {
-    return HomeSectionUi(
+fun Section.toHomeSectionUi(): HomeSectionUi =
+    HomeSectionUi(
         title = category.name,
         summaries = summaries.map { it.toSummaryUi() }
     )
-}

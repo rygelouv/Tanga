@@ -31,7 +31,7 @@ fun MainNavigationGraph(
             onRecommendationClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
         search()
-        playSummaryAudio { navController.popBackStack()}
+        playSummaryAudio { navController.popBackStack() }
         pricingPlan { navController.popBackStack() }
     }
 }

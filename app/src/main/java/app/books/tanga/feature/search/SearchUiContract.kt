@@ -2,7 +2,7 @@ package app.books.tanga.feature.search
 
 import androidx.annotation.DrawableRes
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.core_ui.icons.TangaIcons
+import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.entity.Category
 import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.UiError
@@ -24,8 +24,8 @@ data class CategoryUi(
     @DrawableRes val icon: Int
 )
 
-fun Category.toCategoryUi(): CategoryUi {
-    return CategoryUi(
+fun Category.toCategoryUi(): CategoryUi =
+    CategoryUi(
         id = id.value,
         name = name,
         icon = when (id.value) {
@@ -36,8 +36,9 @@ fun Category.toCategoryUi(): CategoryUi {
             else -> TangaIcons.SelfDevelopment
         }
     )
-}
 
 sealed class SearchUiEvent {
-    data class ShowSnackError(val error: UiError) : SearchUiEvent()
+    data class ShowSnackError(
+        val error: UiError
+    ) : SearchUiEvent()
 }

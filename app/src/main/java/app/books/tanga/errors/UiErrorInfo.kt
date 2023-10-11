@@ -1,7 +1,7 @@
 package app.books.tanga.errors
 
 import androidx.annotation.DrawableRes
-import app.books.tanga.core_ui.resources.TextResource
+import app.books.tanga.coreui.resources.TextResource
 
 /**
  * Represents user-friendly error information to be displayed on the UI.

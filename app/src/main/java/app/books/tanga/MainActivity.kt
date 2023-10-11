@@ -13,14 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import app.books.tanga.core_ui.theme.TangaTheme
+import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.feature.splash.SplashViewModel
 import app.books.tanga.navigation.NavigationGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TangaTheme {
-
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) {

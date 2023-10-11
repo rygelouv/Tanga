@@ -24,13 +24,9 @@ class FavoriteInMemoryCache @Inject constructor() {
         cache.remove(favorite.id)
     }
 
-    fun getBySummaryId(summaryId: String): Favorite? {
-        return cache.values.find { it.summaryId == summaryId }
-    }
+    fun getBySummaryId(summaryId: String): Favorite? = cache.values.find { it.summaryId == summaryId }
 
-    fun getAll(): List<Favorite> {
-        return cache.values.toList()
-    }
+    fun getAll(): List<Favorite> = cache.values.toList()
 
     fun putAll(favorites: List<Favorite>) {
         favorites.forEach { favorite ->
@@ -38,9 +34,7 @@ class FavoriteInMemoryCache @Inject constructor() {
         }
     }
 
-    fun isEmpty(): Boolean {
-        return cache.isEmpty()
-    }
+    fun isEmpty(): Boolean = cache.isEmpty()
 
     fun clear() {
         cache.clear()

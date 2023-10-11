@@ -2,7 +2,6 @@ package app.books.tanga.feature.pricing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,26 +34,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.core_ui.icons.TangaIcons
-import app.books.tanga.core_ui.theme.Cerulean
-import app.books.tanga.core_ui.theme.Cultured
-import app.books.tanga.core_ui.theme.LocalGradientColors
-import app.books.tanga.core_ui.theme.LocalSpacing
+import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.Cerulean
+import app.books.tanga.coreui.theme.Cultured
+import app.books.tanga.coreui.theme.LocalGradientColors
+import app.books.tanga.coreui.theme.LocalSpacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun PricingPlanScreen(onCloseClicked: () -> Unit) {
-
     SystemBarsVisibility()
 
-    val gradientColors = listOf(
-        LocalGradientColors.current.end,
-        LocalGradientColors.current.center,
-        LocalGradientColors.current.center
-    )
+    val gradientColors =
+        listOf(
+            LocalGradientColors.current.end,
+            LocalGradientColors.current.center,
+            LocalGradientColors.current.center
+        )
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .background(brush = Brush.verticalGradient(colors = gradientColors))
             .verticalScroll(
@@ -93,7 +93,8 @@ private fun SystemBarsVisibility() {
 @Composable
 fun PricingPlanTopBar(onCloseClicked: () -> Unit) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(LocalSpacing.current.medium),
         verticalAlignment = Alignment.CenterVertically
@@ -103,7 +104,8 @@ fun PricingPlanTopBar(onCloseClicked: () -> Unit) {
             painter = painterResource(id = TangaIcons.Close),
             contentDescription = "close icon",
             tint = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(18.dp)
                 .clickable { onCloseClicked() }
         )
@@ -113,17 +115,18 @@ fun PricingPlanTopBar(onCloseClicked: () -> Unit) {
 @Composable
 fun PricingPlanContent() {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(horizontal = LocalSpacing.current.small),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
         Image(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(horizontal = 28.dp),
             painter = painterResource(id = R.drawable.graphic_pricing),
@@ -133,7 +136,8 @@ fun PricingPlanContent() {
         Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = LocalSpacing.current.medium),
             text = stringResource(id = R.string.pricing_plan_message),
@@ -141,7 +145,7 @@ fun PricingPlanContent() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
@@ -183,7 +187,7 @@ private fun PricingPlanOfferItem(text: String) {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
@@ -191,7 +195,8 @@ private fun PricingPlanOfferItem(text: String) {
 @Composable
 fun PricingPlans() {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(
                 start = LocalSpacing.current.small,
@@ -203,14 +208,14 @@ fun PricingPlans() {
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             PricingPlanItem(
                 modifier = Modifier.offset(y = 28.dp),
                 title = stringResource(id = R.string.pricing_plan_yearly),
                 price = stringResource(id = R.string.pricing_plan_yearly_price),
                 cadence = stringResource(id = R.string.pricing_plan_yearly_cadence),
-                onClick = { /*TODO*/ }
+                onClick = { }
             )
             BestValueLabel()
         }
@@ -219,7 +224,7 @@ fun PricingPlans() {
             title = stringResource(id = R.string.pricing_plan_monthly),
             price = stringResource(id = R.string.pricing_plan_monthly_price),
             cadence = stringResource(id = R.string.pricing_plan_monthly_cadence),
-            onClick = { /*TODO*/ }
+            onClick = { }
         )
     }
 }
@@ -227,7 +232,8 @@ fun PricingPlans() {
 @Composable
 private fun BestValueLabel() {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .wrapContentWidth(Alignment.CenterHorizontally)
             .height(32.dp)
             .background(
@@ -237,7 +243,8 @@ private fun BestValueLabel() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(horizontal = LocalSpacing.current.medium),
             text = stringResource(id = R.string.pricing_plan_best_value),
@@ -247,4 +254,3 @@ private fun BestValueLabel() {
         )
     }
 }
-
