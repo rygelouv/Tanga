@@ -20,8 +20,11 @@ import androidx.compose.ui.unit.dp
  * A list of summary shimmer placeholders
  */
 @Composable
-fun ShimmerSummaryListRow(brush: Brush) {
-    Row {
+fun ShimmerSummaryListRow(
+    brush: Brush,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
         repeat(4) {
             ShimmerSummaryItem(modifier = Modifier, brush = brush)
             Spacer(modifier = Modifier.width(10.dp))
@@ -34,8 +37,8 @@ fun ShimmerSummaryListRow(brush: Brush) {
  */
 @Composable
 fun ShimmerSummaryItem(
-    modifier: Modifier,
-    brush: Brush
+    brush: Brush,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
