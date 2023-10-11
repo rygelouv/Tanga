@@ -64,6 +64,31 @@ plugins {
 }
 
 subprojects {
-    // https://github.com/JLLeitschuh/ktlint-gradle
+    // Ktlint Gradle Plugin https://github.com/JLLeitschuh/ktlint-gradle
     project.apply("$rootDir/ktlint/ktlint.gradle")
 }
+
+tasks.register("copyGitHooks", Copy::class.java) {
+    description = "Copies the git githooks from /githooks to the .git folder."
+    group = "Git Hooks"
+    from("$rootDir/githooks/pre-commit-ktlint")
+    into("$rootDir/.git/hooks/")
+    rename("pre-commit-ktlint", "pre-commit")
+    doLast {
+        logger.info("*********************** Git hook copied successfully. ***********************")
+    }
+}
+
+tasks.register("installGitHooks", Exec::class.java) {
+    description = "Installs the pre-commit git hooks from /githooks."
+    group = "Git Hooks"
+    workingDir = rootDir
+    commandLine = listOf("chmod")
+    args("-R", "+x", ".git/hooks/")
+    dependsOn("copyGitHooks")
+    doLast {
+        logger.info("*********************** Git hook installed successfully. ***********************")
+    }
+}
+
+tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
