@@ -124,7 +124,7 @@ dependencies {
     // Timber https://github.com/JakeWharton/timber/releases
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-    // Kotlin Immutable Collections
+    // Kotlin Immutable Collections: https://github.com/Kotlin/kotlinx.collections.immutable/releases
     implementation(
         "org.jetbrains.kotlinx:kotlinx-collections-immutable:${rootProject.extra.get(
             "kotlin_immutable_collections_version"
@@ -139,6 +139,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:${rootProject.extra.get("espresso_version")}")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra.get("compose_version")}")
 
+    // Slack Compose Lint Rule set https://github.com/slackhq/compose-lints/releases
     lintChecks(
         "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
     )

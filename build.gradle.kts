@@ -64,5 +64,6 @@ plugins {
 }
 
 subprojects {
+    // https://github.com/JLLeitschuh/ktlint-gradle
     project.apply("$rootDir/ktlint/ktlint.gradle")
 }
