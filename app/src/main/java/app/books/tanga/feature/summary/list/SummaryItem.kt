@@ -79,10 +79,11 @@ fun SummaryItem(
     hasGraphic: Boolean,
     width: Dp,
     titleSize: TextUnit,
+    modifier: Modifier = Modifier,
     onSummaryClicked: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier.width(width),
+        modifier = modifier.width(width),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -125,9 +126,11 @@ fun SummaryItem(
 fun SummaryIndicators(
     duration: String,
     hasVideo: Boolean,
-    hasGraphic: Boolean
+    hasGraphic: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     Row(
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(

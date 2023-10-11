@@ -34,13 +34,13 @@ import app.books.tanga.coreui.components.ProfileImage
 
 @Composable
 fun ProfileScreen(
+    modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel(),
     onProClicked: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(bottom = 10.dp),
         floatingActionButtonPosition = FabPosition.Center
@@ -76,12 +76,10 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileScreenContent(onLogout: () -> Unit) {
+fun ProfileScreenContent(modifier: Modifier = Modifier, onLogout: () -> Unit) {
     Surface(
         color = Color.White,
-        modifier =
-        Modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp)
     ) {
         Column(
@@ -95,10 +93,10 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
             val openDialogState = remember { mutableStateOf(false) }
             val logout = remember { mutableStateOf(false) }
 
-            ProfileContentAction(modifier = Modifier, ProfileAction.CONTACT)
-            ProfileContentAction(modifier = Modifier, ProfileAction.PRIVACY_AND_TERMS)
-            ProfileContentAction(modifier = Modifier, ProfileAction.NOTIFICATIONS)
-            ProfileContentAction(modifier = Modifier, ProfileAction.LOGOUT) {
+            ProfileContentAction(action = ProfileAction.CONTACT)
+            ProfileContentAction(action = ProfileAction.PRIVACY_AND_TERMS)
+            ProfileContentAction(action = ProfileAction.NOTIFICATIONS)
+            ProfileContentAction(action = ProfileAction.LOGOUT) {
                 openDialogState.value = true
             }
             Spacer(modifier = Modifier.height(60.dp))
@@ -124,12 +122,11 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
 fun ProfileHeader(
     fullName: String?,
     photoUrl: String?,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onProClicked: () -> Unit = {}
 ) {
     Column(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 44.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

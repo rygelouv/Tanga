@@ -42,7 +42,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun PricingPlanScreen(onCloseClicked: () -> Unit) {
+fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClicked: () -> Unit) {
     SystemBarsVisibility()
 
     val gradientColors =
@@ -53,15 +53,14 @@ fun PricingPlanScreen(onCloseClicked: () -> Unit) {
         )
 
     Column(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(brush = Brush.verticalGradient(colors = gradientColors))
             .verticalScroll(
                 rememberScrollState()
             )
     ) {
-        PricingPlanTopBar(onCloseClicked)
+        PricingPlanTopBar(onCloseClicked = onCloseClicked)
         PricingPlanContent()
     }
 }
@@ -91,10 +90,9 @@ private fun SystemBarsVisibility() {
 }
 
 @Composable
-fun PricingPlanTopBar(onCloseClicked: () -> Unit) {
+fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClicked: () -> Unit) {
     Row(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(LocalSpacing.current.medium),
         verticalAlignment = Alignment.CenterVertically
@@ -113,10 +111,10 @@ fun PricingPlanTopBar(onCloseClicked: () -> Unit) {
 }
 
 @Composable
-fun PricingPlanContent() {
+fun PricingPlanContent(modifier: Modifier = Modifier) {
     Column(
         modifier =
-        Modifier
+        modifier
             .fillMaxSize()
             .padding(horizontal = LocalSpacing.current.small),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -193,10 +191,10 @@ private fun PricingPlanOfferItem(text: String) {
 }
 
 @Composable
-fun PricingPlans() {
+fun PricingPlans(modifier: Modifier = Modifier) {
     Column(
         modifier =
-        Modifier
+        modifier
             .fillMaxWidth()
             .padding(
                 start = LocalSpacing.current.small,
@@ -232,8 +230,7 @@ fun PricingPlans() {
 @Composable
 private fun BestValueLabel() {
     Box(
-        modifier =
-        Modifier
+        modifier = Modifier
             .wrapContentWidth(Alignment.CenterHorizontally)
             .height(32.dp)
             .background(
@@ -243,8 +240,7 @@ private fun BestValueLabel() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(horizontal = LocalSpacing.current.medium),
             text = stringResource(id = R.string.pricing_plan_best_value),

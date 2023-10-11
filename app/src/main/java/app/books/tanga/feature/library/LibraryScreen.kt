@@ -26,21 +26,23 @@ import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.feature.summary.list.SummaryItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 /**
  * Shows the summaries saved by the user
  */
 @Composable
 fun LibraryScreen(
-    onExploreButtonClicked: () -> Unit,
     onFavoriteClicked: (String) -> Unit,
-    viewModel: LibraryViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: LibraryViewModel = hiltViewModel(),
+    onExploreButtonClicked: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Column(
-        modifier =
-        Modifier
+        modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
             .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
     ) {
@@ -62,7 +64,7 @@ fun LibraryScreen(
                 } else {
                     val favorites = state.favorites ?: return
                     FavoriteGrid(
-                        favorites = favorites,
+                        favorites = favorites.toImmutableList(),
                         onFavoriteClicked = onFavoriteClicked
                     )
                 }
@@ -73,8 +75,8 @@ fun LibraryScreen(
 
 @Composable
 fun FavoriteGrid(
+    favorites: ImmutableList<FavoriteUi>,
     modifier: Modifier = Modifier,
-    favorites: List<FavoriteUi>,
     onFavoriteClicked: (String) -> Unit
 ) {
     LazyVerticalGrid(

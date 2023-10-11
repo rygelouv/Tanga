@@ -74,13 +74,12 @@ enum class ProfileAction(
 
 @Composable
 fun ProfileContentAction(
-    modifier: Modifier,
     action: ProfileAction,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Row(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -91,8 +90,7 @@ fun ProfileContentAction(
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier =
-            Modifier
+            modifier = Modifier
                 .size(50.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(color = action.iconBackgroundColor)

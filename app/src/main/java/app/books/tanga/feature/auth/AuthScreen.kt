@@ -35,10 +35,12 @@ import app.books.tanga.coreui.theme.LocalSpacing
 @Composable
 fun AuthScreen(
     onAuthSkipped: () -> Unit,
-    onAuthSuccess: () -> Unit,
-    viewModel: AuthViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: AuthViewModel = hiltViewModel(),
+    onAuthSuccess: () -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             Row(
                 modifier = Modifier.padding(
@@ -89,11 +91,11 @@ fun AuthScreen(
 
 @Composable
 fun AuthContent(
-    modifier: Modifier,
-    onAuthSuccess: () -> Unit,
     state: AuthUiState,
     event: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
+    onAuthSuccess: () -> Unit,
+    modifier: Modifier = Modifier,
     onGoogleSignInCompleted: (Intent) -> Unit
 ) {
     SignIn(
@@ -146,7 +148,7 @@ fun AuthContent(
         }
 
         // Google Sign In button
-        GoogleSignInButton(onGoogleSignInButtonClick, state)
+        GoogleSignInButton(state = state, onClick = onGoogleSignInButtonClick)
 
         Text(
             modifier = Modifier
@@ -166,5 +168,5 @@ fun AuthContent(
 @Preview
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen({}, {})
+    AuthScreen(onAuthSkipped = {}, onAuthSuccess = {})
 }

@@ -31,8 +31,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 @Composable
 fun SummaryImage(
     summaryId: String,
-    modifier: Modifier = Modifier,
     painter: Painter,
+    modifier: Modifier = Modifier,
     onSummaryClicked: (String) -> Unit
 ) {
     Surface(
@@ -105,17 +105,16 @@ fun GlideSummaryImage(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProfileImage(
+    photoUrl: String?,
     modifier: Modifier = Modifier,
     tag: String = "profile_image",
-    photoUrl: String?,
     shape: Shape = RoundedCornerShape(30.dp),
     size: Dp = 120.dp,
     hasBorder: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Surface(
-        modifier =
-        modifier
+        modifier = modifier
             .size(size)
             .testTag(tag)
             .clickable { onClick() },
@@ -124,7 +123,7 @@ fun ProfileImage(
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
         GlideImage(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             model = photoUrl ?: R.drawable.profile_placeholder,
             contentDescription = "profile picture"
         )

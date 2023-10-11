@@ -15,9 +15,9 @@ import app.books.tanga.common.ui.ProgressState
 
 @Composable
 fun SaveButton(
+    progressState: ProgressState,
     modifier: Modifier = Modifier,
     isSaved: Boolean = false,
-    progressState: ProgressState,
     onClick: () -> Unit
 ) {
     IconButton(modifier = modifier, onClick = { onClick() }) {

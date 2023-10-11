@@ -69,8 +69,8 @@ fun LibraryShimmerLoader(modifier: Modifier = Modifier) {
 
 @Composable
 fun ShimmerFavoriteItem(
-    modifier: Modifier,
-    brush: Brush
+    brush: Brush,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier

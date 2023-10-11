@@ -48,8 +48,9 @@ import app.books.tanga.utils.toTimeFormat
 @Composable
 fun PlaySummaryAudioScreen(
     summaryId: String,
-    onBackClicked: () -> Unit,
-    viewModel: PlaySummaryAudioViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: PlaySummaryAudioViewModel = hiltViewModel(),
+    onBackClicked: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions: PlayerActions = viewModel
@@ -59,9 +60,9 @@ fun PlaySummaryAudioScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
-            PlaySummaryAudioTopBar(onBackClicked)
+            PlaySummaryAudioTopBar(onBackClicked = onBackClicked)
         }
     ) {
         Surface(
@@ -85,8 +86,8 @@ fun PlaySummaryAudioScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaySummaryAudioTopBar(onBackClicked: () -> Unit) {
-    TopAppBar(title = {}, navigationIcon = {
+fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClicked: () -> Unit) {
+    TopAppBar(modifier = modifier, title = {}, navigationIcon = {
         IconButton(onClick = { onBackClicked() }) {
             Icon(
                 modifier = Modifier.size(26.dp),
@@ -100,14 +101,15 @@ fun PlaySummaryAudioTopBar(onBackClicked: () -> Unit) {
 
 @Composable
 fun PlaySummaryAudioContent(
+    actions: PlayerActions,
+    modifier: Modifier = Modifier,
     summaryId: String? = null,
     title: String? = null,
     author: String? = null,
     coverUrl: String? = null,
-    playbackState: PlaybackState? = null,
-    actions: PlayerActions
+    playbackState: PlaybackState? = null
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         Surface(
             color = Color.White,
             modifier =
@@ -188,8 +190,8 @@ fun PlaySummaryAudioContent(
 
 @Composable
 private fun PlaybackControls(
-    playbackState: PlaybackState? = null,
-    actions: PlayerActions
+    actions: PlayerActions,
+    playbackState: PlaybackState? = null
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -260,7 +262,7 @@ private fun AudioBar(
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     ) {
-        MediaSlider(playbackState, onSliderPositionChanged)
+        MediaSlider(playbackState = playbackState, onSliderPositionChanged = onSliderPositionChanged)
         Row(
             modifier =
             Modifier

@@ -41,6 +41,11 @@ buildscript {
     // ExoPlayer
     extra.set("exoplayer_media3_version", "1.1.1")
 
+    // Slack Compose Rules
+    extra.set("slack_compose_lint_ruleset_version", "1.2.0")
+
+    extra.set("kotlin_immutable_collections_version", "0.3.6")
+
     dependencies {
         // Google Play Services
         classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")

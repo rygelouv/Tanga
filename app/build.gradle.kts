@@ -124,6 +124,13 @@ dependencies {
     // Timber https://github.com/JakeWharton/timber/releases
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    // Kotlin Immutable Collections
+    implementation(
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${rootProject.extra.get(
+            "kotlin_immutable_collections_version"
+        )}"
+    )
+
     // Unit tests https://junit.org/junit4/
     testImplementation("junit:junit:${rootProject.extra.get("junit_version")}")
 
@@ -131,6 +138,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:${rootProject.extra.get("androidx_test_junit_version")}")
     androidTestImplementation("androidx.test.espresso:espresso-core:${rootProject.extra.get("espresso_version")}")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra.get("compose_version")}")
+
+    lintChecks(
+        "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
+    )
 }
 
 sentry {

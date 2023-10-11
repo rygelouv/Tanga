@@ -49,6 +49,7 @@ fun OnboardingScreenPreview() {
 @Composable
 fun OnboardingScreen(
     navController: NavController,
+    modifier: Modifier = Modifier,
     onboardingViewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val pages =
@@ -63,8 +64,7 @@ fun OnboardingScreen(
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(bottom = 20.dp)
     ) {
@@ -107,14 +107,13 @@ fun OnboardingScreen(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun FinishOnboardingButton(
-    modifier: Modifier,
     pagerState: PagerState,
     onNextClick: () -> Unit,
+    modifier: Modifier = Modifier,
     onFinishClick: () -> Unit
 ) {
     Box(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 40.dp),
         contentAlignment = Alignment.Center
@@ -124,8 +123,7 @@ fun FinishOnboardingButton(
             modifier = Modifier.align(Alignment.Center)
         ) {
             Button(
-                modifier =
-                modifier
+                modifier = Modifier
                     .size(70.dp)
                     .align(Alignment.Center),
                 onClick = onNextClick,

@@ -46,17 +46,20 @@ import app.books.tanga.data.FakeData
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun HomeScreen(
     onSearch: () -> Unit,
     onProfilePictureClicked: () -> Unit,
-    onSummaryClicked: (String) -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
+    onSummaryClicked: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
             .padding(14.dp),
@@ -64,7 +67,7 @@ fun HomeScreen(
             HomeTopBar(
                 onSearch = onSearch,
                 onProfilePictureClicked = onProfilePictureClicked,
-                state.userPhotoUrl
+                photoUrl = state.userPhotoUrl
             )
         }
     ) {
@@ -79,9 +82,9 @@ fun HomeScreen(
 
 @Composable
 fun LoadHomeContent(
-    modifier: Modifier,
     state: HomeUiState,
     onSummaryClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
     onErrorButtonClicked: () -> Unit = {}
 ) {
     if (state.progressState == ProgressState.Show) {
@@ -100,13 +103,13 @@ fun LoadHomeContent(
 
 @Composable
 fun HomeTopBar(
+    photoUrl: String?,
     onSearch: () -> Unit,
     onProfilePictureClicked: () -> Unit,
-    photoUrl: String?
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier =
-        Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
@@ -130,9 +133,9 @@ fun HomeTopBar(
 
 @Composable
 fun HomeContent(
-    modifier: Modifier,
     state: HomeUiState,
     onSummaryClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
     onErrorButtonClicked: () -> Unit = {}
 ) {
     val dailySummary =
@@ -140,8 +143,7 @@ fun HomeContent(
             FakeData.allSummaries().first()
         }
     Column(
-        modifier =
-        modifier
+        modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
             .padding(0.dp)
     ) {
@@ -155,15 +157,14 @@ fun HomeContent(
             style = MaterialTheme.typography.bodyLarge
         )
         LazyColumn(
-            modifier =
-            modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(vertical = 0.dp),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
             item {
-                HomeTopCard(dailySummary, onSummaryClicked)
+                HomeTopCard(summaryUi = dailySummary, onSummaryClicked = onSummaryClicked)
             }
             state.sections?.let {
                 items(it.size) { index ->
@@ -171,7 +172,7 @@ fun HomeContent(
                     HomeSection(
                         sectionTitle = section.title,
                         isFirst = index == 0,
-                        summaries = section.summaries,
+                        summaries = section.summaries.toImmutableList(),
                         onSummaryClicked = onSummaryClicked
                     )
                 }
@@ -207,12 +208,13 @@ fun getWelcomeMessage(firstName: String): AnnotatedString {
 @Composable
 fun HomeSection(
     sectionTitle: String,
+    summaries: ImmutableList<SummaryUi>,
+    modifier: Modifier = Modifier,
     isFirst: Boolean = false,
-    summaries: List<SummaryUi> = emptyList(),
     onSummaryClicked: (String) -> Unit
 ) {
     Column {
-        Spacer(modifier = Modifier.height(if (isFirst) 22.dp else 28.dp))
+        Spacer(modifier = modifier.height(if (isFirst) 22.dp else 28.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -236,18 +238,22 @@ fun HomeSection(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries = summaries, onSummaryClicked = onSummaryClicked)
+        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClicked = onSummaryClicked)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun HomeSectionPreview() {
-    HomeSection("Personal Growth", true) {}
+    HomeSection(
+        sectionTitle = "Personal Growth",
+        isFirst = true,
+        summaries = FakeData.allSummaries().toImmutableList()
+    ) {}
 }
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen({}, {}, {})
+    HomeScreen({}, {}, onSummaryClicked = {})
 }

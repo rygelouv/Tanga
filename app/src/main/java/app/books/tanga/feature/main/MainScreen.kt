@@ -18,6 +18,7 @@ import app.books.tanga.navigation.NavigationScreen
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
@@ -33,7 +34,7 @@ fun MainScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         bottomBar = { BottomBarNavigation(navController) }
     ) {
         Surface(modifier = Modifier.padding(it)) {
