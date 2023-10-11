@@ -66,7 +66,7 @@ fun HomeScreen(
                 onProfilePictureClicked = onProfilePictureClicked,
                 state.userPhotoUrl
             )
-        },
+        }
     ) {
         LoadHomeContent(
             modifier = Modifier.padding(it),
@@ -92,7 +92,7 @@ fun LoadHomeContent(
                 modifier = modifier,
                 state = state,
                 onSummaryClicked = onSummaryClicked,
-                onErrorButtonClicked = onErrorButtonClicked,
+                onErrorButtonClicked = onErrorButtonClicked
             )
         }
     }
@@ -143,7 +143,7 @@ fun HomeContent(
         modifier =
         modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(0.dp),
+            .padding(0.dp)
     ) {
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         val userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous)

@@ -9,6 +9,7 @@ import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -17,7 +18,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -56,7 +56,7 @@ class AuthViewModel @Inject constructor(
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     errorTracker.setUserDetails(
                         userId = user.id,
-                        userCreationDate = user.createdAt,
+                        userCreationDate = user.createdAt
                     )
                 }.onFailure { error ->
                     Log.e("AuthViewModel", "Complete Google sign In failure: ${error.message}")

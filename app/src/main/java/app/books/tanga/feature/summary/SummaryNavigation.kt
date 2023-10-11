@@ -43,7 +43,7 @@ fun NavController.toSummaryDetails(
             .route
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
-                newValue = summaryId,
+                newValue = summaryId
             )
     ) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }

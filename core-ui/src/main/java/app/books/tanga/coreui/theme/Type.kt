@@ -150,7 +150,7 @@ val Typography =
             fontSize = 10.sp,
             lineHeight = 16.sp,
             letterSpacing = 0.sp
-        ),
+        )
     )
 
 val Typography.button: TextStyle

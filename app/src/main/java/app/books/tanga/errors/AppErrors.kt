@@ -37,7 +37,7 @@ sealed class OperationError(
     ) : OperationError(
         appMessage = TextResource.fromStringId(R.string.error_no_internet_title),
         exceptionMessage = "No internet connection",
-        cause = throwable,
+        cause = throwable
     )
 
     /** Represents an error where an unauthorized operation was attempted. */
@@ -46,7 +46,7 @@ sealed class OperationError(
     ) : OperationError(
         appMessage = TextResource.fromStringId(R.string.error_unauthorized_operation_title),
         exceptionMessage = "Unauthorized operation",
-        cause = throwable,
+        cause = throwable
     )
 
     /** Represents an error indicating that the service is currently on maintenance. */
@@ -55,7 +55,7 @@ sealed class OperationError(
     ) : OperationError(
         appMessage = TextResource.fromStringId(R.string.error_maintenance_title),
         exceptionMessage = "Service on Maintenance",
-        cause = throwable,
+        cause = throwable
     )
 
     /** Represents an error indicating that a resource was not found. */
@@ -64,12 +64,12 @@ sealed class OperationError(
     ) : OperationError(
         appMessage = TextResource.fromStringId(R.string.error_resource_not_found_title),
         exceptionMessage = "Resource not found",
-        cause = throwable,
+        cause = throwable
     )
 
     /** Represents any error that doesn't fall under other predefined categories. */
     data class UnknownError(
-        val throwable: Throwable,
+        val throwable: Throwable
     ) : OperationError(
         appMessage = TextResource.fromStringId(R.string.error_unknown_title),
         exceptionMessage = "Unknown error",
@@ -89,7 +89,7 @@ sealed class DomainError(
 ) : AppError(appMessage = appMessage, exceptionMessage = exceptionMessage, cause = cause) {
     /** Represents an error indicating that a user is not authenticated. */
     data class UserNotAuthenticatedError(
-        val throwable: Throwable? = null,
+        val throwable: Throwable? = null
     ) : DomainError(
         appMessage = TextResource.fromStringId(R.string.error_user_not_authenticated_title),
         exceptionMessage = "User not authenticated",
@@ -107,7 +107,7 @@ sealed class DomainError(
 
     /** Represents an error indicating that Google sign-in launch has failed */
     data class UnableToSignInWithGoogleError(
-        val throwable: Throwable? = null,
+        val throwable: Throwable? = null
     ) : DomainError(
         appMessage = TextResource.fromStringId(R.string.error_unable_to_sign_in_with_google_title),
         exceptionMessage = "User to launch Google sign in",

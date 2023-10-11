@@ -58,7 +58,7 @@ fun PricingPlanScreen(onCloseClicked: () -> Unit) {
             .fillMaxSize()
             .background(brush = Brush.verticalGradient(colors = gradientColors))
             .verticalScroll(
-                rememberScrollState(),
+                rememberScrollState()
             )
     ) {
         PricingPlanTopBar(onCloseClicked)
@@ -78,13 +78,13 @@ private fun SystemBarsVisibility() {
         systemUiController.isNavigationBarVisible = false
         // Status bar color is changed to get the same color as the screen background
         systemUiController.setStatusBarColor(
-            color = Cerulean,
+            color = Cerulean
         )
         onDispose {
             systemUiController.isNavigationBarVisible = true // Navigation bar is visible
             // put back original status bar color
             systemUiController.setStatusBarColor(
-                color = Cultured,
+                color = Cultured
             )
         }
     }
@@ -201,21 +201,21 @@ fun PricingPlans() {
             .padding(
                 start = LocalSpacing.current.small,
                 end = LocalSpacing.current.small,
-                bottom = LocalSpacing.current.medium,
+                bottom = LocalSpacing.current.medium
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             PricingPlanItem(
                 modifier = Modifier.offset(y = 28.dp),
                 title = stringResource(id = R.string.pricing_plan_yearly),
                 price = stringResource(id = R.string.pricing_plan_yearly_price),
                 cadence = stringResource(id = R.string.pricing_plan_yearly_cadence),
-                onClick = { /*TODO*/ }
+                onClick = { }
             )
             BestValueLabel()
         }
@@ -224,7 +224,7 @@ fun PricingPlans() {
             title = stringResource(id = R.string.pricing_plan_monthly),
             price = stringResource(id = R.string.pricing_plan_monthly_price),
             cadence = stringResource(id = R.string.pricing_plan_monthly_cadence),
-            onClick = { /*TODO*/ }
+            onClick = { }
         )
     }
 }
@@ -238,7 +238,7 @@ private fun BestValueLabel() {
             .height(32.dp)
             .background(
                 color = MaterialTheme.colorScheme.secondary,
-                shape = MaterialTheme.shapes.medium,
+                shape = MaterialTheme.shapes.medium
             ),
         contentAlignment = Alignment.Center
     ) {

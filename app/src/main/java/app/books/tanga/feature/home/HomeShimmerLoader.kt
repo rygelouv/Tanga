@@ -40,7 +40,7 @@ fun AnimatedShimmerLoader(modifier: Modifier) {
             animationSpec = infiniteRepeatable(
                 animation = tween(
                     durationMillis = 1000,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 ),
                 repeatMode = RepeatMode.Restart
             ),
@@ -73,7 +73,7 @@ fun ShimmerPreview() {
                     listOf(
                         Color.LightGray.copy(alpha = 0.6f),
                         Color.LightGray.copy(alpha = 0.2f),
-                        Color.LightGray.copy(alpha = 0.6f),
+                        Color.LightGray.copy(alpha = 0.6f)
                     )
                 )
             )

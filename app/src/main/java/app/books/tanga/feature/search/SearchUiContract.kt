@@ -21,7 +21,7 @@ data class SearchUiState(
 data class CategoryUi(
     val id: String,
     val name: String,
-    @DrawableRes val icon: Int,
+    @DrawableRes val icon: Int
 )
 
 fun Category.toCategoryUi(): CategoryUi =

@@ -7,12 +7,12 @@ import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 interface FavoriteRepository {
     /**
@@ -35,7 +35,7 @@ interface FavoriteRepository {
      */
     suspend fun getFavoriteBySummaryId(
         summaryId: String,
-        userId: String,
+        userId: String
     ): Result<Favorite?>
 
     /**
@@ -51,7 +51,7 @@ interface FavoriteRepository {
 class FavoriteRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val cache: FavoriteInMemoryCache,
-    private val operationHandler: FirestoreOperationHandler,
+    private val operationHandler: FirestoreOperationHandler
 ) : FavoriteRepository {
     /**
      * Create the favorite on Firestore, get the [DocumentReference] and update the field
@@ -89,13 +89,13 @@ class FavoriteRepositoryImpl @Inject constructor(
      */
     override suspend fun getFavoriteBySummaryId(
         summaryId: String,
-        userId: String,
+        userId: String
     ): Result<Favorite?> =
         operationHandler.executeOperation {
             if (cache.isEmpty()) {
                 getFavoriteBySummaryIdFromFirestore(
                     summaryId = summaryId,
-                    userId = userId,
+                    userId = userId
                 ).getOrThrow()
             } else {
                 cache.getBySummaryId(summaryId)
@@ -112,7 +112,7 @@ class FavoriteRepositoryImpl @Inject constructor(
             .favoriteCollection
             .whereEqualTo(
                 FirestoreDatabase.Favorites.Fields.USER_ID,
-                userId,
+                userId
             ).snapshots()
             .map { querySnapshot ->
                 querySnapshot.map { it.data.toFavorite() }.also { favorites ->
@@ -127,7 +127,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      */
     private suspend fun getFavoriteBySummaryIdFromFirestore(
         summaryId: String,
-        userId: String,
+        userId: String
     ): Result<Favorite?> =
         operationHandler.executeOperation {
             val favorite = firestore
@@ -159,7 +159,7 @@ class FavoriteRepositoryImpl @Inject constructor(
                 .favoriteCollection
                 .whereEqualTo(
                     FirestoreDatabase.Favorites.Fields.USER_ID,
-                    userId,
+                    userId
                 ).get()
                 .await()
             favorites

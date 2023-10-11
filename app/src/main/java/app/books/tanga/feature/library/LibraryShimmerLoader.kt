@@ -31,7 +31,7 @@ fun LibraryShimmerLoader(modifier: Modifier = Modifier) {
         listOf(
             Color.LightGray.copy(alpha = 0.6f),
             Color.LightGray.copy(alpha = 0.2f),
-            Color.LightGray.copy(alpha = 0.6f),
+            Color.LightGray.copy(alpha = 0.6f)
         )
 
     val transition = rememberInfiniteTransition(label = "Summary list Shimmer transition")
@@ -42,17 +42,17 @@ fun LibraryShimmerLoader(modifier: Modifier = Modifier) {
             animationSpec = infiniteRepeatable(
                 animation = tween(
                     durationMillis = 1000,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 ),
-                repeatMode = RepeatMode.Restart,
+                repeatMode = RepeatMode.Restart
             ),
-            label = "Summary list Shimmer translate animation",
+            label = "Summary list Shimmer translate animation"
         )
 
     val brush = Brush.linearGradient(
         colors = shimmerColors,
         start = Offset.Zero,
-        end = Offset(x = translateAnimation.value, y = translateAnimation.value),
+        end = Offset(x = translateAnimation.value, y = translateAnimation.value)
     )
     Column(modifier = modifier.background(color = MaterialTheme.colorScheme.background)) {
         repeat(3) {
@@ -84,7 +84,7 @@ fun ShimmerFavoriteItem(
                 .fillMaxWidth()
                 .height(300.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(brush),
+                .background(brush)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -94,7 +94,7 @@ fun ShimmerFavoriteItem(
                 .fillMaxWidth()
                 .height(20.dp)
                 .clip(RoundedCornerShape(5.dp))
-                .background(brush),
+                .background(brush)
         )
 
         Spacer(modifier = Modifier.height(10.dp))

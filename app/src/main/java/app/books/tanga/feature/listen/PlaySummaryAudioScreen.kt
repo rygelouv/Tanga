@@ -49,7 +49,7 @@ import app.books.tanga.utils.toTimeFormat
 fun PlaySummaryAudioScreen(
     summaryId: String,
     onBackClicked: () -> Unit,
-    viewModel: PlaySummaryAudioViewModel = hiltViewModel(),
+    viewModel: PlaySummaryAudioViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions: PlayerActions = viewModel
@@ -62,7 +62,7 @@ fun PlaySummaryAudioScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             PlaySummaryAudioTopBar(onBackClicked)
-        },
+        }
     ) {
         Surface(
             color = MaterialTheme.colorScheme.background,
@@ -114,7 +114,7 @@ fun PlaySummaryAudioContent(
             Modifier
                 .fillMaxSize()
                 .offset(y = 148.dp),
-            shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
+            shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
         ) {
             Column(
                 modifier =
@@ -194,14 +194,14 @@ private fun PlaybackControls(
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = { actions.onBackward() }) {
             Icon(
                 modifier = Modifier.size(18.dp),
                 painter = painterResource(id = TangaIcons.Backward),
                 tint = MaterialTheme.colorScheme.primary,
-                contentDescription = "previous",
+                contentDescription = "previous"
             )
         }
         Text(
@@ -224,7 +224,7 @@ private fun PlaybackControls(
                         .padding(18.dp),
                     painter =
                     painterResource(
-                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play,
+                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
                     ),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     contentDescription = "play/pause"
@@ -258,7 +258,7 @@ private fun AudioBar(
         modifier =
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 20.dp)
     ) {
         MediaSlider(playbackState, onSliderPositionChanged)
         Row(

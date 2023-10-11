@@ -49,19 +49,19 @@ enum class ProfileAction(
         icon = R.drawable.ic_contact_email,
         color = ProfileYellow,
         iconBackgroundColor = ProfileYellowBackground,
-        text = R.string.contact_us,
+        text = R.string.contact_us
     ),
     PRIVACY_AND_TERMS(
         icon = R.drawable.ic_privacy,
         color = ProfileGreen,
         iconBackgroundColor = ProfileGreenBackground,
-        text = R.string.privay_and_terms,
+        text = R.string.privay_and_terms
     ),
     NOTIFICATIONS(
         icon = R.drawable.ic_notification_bell,
         color = ProfilePurple,
         iconBackgroundColor = ProfilePurpleBackground,
-        text = R.string.notificaitons_label,
+        text = R.string.notificaitons_label
     ),
     LOGOUT(
         icon = R.drawable.ic_logout,
@@ -84,7 +84,7 @@ fun ProfileContentAction(
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(bounded = true, color = MaterialTheme.colorScheme.navyTransparent),
+                indication = rememberRipple(bounded = true, color = MaterialTheme.colorScheme.navyTransparent)
             ) { onClick() }
             .padding(horizontal = 30.dp, vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically

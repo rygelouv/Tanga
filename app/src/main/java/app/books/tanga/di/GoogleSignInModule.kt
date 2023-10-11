@@ -23,13 +23,13 @@ private const val WEB_CLIENT_ID = "webClientId"
 class GoogleSignInModule {
     @Provides
     fun provideSignInClient(
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): SignInClient = Identity.getSignInClient(context)
 
     @Provides
     @Named(GOOGLE_SIGN_IN_REQUEST)
     fun provideSignInRequest(
-        @Named(WEB_CLIENT_ID) clientId: String,
+        @Named(WEB_CLIENT_ID) clientId: String
     ): BeginSignInRequest = BeginSignInRequest
         .builder()
         .setGoogleIdTokenRequestOptions(
@@ -39,14 +39,14 @@ class GoogleSignInModule {
                 .setSupported(true)
                 .setServerClientId(clientId)
                 .setFilterByAuthorizedAccounts(true)
-                .build(),
+                .build()
         ).setAutoSelectEnabled(true)
         .build()
 
     @Provides
     @Named(GOOGLE_SIGN_UP_REQUEST)
     fun provideSignUpRequest(
-        @Named(WEB_CLIENT_ID) clientId: String,
+        @Named(WEB_CLIENT_ID) clientId: String
     ): BeginSignInRequest = BeginSignInRequest
         .builder()
         .setGoogleIdTokenRequestOptions(
@@ -56,7 +56,7 @@ class GoogleSignInModule {
                 .setSupported(true)
                 .setServerClientId(clientId)
                 .setFilterByAuthorizedAccounts(true)
-                .build(),
+                .build()
         ).build()
 
     @Provides

@@ -20,7 +20,7 @@ sealed class TextResource {
          * Create a [TextResource] instance from a string resource ID.
          */
         fun fromStringId(
-            @StringRes id: Int,
+            @StringRes id: Int
         ): TextResource = IdTextResource(id)
     }
 }
@@ -36,7 +36,7 @@ class IdTextResource(
  * Represents a [TextResource] holding a direct text string.
  */
 private data class SimpleTextResource(
-    val text: String,
+    val text: String
 ) : TextResource()
 
 /**

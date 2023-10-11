@@ -22,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -55,8 +55,8 @@ dependencies {
     // Accompanist https://google.github.io/accompanist/
     api(
         "com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get(
-            "accompanist_systemuicontroller_version",
-        )}",
+            "accompanist_systemuicontroller_version"
+        )}"
     )
 
     /************** Image loading *****************

@@ -38,7 +38,7 @@ fun PricingPlanItem(
                 shape = MaterialTheme.shapes.large
             ).padding(
                 horizontal = LocalSpacing.current.medium,
-                vertical = LocalSpacing.current.medium,
+                vertical = LocalSpacing.current.medium
             ).clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {

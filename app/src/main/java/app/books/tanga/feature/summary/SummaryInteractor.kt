@@ -41,7 +41,7 @@ class SummaryInteractor @Inject constructor(
     private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
         summaryRepository
             .getSummariesByCategory(
-                categoryId,
+                categoryId
             )
 
     /**

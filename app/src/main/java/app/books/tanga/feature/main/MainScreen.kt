@@ -34,7 +34,7 @@ fun MainScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { BottomBarNavigation(navController) },
+        bottomBar = { BottomBarNavigation(navController) }
     ) {
         Surface(modifier = Modifier.padding(it)) {
             MainNavigationGraph(

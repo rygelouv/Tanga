@@ -36,7 +36,7 @@ fun SignIn(
 ) {
     val launcher =
         rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartIntentSenderForResult(),
+            contract = ActivityResultContracts.StartIntentSenderForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.let(onGoogleSignInCompleted)
@@ -76,31 +76,31 @@ fun GoogleSignInButton(
         },
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.Transparent,
-            containerColor = Color.Black,
+            containerColor = Color.Black
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-        enabled = progressState != ProgressState.Show,
+        enabled = progressState != ProgressState.Show
     ) {
         Box {
             when (progressState) {
                 ProgressState.Show ->
                     CircularProgressIndicator(
                         modifier = Modifier.size(30.dp),
-                        color = Color.White,
+                        color = Color.White
                     )
                 else -> {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),
                         contentDescription = "google logo",
-                        modifier = Modifier.size(22.dp),
+                        modifier = Modifier.size(22.dp)
                     )
 
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.auth_sign_in_with_google),
                         textAlign = TextAlign.Center,
-                        color = Color.White,
+                        color = Color.White
                     )
                 }
             }

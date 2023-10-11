@@ -26,7 +26,7 @@ fun LogoutDialog(
             }
         },
         title = { Text(text = stringResource(id = R.string.confirm_logout_title)) },
-        text = { Text(text = stringResource(id = R.string.confirm_logout_message)) },
+        text = { Text(text = stringResource(id = R.string.confirm_logout_message)) }
     )
 }
 

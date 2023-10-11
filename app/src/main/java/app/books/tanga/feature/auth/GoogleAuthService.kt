@@ -11,9 +11,9 @@ import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Named
+import kotlinx.coroutines.tasks.await
 
 /**
  * An interface for Google sign-in operations.

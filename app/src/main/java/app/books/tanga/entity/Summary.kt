@@ -1,9 +1,7 @@
 package app.books.tanga.entity
 
 @JvmInline
-value class SummaryId(
-    val value: String,
-)
+value class SummaryId(val value: String)
 
 /**
  *  Class representing a Summary

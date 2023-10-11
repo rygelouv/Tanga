@@ -4,8 +4,8 @@ import app.books.tanga.entity.Category
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import kotlinx.coroutines.tasks.await
 
 interface CategoryRepository {
     suspend fun getCategories(): Result<List<Category>>

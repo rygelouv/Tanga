@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 class AudioPlayerModule {
     @Provides
     fun provideExoPlayer(
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): ExoPlayer = ExoPlayer.Builder(context).build()
 
     @Provides

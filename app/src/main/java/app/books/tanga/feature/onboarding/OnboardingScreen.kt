@@ -56,7 +56,7 @@ fun OnboardingScreen(
             OnboardingPage.Read,
             OnboardingPage.Listen,
             OnboardingPage.Watch,
-            OnboardingPage.Visualize,
+            OnboardingPage.Visualize
         )
 
     val pagerState = rememberPagerState()
@@ -147,7 +147,7 @@ fun FinishOnboardingButton(
 
         AnimatedVisibility(
             visible = pagerState.currentPage == MAX_PAGER_INDEX,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             TangaButtonRightIcon(
                 onClick = onFinishClick,

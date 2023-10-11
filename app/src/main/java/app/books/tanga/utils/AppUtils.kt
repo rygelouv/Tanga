@@ -23,8 +23,8 @@ fun shareSummary(
                     R.string.summary_details_share_message,
                     summaryTitle,
                     summaryAuthor,
-                    url,
-                ),
+                    url
+                )
             )
             type = "text/plain"
         }

@@ -10,11 +10,11 @@ import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.timber.SentryTimberIntegration
+import java.util.Date
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.Date
-import javax.inject.Inject
 
 private const val USER_CREATED_AT_KEY = "user_creation_date"
 
@@ -26,7 +26,7 @@ private const val USER_CREATED_AT_KEY = "user_creation_date"
  * other functionalities specifically tailored for Sentry.
  */
 class SentryTracker @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     /**
      * Initializes the Sentry SDK with specified configurations.
@@ -36,7 +36,7 @@ class SentryTracker @Inject constructor(
      */
     fun init(context: Context) {
         SentryAndroid.init(
-            context,
+            context
         ) { options ->
             // Filtering out DEBUG level events
             options.beforeSend =
@@ -52,8 +52,8 @@ class SentryTracker @Inject constructor(
             if (BuildConfig.DEBUG.not()) {
                 options.addIntegration(
                     SentryTimberIntegration(
-                        minBreadcrumbLevel = SentryLevel.WARNING,
-                    ),
+                        minBreadcrumbLevel = SentryLevel.WARNING
+                    )
                 )
             }
         }
@@ -67,7 +67,7 @@ class SentryTracker @Inject constructor(
      */
     fun setUserDetails(
         userId: UserId,
-        userCreationDate: Date,
+        userCreationDate: Date
     ) {
         CoroutineScope(ioDispatcher).launch {
             val user = io.sentry.protocol.User().apply { id = userId.value }

@@ -12,5 +12,5 @@ fun FirestoreData.toFavorite(): Favorite = Favorite(
     coverUrl = this[FirestoreDatabase.Favorites.Fields.COVER_URL].toString(),
     userId = this[FirestoreDatabase.Favorites.Fields.USER_ID].toString(),
     summaryId = this[FirestoreDatabase.Favorites.Fields.SUMMARY_ID].toString(),
-    playingLength = this[FirestoreDatabase.Favorites.Fields.PLAYING_LENGTH].toString(),
+    playingLength = this[FirestoreDatabase.Favorites.Fields.PLAYING_LENGTH].toString()
 )

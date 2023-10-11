@@ -84,7 +84,7 @@ fun HomeTopCard(
                     maxLines = 2
                 )
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         color = Color.White,

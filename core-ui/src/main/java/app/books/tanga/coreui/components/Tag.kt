@@ -69,7 +69,7 @@ fun Tag(
             modifier = Modifier.size(16.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = if (selected) Color.White else tint,
+            tint = if (selected) Color.White else tint
         )
         Spacer(modifier = Modifier.width(LocalSpacing.current.small))
         Text(

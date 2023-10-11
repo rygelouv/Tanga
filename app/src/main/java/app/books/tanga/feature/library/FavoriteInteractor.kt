@@ -6,9 +6,9 @@ import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
 import app.books.tanga.entity.Summary
 import app.books.tanga.errors.DomainError
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 
 class FavoriteInteractor @Inject constructor(
     private val favoriteRepository: FavoriteRepository,

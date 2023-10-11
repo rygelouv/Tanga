@@ -45,7 +45,7 @@ fun AuthScreen(
                     top = 5.dp,
                     start = 5.dp,
                     end = LocalSpacing.current.extraLarge,
-                    bottom = 5.dp,
+                    bottom = 5.dp
                 ),
                 horizontalArrangement = Arrangement.End
             ) {
@@ -72,7 +72,7 @@ fun AuthScreen(
                     )
                 }
             }
-        },
+        }
     ) {
         val state by viewModel.state.collectAsStateWithLifecycle()
         val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)

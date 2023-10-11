@@ -16,7 +16,7 @@ fun FirebaseUser.toUser(): User =
         email = requireNotNull(email),
         photoUrl = photoUrl?.toString(),
         isPro = false,
-        createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date(),
+        createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
     )
 
 fun User.toFireStoreUserData() =
@@ -25,8 +25,8 @@ fun User.toFireStoreUserData() =
         FirestoreDatabase.Users.Fields.FULL_NAME to fullName,
         FirestoreDatabase.Users.Fields.EMAIL to email,
         FirestoreDatabase.Users.Fields.PHOTO_URL to photoUrl,
-        FirestoreDatabase.Users.Fields.CREATED_AT to
-            FieldValue.serverTimestamp(), // We use the server timestamp to avoid issues with the device time
+        // We use the server timestamp to avoid issues with the device time
+        FirestoreDatabase.Users.Fields.CREATED_AT to FieldValue.serverTimestamp()
     )
 
 fun FirestoreData.toUser(uid: String) =
@@ -36,5 +36,5 @@ fun FirestoreData.toUser(uid: String) =
         email = this[FirestoreDatabase.Users.Fields.EMAIL].toString(),
         photoUrl = this[FirestoreDatabase.Users.Fields.PHOTO_URL].toString(),
         isPro = false,
-        createdAt = (this[FirestoreDatabase.Users.Fields.CREATED_AT] as Timestamp).toDate(),
+        createdAt = (this[FirestoreDatabase.Users.Fields.CREATED_AT] as Timestamp).toDate()
     )

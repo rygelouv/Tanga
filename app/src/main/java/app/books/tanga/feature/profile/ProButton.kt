@@ -46,7 +46,7 @@ fun ProButton(onClick: () -> Unit = {}) {
             .height(70.dp)
             .background(
                 brush = Brush.linearGradient(colors = gradientColors),
-                shape = RoundedCornerShape(40.dp),
+                shape = RoundedCornerShape(40.dp)
             ).clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {

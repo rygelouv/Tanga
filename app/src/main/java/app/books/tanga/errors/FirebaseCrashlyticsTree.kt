@@ -2,20 +2,20 @@ package app.books.tanga.errors
 
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * A [Timber.Tree] that logs to Crashlytics.
  */
 class FirebaseCrashlyticsTree @Inject constructor(
-    private val crashlytics: FirebaseCrashlytics,
+    private val crashlytics: FirebaseCrashlytics
 ) : Timber.Tree() {
     override fun log(
         priority: Int,
         tag: String?,
         message: String,
-        t: Throwable?,
+        t: Throwable?
     ) {
         // Ignore VERBOSE and DEBUG logs to prevent noise in Crashlytics
         if (priority == Log.VERBOSE || priority == Log.DEBUG) {
@@ -42,5 +42,5 @@ class FirebaseCrashlyticsTree @Inject constructor(
 
 /** Helps tracking non-fatal exceptions in Crashlytics */
 private class CrashlyticsNonFatalException(
-    override val message: String?,
+    override val message: String?
 ) : Exception(message)

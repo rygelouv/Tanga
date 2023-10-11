@@ -82,7 +82,7 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
         modifier =
         Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp),
+        shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp)
     ) {
         Column(
             modifier =
@@ -109,7 +109,7 @@ fun ProfileScreenContent(onLogout: () -> Unit) {
                     onConfirm = {
                         openDialogState.value = false
                         logout.value = true
-                    },
+                    }
                 )
             }
 
@@ -138,7 +138,7 @@ fun ProfileHeader(
         Spacer(modifier = Modifier.height(80.dp))
         ProfileImage(
             photoUrl = photoUrl,
-            onClick = { /*TODO*/ }
+            onClick = { }
         )
 
         Spacer(modifier = Modifier.height(20.dp))

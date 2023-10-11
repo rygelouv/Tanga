@@ -16,14 +16,14 @@ private const val USER_CREATED_AT_KEY = "userCreationDate"
  * on a per-user basis.
  */
 class FirebaseCrashlyticsUserTracker @Inject constructor(
-    private val crashlytics: FirebaseCrashlytics,
+    private val crashlytics: FirebaseCrashlytics
 ) {
     /**
      * Set user-specific details (ID and creation date) to Firebase Crashlytics.
      */
     fun setUserDetails(
         userId: UserId,
-        createdAt: Date,
+        createdAt: Date
     ) {
         crashlytics.setUserId(userId.value)
         crashlytics.setCustomKey(USER_CREATED_AT_KEY, createdAt.toFormattedString())

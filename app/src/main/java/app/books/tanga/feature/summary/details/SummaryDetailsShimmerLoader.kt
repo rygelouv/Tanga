@@ -44,7 +44,7 @@ fun SummaryDetailsShimmerLoader() {
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 1000,
-                easing = FastOutSlowInEasing,
+                easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Restart
         ),

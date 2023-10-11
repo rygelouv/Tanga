@@ -128,7 +128,7 @@ fun SummaryIndicators(
     hasGraphic: Boolean
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -154,7 +154,7 @@ fun SummaryIndicators(
                 modifier = Modifier.size(13.dp),
                 painter = painterResource(id = TangaIcons.IndicatorWatch),
                 contentDescription = null,
-                tint = LocalTintColor.current.color,
+                tint = LocalTintColor.current.color
             )
         }
         if (hasGraphic) {

@@ -53,7 +53,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
-        },
+        }
     ) { paddingValues ->
 
         HandleEvents(event = event, snackbarHostState = snackbarHostState)

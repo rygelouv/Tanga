@@ -18,7 +18,7 @@ fun TangaTheme(content: @Composable () -> Unit) {
     val tintColor =
         TintColor(
             color = colors.primary,
-            disabled = colors.onSurfaceVariant.copy(alpha = 0.38f),
+            disabled = colors.onSurfaceVariant.copy(alpha = 0.38f)
         )
     val spacing = Spacing()
 

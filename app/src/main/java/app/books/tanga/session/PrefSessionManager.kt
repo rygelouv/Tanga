@@ -2,11 +2,11 @@ package app.books.tanga.session
 
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.di.IoDispatcher
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class PrefSessionManager @Inject constructor(
     private val prefRepository: DefaultPrefDataStoreRepository,

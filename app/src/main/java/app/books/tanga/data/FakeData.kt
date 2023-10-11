@@ -15,8 +15,8 @@ object FakeData {
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
                     hasGraphic = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -26,8 +26,8 @@ object FakeData {
                     author = "James Clear",
                     duration = "15",
                     hasVideo = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -37,8 +37,8 @@ object FakeData {
                     author = "Cal Newport",
                     duration = "9",
                     hasGraphic = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -48,8 +48,8 @@ object FakeData {
                     author = "Ryan Holiday",
                     duration = "13",
                     hasVideo = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -58,8 +58,8 @@ object FakeData {
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
                     duration = "11",
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -68,8 +68,8 @@ object FakeData {
                     title = "Good To Great",
                     author = "Jim Collins",
                     duration = "8",
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -78,8 +78,8 @@ object FakeData {
                     title = "Never Split The Difference",
                     author = "Chris Voss",
                     duration = "10",
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -90,8 +90,8 @@ object FakeData {
                     duration = "10",
                     hasGraphic = true,
                     hasVideo = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -101,8 +101,8 @@ object FakeData {
                     author = "Morgan Housel",
                     duration = "10",
                     hasGraphic = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -113,8 +113,8 @@ object FakeData {
                     duration = "11",
                     hasGraphic = true,
                     hasVideo = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
             add(
                 SummaryUi(
@@ -125,8 +125,8 @@ object FakeData {
                     duration = "9",
                     hasGraphic = true,
                     hasVideo = true,
-                    authorPictureUrl = null,
-                ),
+                    authorPictureUrl = null
+                )
             )
         }
 }

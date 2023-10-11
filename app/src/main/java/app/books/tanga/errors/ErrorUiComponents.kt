@@ -135,7 +135,7 @@ fun ErrorContent(
             .background(Color.White)
             .padding(
                 horizontal = LocalSpacing.current.medium,
-                vertical = LocalSpacing.current.small,
+                vertical = LocalSpacing.current.small
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -216,7 +216,7 @@ fun ShowSnackbarErrorPreview() {
             modifier =
             Modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(it)
         ) {
             ShowSnackbarError(errorInfo = errorInfo, snackbarHostState = snackbarHostState)
         }

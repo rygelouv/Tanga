@@ -10,9 +10,9 @@ import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(

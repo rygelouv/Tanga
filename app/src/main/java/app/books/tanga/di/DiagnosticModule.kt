@@ -12,8 +12,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import timber.log.Timber
 import javax.inject.Singleton
+import timber.log.Timber
 
 typealias TimberTrees = ArrayList<Timber.Tree>
 
@@ -41,7 +41,7 @@ class DiagnosticModule {
     fun provideTangaErrorTracker(
         firebaseCrashlyticsUserTracker: FirebaseCrashlyticsUserTracker,
         sentryTracker: SentryTracker,
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ) = TangaErrorTracker(firebaseCrashlyticsUserTracker, sentryTracker, context)
 
     @Singleton

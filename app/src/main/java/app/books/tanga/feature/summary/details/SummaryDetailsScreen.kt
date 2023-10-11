@@ -116,7 +116,7 @@ private fun SummaryDetailsContent(
             modifier =
             Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
         ) {
             SummaryDetailsHeader(modifier = Modifier.padding(paddingValues), summary = summary)
 
@@ -195,7 +195,7 @@ private fun SummaryTopAppBar(
                     contentDescription = "share summary"
                 )
             }
-        },
+        }
     )
 }
 
@@ -223,7 +223,7 @@ fun PlayFloatingActionButton(
                     .coreui
                     .R
                     .drawable
-                    .ic_indicator_listen,
+                    .ic_indicator_listen
             ),
             tint = MaterialTheme.colorScheme.onPrimary,
             contentDescription = "play summary"
@@ -234,22 +234,22 @@ fun PlayFloatingActionButton(
 @Composable
 fun SummaryDetailsHeader(
     modifier: Modifier,
-    summary: SummaryUi,
+    summary: SummaryUi
 ) {
     Surface(
         modifier =
         Modifier
             .fillMaxWidth()
             .shadow(elevation = 8.dp),
-        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
+        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = modifier.padding(LocalSpacing.current.medium),
-                horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large),
+                horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large)
             ) {
                 GlideSummaryImage(
                     modifier = Modifier.width(128.dp),
@@ -283,22 +283,22 @@ fun SummaryDetailsHeader(
 private fun SummaryActionButtonsSection(summary: SummaryUi) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         SummaryActionButton(
             text = stringResource(id = R.string.summary_details_read),
             icon = TangaIcons.IndicatorRead,
-            enabled = summary.textUrl?.isNotEmpty() == true,
+            enabled = summary.textUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
             text = stringResource(id = R.string.summary_details_listen),
             icon = TangaIcons.IndicatorListen,
-            enabled = summary.audioUrl?.isNotEmpty() == true,
+            enabled = summary.audioUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
             text = stringResource(id = R.string.summary_details_watch),
             icon = TangaIcons.IndicatorWatch,
-            enabled = summary.videoUrl?.isNotEmpty() == true,
+            enabled = summary.videoUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
             text = stringResource(id = R.string.summary_details_visualize),
@@ -316,7 +316,7 @@ private fun SummaryBasicInfo(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Top
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -404,7 +404,7 @@ fun SummaryAuthor(
             ProfileImage(
                 modifier = Modifier.size(40.dp),
                 photoUrl = authorPictureUrl,
-                onClick = { /*TODO*/ }
+                onClick = { }
             )
             Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
             Text(
@@ -457,7 +457,7 @@ fun Recommendations(
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         SummaryRow(
-            summaries = recommendations,
+            summaries = recommendations
         ) { summaryId ->
             onRecommendationClicked(summaryId)
         }

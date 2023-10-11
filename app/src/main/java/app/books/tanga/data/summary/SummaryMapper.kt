@@ -23,6 +23,6 @@ fun FirestoreData.toSummary(): Summary {
         textUrl = this[FirestoreDatabase.Summaries.Fields.SUMMARY_URL].toString(),
         videoUrl = this[FirestoreDatabase.Summaries.Fields.VIDEO_URL].toString(),
         authorPictureUrl = this[FirestoreDatabase.Summaries.Fields.AUTHOR_PICTURE_URL].toString(),
-        purchaseBookUrl = this[FirestoreDatabase.Summaries.Fields.PURCHASE_BOOK_URL].toString(),
+        purchaseBookUrl = this[FirestoreDatabase.Summaries.Fields.PURCHASE_BOOK_URL].toString()
     )
 }

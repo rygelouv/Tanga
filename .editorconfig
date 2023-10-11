@@ -12,7 +12,21 @@ ktlint_standard_filename = disabled
 ktlint_standard_function-naming = disabled
 ktlint_standard_trailing-comma-on-declaration-site = disabled
 ktlint_standard_trailing-comma-on-call-site = disabled
-
+# We disabling these two rules because they seem to be too rigid.
+# for example this is considered invalid in ktlint 1.0.0
+# data class HomeSectionUi(
+#     val title: String,
+#     val summaries: List<SummaryUi>
+# )
+# The correct for would be this:
+# data class HomeSectionUi( al title: String, val summaries: List<SummaryUi>)
+# as long as max line length is respected.
+#
+# We think both formats are correct. So we disable these rules.
+# However, we still want our functions to be formatted correctly for that we rely on the
+# Ktlint Android Studio plugin which seem to accept both formats as valid.
+ktlint_standard_function-signature = disabled
+ktlint_standard_class-signature = disabled
 
 [**/test/**.kt]
 ktlint_ignore_back_ticked_identifier = true

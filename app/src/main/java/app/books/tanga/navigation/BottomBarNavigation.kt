@@ -80,7 +80,7 @@ fun RowScope.AddItem(
         },
         alwaysShowLabel = false,
         colors = NavigationBarItemDefaults.colors(
-            indicatorColor = Color.White,
+            indicatorColor = Color.White
         )
     )
 }

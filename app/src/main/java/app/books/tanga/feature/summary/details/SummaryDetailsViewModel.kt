@@ -10,12 +10,12 @@ import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SummaryDetailsViewModel @Inject constructor(
@@ -44,7 +44,7 @@ class SummaryDetailsViewModel @Inject constructor(
                     _state.update { state ->
                         state.copy(
                             progressState = ProgressState.Hide,
-                            summary = summary.toSummaryUi(),
+                            summary = summary.toSummaryUi()
                         )
                     }
                     loadFavoriteStatus(summaryId)
@@ -54,7 +54,7 @@ class SummaryDetailsViewModel @Inject constructor(
                     _state.update { state ->
                         state.copy(
                             progressState = ProgressState.Hide,
-                            error = it.toUiError(),
+                            error = it.toUiError()
                         )
                     }
                 }
@@ -117,7 +117,7 @@ class SummaryDetailsViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isFavorite = true,
-                        favoriteProgressState = ProgressState.Hide,
+                        favoriteProgressState = ProgressState.Hide
                     )
                 }
                 // TODO: Show a snackbar to notify the user that the summary is added to favorites
@@ -134,7 +134,7 @@ class SummaryDetailsViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isFavorite = false,
-                        favoriteProgressState = ProgressState.Hide,
+                        favoriteProgressState = ProgressState.Hide
                     )
                 }
                 // TODO: Show a snackbar to notify the user that the summary is removed from favorites

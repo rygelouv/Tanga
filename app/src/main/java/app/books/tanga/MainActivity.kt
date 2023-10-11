@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TangaTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Surface(
                         modifier = Modifier.fillMaxSize().padding(it),

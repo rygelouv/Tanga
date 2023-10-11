@@ -31,7 +31,7 @@ fun OperationError.toUiError(): UiError =
                     message = TextResource.fromStringId(R.string.error_no_internet_message),
                     icon = null
                 ),
-                throwable = throwable,
+                throwable = throwable
             )
 
         is OperationError.UnauthorizedOperationError ->
@@ -83,7 +83,7 @@ fun DomainError.toUiError(): UiError =
                 info = UiErrorInfo(
                     title = appMessage,
                     message = TextResource.fromStringId(R.string.error_user_not_authenticated_message),
-                    icon = null,
+                    icon = null
                 ),
                 throwable = throwable
             )
