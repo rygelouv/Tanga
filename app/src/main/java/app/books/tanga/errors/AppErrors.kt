@@ -98,7 +98,7 @@ sealed class DomainError(
 
     /** Represents an error indicating that the favorite was not found */
     data class FavoriteNotFoundError(
-        val throwable: Throwable? = null,
+        val throwable: Throwable? = null
     ) : DomainError(
         appMessage = TextResource.fromStringId(R.string.error_favorite_not_found_title),
         exceptionMessage = "Favorite not found",

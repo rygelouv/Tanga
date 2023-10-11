@@ -44,11 +44,10 @@ private data class SimpleTextResource(
  *
  * @param resources The resources to fetch string if the resource is an [IdTextResource].
  */
-fun TextResource.asString(resources: Resources): String =
-    when (this) {
-        is SimpleTextResource -> this.text
-        is IdTextResource -> resources.getString(this.id)
-    }
+fun TextResource.asString(resources: Resources): String = when (this) {
+    is SimpleTextResource -> this.text
+    is IdTextResource -> resources.getString(this.id)
+}
 
 /**
  * Extension function to get the string representation of [TextResource] or an empty string.
@@ -56,8 +55,7 @@ fun TextResource.asString(resources: Resources): String =
  * @return The actual string text if [TextResource] is a [SimpleTextResource] or
  * an empty string if it's an [IdTextResource].
  */
-fun TextResource.asStringOrEmpty(): String =
-    when (this) {
-        is SimpleTextResource -> this.text
-        is IdTextResource -> ""
-    }
+fun TextResource.asStringOrEmpty(): String = when (this) {
+    is SimpleTextResource -> this.text
+    is IdTextResource -> ""
+}

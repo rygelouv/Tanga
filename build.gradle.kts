@@ -60,10 +60,13 @@ plugins {
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
     id("com.diffplug.spotless") version "6.22.0" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1" apply false
 }
 
 subprojects {
     afterEvaluate {
         project.apply("$rootDir/spotless/spotless.gradle")
     }
+
+    project.apply("$rootDir/ktlint/ktlint.gradle")
 }
