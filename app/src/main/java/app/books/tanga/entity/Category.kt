@@ -6,7 +6,10 @@ value class CategoryId(val value: String)
 /**
  * Class representing a Category
  */
-data class Category(val id: CategoryId, val name: String)
+data class Category(
+    val id: CategoryId,
+    val name: String
+)
 
 enum class PredefinedCategory(val id: String) {
     BUSINESS("business"),

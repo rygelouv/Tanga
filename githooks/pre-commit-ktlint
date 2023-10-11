@@ -1,0 +1,65 @@
+#!/bin/sh
+set -e  # Exit immediately if a command exits with a non-zero status.
+
+######## KTLINT-GRADLE HOOK START ########
+
+echo "
+=========================================================
+|  Formatting code changes with ktlint...               |
+=========================================================
+"
+
+# Get the list of staged Kotlin files, excluding deleted ones.
+get_staged_kotlin_files() {
+    git --no-pager diff --name-status --no-color --cached \
+    | awk '$1 != "D" && $NF ~ /\.kts?$/ { print $NF }'
+}
+
+STAGED_KOTLIN_FILES=$(get_staged_kotlin_files)
+
+# If no Kotlin files are staged, exit.
+if [ -z "$STAGED_KOTLIN_FILES" ]; then
+    echo "No Kotlin staged files."
+    exit 0
+fi
+
+echo "Running ktlint over these Kotlin files:"
+echo "$STAGED_KOTLIN_FILES"
+
+# Capture and temporarily remove unstaged changes.
+DIFF_FILE=.git/unstaged-ktlint-git-hook.diff
+git diff --color=never > "$DIFF_FILE"
+[ -s "$DIFF_FILE" ] && git apply -R "$DIFF_FILE"
+
+# Format the staged Kotlin files using ktlint.
+./gradlew --quiet ktlintFormat -PinternalKtlintGitFilter="$STAGED_KOTLIN_FILES" || {
+    echo "
+     =============================================================================================
+     |  ktlint format hook failed. You can run ./gradlew ktlintCheck to see the violations        |
+     =============================================================================================
+     "
+    exit 1
+}
+
+# Add the formatted Kotlin files back to the staging area.
+for file in $STAGED_KOTLIN_FILES; do
+    [ -f "$file" ] && git add "$file"
+done
+
+# Reapply the unstaged changes and clean up.
+[ -s "$DIFF_FILE" ] && git apply --ignore-whitespace "$DIFF_FILE"
+rm "$DIFF_FILE"
+
+echo "Completed ktlint hook."
+
+EXIT_CODE=$?
+if [ $EXIT_CODE -ne 0 ]; then
+    echo "
+=========================================================
+|  ktlint hook failed with exit code $EXIT_CODE.         |
+=========================================================
+"
+    exit $EXIT_CODE
+fi
+
+######## KTLINT-GRADLE HOOK END ########
