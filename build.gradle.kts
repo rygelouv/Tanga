@@ -40,16 +40,12 @@ buildscript {
     extra.set("google_services", "4.3.15")
     // ExoPlayer
     extra.set("exoplayer_media3_version", "1.1.1")
-    // Spotless
-    extra.set("spotless_version", "6.22.0")
 
     dependencies {
         // Google Play Services
         classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")
         // Hilt
         classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra.get("hilt_version")}")
-        // Spotless
-        classpath("com.diffplug.spotless:spotless-plugin-gradle:${rootProject.extra.get("spotless_version")}")
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -59,14 +55,9 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
-    id("com.diffplug.spotless") version "6.22.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1" apply false
 }
 
 subprojects {
-    afterEvaluate {
-        project.apply("$rootDir/spotless/spotless.gradle")
-    }
-
     project.apply("$rootDir/ktlint/ktlint.gradle")
 }
