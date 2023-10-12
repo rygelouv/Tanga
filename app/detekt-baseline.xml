@@ -2,7 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-
+    <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add graphic indicator support</ID>
+    <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add video indicator support</ID>
     <ID>ForbiddenComment:Summary.kt$Summary$// TODO: 2023-09-22 Change to coverUrl</ID>
     <ID>ForbiddenComment:SummaryDetailsViewModel.kt$SummaryDetailsViewModel$// TODO: Show a snackbar to notify the user that the summary is added to favorites</ID>
     <ID>ForbiddenComment:SummaryDetailsViewModel.kt$SummaryDetailsViewModel$// TODO: Show a snackbar to notify the user that the summary is removed from favorites</ID>
