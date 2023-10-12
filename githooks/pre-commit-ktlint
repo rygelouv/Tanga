@@ -35,7 +35,7 @@ git diff --color=never > "$DIFF_FILE"
 ./gradlew --quiet ktlintFormat -PinternalKtlintGitFilter="$STAGED_KOTLIN_FILES" || {
     echo "
      =============================================================================================
-     |  ktlint format hook failed. You can run ./gradlew ktlintCheck to see the violations        |
+     |  👎 ktlint format hook failed. You can run ./gradlew ktlintCheck to see the violations        |
      =============================================================================================
      "
     exit 1
@@ -50,7 +50,7 @@ done
 [ -s "$DIFF_FILE" ] && git apply --ignore-whitespace "$DIFF_FILE"
 rm "$DIFF_FILE"
 
-echo "Completed ktlint hook."
+echo " =============== Completed ktlint hook successfully ✅ ==============="
 
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then

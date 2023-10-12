@@ -13,7 +13,7 @@ ktlint_standard_function-naming = disabled
 ktlint_standard_trailing-comma-on-declaration-site = disabled
 ktlint_standard_trailing-comma-on-call-site = disabled
 # We disabling these two rules because they seem to be too rigid.
-# for example this is considered invalid in ktlint 1.0.0
+# for example this is considered invalid in buildscripts 1.0.0
 # data class HomeSectionUi(
 #     val title: String,
 #     val summaries: List<SummaryUi>

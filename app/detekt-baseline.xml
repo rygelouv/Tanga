@@ -1,0 +1,146 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add graphic indicator support</ID>
+    <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add video indicator support</ID>
+    <ID>ForbiddenComment:Summary.kt$Summary$// TODO: 2023-09-22 Change to coverUrl</ID>
+    <ID>ForbiddenComment:SummaryDetailsViewModel.kt$SummaryDetailsViewModel$// TODO: Show a snackbar to notify the user that the summary is added to favorites</ID>
+    <ID>ForbiddenComment:SummaryDetailsViewModel.kt$SummaryDetailsViewModel$// TODO: Show a snackbar to notify the user that the summary is removed from favorites</ID>
+    <ID>ForbiddenComment:SummaryMapper.kt$// TODO: 2023-09-14 Wrap this in a try catch block, track error and return null</ID>
+    <ID>ForbiddenComment:SummaryUi.kt$SummaryUi$// TODO: 2023-09-14 Remove this</ID>
+    <ID>ForbiddenComment:SummaryUi.kt$SummaryUi$// TODO: 2023-09-21 Remove this after FakeData is removed</ID>
+    <ID>ForbiddenComment:SummaryUi.kt$SummaryUi$// TODO: 2023-09-21 make this non-nullable after FakeData is removed</ID>
+    <ID>FunctionNaming:AuthScreen.kt$@Composable fun AuthContent( state: AuthUiState, event: AuthUiEvent, onGoogleSignInButtonClick: () -&gt; Unit, onAuthSuccess: () -&gt; Unit, modifier: Modifier = Modifier, onGoogleSignInCompleted: (Intent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:AuthScreen.kt$@Composable fun AuthScreen( onAuthSkipped: () -&gt; Unit, modifier: Modifier = Modifier, viewModel: AuthViewModel = hiltViewModel(), onAuthSuccess: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:AuthScreen.kt$@Preview @Composable fun AuthScreenPreview()</ID>
+    <ID>FunctionNaming:AuthSignInBehaviour.kt$@Composable fun GoogleSignInButton( state: AuthUiState, modifier: Modifier = Modifier, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:AuthSignInBehaviour.kt$@Composable fun SignIn( onAuthSuccess: () -&gt; Unit, event: AuthUiEvent, onGoogleSignInCompleted: (Intent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:BottomBarNavigation.kt$@Composable fun BottomBarNavigation(navController: NavController)</ID>
+    <ID>FunctionNaming:BottomBarNavigation.kt$@Composable fun RowScope.AddItem( navController: NavController, currentRoute: String?, item: NavigationScreen.BottomBarScreen, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:EmptyLibraryScreen.kt$@Composable fun EmptyLibraryScreen(modifier: Modifier = Modifier, onExploreButtonClicked: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@Composable fun ErrorContent( errorInfo: UiErrorInfo, modifier: Modifier = Modifier, canRetry: Boolean = false, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@Composable fun ShowSnackbarError( errorInfo: UiErrorInfo, snackbarHostState: SnackbarHostState )</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ErrorBottomSheetModal( errorInfo: UiErrorInfo, onDismiss: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@Preview @Composable fun ShowSnackbarErrorPreview()</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF) @Composable fun ErrorBottomSheetModalPreview()</ID>
+    <ID>FunctionNaming:ErrorUiComponents.kt$@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF) @Composable fun ErrorContentPreview()</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable fun HomeContent( state: HomeUiState, onSummaryClicked: (String) -&gt; Unit, modifier: Modifier = Modifier, onErrorButtonClicked: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable fun HomeScreen( onSearch: () -&gt; Unit, onProfilePictureClicked: () -&gt; Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel(), onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable fun HomeSection( sectionTitle: String, summaries: ImmutableList&lt;SummaryUi&gt;, modifier: Modifier = Modifier, isFirst: Boolean = false, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable fun HomeTopBar( photoUrl: String?, onSearch: () -&gt; Unit, onProfilePictureClicked: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable fun LoadHomeContent( state: HomeUiState, onSummaryClicked: (String) -&gt; Unit, modifier: Modifier = Modifier, onErrorButtonClicked: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Preview @Composable fun HomeScreenPreview()</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Preview(showBackground = true) @Composable fun HomeSectionPreview()</ID>
+    <ID>FunctionNaming:HomeShimmerLoader.kt$@Composable fun AnimatedShimmerLoader(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:HomeShimmerLoader.kt$@Preview(showBackground = true) @Composable fun ShimmerPreview()</ID>
+    <ID>FunctionNaming:HomeTopCard.kt$@Composable fun HomeTopCard( summaryUi: SummaryUi, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:HomeTopCard.kt$@Preview(showBackground = true) @Composable fun HomeTopCardPreview()</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable fun FavoriteGrid( favorites: ImmutableList&lt;FavoriteUi&gt;, modifier: Modifier = Modifier, onFavoriteClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable fun LibraryScreen( onFavoriteClicked: (String) -&gt; Unit, modifier: Modifier = Modifier, viewModel: LibraryViewModel = hiltViewModel(), onExploreButtonClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Preview @Composable fun LibraryScreenPreview()</ID>
+    <ID>FunctionNaming:LibraryShimmerLoader.kt$@Composable fun LibraryShimmerLoader(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:LibraryShimmerLoader.kt$@Composable fun ShimmerFavoriteItem( brush: Brush, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:LogoutDialog.kt$@Composable @Preview fun LogoutDialogPreview()</ID>
+    <ID>FunctionNaming:LogoutDialog.kt$@Composable fun LogoutDialog( onDismiss: () -&gt; Unit, onConfirm: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:MainNavigationGraph.kt$@Composable fun MainNavigationGraph( navController: NavHostController, startDestination: NavigationScreen.BottomBarScreen )</ID>
+    <ID>FunctionNaming:MainScreen.kt$@Composable fun MainScreen( onLogout: () -&gt; Unit, modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:MediaSlider.kt$@Composable fun MediaSlider( playbackState: PlaybackState?, modifier: Modifier = Modifier, onSliderPositionChanged: (Long) -&gt; Unit )</ID>
+    <ID>FunctionNaming:OnboardingPage.kt$@Composable fun PagerScreen( onBoardingPage: OnboardingPage, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Composable fun FinishOnboardingButton( pagerState: PagerState, onNextClick: () -&gt; Unit, modifier: Modifier = Modifier, onFinishClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Composable fun OnboardingScreen( navController: NavController, modifier: Modifier = Modifier, onboardingViewModel: OnboardingViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:OnboardingScreen.kt$@Preview @Composable fun OnboardingScreenPreview()</ID>
+    <ID>FunctionNaming:PlaySummaryAudioScreen.kt$@Composable fun PlaySummaryAudioContent( actions: PlayerActions, modifier: Modifier = Modifier, summaryId: String? = null, title: String? = null, author: String? = null, coverUrl: String? = null, playbackState: PlaybackState? = null )</ID>
+    <ID>FunctionNaming:PlaySummaryAudioScreen.kt$@Composable fun PlaySummaryAudioScreen( summaryId: String, modifier: Modifier = Modifier, viewModel: PlaySummaryAudioViewModel = hiltViewModel(), onBackClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:PlaySummaryAudioScreen.kt$@Composable private fun AudioBar( playbackState: PlaybackState?, onSliderPositionChanged: (Long) -&gt; Unit )</ID>
+    <ID>FunctionNaming:PlaySummaryAudioScreen.kt$@Composable private fun PlaybackControls( actions: PlayerActions, playbackState: PlaybackState? = null )</ID>
+    <ID>FunctionNaming:PlaySummaryAudioScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClicked: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PricingPlanItem.kt$@Composable fun PricingPlanItem( title: String, price: String, cadence: String, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable fun PricingPlanContent(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClicked: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClicked: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable fun PricingPlans(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable private fun BestValueLabel()</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable private fun Offers()</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable private fun PricingPlanOfferItem(text: String)</ID>
+    <ID>FunctionNaming:PricingPlanScreen.kt$@Composable private fun SystemBarsVisibility()</ID>
+    <ID>FunctionNaming:ProButton.kt$@Composable fun ProButton(modifier: Modifier = Modifier, onClick: () -&gt; Unit = {})</ID>
+    <ID>FunctionNaming:ProButton.kt$@Preview @Composable fun ProButtonPreview()</ID>
+    <ID>FunctionNaming:ProfileAction.kt$@Composable fun ProfileContentAction( action: ProfileAction, modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Composable fun ProfileHeader( fullName: String?, photoUrl: String?, modifier: Modifier = Modifier, onProClicked: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Composable fun ProfileScreen( modifier: Modifier = Modifier, viewModel: ProfileViewModel = hiltViewModel(), onProClicked: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Composable fun ProfileScreenContent(modifier: Modifier = Modifier, onLogout: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Preview @Composable fun ProfileScreenPreview()</ID>
+    <ID>FunctionNaming:RootNavGraph.kt$@Composable fun NavigationGraph( navController: NavHostController, startDestination: NavigationScreen )</ID>
+    <ID>FunctionNaming:SearchEmptyScreen.kt$@Composable @Preview(showBackground = true) fun EmptySearchScreenPreview()</ID>
+    <ID>FunctionNaming:SearchEmptyScreen.kt$@Composable fun EmptySearchScreen( query: String, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:SearchScreen.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) private fun SearchBox(onSearch: (String) -&gt; Unit)</ID>
+    <ID>FunctionNaming:SearchScreen.kt$@Composable fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hiltViewModel())</ID>
+    <ID>FunctionNaming:SearchScreen.kt$@Composable private fun HandleEvents( event: SearchUiEvent?, snackbarHostState: SnackbarHostState )</ID>
+    <ID>FunctionNaming:SearchScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun CategoriesSection( categories: ImmutableList&lt;CategoryUi&gt;, modifier: Modifier = Modifier, onCategoryDeselected: (CategoryUi) -&gt; Unit = {}, onCategorySelected: (CategoryUi) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ShimmerComponents.kt$@Composable fun ShimmerSummaryItem( brush: Brush, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ShimmerComponents.kt$@Composable fun ShimmerSummaryListRow( brush: Brush, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:SummaryDetailsSaveButton.kt$@Composable fun SaveButton( progressState: ProgressState, modifier: Modifier = Modifier, isSaved: Boolean = false, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) private fun SummaryTopAppBar( summary: SummaryUi?, isFavorite: Boolean, favoriteProgressState: ProgressState, onSaveClicked: () -&gt; Unit, onBackClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun PlayFloatingActionButton( summaryId: String, modifier: Modifier = Modifier, onClick: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun Recommendations( recommendations: ImmutableList&lt;SummaryUi&gt;, modifier: Modifier = Modifier, onRecommendationClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun SummaryAuthor( author: String, authorPictureUrl: String?, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun SummaryDetailsHeader( summary: SummaryUi, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun SummaryDetailsScreen( summaryId: String, onBackClicked: () -&gt; Unit, onPlayClicked: (String) -&gt; Unit, modifier: Modifier = Modifier, viewModel: SummaryDetailsViewModel = hiltViewModel(), onRecommendationClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable fun SummaryIntroduction( summary: SummaryUi, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable private fun PurchaseButton(url: String)</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable private fun SummaryActionButtonsSection(summary: SummaryUi)</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable private fun SummaryBasicInfo( title: String, author: String, duration: String )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Composable private fun SummaryDetailsContent( state: SummaryDetailsUiState, paddingValues: PaddingValues, onRecommendationClicked: (String) -&gt; Unit, onErrorButtonClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryDetailsScreen.kt$@Preview @Composable fun SummaryHeaderPreview()</ID>
+    <ID>FunctionNaming:SummaryDetailsShimmerLoader.kt$@Composable fun SummaryDetailsShimmerLoader(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:SummaryGrid.kt$@Composable fun SummaryGrid( summaries: ImmutableList&lt;SummaryUi&gt;, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Composable fun SummaryIndicators( duration: String, hasVideo: Boolean, hasGraphic: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Composable fun SummaryItem( summaryId: String, title: String, author: String, coverUrl: String?, duration: String, hasVideo: Boolean, hasGraphic: Boolean, width: Dp, titleSize: TextUnit, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Composable fun SummaryItemBig( summary: SummaryUi, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Composable fun SummaryItemSmall( summary: SummaryUi, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Preview @Composable fun SummaryItemPreview()</ID>
+    <ID>FunctionNaming:SummaryRow.kt$@Composable fun SummaryRow( summaries: ImmutableList&lt;SummaryUi&gt;, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>LongMethod:AuthScreen.kt$@Composable fun AuthContent( state: AuthUiState, event: AuthUiEvent, onGoogleSignInButtonClick: () -&gt; Unit, onAuthSuccess: () -&gt; Unit, modifier: Modifier = Modifier, onGoogleSignInCompleted: (Intent) -&gt; Unit )</ID>
+    <ID>LongMethod:FakeData.kt$FakeData$fun allSummaries()</ID>
+    <ID>LongMethod:HomeTopCard.kt$@Composable fun HomeTopCard( summaryUi: SummaryUi, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>LongMethod:PlaySummaryAudioScreen.kt$@Composable fun PlaySummaryAudioContent( actions: PlayerActions, modifier: Modifier = Modifier, summaryId: String? = null, title: String? = null, author: String? = null, coverUrl: String? = null, playbackState: PlaybackState? = null )</ID>
+    <ID>LongMethod:SearchScreen.kt$@Composable fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hiltViewModel())</ID>
+    <ID>LongMethod:SummaryDetailsShimmerLoader.kt$@Composable fun SummaryDetailsShimmerLoader(modifier: Modifier = Modifier)</ID>
+    <ID>LongParameterList:AuthScreen.kt$( state: AuthUiState, event: AuthUiEvent, onGoogleSignInButtonClick: () -&gt; Unit, onAuthSuccess: () -&gt; Unit, modifier: Modifier = Modifier, onGoogleSignInCompleted: (Intent) -&gt; Unit )</ID>
+    <ID>LongParameterList:PlaySummaryAudioScreen.kt$( actions: PlayerActions, modifier: Modifier = Modifier, summaryId: String? = null, title: String? = null, author: String? = null, coverUrl: String? = null, playbackState: PlaybackState? = null )</ID>
+    <ID>LongParameterList:SummaryDetailsScreen.kt$( summaryId: String, onBackClicked: () -&gt; Unit, onPlayClicked: (String) -&gt; Unit, modifier: Modifier = Modifier, viewModel: SummaryDetailsViewModel = hiltViewModel(), onRecommendationClicked: (String) -&gt; Unit )</ID>
+    <ID>LongParameterList:SummaryItem.kt$( summaryId: String, title: String, author: String, coverUrl: String?, duration: String, hasVideo: Boolean, hasGraphic: Boolean, width: Dp, titleSize: TextUnit, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>MagicNumber:AuthScreen.kt$3f</ID>
+    <ID>MagicNumber:AuthScreen.kt$7f</ID>
+    <ID>MagicNumber:EmptyLibraryScreen.kt$3f</ID>
+    <ID>MagicNumber:Extensions.kt$10</ID>
+    <ID>MagicNumber:Extensions.kt$1000</ID>
+    <ID>MagicNumber:Extensions.kt$60</ID>
+    <ID>MagicNumber:HomeScreen.kt$5f</ID>
+    <ID>MagicNumber:HomeShimmerLoader.kt$3</ID>
+    <ID>MagicNumber:HomeShimmerLoader.kt$4</ID>
+    <ID>MagicNumber:LibraryShimmerLoader.kt$3</ID>
+    <ID>MagicNumber:OnboardingPage.kt$3f</ID>
+    <ID>MagicNumber:OnboardingScreen.kt$10f</ID>
+    <ID>MagicNumber:PlayerController.kt$ExoPlayerController$1000</ID>
+    <ID>MagicNumber:PricingPlanScreen.kt$5f</ID>
+    <ID>MagicNumber:ProfileAction.kt$5f</ID>
+    <ID>MagicNumber:ShimmerComponents.kt$4</ID>
+    <ID>MatchingDeclarationName:ErrorFactory.kt$FirestoreErrorFactory</ID>
+    <ID>MatchingDeclarationName:MainUiContract.kt$MainUiEvent</ID>
+    <ID>MatchingDeclarationName:PlaySummaryAudioUiContract.kt$PlaySummaryAudioUiState</ID>
+    <ID>MatchingDeclarationName:ProfileUiContract.kt$ProfileUiState</ID>
+    <ID>MatchingDeclarationName:SplashUiContract.kt$SplashState</ID>
+    <ID>MatchingDeclarationName:SummaryDetailsUiContract.kt$SummaryDetailsUiState</ID>
+    <ID>MatchingDeclarationName:ToolsModule.kt$InternetConnectivityMonitorModule</ID>
+    <ID>MaxLineLength:AppErrors.kt$UiError$*</ID>
+    <ID>MaxLineLength:CommonUtils.kt$*</ID>
+    <ID>TooGenericExceptionCaught:CommonUtils.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirestoreOperationHandler.kt$FirestoreOperationHandlerImpl$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GoogleAuthService.kt$GoogleAuthServiceImpl$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:SummaryRepository.kt$SummaryRepositoryImpl$throw Exception("Summary not found")</ID>
+    <ID>TooManyFunctions:PlayerController.kt$ExoPlayerController : PlayerControllerListener</ID>
+    <ID>TooManyFunctions:SummaryDetailsScreen.kt$app.books.tanga.feature.summary.details.SummaryDetailsScreen.kt</ID>
+  </CurrentIssues>
+</SmellBaseline>

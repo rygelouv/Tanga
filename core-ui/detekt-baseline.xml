@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun SummaryActionButton( text: String, icon: Int, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun TangaButton( text: String, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), endPadding: Dp = 30.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun TangaButtonLeftIcon( text: String, rightIcon: Int, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), startPadding: Dp = 30.dp, iconSize: Dp = 26.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun TangaButtonRightIcon( text: String, leftIcon: Int, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), endPadding: Dp = 30.dp, iconSize: Dp = 26.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Preview @Composable fun SummaryActionButtonPreview()</ID>
+    <ID>FunctionNaming:Buttons.kt$@Preview @Composable fun TangaButtonLeftIconPreview()</ID>
+    <ID>FunctionNaming:Buttons.kt$@Preview @Composable fun TangaButtonRightIconPreview()</ID>
+    <ID>FunctionNaming:Images.kt$@Composable fun SummaryImage( summaryId: String, painter: Painter, modifier: Modifier = Modifier, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:Images.kt$@OptIn(ExperimentalGlideComposeApi::class) @Composable fun GlideSummaryImage( summaryId: String, modifier: Modifier = Modifier, url: String? = null, painter: Painter? = null, onSummaryClicked: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:Images.kt$@OptIn(ExperimentalGlideComposeApi::class) @Composable fun ProfileImage( photoUrl: String?, modifier: Modifier = Modifier, tag: String = "profile_image", shape: Shape = RoundedCornerShape(30.dp), size: Dp = 120.dp, hasBorder: Boolean = false, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:Images.kt$@Preview( showBackground = true, backgroundColor = 0xFFFFFFFF ) @Composable fun ProfilePicturePreview()</ID>
+    <ID>FunctionNaming:Images.kt$@Preview( showBackground = true, backgroundColor = 0xFFFFFFFF, showSystemUi = true, device = "id:pixel_4a" ) @Composable fun SummaryImagePreview()</ID>
+    <ID>FunctionNaming:Tag.kt$@Composable fun Tag( text: String, icon: Int, modifier: Modifier = Modifier, shape: RoundedCornerShape = RoundedCornerShape(14.dp), backgroundColor: Color = MaterialTheme.colorScheme.onPrimary, tint: Color = LocalTintColor.current.color, hasBorder: Boolean = false, onSelected: () -&gt; Unit = {}, onDeselected: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:Tags.kt$@Preview @Composable fun TagPreview()</ID>
+    <ID>FunctionNaming:Texts.kt$@Composable fun ExpendableText( text: String, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:Texts.kt$@Composable fun TangaDescriptionText( text: String, modifier: Modifier = Modifier, overflow: TextOverflow = TextOverflow.Ellipsis, maxLines: Int = 50, style: TextStyle = MaterialTheme.typography.bodyLarge, textAlign: TextAlign = TextAlign.Center )</ID>
+    <ID>FunctionNaming:Texts.kt$@Preview( showBackground = true, backgroundColor = 0xFFFFFFFF, showSystemUi = true, device = "id:pixel_4a" ) @Composable fun TangaDescriptionTexPreview()</ID>
+    <ID>FunctionNaming:Texts.kt$@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF) @Composable fun TangaDescriptionTexPreviewLong()</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun TangaTheme(content: @Composable () -&gt; Unit)</ID>
+    <ID>LongParameterList:Buttons.kt$( text: String, leftIcon: Int, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), endPadding: Dp = 30.dp, iconSize: Dp = 26.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>LongParameterList:Buttons.kt$( text: String, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), endPadding: Dp = 30.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>LongParameterList:Buttons.kt$( text: String, rightIcon: Int, onClick: () -&gt; Unit, modifier: Modifier = Modifier, height: Dp = 64.dp, elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp), startPadding: Dp = 30.dp, iconSize: Dp = 26.dp, shape: RoundedCornerShape = RoundedCornerShape(16.dp) )</ID>
+    <ID>LongParameterList:Images.kt$( photoUrl: String?, modifier: Modifier = Modifier, tag: String = "profile_image", shape: Shape = RoundedCornerShape(30.dp), size: Dp = 120.dp, hasBorder: Boolean = false, onClick: () -&gt; Unit = {} )</ID>
+    <ID>LongParameterList:Tag.kt$( text: String, icon: Int, modifier: Modifier = Modifier, shape: RoundedCornerShape = RoundedCornerShape(14.dp), backgroundColor: Color = MaterialTheme.colorScheme.onPrimary, tint: Color = LocalTintColor.current.color, hasBorder: Boolean = false, onSelected: () -&gt; Unit = {}, onDeselected: () -&gt; Unit = {} )</ID>
+    <ID>LongParameterList:Texts.kt$( text: String, modifier: Modifier = Modifier, overflow: TextOverflow = TextOverflow.Ellipsis, maxLines: Int = 50, style: TextStyle = MaterialTheme.typography.bodyLarge, textAlign: TextAlign = TextAlign.Center )</ID>
+    <ID>MagicNumber:Color.kt$0x1A115A8E</ID>
+    <ID>MagicNumber:Color.kt$0x33FA974A</ID>
+    <ID>MagicNumber:Color.kt$0xFF000000</ID>
+    <ID>MagicNumber:Color.kt$0xFF001849</ID>
+    <ID>MagicNumber:Color.kt$0xFF003062</ID>
+    <ID>MagicNumber:Color.kt$0xFF003353</ID>
+    <ID>MagicNumber:Color.kt$0xFF00468A</ID>
+    <ID>MagicNumber:Color.kt$0xFF004A76</ID>
+    <ID>MagicNumber:Color.kt$0xFF0F4C90</ID>
+    <ID>MagicNumber:Color.kt$0xFF1F91DD</ID>
+    <ID>MagicNumber:Color.kt$0xFF410002</ID>
+    <ID>MagicNumber:Color.kt$0xFF43474E</ID>
+    <ID>MagicNumber:Color.kt$0xFF4F2500</ID>
+    <ID>MagicNumber:Color.kt$0xFF5AAF75</ID>
+    <ID>MagicNumber:Color.kt$0xFF5D62CD</ID>
+    <ID>MagicNumber:Color.kt$0xFF690005</ID>
+    <ID>MagicNumber:Color.kt$0xFF713700</ID>
+    <ID>MagicNumber:Color.kt$0xFF74777F</ID>
+    <ID>MagicNumber:Color.kt$0xFF8E9099</ID>
+    <ID>MagicNumber:Color.kt$0xFF93000A</ID>
+    <ID>MagicNumber:Color.kt$0xFF97CBFF</ID>
+    <ID>MagicNumber:Color.kt$0xFFA8C8FF</ID>
+    <ID>MagicNumber:Color.kt$0xFFAFAFAF</ID>
+    <ID>MagicNumber:Color.kt$0xFFBA1A1A</ID>
+    <ID>MagicNumber:Color.kt$0xFFC4C6CF</ID>
+    <ID>MagicNumber:Color.kt$0xFFCEE5FF</ID>
+    <ID>MagicNumber:Color.kt$0xFFD25F64</ID>
+    <ID>MagicNumber:Color.kt$0xFFD4F4DC</ID>
+    <ID>MagicNumber:Color.kt$0xFFD6E3FF</ID>
+    <ID>MagicNumber:Color.kt$0xFFD7DAFE</ID>
+    <ID>MagicNumber:Color.kt$0xFFDBE1FF</ID>
+    <ID>MagicNumber:Color.kt$0xFFEFCC59</ID>
+    <ID>MagicNumber:Color.kt$0xFFF6F3F6</ID>
+    <ID>MagicNumber:Color.kt$0xFFFA974A</ID>
+    <ID>MagicNumber:Color.kt$0xFFFCEFD0</ID>
+    <ID>MagicNumber:Color.kt$0xFFFDD8D8</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFB4AB</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFB784</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFDAD6</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFDCC6</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFFFFF</ID>
+    <ID>MatchingDeclarationName:Gradient.kt$GradientColors</ID>
+    <ID>MatchingDeclarationName:Tint.kt$TintColor</ID>
+  </CurrentIssues>
+</SmellBaseline>
