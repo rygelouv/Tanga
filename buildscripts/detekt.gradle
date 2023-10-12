@@ -1,0 +1,26 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    buildUponDefaultConfig = true
+    parallel = true
+    config.setFrom(files("${rootProject.rootDir}/config/detekt/detekt.yml"))
+    // We remove this until we figure out how to create a single baseline for all modules
+    // baseline = file("${rootProject.rootDir}/config/detekt/baseline.xml")
+}
+
+tasks.named("detekt").configure {
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(file("build/reports/detekt.xml"))
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
+        md.required.set(true)
+        md.outputLocation.set(file("build/reports/detekt.md"))
+        txt.required.set(false)
+        sarif.required.set(false)
+    }
+}
+
+dependencies {
+    detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.23.1'
+}

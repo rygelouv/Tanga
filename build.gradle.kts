@@ -1,3 +1,4 @@
+
 buildscript {
     // Core
     extra.set("core_version_ktx", "1.10.0")
@@ -51,6 +52,7 @@ buildscript {
         classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")
         // Hilt
         classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra.get("hilt_version")}")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1")
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -61,21 +63,24 @@ plugins {
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.23.1" apply false
 }
 
 subprojects {
     // Ktlint Gradle Plugin https://github.com/JLLeitschuh/ktlint-gradle
-    project.apply("$rootDir/ktlint/ktlint.gradle")
+    project.apply("$rootDir/buildscripts/ktlint.gradle")
+    project.apply("$rootDir/buildscripts/detekt.gradle")
 }
 
 tasks.register("copyGitHooks", Copy::class.java) {
     description = "Copies the git githooks from /githooks to the .git folder."
     group = "Git Hooks"
-    from("$rootDir/githooks/pre-commit-ktlint")
+    from("$rootDir/githooks/pre-commit-ktlint", "$rootDir/githooks/pre-push-detekt")
     into("$rootDir/.git/hooks/")
     rename("pre-commit-ktlint", "pre-commit")
+    rename("pre-push-detekt", "pre-push")
     doLast {
-        logger.info("*********************** Git hook copied successfully. ***********************")
+        logger.info("******** Git hook copied successfully. ***********")
     }
 }
 
@@ -87,7 +92,7 @@ tasks.register("installGitHooks", Exec::class.java) {
     args("-R", "+x", ".git/hooks/")
     dependsOn("copyGitHooks")
     doLast {
-        logger.info("*********************** Git hook installed successfully. ***********************")
+        logger.info("******** Git hooks installed successfully. *********")
     }
 }
 
