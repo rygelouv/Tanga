@@ -5,8 +5,8 @@ import app.books.tanga.di.IoDispatcher
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 class PrefSessionManager @Inject constructor(
     private val prefRepository: DefaultPrefDataStoreRepository,
@@ -22,15 +22,12 @@ class PrefSessionManager @Inject constructor(
         prefRepository.removeSessionId()
     }
 
-    override suspend fun sessionState(): Flow<SessionState> =
-        withContext(ioDispatcher) {
-            prefRepository
-                .getSessionId()
-                .map { sessionId ->
-                    when (sessionId) {
-                        null -> SessionState.SignedOut
-                        else -> SessionState.SignedIn(sessionId)
-                    }
+    override fun sessionState(): Flow<SessionState> =
+        prefRepository.getSessionId()
+            .map { sessionId ->
+                when (sessionId) {
+                    null -> SessionState.SignedOut
+                    else -> SessionState.SignedIn(sessionId)
                 }
-        }
+            }.flowOn(ioDispatcher)
 }

@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface InternetConnectivityMonitorModule {
+abstract class InternetConnectivityMonitorModule {
     @Binds
-    fun InternetConnectivityMonitorImpl.provideInternetConnectivityMonitor(): InternetConnectivityMonitor
+    abstract fun InternetConnectivityMonitorImpl.provideInternetConnectivityMonitor(): InternetConnectivityMonitor
 }

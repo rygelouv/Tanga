@@ -41,7 +41,7 @@ interface FavoriteRepository {
     /**
      * Get a stream of favorites for a given user
      */
-    suspend fun getFavoritesStream(userId: String): Flow<List<Favorite>>
+    fun getFavoritesStream(userId: String): Flow<List<Favorite>>
 }
 
 /**
@@ -106,7 +106,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Get a stream of favorites for a given user
      * First get the favorites from the cache, then get the favorites from Firestore
      */
-    override suspend fun getFavoritesStream(userId: String): Flow<List<Favorite>> {
+    override fun getFavoritesStream(userId: String): Flow<List<Favorite>> {
         val cacheStream = flowOf(getFavoritesFromCache())
         val firestoreStream = firestore
             .favoriteCollection
