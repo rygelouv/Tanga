@@ -7,7 +7,7 @@ ktlint {
     outputToConsole = true
     outputColorName = "RED"
     enableExperimentalRules = true
-    baseline = file("baseline.xml")
+    baseline = file("config/ktlint/baseline.xml")
     reporters {
         reporter "checkstyle"
         reporter "json"
