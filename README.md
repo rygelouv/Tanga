@@ -16,13 +16,10 @@
 
 ## 🚧 **This project is still under construction** 🚧
 You can come back in a few months to see considerable progress. 
-We finished implementing most screen from the design with dummy data. We are now making it functional by working with real data from firebase firestore and cloud storage.
-So far we have done:
-- Home screen: now shows real summaries broken by sections based on categories
-- Search screen: now allows you to search for summaries and filter by category
-- Summary Details screen: show the real detailed information of the summary selected
-- Audio Player: now the screen can play the audio of the summary selected
+
+- We finished implementing most screens
 - We have done the most part of the error management system. But some screens still need some work regarding errors
+- We are currently working on the Static Code Analysis system, the CI/CD and testing infrastructure. Find the related project here: https://github.com/users/rygelouv/projects/6/views/1
 
 ## Next steps on UI:
 - We need to activate the remaning buttons on Summary details screen. Those are "Read", "Watch" and "Visualize"
