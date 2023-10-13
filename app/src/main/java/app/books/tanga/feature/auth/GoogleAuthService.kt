@@ -56,10 +56,10 @@ class GoogleAuthServiceImpl @Inject constructor(
         val googleCredentials =
             GoogleAuthProvider.getCredential(credentials.googleIdToken, null)
         // Sign-in with firebase auth
-        val authResult = auth.signInWithCredential(googleCredentials).await()
+        val firebaseAuthResult = auth.signInWithCredential(googleCredentials).await()
+        val isNewUser = firebaseAuthResult.additionalUserInfo?.isNewUser == true
 
         val user = auth.currentUser?.toUser() ?: throw UnableToSignInWithGoogleError()
-        val isNewUser = authResult.additionalUserInfo?.isNewUser == true
 
         return AuthResult(
             user = user,

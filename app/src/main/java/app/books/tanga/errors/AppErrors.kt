@@ -3,7 +3,6 @@ package app.books.tanga.errors
 import app.books.tanga.R
 import app.books.tanga.coreui.resources.TextResource
 import app.books.tanga.coreui.resources.asStringOrEmpty
-import kotlin.Exception
 
 /**
  * Represents all application-level errors in the system.

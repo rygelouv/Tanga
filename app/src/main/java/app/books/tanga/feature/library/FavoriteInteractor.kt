@@ -8,7 +8,8 @@ import app.books.tanga.entity.Summary
 import app.books.tanga.errors.DomainError
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 
 class FavoriteInteractor @Inject constructor(
     private val favoriteRepository: FavoriteRepository,
@@ -22,9 +23,13 @@ class FavoriteInteractor @Inject constructor(
     /**
      * Observe changes to the favorites for the current user
      */
-    suspend fun observeFavorites(): Flow<List<Favorite>> {
-        val userId = userRepository.getUserId() ?: return flowOf(emptyList())
-        return favoriteRepository.getFavoritesStream(userId.value)
+    fun observeFavorites(): Flow<List<Favorite>> = flow {
+        val userId = userRepository.getUserId() // This can be a suspending call
+        if (userId != null) {
+            emitAll(favoriteRepository.getFavoritesStream(userId.value))
+        } else {
+            emit(emptyList())
+        }
     }
 
     /**

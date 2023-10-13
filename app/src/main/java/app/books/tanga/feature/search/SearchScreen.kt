@@ -102,10 +102,10 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hil
                     )
 
                 ProgressState.Hide -> {
-                    if (state.summaries.isNullOrEmpty()) {
-                        EmptySearchScreen(query = state.query ?: "")
-                    } else {
-                        state.summaries?.let {
+                    state.summaries?.let {
+                        if (state.summaries?.isEmpty() == true && state.error == null) {
+                            EmptySearchScreen(query = state.query ?: "")
+                        } else {
                             SummaryGrid(
                                 modifier = Modifier,
                                 summaries = it.toImmutableList()

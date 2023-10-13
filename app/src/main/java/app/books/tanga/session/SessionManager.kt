@@ -7,5 +7,5 @@ interface SessionManager {
 
     suspend fun closeSession()
 
-    suspend fun sessionState(): Flow<SessionState>
+    fun sessionState(): Flow<SessionState>
 }

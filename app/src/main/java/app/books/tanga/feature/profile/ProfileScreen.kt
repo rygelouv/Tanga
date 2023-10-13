@@ -154,6 +154,5 @@ fun ProfileHeader(
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    // val navController = rememberNavController()
     ProfileScreen()
 }
