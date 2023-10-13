@@ -32,16 +32,18 @@ So far we have done:
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
 
 ## Infrastructure work
-- [ ] Add a CI (Bitrise)
-- [ ] Add Spotless and ktlint
-- [ ] Add Detekt
-- [ ] Add SonarCloud
-- [x] Add error tracking system
+- [x] Add a CI (Bitrise)
+- [x] Add Spotless and ktlint
+- [x] Add Detekt
+- [x] Add SonarCloud
+- [x] Add error tracking system with Sentry and Crashlytics
+- [ ] Add Detekt To Bitrise
 
 ## Testing
 We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
 - [ ] Add JUnit 5
-- [ ] Add Codecov 
+- [ ] Add Codecov
+- [ ] Add Kover 
 - We need to add unit tests for most repositories, interactors, viewmodels and other components
 - We need to UI test the screen composables
 
