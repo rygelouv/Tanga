@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class InternetConnectivityMonitorImplTest {
+class InternetConnectivityMonitorTest {
 
     private val connectivityManager: ConnectivityManager = mockk(relaxed = true)
 
