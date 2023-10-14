@@ -11,7 +11,7 @@ import timber.log.Timber
 class FirebaseCrashlyticsTree @Inject constructor(
     private val crashlytics: FirebaseCrashlytics
 ) : Timber.Tree() {
-    override fun log(
+    public override fun log(
         priority: Int,
         tag: String?,
         message: String,
@@ -41,6 +41,6 @@ class FirebaseCrashlyticsTree @Inject constructor(
 }
 
 /** Helps tracking non-fatal exceptions in Crashlytics */
-private class CrashlyticsNonFatalException(
+class CrashlyticsNonFatalException(
     override val message: String?
 ) : Exception(message)

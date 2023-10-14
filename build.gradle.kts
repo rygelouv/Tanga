@@ -47,6 +47,8 @@ buildscript {
 
     extra.set("kotlin_immutable_collections_version", "0.3.6")
 
+    extra.set("mockk_version", "1.13.8")
+
     dependencies {
         // Google Play Services
         classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")
@@ -64,6 +66,7 @@ plugins {
     id("com.google.gms.google-services") version "4.4.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.1" apply false
+    id("de.mannodermaus.android-junit5") version "1.9.3.0" apply false
 }
 
 subprojects {

@@ -42,7 +42,7 @@ class FirestoreOperationHandlerImpl @Inject constructor(
             Result.failure(error)
         } catch (exception: Exception) {
             // Check if there is internet connection
-            if (internetConnectivityMonitor.isInternetAvailable.value) {
+            if (internetConnectivityMonitor.isInternetAvailable.value.not()) {
                 Result.failure(OperationError.NoInternetConnectionError(exception))
             } else {
                 Result.failure(OperationError.UnknownError(exception))

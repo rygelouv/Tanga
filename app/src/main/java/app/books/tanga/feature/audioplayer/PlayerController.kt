@@ -45,8 +45,7 @@ interface PlayerController : PlayerActions {
  */
 class ExoPlayerController @Inject constructor(
     private val player: ExoPlayer
-) : PlayerController,
-    Player.Listener {
+) : PlayerController, Player.Listener {
     /** A state flow that emits the current playback state of the player. */
     private val _playbackState = MutableStateFlow(PlaybackState())
     override val playbackState: StateFlow<PlaybackState> = _playbackState.asStateFlow()
