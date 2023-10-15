@@ -6,6 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.firebase.crashlytics")
     id("io.sentry.android.gradle") version "3.13.0"
+    id("de.mannodermaus.android-junit5")
 }
 
 android {
@@ -131,8 +132,16 @@ dependencies {
         )}"
     )
 
-    // Unit tests https://junit.org/junit4/
-    testImplementation("junit:junit:${rootProject.extra.get("junit_version")}")
+    // Unit tests https://junit.org/junit5/
+    // JUnit 5 (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${rootProject.extra.get("junit_version")}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${rootProject.extra.get("junit_version")}")
+    // For "Parameterized Tests"
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${rootProject.extra.get("junit_version")}")
+    // MockK https://github.com/mockk/mockk/releases
+    testImplementation("io.mockk:mockk:${rootProject.extra.get("mockk_version")}")
+    // Coroutines Test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${rootProject.extra.get("coroutines_version")}")
 
     // UI Instrumentation tests https://developer.android.com/jetpack/androidx/releases/test
     androidTestImplementation("androidx.test.ext:junit:${rootProject.extra.get("androidx_test_junit_version")}")
