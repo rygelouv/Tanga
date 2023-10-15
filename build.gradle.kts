@@ -30,7 +30,7 @@ buildscript {
     // Coil
     extra.set("coil_compose_version", "2.2.2")
     // Unit Tests
-    extra.set("junit_version", "4.13.2")
+    extra.set("junit_version", "5.9.3")
     // Instrumentation Tests
     extra.set("androidx_test_junit_version", "1.1.5")
     extra.set("espresso_version", "3.5.1")

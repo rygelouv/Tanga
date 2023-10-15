@@ -35,7 +35,7 @@ class FirebaseCrashlyticsTreeTest {
         verify(exactly = 0) { crashlytics.log(any()) }
     }
 
-    @Disabled("Disabling because the test logic seems correct but the test fails.")
+    // @Disabled("Disabling because the test logic seems correct but the test fails.")
     @Test
     fun `log sends INFO, WARN, and ERROR logs to Crashlytics with correct format`() {
         // Given
@@ -55,6 +55,15 @@ class FirebaseCrashlyticsTreeTest {
 
     @Disabled("Disabling because the test logic seems correct but the test fails")
     @Test
+    fun `log records exception in Crashlytics via CrashlyticsNonFatalException if throwable is not provided`() {
+        // When
+        firebaseCrashlyticsTree.log(priority = Log.ERROR, tag = "testTag", message = "testMessage", t = null)
+
+        // Then
+        verify { crashlytics.recordException(CrashlyticsNonFatalException("testTag: testMessage")) }
+    }
+
+    @Test
     fun `log records exception in Crashlytics if throwable is provided`() {
         // Given
         val throwable = Throwable("Test throwable")
@@ -63,7 +72,7 @@ class FirebaseCrashlyticsTreeTest {
         firebaseCrashlyticsTree.log(priority = Log.ERROR, tag = "testTag", message = "testMessage", t = throwable)
 
         // Then
-        verify { crashlytics.recordException(CrashlyticsNonFatalException("testTag: testMessage")) }
+        verify { crashlytics.recordException(throwable) }
     }
 
     @Test

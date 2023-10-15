@@ -22,7 +22,7 @@ class CategoryRepositoryImpl @Inject constructor(
                 it.data.toCategory()
             }
         }
-
-    private val FirebaseFirestore.categoryCollection
-        get() = collection(FirestoreDatabase.Categories.COLLECTION_NAME)
 }
+
+val FirebaseFirestore.categoryCollection
+    get() = collection(FirestoreDatabase.Categories.COLLECTION_NAME)
