@@ -7,6 +7,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("io.sentry.android.gradle") version "3.13.0"
     id("de.mannodermaus.android-junit5")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {
@@ -158,4 +159,8 @@ sentry {
     // this will upload your source code to Sentry to show it as part of the stack traces
     // disable if you don't want to expose your sources
     includeSourceContext.set(true)
+}
+
+kover {
+    useJacoco()
 }

@@ -25,10 +25,10 @@ class UserRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val prefDataStoreRepo: DefaultPrefDataStoreRepository,
     private val operationHandler: FirestoreOperationHandler
-) : UserRepository {
+) : UserRepository, FirestoreOperationHandler by operationHandler {
     override suspend fun getUser(): Result<User?> {
         val sessionId = prefDataStoreRepo.getSessionId().first() ?: return Result.success(null)
-        return operationHandler.executeOperation {
+        return executeOperation {
             val uid = sessionId.value
             val userDocument =
                 firestore
@@ -48,7 +48,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun createUser(user: User): Result<Unit> {
         val userMap = user.toFireStoreUserData()
-        return operationHandler.executeOperation {
+        return executeOperation {
             firestore
                 .userCollection
                 .document(user.id.value)
@@ -58,7 +58,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteUser(user: User): Result<Unit> =
-        operationHandler.executeOperation {
+        executeOperation {
             firestore
                 .userCollection
                 .document(user.id.value)
