@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {
@@ -54,9 +55,11 @@ dependencies {
 
     // Accompanist https://google.github.io/accompanist/
     api(
-        "com.google.accompanist:accompanist-systemuicontroller:${rootProject.extra.get(
-            "accompanist_systemuicontroller_version"
-        )}"
+        "com.google.accompanist:accompanist-systemuicontroller:${
+            rootProject.extra.get(
+                "accompanist_systemuicontroller_version"
+            )
+        }"
     )
 
     /************** Image loading *****************
@@ -73,9 +76,11 @@ dependencies {
 
     // Kotlin Immutable Collections: https://github.com/Kotlin/kotlinx.collections.immutable/releases
     implementation(
-        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${rootProject.extra.get(
-            "kotlin_immutable_collections_version"
-        )}"
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${
+            rootProject.extra.get(
+                "kotlin_immutable_collections_version"
+            )
+        }"
     )
 
     // Debug dependencies
@@ -87,4 +92,8 @@ dependencies {
     lintChecks(
         "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
     )
+}
+
+kover {
+    useJacoco()
 }

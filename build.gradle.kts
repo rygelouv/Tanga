@@ -67,6 +67,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.1" apply false
     id("de.mannodermaus.android-junit5") version "1.9.3.0" apply false
+    id("org.jetbrains.kotlinx.kover") version "0.7.4"
 }
 
 subprojects {
