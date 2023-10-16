@@ -11,18 +11,18 @@ fun interface CategoryRepository {
     suspend fun getCategories(): Result<List<Category>>
 }
 
+val FirebaseFirestore.categoryCollection
+    get() = collection(FirestoreDatabase.Categories.COLLECTION_NAME)
+
 class CategoryRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val operationHandler: FirestoreOperationHandler
-) : CategoryRepository {
+) : CategoryRepository, FirestoreOperationHandler by operationHandler {
     override suspend fun getCategories(): Result<List<Category>> =
-        operationHandler.executeOperation {
+        executeOperation {
             val categories = firestore.categoryCollection.get().await()
             categories.map {
                 it.data.toCategory()
             }
         }
 }
-
-val FirebaseFirestore.categoryCollection
-    get() = collection(FirestoreDatabase.Categories.COLLECTION_NAME)
