@@ -45,53 +45,29 @@ android {
 
 dependencies {
 
-    // Core https://developer.android.com/jetpack/androidx/releases/core
-    api("androidx.core:core-ktx:${rootProject.extra.get("core_version_ktx")}")
-
-    // Compose https://developer.android.com/jetpack/androidx/releases/compose
-    api("androidx.compose.ui:ui:${rootProject.extra.get("compose_version")}")
-    api("androidx.compose.ui:ui-tooling-preview:${rootProject.extra.get("compose_version")}")
-    api("androidx.compose.material3:material3:${rootProject.extra.get("compose_material_version")}")
-
-    // Accompanist https://google.github.io/accompanist/
-    api(
-        "com.google.accompanist:accompanist-systemuicontroller:${
-            rootProject.extra.get(
-                "accompanist_systemuicontroller_version"
-            )
-        }"
-    )
+    api(libs.core.ktx)
+    api(libs.compose.ui)
+    api(libs.compose.preview)
+    api(libs.compose.material)
+    api(libs.accompanist.systemuicontroller)
 
     /************** Image loading *****************
      * For now we are using both Glide and Coil because Coil still doesn't support
      * Firebase Cloud Storage Images. Once it does, we can remove Glide.
      */
-    // Coil https://github.com/coil-kt/coil/releases
-    api("io.coil-kt:coil-compose:2.2.2")
+    api(libs.coil.compose)
     // Glide
-    api("com.github.bumptech.glide:glide:4.16.0")
+    api(libs.glide)
     // Glide Compose
-    api("com.github.bumptech.glide:compose:1.0.0-alpha.5")
+    api(libs.glide.compose)
     /************** End Image loading *****************/
 
-    // Kotlin Immutable Collections: https://github.com/Kotlin/kotlinx.collections.immutable/releases
-    implementation(
-        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${
-            rootProject.extra.get(
-                "kotlin_immutable_collections_version"
-            )
-        }"
-    )
+    implementation(libs.kotlin.immutable.collections)
 
     // Debug dependencies
-    // https://developer.android.com/jetpack/androidx/releases/compose-ui#debugging
-    debugApi("androidx.compose.ui:ui-tooling:${rootProject.extra.get("compose_version")}")
-    debugApi("androidx.compose.ui:ui-test-manifest:${rootProject.extra.get("compose_version")}")
-
-    // Slack Compose Lint Rule set https://github.com/slackhq/compose-lints/releases
-    lintChecks(
-        "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
-    )
+    debugApi(libs.compose.tooling)
+    debugApi(libs.compose.test.manifest)
+    lintChecks(libs.slack.compose.lint.checks)
 }
 
 kover {
