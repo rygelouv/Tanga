@@ -57,102 +57,72 @@ android {
 }
 
 dependencies {
-
+    // Project Dependencies
     implementation(project(":core-ui"))
 
-    // Core https://developer.android.com/jetpack/androidx/releases/core
-    implementation("androidx.core:core-splashscreen:${rootProject.extra.get("core_splashscreen_version")}")
+    // Core Libraries
+    implementation(libs.splashscreen)
+    implementation(libs.activity.compose)
 
-    // Activity KTX Compose https://developer.android.com/jetpack/androidx/releases/activity
-    implementation("androidx.activity:activity-compose:${rootProject.extra.get("activity_version")}")
-    implementation("androidx.activity:activity-ktx:${rootProject.extra.get("activity_version")}")
+    // Lifecycle
+    implementation(libs.viewmodel.ktx)
+    implementation(libs.viewmodel.compose)
+    implementation(libs.livedata.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.viewmodel.savedstate)
+    implementation(libs.lifecycle.common.java8)
+    implementation(libs.runtime.compose)
 
-    // Lifecycle and ViewModel https://developer.android.com/jetpack/androidx/releases/lifecycle
-    implementation(
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.extra.get("lifecycle_version")}"
-    ) // ViewModel
-    implementation(
-        "androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.extra.get("lifecycle_version")}"
-    ) // ViewModel with Compose
-    implementation(
-        "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.extra.get("lifecycle_version")}"
-    ) // optional - LiveData
-    implementation(
-        "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra.get("lifecycle_version")}"
-    ) // Lifecycles only (without ViewModel or LiveData)
-    implementation(
-        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${rootProject.extra.get("lifecycle_version")}"
-    ) // Saved state module for ViewModel
-    implementation("androidx.lifecycle:lifecycle-common-java8:${rootProject.extra.get("lifecycle_version")}")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:${rootProject.extra.get("lifecycle_version")}")
+    // Navigation and DI
+    implementation(libs.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
 
-    // Navigation https://developer.android.com/jetpack/androidx/releases/navigation
-    implementation("androidx.navigation:navigation-compose:${rootProject.extra.get("compose_navigation_version")}")
-    implementation("androidx.hilt:hilt-navigation-compose:${rootProject.extra.get("hilt_navigation_compose_version")}")
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    // Hilt https://developer.android.com/jetpack/androidx/releases/hilt
-    implementation("com.google.dagger:hilt-android:${rootProject.extra.get("hilt_version")}")
-    kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra.get("hilt_version")}")
+    // DataStore
+    implementation(libs.datastore.preferences)
 
-    // DataStore https://developer.android.com/jetpack/androidx/releases/datastore
-    implementation("androidx.datastore:datastore-preferences:${rootProject.extra.get("datastore_version")}")
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics.ktx)
 
-    // Firebase https://firebase.google.com/support/release-notes/android
-    implementation(platform("com.google.firebase:firebase-bom:${rootProject.extra.get("firebase_bom_version")}"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    // implementation("com.google.firebase:firebase-storage-ktx")
+    // UI Libraries
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
-    // Accompanist https://github.com/google/accompanist/releases
-    implementation("com.google.accompanist:accompanist-pager:${rootProject.extra.get("accompanist_version")}")
-    implementation(
-        "com.google.accompanist:accompanist-pager-indicators:${rootProject.extra.get("accompanist_version")}"
-    )
+    // Kotlin Coroutines
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlin.coroutines.play.services)
 
-    // Kotlin Coroutines https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra.get("coroutines_version")}")
-    implementation(
-        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${rootProject.extra.get("coroutines_version")}"
-    )
+    // Google Play Services
+    implementation(libs.android.gms.play.services.auth)
 
-    // Play Services https://developers.google.com/android/guides/releases
-    implementation("com.google.android.gms:play-services-auth:${rootProject.extra.get("play_services_auth_version")}")
+    // Media and Logging
+    implementation(libs.media3.exoplayer)
+    implementation(libs.timber)
 
-    // ExoPlayer Media3 https://developer.android.com/guide/topics/media/exoplayer
-    implementation("androidx.media3:media3-exoplayer:${rootProject.extra.get("exoplayer_media3_version")}")
+    // Kotlin Immutable Collections
+    implementation(libs.kotlin.immutable.collections)
 
-    // Timber https://github.com/JakeWharton/timber/releases
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    // Testing
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
 
-    // Kotlin Immutable Collections: https://github.com/Kotlin/kotlinx.collections.immutable/releases
-    implementation(
-        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${rootProject.extra.get(
-            "kotlin_immutable_collections_version"
-        )}"
-    )
+    // Android Testing
+    androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(libs.android.espresso.core)
+    androidTestImplementation(libs.compose.ui.test.junit4)
 
-    // Unit tests https://junit.org/junit5/
-    // JUnit 5 (Required) Writing and executing Unit Tests on the JUnit Platform
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${rootProject.extra.get("junit_version")}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${rootProject.extra.get("junit_version")}")
-    // For "Parameterized Tests"
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${rootProject.extra.get("junit_version")}")
-    // MockK https://github.com/mockk/mockk/releases
-    testImplementation("io.mockk:mockk:${rootProject.extra.get("mockk_version")}")
-    // Coroutines Test
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${rootProject.extra.get("coroutines_version")}")
-
-    // UI Instrumentation tests https://developer.android.com/jetpack/androidx/releases/test
-    androidTestImplementation("androidx.test.ext:junit:${rootProject.extra.get("androidx_test_junit_version")}")
-    androidTestImplementation("androidx.test.espresso:espresso-core:${rootProject.extra.get("espresso_version")}")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra.get("compose_version")}")
-
-    // Slack Compose Lint Rule set https://github.com/slackhq/compose-lints/releases
-    lintChecks(
-        "com.slack.lint.compose:compose-lint-checks:${rootProject.extra.get("slack_compose_lint_ruleset_version")}"
-    )
+    // Lint Rules
+    lintChecks(libs.slack.compose.lint.checks)
 }
 
 sentry {

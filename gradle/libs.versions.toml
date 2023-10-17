@@ -1,0 +1,170 @@
+[versions]
+android-plugin-gradle-version = "8.0.2"
+kotlin-android-plugin-version = "1.9.0"
+firebase-crashlytics-version = "2.9.9"
+google-services-version = "4.4.0"
+ktlint-version = "11.6.1"
+detekt-version = "1.23.1"
+junit5-version = "1.9.3.0"
+kover-version = "0.7.4"
+
+# Core Dependencies
+# Core https://developer.android.com/jetpack/androidx/releases/core
+core-version-ktx = "1.10.0"
+core-splashscreen-version = "1.0.0"
+# https://developer.android.com/jetpack/androidx/releases/activity
+activity-version = "1.7.2"
+# https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle-version = "2.5.1"
+
+# Compose https://developer.android.com/jetpack/androidx/releases/compose
+compose-version = "1.5.0"
+compose-material-version = "1.1.0-beta01"
+
+# Coil Compose https://github.com/coil-kt/coil/releases
+coil-compose-version = "2.2.2"
+
+# Glide and Glide Compose
+# https://bumptech.github.io/glide/doc/download-setup.html
+glide-version = "4.16.0"
+# https://bumptech.github.io/glide/int/compose.html
+glide-compose-version = "1.0.0-alpha.5"
+
+# Navigation and DI
+# https://developer.android.com/jetpack/androidx/releases/navigation
+hilt-navigation-compose-version = "1.0.0"
+compose-navigation-version = "2.6.0-alpha09"
+# https://developer.android.com/jetpack/androidx/releases/hilt
+hilt-version = "2.47"
+
+# Firebase and Data
+# https://firebase.google.com/support/release-notes/android
+firebase-bom-version = "31.2.0"
+# https://developer.android.com/jetpack/androidx/releases/datastore
+datastore-version = "1.0.0"
+
+# UI Libraries https://github.com/google/accompanist/releases
+accompanist-version = "0.24.7-alpha"
+accompanist-systemuicontroller-version = "0.28.0"
+
+# Coroutines https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
+coroutines-version = "1.6.4"
+
+# Google Services https://developers.google.com/android/guides/releases
+play-services-auth-version = "20.5.0"
+
+# Testing
+# https://junit.org/junit5/
+junit-version = "5.9.3"
+androidx-test-junit-version = "1.1.5"
+espresso-version = "3.5.1"
+# https://github.com/mockk/mockk/releases
+mockk-version = "1.13.8"
+
+# Google Services
+# google-services-version = "4.3.15"
+
+# Lint Checks https://github.com/slackhq/compose-lints/releases
+slack-compose-lint-ruleset-version = "1.2.0"
+
+# Kotlin Immutable Collections https://github.com/Kotlin/kotlinx.collections.immutable/releases
+kotlin-immutable-collections-version = "0.3.6"
+
+# Media https://developer.android.com/guide/topics/media/exoplayer
+exoplayer-media3-version = "1.1.1"
+
+# Logging
+# https://github.com/JakeWharton/timber/releases
+timber-version = "5.0.1"
+
+[libraries]
+# Core Libraries
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-version-ktx" }
+splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen-version" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-version" }
+
+# Compose
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-version" }
+compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-version" }
+compose-material = { module = "androidx.compose.material3:material3", version.ref = "compose-material-version" }
+
+# Lifecycle
+viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-version" }
+viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-version" }
+livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle-version" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-version" }
+viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle-version" }
+lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle-version" }
+runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-version" }
+
+# Navigation and DI
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation-version" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose-version" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-version" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-version" }
+
+# Data
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-version" }
+
+# Firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom-version" }
+firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+
+# Image loading
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide-version" }
+glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose-version" }
+
+# UI Libraries
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist-version" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist-version" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-systemuicontroller-version" }
+
+# Coroutines
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines-version" }
+kotlin-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines-version" }
+
+# Google Play Services
+android-gms-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth-version" }
+
+# Media
+media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exoplayer-media3-version" }
+
+# Logging
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber-version" }
+
+# Kotlin Immutable Collections
+kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutable-collections-version" }
+
+# Testing
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-version" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-version" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-version" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk-version" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-version" }
+
+# Android Testing
+android-test-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-junit-version" }
+android-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-version" }
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-version" }
+
+# Lint Checks
+slack-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "slack-compose-lint-ruleset-version" }
+
+# Debug tools
+compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-version" }
+compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-version" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-plugin-gradle-version" }
+android-library = { id = "com.android.library", version.ref = "android-plugin-gradle-version" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android-plugin-version" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-version" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services-version" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-version" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt-version" }
+junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "junit5-version" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover-version" }
