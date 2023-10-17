@@ -1,5 +1,5 @@
 ---
-### 🚀 Description or 🔧 Fixes (if bug fix)
+### 🚀 Description
 
 **Issue (if applicable):**
 
