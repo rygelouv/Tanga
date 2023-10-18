@@ -5,6 +5,8 @@
   <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=for-the-badge&logo=appveyor"/></a>
   <a href="https://github.com/rygelouv/Tanga/tree/dev"><img alt="API" src="https://img.shields.io/bitrise/af836c41-1d0e-4c07-a9e1-b4c4452a0686/dev?token=TmwPfWg3f5jHJEub8sA6Hw"/></a>
   <a href="https://sonarcloud.io/summary/new_code?id=rygelouv_Tanga"><img alt="API" src="https://sonarcloud.io/api/project_badges/measure?project=rygelouv_Tanga&metric=alert_status"/></a>
+  <a href="https://codecov.io/gh/rygelouv/Tanga" ><img src="https://codecov.io/gh/rygelouv/Tanga/graph/badge.svg?token=LWTD8CBUBW"/> 
+ </a>
 </p>
 
 ![tanga_banner_v2_updated](https://user-images.githubusercontent.com/7549316/227764073-7e88f504-710e-46a6-9a43-e18521200f4d.png)
@@ -15,11 +17,13 @@
 </p>
 
 ## 🚧 **This project is still under construction** 🚧
-You can come back in a few months to see considerable progress. 
+You can come back in a few months to see considerable progress. In the meantime, here are our recent achievements
 
-- We finished implementing most screens
-- We have done the most part of the error management system. But some screens still need some work regarding errors
-- We are currently working on the Static Code Analysis system, the CI/CD and testing infrastructure. Find the related project here: https://github.com/users/rygelouv/projects/6/views/1
+- [Use real data from firebase](https://github.com/users/rygelouv/projects/3/views/1)
+- [Build an Error management system](https://github.com/users/rygelouv/projects/5/views/1?layout=board)
+- [Gradle Migration](https://github.com/users/rygelouv/projects/2)
+- [Build the audio player https](https://github.com/users/rygelouv/projects/4)
+- [Static Code Analysis the CI/CD and testing infrastructure](https://github.com/users/rygelouv/projects/6/views/1)
 
 ## Next steps on UI:
 - We need to activate the remaning buttons on Summary details screen. Those are "Read", "Watch" and "Visualize"
@@ -38,11 +42,14 @@ You can come back in a few months to see considerable progress.
 
 ## Testing
 We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
-- [ ] Add JUnit 5
-- [ ] Add Codecov
-- [ ] Add Kover 
-- We need to add unit tests for most repositories, interactors, viewmodels and other components
-- We need to UI test the screen composables
+- [x] Add JUnit 5
+- [X] Add Mockk 
+- [x] Add Codecov for tracking project coverage
+- [x] Add Kover for generating coverage reports
+- [x] Start adding unit tests.
+- [ ] We need to UI test the screen composables with Espresso
+- [ ] We only have 3% coverage so far 🙈, we need to add more unit tests and increase the coverage.
+- [ ] Add Maestro tests
 
 # License
 ```xml
