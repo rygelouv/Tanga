@@ -59,6 +59,7 @@ fun SummaryImage(
  * It uses Glide to load the image from a URL. If the URL is null, it uses a placeholder image.
  */
 @OptIn(ExperimentalGlideComposeApi::class)
+@Suppress("FunctionNaming")
 @Composable
 fun GlideSummaryImage(
     summaryId: String,
