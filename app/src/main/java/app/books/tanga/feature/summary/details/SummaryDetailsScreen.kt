@@ -43,8 +43,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.components.ExpendableText
-import app.books.tanga.coreui.components.GlideSummaryImage
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
@@ -247,18 +247,17 @@ fun SummaryDetailsHeader(
                 modifier = modifier.padding(LocalSpacing.current.medium),
                 horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large)
             ) {
-                GlideSummaryImage(
+                UrlDownloadableImage(
+                    modifier = Modifier.width(128.dp),
+                    summaryId = summary.id,
+                    onSummaryClicked = {}
+                )
+                /*GlideSummaryImage(
                     modifier = Modifier.width(128.dp),
                     summaryId = summary.id,
                     url = summary.coverUrl,
-                    painter =
-                    if (summary.coverUrl == null) {
-                        painterResource(id = R.drawable.cover_never_split_difference)
-                    } else {
-                        null
-                    },
                     onSummaryClicked = {}
-                )
+                )*/
                 SummaryBasicInfo(
                     title = summary.title,
                     author = summary.author,

@@ -112,6 +112,7 @@ firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
 
 # Image loading
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }

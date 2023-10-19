@@ -56,7 +56,7 @@ fun HomeTopCard(
             .fillMaxWidth()
             .height(170.dp)
             .clickable {
-                onSummaryClicked(summaryUi.id)
+                onSummaryClicked(summaryUi.id.value)
             },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
@@ -105,7 +105,7 @@ fun HomeTopCard(
             }
 
             SummaryImage(
-                summaryId = summaryUi.id,
+                summaryId = summaryUi.id.value,
                 modifier = Modifier.width(90.dp),
                 painter = painterResource(id = summaryUi.cover),
                 onSummaryClicked = onSummaryClicked

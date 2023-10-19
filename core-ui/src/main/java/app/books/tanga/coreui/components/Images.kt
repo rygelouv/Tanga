@@ -15,11 +15,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 
 /**
  * This is a composable that displays an image of a book summary cover.
@@ -62,7 +64,6 @@ fun GlideSummaryImage(
     summaryId: String,
     modifier: Modifier = Modifier,
     url: String? = null,
-    painter: Painter? = null,
     onSummaryClicked: (String) -> Unit
 ) {
     Surface(
@@ -78,12 +79,15 @@ fun GlideSummaryImage(
             GlideImage(
                 model = url,
                 contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                loading = placeholder(R.drawable.tanga_cover_placeholder),
+                failure = placeholder(R.drawable.tanga_cover_placeholder),
             )
         } else {
-            // TODO we need to remove this condition when we have got rid of FakeData usage
+            // We could have used only failure and it would have been enough but when url is null and failure
+            // is displayed, it shows up with extra top and bottom padding/borders that gives a weird look.
             Image(
-                painter = painter!!,
+                painter = painterResource(id = R.drawable.tanga_cover_placeholder),
                 contentDescription = "summary cover",
                 modifier = Modifier.fillMaxWidth()
             )

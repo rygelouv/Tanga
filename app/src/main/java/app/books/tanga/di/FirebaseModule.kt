@@ -5,6 +5,7 @@ import app.books.tanga.firestore.FirestoreOperationHandlerImpl
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,9 @@ class FirebaseModule {
 
     @Provides
     fun provideFirebaseFirestore() = Firebase.firestore
+
+    @Provides
+    fun provideFirebaseStorage() = Firebase.storage
 }
 
 @Module

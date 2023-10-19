@@ -24,10 +24,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.summary.SummaryUi
 
 @Composable
@@ -70,7 +71,7 @@ fun SummaryItemSmall(
 
 @Composable
 fun SummaryItem(
-    summaryId: String,
+    summaryId: SummaryId,
     title: String,
     author: String,
     coverUrl: String?,
@@ -87,15 +88,9 @@ fun SummaryItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        GlideSummaryImage(
+        UrlDownloadableImage(
             summaryId = summaryId,
-            url = coverUrl,
-            painter = if (coverUrl == null) {
-                painterResource(id = R.drawable.cover_never_split_difference)
-            } else {
-                null
-            },
-            onSummaryClicked = onSummaryClicked
+            onSummaryClicked = onSummaryClicked,
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(

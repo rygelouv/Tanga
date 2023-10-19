@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.summary.list.SummaryItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -87,7 +88,7 @@ fun FavoriteGrid(
     ) {
         items(favorites) { favorite ->
             SummaryItem(
-                summaryId = favorite.summaryId,
+                summaryId = SummaryId(favorite.summaryId),
                 title = favorite.title,
                 author = favorite.author,
                 coverUrl = favorite.coverUrl,

@@ -2,9 +2,10 @@ package app.books.tanga.feature.summary
 
 import androidx.annotation.DrawableRes
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 
 data class SummaryUi(
-    val id: String,
+    val id: SummaryId,
     // TODO: 2023-09-14 Remove this
     @DrawableRes val cover: Int = 0,
     val coverUrl: String? = null,
@@ -27,7 +28,7 @@ data class SummaryUi(
 
 fun Summary.toSummaryUi(): SummaryUi =
     SummaryUi(
-        id = id.value,
+        id = id,
         coverUrl = coverImageUrl,
         title = title,
         author = author,
