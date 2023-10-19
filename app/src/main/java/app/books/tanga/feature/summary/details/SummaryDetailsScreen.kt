@@ -252,12 +252,6 @@ fun SummaryDetailsHeader(
                     summaryId = summary.id,
                     onSummaryClicked = {}
                 )
-                /*GlideSummaryImage(
-                    modifier = Modifier.width(128.dp),
-                    summaryId = summary.id,
-                    url = summary.coverUrl,
-                    onSummaryClicked = {}
-                )*/
                 SummaryBasicInfo(
                     title = summary.title,
                     author = summary.author,
