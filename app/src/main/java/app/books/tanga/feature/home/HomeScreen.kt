@@ -156,6 +156,7 @@ fun HomeContent(
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge
         )
+        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

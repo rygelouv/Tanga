@@ -36,7 +36,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.books.tanga.R
 import app.books.tanga.coreui.components.GlideSummaryImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
@@ -177,12 +176,6 @@ fun PlaySummaryAudioContent(
                 .align(alignment = Alignment.TopCenter)
                 .offset(y = 4.dp),
             url = coverUrl,
-            painter =
-            if (coverUrl == null) {
-                painterResource(id = R.drawable.cover_never_split_difference)
-            } else {
-                null
-            },
             onSummaryClicked = { }
         )
     }
