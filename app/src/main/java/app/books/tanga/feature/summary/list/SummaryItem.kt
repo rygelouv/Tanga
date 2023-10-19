@@ -40,7 +40,6 @@ fun SummaryItemBig(
         summaryId = summary.id,
         title = summary.title,
         author = summary.author,
-        coverUrl = summary.coverUrl,
         duration = summary.duration,
         hasVideo = summary.hasVideo,
         hasGraphic = summary.hasGraphic,
@@ -59,7 +58,6 @@ fun SummaryItemSmall(
         summaryId = summary.id,
         title = summary.title,
         author = summary.author,
-        coverUrl = summary.coverUrl,
         duration = summary.duration,
         hasVideo = summary.hasVideo,
         hasGraphic = summary.hasGraphic,
@@ -69,12 +67,12 @@ fun SummaryItemSmall(
     )
 }
 
+@Suppress("LongParameterList", "FunctionNaming")
 @Composable
 fun SummaryItem(
     summaryId: SummaryId,
     title: String,
     author: String,
-    coverUrl: String?,
     duration: String,
     hasVideo: Boolean,
     hasGraphic: Boolean,

@@ -91,7 +91,6 @@ fun FavoriteGrid(
                 summaryId = SummaryId(favorite.summaryId),
                 title = favorite.title,
                 author = favorite.author,
-                coverUrl = favorite.coverUrl,
                 duration = favorite.playingLength,
                 // TODO: Add video indicator support
                 hasVideo = false,

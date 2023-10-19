@@ -16,6 +16,7 @@ import app.books.tanga.entity.SummaryId
  * @param modifier Modifier for the image composable.
  * @param onSummaryClicked A callback to be invoked when the summary is clicked.
  */
+@Suppress("FunctionNaming")
 @Composable
 fun UrlDownloadableImage(
     summaryId: SummaryId,
