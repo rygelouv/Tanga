@@ -21,6 +21,9 @@ interface UserRepository {
     suspend fun deleteUser(user: User): Result<Unit>
 }
 
+val FirebaseFirestore.userCollection: CollectionReference
+    get() = collection(FirestoreDatabase.Users.COLLECTION_NAME)
+
 class UserRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val prefDataStoreRepo: DefaultPrefDataStoreRepository,
@@ -63,8 +66,6 @@ class UserRepositoryImpl @Inject constructor(
                 .userCollection
                 .document(user.id.value)
                 .delete()
+                .await()
         }
-
-    private val FirebaseFirestore.userCollection: CollectionReference
-        get() = collection(FirestoreDatabase.Users.COLLECTION_NAME)
 }

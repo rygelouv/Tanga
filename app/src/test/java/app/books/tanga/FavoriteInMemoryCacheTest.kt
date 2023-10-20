@@ -1,12 +1,9 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import app.books.tanga.data.favorite.FavoriteInMemoryCache
-import app.books.tanga.entity.Favorite
-import app.books.tanga.entity.FavoriteId
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertTrue
+import app.books.tanga.fixtures.Fixtures.dummyFavorite1
+import app.books.tanga.fixtures.Fixtures.dummyFavorite2
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -23,7 +20,7 @@ class FavoriteInMemoryCacheTest {
     fun `adding favorite puts it in cache`() {
         val favorite = dummyFavorite1
         cache.add(favorite)
-        assertEquals(favorite, cache.getBySummaryId("SummaryId1"))
+        Assertions.assertEquals(favorite, cache.getBySummaryId("SummaryId1"))
     }
 
     @Test
@@ -31,7 +28,7 @@ class FavoriteInMemoryCacheTest {
         val favorite = dummyFavorite1
         cache.add(favorite)
         cache.remove(favorite)
-        assertNull(cache.getBySummaryId("Summary1"))
+        Assertions.assertNull(cache.getBySummaryId("Summary1"))
     }
 
     @Test
@@ -40,7 +37,7 @@ class FavoriteInMemoryCacheTest {
         val favorite2 = dummyFavorite2
         cache.add(favorite1)
         cache.add(favorite2)
-        assertEquals(favorite2, cache.getBySummaryId("SummaryId2"))
+        Assertions.assertEquals(favorite2, cache.getBySummaryId("SummaryId2"))
     }
 
     @Test
@@ -49,7 +46,7 @@ class FavoriteInMemoryCacheTest {
         val favorite2 = dummyFavorite2
         cache.add(favorite1)
         cache.add(favorite2)
-        assertEquals(listOf(favorite1, favorite2), cache.getAll())
+        Assertions.assertEquals(listOf(favorite1, favorite2), cache.getAll())
     }
 
     @Test
@@ -59,19 +56,19 @@ class FavoriteInMemoryCacheTest {
             dummyFavorite2
         )
         cache.putAll(favorites)
-        assertEquals(favorites, cache.getAll())
+        Assertions.assertEquals(favorites, cache.getAll())
     }
 
     @Test
     fun `isEmpty returns true when cache is empty`() {
-        assertTrue(cache.isEmpty())
+        Assertions.assertTrue(cache.isEmpty())
     }
 
     @Test
     fun `isEmpty returns false when cache is not empty`() {
         val favorite = dummyFavorite1
         cache.add(favorite)
-        assertFalse(cache.isEmpty())
+        Assertions.assertFalse(cache.isEmpty())
     }
 
     @Test
@@ -79,28 +76,6 @@ class FavoriteInMemoryCacheTest {
         val favorite = dummyFavorite1
         cache.add(favorite)
         cache.clear()
-        assertTrue(cache.isEmpty())
-    }
-
-    companion object {
-        val dummyFavorite1 = Favorite(
-            id = FavoriteId("1"),
-            title = "Summary1",
-            author = "Author1",
-            coverUrl = "CoverUrl1",
-            userId = "UserId1",
-            summaryId = "SummaryId1",
-            playingLength = "PlayingLength1"
-        )
-
-        val dummyFavorite2 = Favorite(
-            id = FavoriteId("2"),
-            title = "Summary2",
-            author = "Author2",
-            coverUrl = "CoverUrl2",
-            userId = "UserId2",
-            summaryId = "SummaryId2",
-            playingLength = "PlayingLength2"
-        )
+        Assertions.assertTrue(cache.isEmpty())
     }
 }

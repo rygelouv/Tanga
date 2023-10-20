@@ -1,9 +1,10 @@
-package app.books.tanga.session
+package app.books.tanga.data
 
 import app.books.tanga.data.category.CategoryRepositoryImpl
 import app.books.tanga.data.category.categoryCollection
 import app.books.tanga.entity.Category
 import app.books.tanga.entity.CategoryId
+import app.books.tanga.fakes.FakeFirestoreOperationHandler
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.android.gms.tasks.Task
@@ -18,8 +19,7 @@ import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -50,9 +50,9 @@ class CategoryRepositoryTest {
         val categories = repository.getCategories().getOrNull()
 
         // Then
-        assertTrue(categories?.size == 2)
-        assertEquals(category, categories?.get(0))
-        assertEquals(category, categories?.get(1))
+        Assertions.assertTrue(categories?.size == 2)
+        Assertions.assertEquals(category, categories?.get(0))
+        Assertions.assertEquals(category, categories?.get(1))
     }
 
     private fun setupFirestoreMocks() {
@@ -75,8 +75,4 @@ class CategoryRepositoryTest {
         FirestoreDatabase.Categories.Fields.SLUG to "testId",
         FirestoreDatabase.Categories.Fields.NAME to "testName"
     )
-
-    class FakeFirestoreOperationHandler : FirestoreOperationHandler {
-        override suspend fun <T> executeOperation(operation: suspend () -> T): Result<T> = Result.success(operation())
-    }
 }

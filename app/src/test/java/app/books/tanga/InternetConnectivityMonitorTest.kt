@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -27,28 +27,30 @@ class InternetConnectivityMonitorTest {
     }
 
     @Test
-    fun `monitor returns available internet when network capabilities for internet are present`() = runTest {
-        val capabilities: NetworkCapabilities = mockk(relaxed = true)
-        every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED) } returns true
-        every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) } returns true
-        every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) } returns true
-        every { connectivityManager.getNetworkCapabilities(any()) } returns capabilities
+    fun `monitor returns available internet when network capabilities for internet are present`() =
+        runTest {
+            val capabilities: NetworkCapabilities = mockk(relaxed = true)
+            every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED) } returns true
+            every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) } returns true
+            every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) } returns true
+            every { connectivityManager.getNetworkCapabilities(any()) } returns capabilities
 
-        val isInternetAvailable = monitor.isInternetAvailable.value
+            val isInternetAvailable = monitor.isInternetAvailable.value
 
-        assert(isInternetAvailable)
-    }
+            assert(isInternetAvailable)
+        }
 
     @Test
-    fun `monitor returns internet NOT available when network capabilities for internet are not present`() = runTest {
-        val capabilities: NetworkCapabilities = mockk(relaxed = true)
-        every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) } returns false
-        every { connectivityManager.getNetworkCapabilities(any()) } returns capabilities
+    fun `monitor returns internet NOT available when network capabilities for internet are not present`() =
+        runTest {
+            val capabilities: NetworkCapabilities = mockk(relaxed = true)
+            every { capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) } returns false
+            every { connectivityManager.getNetworkCapabilities(any()) } returns capabilities
 
-        val isInternetAvailable = monitor.isInternetAvailable.value
+            val isInternetAvailable = monitor.isInternetAvailable.value
 
-        assert(isInternetAvailable.not())
-    }
+            assert(isInternetAvailable.not())
+        }
 
     @Test
     fun `connectivity callback emits correct values on capabilities change`() = runTest {

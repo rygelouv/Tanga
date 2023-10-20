@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import app.books.tanga.common.urls.StorageDownloadUrlGenerator
 import app.books.tanga.common.urls.SummaryCoverUrlCache
@@ -15,7 +15,7 @@ import io.mockk.verify
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -41,38 +41,40 @@ class StorageDownloadUrlGeneratorTest {
     }
 
     @Test
-    fun `verify generateCoverDownloadUrl uses cached value when url had been already cached`() = runTest {
-        // Given
-        val summaryId = SummaryId("123")
-        val otherUrl = "http://example.com/some_other_url"
-        SummaryCoverUrlCache.put(summaryId, otherUrl)
+    fun `verify generateCoverDownloadUrl uses cached value when url had been already cached`() =
+        runTest {
+            // Given
+            val summaryId = SummaryId("123")
+            val otherUrl = "http://example.com/some_other_url"
+            SummaryCoverUrlCache.put(summaryId, otherUrl)
 
-        // When
-        val url = generator.generateCoverDownloadUrl(summaryId)
-        val url2 = generator.generateCoverDownloadUrl(summaryId)
+            // When
+            val url = generator.generateCoverDownloadUrl(summaryId)
+            val url2 = generator.generateCoverDownloadUrl(summaryId)
 
-        assertTrue(url == otherUrl)
-        assertTrue(url2 == otherUrl)
+            Assertions.assertTrue(url == otherUrl)
+            Assertions.assertTrue(url2 == otherUrl)
 
-        verify(exactly = 0) { mockkStorageReferenceSummaryCover.downloadUrl }
-        confirmVerified(mockkStorageReferenceSummaryCover)
-    }
+            verify(exactly = 0) { mockkStorageReferenceSummaryCover.downloadUrl }
+            confirmVerified(mockkStorageReferenceSummaryCover)
+        }
 
     @Test
-    fun `verify generateCoverDownloadUrl generates url when url had not been found in cache`() = runTest {
-        // Given
-        val summaryId = SummaryId("123")
-        // val otherUrl = "http://example.com/some_other_url"
-        SummaryCoverUrlCache.clear()
+    fun `verify generateCoverDownloadUrl generates url when url had not been found in cache`() =
+        runTest {
+            // Given
+            val summaryId = SummaryId("123")
+            // val otherUrl = "http://example.com/some_other_url"
+            SummaryCoverUrlCache.clear()
 
-        // When
-        val url = generator.generateCoverDownloadUrl(summaryId)
+            // When
+            val url = generator.generateCoverDownloadUrl(summaryId)
 
-        assertTrue(url == mockUrl)
+            Assertions.assertTrue(url == mockUrl)
 
-        verify(exactly = 1) { mockkStorageReferenceSummaryCover.downloadUrl }
-        confirmVerified(mockkStorageReferenceSummaryCover)
-    }
+            verify(exactly = 1) { mockkStorageReferenceSummaryCover.downloadUrl }
+            confirmVerified(mockkStorageReferenceSummaryCover)
+        }
 
     @Test
     fun `verify generateCoverDownloadUrl generate url after cache had been cleared`() = runTest {
@@ -83,12 +85,12 @@ class StorageDownloadUrlGeneratorTest {
 
         // When
         val url = generator.generateCoverDownloadUrl(summaryId)
-        assertTrue(url == otherUrl)
+        Assertions.assertTrue(url == otherUrl)
 
         SummaryCoverUrlCache.clear()
 
         val url2 = generator.generateCoverDownloadUrl(summaryId)
-        assertTrue(url2 == mockUrl)
+        Assertions.assertTrue(url2 == mockUrl)
 
         verify(exactly = 1) { mockkStorageReferenceSummaryCover.downloadUrl }
         confirmVerified(mockkStorageReferenceSummaryCover)
@@ -104,8 +106,8 @@ class StorageDownloadUrlGeneratorTest {
 
         val urlFromCache = SummaryCoverUrlCache.get(summaryId)
 
-        assertTrue(url == mockUrl)
-        assertTrue(urlFromCache == url)
+        Assertions.assertTrue(url == mockUrl)
+        Assertions.assertTrue(urlFromCache == url)
 
         verify(exactly = 1) { mockkStorageReferenceSummaryCover.downloadUrl }
         confirmVerified(mockkStorageReferenceSummaryCover)

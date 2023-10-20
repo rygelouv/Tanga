@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import app.books.tanga.errors.AppError
 import app.books.tanga.errors.FirestoreErrorFactory
@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -34,8 +33,8 @@ class FirestoreOperationHandlerTest {
     fun `executeOperation returns success when operation is successful`() = runTest {
         val result = handler.executeOperation { "Success" }
 
-        assertTrue(result.isSuccess)
-        assertEquals("Success", result.getOrNull())
+        Assertions.assertTrue(result.isSuccess)
+        Assertions.assertEquals("Success", result.getOrNull())
     }
 
     @Test
@@ -50,36 +49,42 @@ class FirestoreOperationHandlerTest {
             throw firebaseException
         }
 
-        assertTrue(result.isFailure)
+        Assertions.assertTrue(result.isFailure)
         // Assuming FirestoreErrorFactory.createError converts the exception into a FirestoreError type.
-        assertTrue(result.exceptionOrNull() is AppError)
+        Assertions.assertTrue(result.exceptionOrNull() is AppError)
     }
 
     @Test
-    fun `executeOperation returns NoInternetConnectionError when exception occurs and no internet`() = runTest {
-        val genericException = Exception("Generic error")
-        coEvery { internetConnectivityMonitor.isInternetAvailable } returns flowOf(false).stateIn(this)
+    fun `executeOperation returns NoInternetConnectionError when exception occurs and no internet`() =
+        runTest {
+            val genericException = Exception("Generic error")
+            coEvery { internetConnectivityMonitor.isInternetAvailable } returns flowOf(false).stateIn(
+                this
+            )
 
-        val result = handler.executeOperation {
-            throw genericException
+            val result = handler.executeOperation {
+                throw genericException
+            }
+
+            Assertions.assertTrue(result.isFailure)
+            Assertions.assertTrue(result.exceptionOrNull() is OperationError.NoInternetConnectionError)
         }
-
-        assertTrue(result.isFailure)
-        assertTrue(result.exceptionOrNull() is OperationError.NoInternetConnectionError)
-    }
 
     @Test
-    fun `executeOperation returns UnknownError when exception occurs and internet is available`() = runTest {
-        val genericException = Exception("Generic error")
-        coEvery { internetConnectivityMonitor.isInternetAvailable } returns flowOf(true).stateIn(this)
+    fun `executeOperation returns UnknownError when exception occurs and internet is available`() =
+        runTest {
+            val genericException = Exception("Generic error")
+            coEvery { internetConnectivityMonitor.isInternetAvailable } returns flowOf(true).stateIn(
+                this
+            )
 
-        val result = handler.executeOperation {
-            throw genericException
+            val result = handler.executeOperation {
+                throw genericException
+            }
+
+            Assertions.assertTrue(result.isFailure)
+            Assertions.assertTrue(result.exceptionOrNull() is OperationError.UnknownError)
         }
-
-        assertTrue(result.isFailure)
-        assertTrue(result.exceptionOrNull() is OperationError.UnknownError)
-    }
 
     companion object {
         @JvmStatic
