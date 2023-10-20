@@ -60,14 +60,15 @@ import app.books.tanga.utils.shareSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
+@Suppress("LongParameterList")
 @Composable
 fun SummaryDetailsScreen(
     summaryId: String,
-    onBackClicked: () -> Unit,
-    onPlayClicked: (String) -> Unit,
+    onBackClick: () -> Unit,
+    onPlayClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
-    onRecommendationClicked: (String) -> Unit
+    onRecommendationClick: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
@@ -83,14 +84,14 @@ fun SummaryDetailsScreen(
                 summary = state.summary,
                 isFavorite = state.isFavorite,
                 favoriteProgressState = state.favoriteProgressState,
-                onBackClicked = onBackClicked,
-                onSaveClicked = { viewModel.toggleFavorite() }
+                onBackClick = onBackClick,
+                onSaveClick = { viewModel.toggleFavorite() }
             )
         },
         floatingActionButton = {
             PlayFloatingActionButton(
                 summaryId = summaryId,
-                onClick = onPlayClicked
+                onClick = onPlayClick
             )
         }
     ) {
@@ -100,8 +101,8 @@ fun SummaryDetailsScreen(
                 SummaryDetailsContent(
                     state = state,
                     paddingValues = it,
-                    onRecommendationClicked = onRecommendationClicked,
-                    onErrorButtonClicked = { viewModel.loadSummary(summaryId) }
+                    onRecommendationClick = onRecommendationClick,
+                    onErrorButtonClick = { viewModel.loadSummary(summaryId) }
                 )
         }
     }
@@ -111,8 +112,8 @@ fun SummaryDetailsScreen(
 private fun SummaryDetailsContent(
     state: SummaryDetailsUiState,
     paddingValues: PaddingValues,
-    onRecommendationClicked: (String) -> Unit,
-    onErrorButtonClicked: () -> Unit
+    onRecommendationClick: (String) -> Unit,
+    onErrorButtonClick: () -> Unit
 ) {
     state.summary?.let { summary ->
         Column(
@@ -138,7 +139,7 @@ private fun SummaryDetailsContent(
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
             Recommendations(
                 recommendations = state.recommendations.toImmutableList(),
-                onRecommendationClicked = onRecommendationClicked
+                onRecommendationClick = onRecommendationClick
             )
         }
     }
@@ -147,7 +148,7 @@ private fun SummaryDetailsContent(
         ErrorContent(
             errorInfo = it.info,
             canRetry = true,
-            onClick = { onErrorButtonClicked() }
+            onClick = { onErrorButtonClick() }
         )
     }
 }
@@ -158,14 +159,14 @@ private fun SummaryTopAppBar(
     summary: SummaryUi?,
     isFavorite: Boolean,
     favoriteProgressState: ProgressState,
-    onSaveClicked: () -> Unit,
-    onBackClicked: () -> Unit
+    onSaveClick: () -> Unit,
+    onBackClick: () -> Unit
 ) {
     TopAppBar(
         title = {},
         navigationIcon = {
             IconButton(
-                onClick = { onBackClicked() }
+                onClick = { onBackClick() }
             ) {
                 Icon(
                     modifier = Modifier.size(26.dp),
@@ -179,7 +180,7 @@ private fun SummaryTopAppBar(
             SaveButton(
                 isSaved = isFavorite,
                 progressState = favoriteProgressState,
-                onClick = { onSaveClicked() }
+                onClick = { onSaveClick() }
             )
             val context = LocalContext.current
             IconButton(onClick = {
@@ -250,7 +251,7 @@ fun SummaryDetailsHeader(
                 UrlDownloadableImage(
                     modifier = Modifier.width(128.dp),
                     summaryId = summary.id,
-                    onSummaryClicked = {}
+                    onSummaryClick = {}
                 )
                 SummaryBasicInfo(
                     title = summary.title,
@@ -436,7 +437,7 @@ private fun PurchaseButton(url: String) {
 fun Recommendations(
     recommendations: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    onRecommendationClicked: (String) -> Unit
+    onRecommendationClick: (String) -> Unit
 ) {
     Column(modifier = modifier.padding(LocalSpacing.current.medium)) {
         Text(
@@ -450,13 +451,13 @@ fun Recommendations(
         SummaryRow(
             summaries = recommendations
         ) { summaryId ->
-            onRecommendationClicked(summaryId)
+            onRecommendationClick(summaryId)
         }
     }
 }
 
 @Preview
 @Composable
-fun SummaryHeaderPreview() {
+private fun SummaryHeaderPreview() {
     SummaryDetailsHeader(modifier = Modifier, summary = FakeData.allSummaries().first())
 }

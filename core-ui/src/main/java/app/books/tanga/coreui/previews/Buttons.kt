@@ -10,7 +10,7 @@ import app.books.tanga.coreui.icons.TangaIcons
 
 @Preview
 @Composable
-fun TangaButtonLeftIconPreview() {
+private fun TangaButtonLeftIconPreview() {
     TangaButtonRightIcon(
         text = "Get Started",
         leftIcon = R.drawable.ic_right_arrow,
@@ -20,7 +20,7 @@ fun TangaButtonLeftIconPreview() {
 
 @Preview
 @Composable
-fun TangaButtonRightIconPreview() {
+private fun TangaButtonRightIconPreview() {
     TangaButtonLeftIcon(
         text = "Explore summaries",
         rightIcon = R.drawable.ic_search,
@@ -30,6 +30,6 @@ fun TangaButtonRightIconPreview() {
 
 @Preview
 @Composable
-fun SummaryActionButtonPreview() {
+private fun SummaryActionButtonPreview() {
     SummaryActionButton(text = "Read", icon = TangaIcons.IndicatorRead) {}
 }

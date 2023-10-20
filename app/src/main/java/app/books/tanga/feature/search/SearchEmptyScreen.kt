@@ -56,6 +56,6 @@ fun EmptySearchScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun EmptySearchScreenPreview() {
+private fun EmptySearchScreenPreview() {
     EmptySearchScreen(query = "Deep Work")
 }

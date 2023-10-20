@@ -40,7 +40,7 @@ const val MAX_PAGER_INDEX = 3
 
 @Preview
 @Composable
-fun OnboardingScreenPreview() {
+private fun OnboardingScreenPreview() {
     val navController = rememberNavController()
     OnboardingScreen(navController)
 }

@@ -20,7 +20,7 @@ fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
             summaryId = backStackEntry
                 .arguments
                 ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
-            onBackClicked = onBackClicked
+            onBackClick = onBackClicked
         )
     }
 }

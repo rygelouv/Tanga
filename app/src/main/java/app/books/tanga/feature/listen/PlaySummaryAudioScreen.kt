@@ -49,7 +49,7 @@ fun PlaySummaryAudioScreen(
     summaryId: String,
     modifier: Modifier = Modifier,
     viewModel: PlaySummaryAudioViewModel = hiltViewModel(),
-    onBackClicked: () -> Unit
+    onBackClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions: PlayerActions = viewModel
@@ -61,7 +61,7 @@ fun PlaySummaryAudioScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            PlaySummaryAudioTopBar(onBackClicked = onBackClicked)
+            PlaySummaryAudioTopBar(onBackClick = onBackClick)
         }
     ) {
         Surface(
@@ -85,9 +85,9 @@ fun PlaySummaryAudioScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClicked: () -> Unit) {
+fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
     TopAppBar(modifier = modifier, title = {}, navigationIcon = {
-        IconButton(onClick = { onBackClicked() }) {
+        IconButton(onClick = { onBackClick() }) {
             Icon(
                 modifier = Modifier.size(26.dp),
                 painter = painterResource(id = TangaIcons.LeftArrow),
@@ -176,7 +176,7 @@ fun PlaySummaryAudioContent(
                 .align(alignment = Alignment.TopCenter)
                 .offset(y = 4.dp),
             url = coverUrl,
-            onSummaryClicked = { }
+            onSummaryClick = { }
         )
     }
 }
@@ -247,7 +247,7 @@ private fun PlaybackControls(
 @Composable
 private fun AudioBar(
     playbackState: PlaybackState?,
-    onSliderPositionChanged: (Long) -> Unit
+    onSliderPositionChange: (Long) -> Unit
 ) {
     Column(
         modifier =
@@ -255,7 +255,7 @@ private fun AudioBar(
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     ) {
-        MediaSlider(playbackState = playbackState, onSliderPositionChanged = onSliderPositionChanged)
+        MediaSlider(playbackState = playbackState, onSliderPositionChange = onSliderPositionChange)
         Row(
             modifier =
             Modifier

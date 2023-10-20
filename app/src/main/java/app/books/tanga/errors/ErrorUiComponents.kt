@@ -178,7 +178,7 @@ fun ErrorContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun ErrorContentPreview() {
+private fun ErrorContentPreview() {
     val errorInfo =
         UiErrorInfo(
             title = TextResource.fromText("Error!"),
@@ -190,7 +190,7 @@ fun ErrorContentPreview() {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun ErrorBottomSheetModalPreview() {
+private fun ErrorBottomSheetModalPreview() {
     val errorInfo =
         UiErrorInfo(
             title = TextResource.fromText("Error!"),
@@ -202,7 +202,7 @@ fun ErrorBottomSheetModalPreview() {
 
 @Preview
 @Composable
-fun ShowSnackbarErrorPreview() {
+private fun ShowSnackbarErrorPreview() {
     val errorInfo =
         UiErrorInfo(
             title = TextResource.fromText("Error!"),

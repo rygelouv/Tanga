@@ -1,0 +1,30 @@
+
+# Compose Rules https://github.com/appKODE/detekt-rules-compose
+compose:
+  ReusedModifierInstance:
+    active: true
+  UnnecessaryEventHandlerParameter:
+    active: true
+  ComposableEventParameterNaming:
+    active: true
+  ComposableParametersOrdering:
+    # Disabling because we are using Slack rule plugins which want modifier to come only first after required parameters
+    active: false
+  ModifierHeightWithText:
+    active: true
+  ModifierParameterPosition:
+    # Disabling because we are using Slack rule plugins which want modifier to come only first after required parameters
+    active: false
+  ModifierDefaultValue:
+    active: true
+  MissingModifierDefaultValue:
+    active: true
+  PublicComposablePreview:
+    active: true
+  TopLevelComposableFunctions:
+    active: true
+  ComposableFunctionName:
+    active: true
+  ConditionCouldBeLifted:
+    active: true
+    ignoreCallsWithArgumentNames: [ 'modifier', 'contentAlignment' ]

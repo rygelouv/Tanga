@@ -40,14 +40,14 @@ fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController) {
     composable(route = NavigationScreen.BottomBarScreen.Home.route) {
         HomeScreen(
             onSearch = { navController.toSearch() },
-            onProfilePictureClicked = { navController.toProfile() },
-            onSummaryClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
+            onProfilePictureClick = { navController.toProfile() },
+            onSummaryClick = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
     }
     composable(route = NavigationScreen.BottomBarScreen.Library.route) {
         LibraryScreen(
-            onExploreButtonClicked = { navController.toSearch() },
-            onFavoriteClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
+            onExploreButtonClick = { navController.toSearch() },
+            onFavoriteClick = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
     }
     profile { navController.toPricingPlan() }

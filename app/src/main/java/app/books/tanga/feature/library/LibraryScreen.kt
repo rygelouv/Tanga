@@ -35,10 +35,10 @@ import kotlinx.collections.immutable.toImmutableList
  */
 @Composable
 fun LibraryScreen(
-    onFavoriteClicked: (String) -> Unit,
+    onFavoriteClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LibraryViewModel = hiltViewModel(),
-    onExploreButtonClicked: () -> Unit
+    onExploreButtonClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -61,12 +61,12 @@ fun LibraryScreen(
             }
             ProgressState.Hide -> {
                 if (state.favorites.isNullOrEmpty()) {
-                    EmptyLibraryScreen(onExploreButtonClicked = onExploreButtonClicked)
+                    EmptyLibraryScreen(onExploreButtonClick = onExploreButtonClick)
                 } else {
                     val favorites = state.favorites ?: return
                     FavoriteGrid(
                         favorites = favorites.toImmutableList(),
-                        onFavoriteClicked = onFavoriteClicked
+                        onFavoriteClick = onFavoriteClick
                     )
                 }
             }
@@ -78,7 +78,7 @@ fun LibraryScreen(
 fun FavoriteGrid(
     favorites: ImmutableList<FavoriteUi>,
     modifier: Modifier = Modifier,
-    onFavoriteClicked: (String) -> Unit
+    onFavoriteClick: (String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -98,7 +98,7 @@ fun FavoriteGrid(
                 hasGraphic = false,
                 width = 134.dp,
                 titleSize = 18.sp,
-                onSummaryClicked = onFavoriteClicked
+                onSummaryClick = onFavoriteClick
             )
         }
     }
@@ -106,9 +106,9 @@ fun FavoriteGrid(
 
 @Preview
 @Composable
-fun LibraryScreenPreview() {
+private fun LibraryScreenPreview() {
     LibraryScreen(
-        onExploreButtonClicked = {},
-        onFavoriteClicked = {}
+        onExploreButtonClick = {},
+        onFavoriteClick = {}
     )
 }

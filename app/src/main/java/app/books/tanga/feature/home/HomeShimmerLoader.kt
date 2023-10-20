@@ -63,7 +63,7 @@ fun AnimatedShimmerLoader(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun ShimmerPreview() {
+private fun ShimmerPreview() {
     Row {
         repeat(4) {
             ShimmerSummaryItem(

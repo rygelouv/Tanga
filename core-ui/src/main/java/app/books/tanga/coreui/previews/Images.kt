@@ -17,12 +17,12 @@ import app.books.tanga.coreui.components.SummaryImage
     device = "id:pixel_4a"
 )
 @Composable
-fun SummaryImagePreview() {
+private fun SummaryImagePreview() {
     SummaryImage(
         summaryId = "1",
         modifier = Modifier.size(64.dp),
         painter = painterResource(id = R.drawable.profile_placeholder),
-        onSummaryClicked = {}
+        onSummaryClick = {}
     )
 }
 
@@ -31,7 +31,7 @@ fun SummaryImagePreview() {
     backgroundColor = 0xFFFFFFFF
 )
 @Composable
-fun ProfilePicturePreview() {
+private fun ProfilePicturePreview() {
     ProfileImage(
         modifier = Modifier.size(100.dp),
         photoUrl = "https://picsum.photos/200"

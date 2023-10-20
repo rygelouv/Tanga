@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -42,7 +42,7 @@ fun ProButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
 
     Row(
         modifier = modifier
-            .height(70.dp)
+            .heightIn(min = 70.dp)
             .background(
                 brush = Brush.linearGradient(colors = gradientColors),
                 shape = RoundedCornerShape(40.dp)
@@ -79,6 +79,6 @@ fun ProButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
 
 @Preview
 @Composable
-fun ProButtonPreview() {
+private fun ProButtonPreview() {
     ProButton()
 }

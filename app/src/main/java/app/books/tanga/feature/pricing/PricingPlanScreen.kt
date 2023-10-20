@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,7 +43,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClicked: () -> Unit) {
+fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
     SystemBarsVisibility()
 
     val gradientColors =
@@ -60,7 +61,7 @@ fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClicked: () -> Unit)
                 rememberScrollState()
             )
     ) {
-        PricingPlanTopBar(onCloseClicked = onCloseClicked)
+        PricingPlanTopBar(onCloseClick = onCloseClick)
         PricingPlanContent()
     }
 }
@@ -90,7 +91,7 @@ private fun SystemBarsVisibility() {
 }
 
 @Composable
-fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClicked: () -> Unit) {
+fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -105,7 +106,7 @@ fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClicked: () -> Unit)
             modifier =
             Modifier
                 .size(18.dp)
-                .clickable { onCloseClicked() }
+                .clickable { onCloseClick() }
         )
     }
 }
@@ -232,7 +233,7 @@ private fun BestValueLabel() {
     Box(
         modifier = Modifier
             .wrapContentWidth(Alignment.CenterHorizontally)
-            .height(32.dp)
+            .heightIn(min = 32.dp)
             .background(
                 color = MaterialTheme.colorScheme.secondary,
                 shape = MaterialTheme.shapes.medium

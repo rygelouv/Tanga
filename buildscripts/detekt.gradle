@@ -3,7 +3,7 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 detekt {
     buildUponDefaultConfig = true
     parallel = true
-    config.setFrom(files("${rootProject.rootDir}/config/detekt/detekt.yml"))
+    config.setFrom(files("${rootProject.rootDir}/config/detekt/detekt.yml", "${rootProject.rootDir}/config/detekt/compose-detekt.yml"))
     // We remove this until we figure out how to create a single baseline for all modules
     // baseline = file("${rootProject.rootDir}/config/detekt/baseline.xml")
 }
@@ -22,5 +22,7 @@ tasks.named("detekt").configure {
 }
 
 dependencies {
-    detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.23.1'
+    detekt libs.detekt.cli
+    // detektPlugins libs.twitter.compose.lint.rules
+    detektPlugins libs.detekt.rules.compose
 }

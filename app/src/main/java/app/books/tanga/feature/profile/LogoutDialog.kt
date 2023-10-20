@@ -32,6 +32,6 @@ fun LogoutDialog(
 
 @Composable
 @Preview
-fun LogoutDialogPreview() {
+private fun LogoutDialogPreview() {
     LogoutDialog({}, {})
 }

@@ -14,14 +14,13 @@ import app.books.tanga.entity.SummaryId
  *
  * @param summaryId The ID of the book summary or item used to fetch the image.
  * @param modifier Modifier for the image composable.
- * @param onSummaryClicked A callback to be invoked when the summary is clicked.
+ * @param onSummaryClick A callback to be invoked when the summary is clicked.
  */
-@Suppress("FunctionNaming")
 @Composable
 fun UrlDownloadableImage(
     summaryId: SummaryId,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     // A mutable state to hold the URL of the image to be downloaded and displayed.
     val imageUrlState = remember { mutableStateOf<String?>(null) }
@@ -37,6 +36,6 @@ fun UrlDownloadableImage(
         modifier = modifier,
         summaryId = summaryId.value,
         url = imageUrlState.value,
-        onSummaryClicked = onSummaryClicked
+        onSummaryClick = onSummaryClick
     )
 }
