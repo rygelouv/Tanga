@@ -52,10 +52,10 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun HomeScreen(
     onSearch: () -> Unit,
-    onProfilePictureClicked: () -> Unit,
+    onProfilePictureClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
@@ -66,7 +66,7 @@ fun HomeScreen(
         topBar = {
             HomeTopBar(
                 onSearch = onSearch,
-                onProfilePictureClicked = onProfilePictureClicked,
+                onProfilePictureClick = onProfilePictureClick,
                 photoUrl = state.userPhotoUrl
             )
         }
@@ -74,8 +74,8 @@ fun HomeScreen(
         LoadHomeContent(
             modifier = Modifier.padding(it),
             state = state,
-            onSummaryClicked = onSummaryClicked,
-            onErrorButtonClicked = { viewModel.onRetry() }
+            onSummaryClick = onSummaryClick,
+            onErrorButtonClick = { viewModel.onRetry() }
         )
     }
 }
@@ -83,9 +83,9 @@ fun HomeScreen(
 @Composable
 fun LoadHomeContent(
     state: HomeUiState,
-    onSummaryClicked: (String) -> Unit,
+    onSummaryClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    onErrorButtonClicked: () -> Unit = {}
+    onErrorButtonClick: () -> Unit = {}
 ) {
     if (state.progressState == ProgressState.Show) {
         AnimatedShimmerLoader(modifier)
@@ -94,8 +94,8 @@ fun LoadHomeContent(
             HomeContent(
                 modifier = modifier,
                 state = state,
-                onSummaryClicked = onSummaryClicked,
-                onErrorButtonClicked = onErrorButtonClicked
+                onSummaryClick = onSummaryClick,
+                onErrorButtonClick = onErrorButtonClick
             )
         }
     }
@@ -105,7 +105,7 @@ fun LoadHomeContent(
 fun HomeTopBar(
     photoUrl: String?,
     onSearch: () -> Unit,
-    onProfilePictureClicked: () -> Unit,
+    onProfilePictureClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -126,7 +126,7 @@ fun HomeTopBar(
             shape = CircleShape,
             size = 40.dp,
             hasBorder = true,
-            onClick = onProfilePictureClicked
+            onClick = onProfilePictureClick
         )
     }
 }
@@ -134,9 +134,9 @@ fun HomeTopBar(
 @Composable
 fun HomeContent(
     state: HomeUiState,
-    onSummaryClicked: (String) -> Unit,
+    onSummaryClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    onErrorButtonClicked: () -> Unit = {}
+    onErrorButtonClick: () -> Unit = {}
 ) {
     val dailySummary =
         remember {
@@ -165,7 +165,7 @@ fun HomeContent(
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
             item {
-                HomeTopCard(summaryUi = dailySummary, onSummaryClicked = onSummaryClicked)
+                HomeTopCard(summaryUi = dailySummary, onSummaryClick = onSummaryClick)
             }
             state.sections?.let {
                 items(it.size) { index ->
@@ -174,7 +174,7 @@ fun HomeContent(
                         sectionTitle = section.title,
                         isFirst = index == 0,
                         summaries = section.summaries.toImmutableList(),
-                        onSummaryClicked = onSummaryClicked
+                        onSummaryClick = onSummaryClick
                     )
                 }
             }
@@ -183,7 +183,7 @@ fun HomeContent(
                     ErrorContent(
                         errorInfo = it.info,
                         canRetry = true,
-                        onClick = onErrorButtonClicked
+                        onClick = onErrorButtonClick
                     )
                 }
             }
@@ -212,7 +212,7 @@ fun HomeSection(
     summaries: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
     isFirst: Boolean = false,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     Column {
         Spacer(modifier = modifier.height(if (isFirst) 22.dp else 28.dp))
@@ -239,13 +239,13 @@ fun HomeSection(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClicked = onSummaryClicked)
+        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClick = onSummaryClick)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeSectionPreview() {
+private fun HomeSectionPreview() {
     HomeSection(
         sectionTitle = "Personal Growth",
         isFirst = true,
@@ -255,6 +255,6 @@ fun HomeSectionPreview() {
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen({}, {}, onSummaryClicked = {})
+private fun HomeScreenPreview() {
+    HomeScreen({}, {}, onSummaryClick = {})
 }

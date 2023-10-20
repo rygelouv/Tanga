@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import app.books.tanga.entity.UserId
 import app.books.tanga.errors.SentryTracker

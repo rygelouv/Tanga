@@ -20,7 +20,7 @@ import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.icons.TangaIcons
 
 @Composable
-fun EmptyLibraryScreen(modifier: Modifier = Modifier, onExploreButtonClicked: () -> Unit) {
+fun EmptyLibraryScreen(modifier: Modifier = Modifier, onExploreButtonClick: () -> Unit) {
     Column(
         modifier = modifier.padding(top = 64.dp, bottom = 34.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,7 +44,7 @@ fun EmptyLibraryScreen(modifier: Modifier = Modifier, onExploreButtonClicked: ()
             modifier = Modifier
                 .fillMaxWidth()
                 .height(64.dp),
-            onClick = onExploreButtonClicked,
+            onClick = onExploreButtonClick,
             rightIcon = TangaIcons.Search,
             text = stringResource(id = R.string.library_explore_summaries)
         )

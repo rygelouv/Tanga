@@ -13,14 +13,14 @@ import kotlinx.collections.immutable.ImmutableList
 fun SummaryRow(
     summaries: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         items(summaries) { summary ->
-            SummaryItemSmall(summary = summary, onSummaryClicked = onSummaryClicked)
+            SummaryItemSmall(summary = summary, onSummaryClick = onSummaryClick)
         }
     }
 }

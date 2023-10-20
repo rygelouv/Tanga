@@ -14,7 +14,7 @@ import kotlinx.collections.immutable.ImmutableList
 fun SummaryGrid(
     summaries: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -25,7 +25,7 @@ fun SummaryGrid(
         items(summaries) { summary ->
             SummaryItemBig(
                 summary = summary,
-                onSummaryClicked = onSummaryClicked
+                onSummaryClick = onSummaryClick
             )
         }
     }

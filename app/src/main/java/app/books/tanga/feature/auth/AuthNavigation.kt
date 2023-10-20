@@ -14,7 +14,7 @@ fun NavGraphBuilder.authentication(
 ) {
     composable(route = NavigationScreen.Authentication.route) {
         AuthScreen(
-            onAuthSkipped = onAuthSkipped,
+            onAuthSkip = onAuthSkipped,
             onAuthSuccess = onAuthSuccess
         )
     }

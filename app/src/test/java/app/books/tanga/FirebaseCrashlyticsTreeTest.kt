@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import android.util.Log
 import app.books.tanga.errors.CrashlyticsNonFatalException

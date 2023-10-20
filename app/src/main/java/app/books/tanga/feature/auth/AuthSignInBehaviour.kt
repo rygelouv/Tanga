@@ -32,14 +32,14 @@ import app.books.tanga.common.ui.ProgressState
 fun SignIn(
     onAuthSuccess: () -> Unit,
     event: AuthUiEvent,
-    onGoogleSignInCompleted: (Intent) -> Unit
+    onGoogleSignInComplete: (Intent) -> Unit
 ) {
     val launcher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartIntentSenderForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                result.data?.let(onGoogleSignInCompleted)
+                result.data?.let(onGoogleSignInComplete)
             }
         }
 

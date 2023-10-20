@@ -83,10 +83,10 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hil
                 state.categories?.let {
                     CategoriesSection(
                         categories = it.toImmutableList(),
-                        onCategorySelected = { category ->
+                        onCategorySelect = { category ->
                             viewModel.onCategorySelected(category)
                         },
-                        onCategoryDeselected = { category ->
+                        onCategoryUnselect = { category ->
                             viewModel.onCategoryDeselected(category)
                         }
                     )
@@ -130,8 +130,8 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hil
 private fun CategoriesSection(
     categories: ImmutableList<CategoryUi>,
     modifier: Modifier = Modifier,
-    onCategoryDeselected: (CategoryUi) -> Unit = {},
-    onCategorySelected: (CategoryUi) -> Unit = {}
+    onCategorySelect: (CategoryUi) -> Unit = {},
+    onCategoryUnselect: (CategoryUi) -> Unit = {}
 ) {
     Column(modifier = modifier) {
         Text(
@@ -155,8 +155,8 @@ private fun CategoriesSection(
                     shape = RoundedCornerShape(8.dp),
                     hasBorder = true,
                     icon = it.icon,
-                    onSelected = { onCategorySelected(it) },
-                    onDeselected = { onCategoryDeselected(it) }
+                    onSelect = { onCategorySelect(it) },
+                    onUnselect = { onCategoryUnselect(it) }
                 )
             }
         }

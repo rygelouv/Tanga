@@ -7,7 +7,7 @@ import app.books.tanga.coreui.components.TangaDescriptionText
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun TangaDescriptionTexPreviewLong() {
+private fun TangaDescriptionTexPreviewLong() {
     TangaDescriptionText(
         text =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
@@ -40,7 +40,7 @@ fun TangaDescriptionTexPreviewLong() {
     device = "id:pixel_4a"
 )
 @Composable
-fun TangaDescriptionTexPreview() {
+private fun TangaDescriptionTexPreview() {
     TangaDescriptionText(
         text =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +

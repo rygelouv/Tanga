@@ -34,7 +34,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 
 @Composable
 fun AuthScreen(
-    onAuthSkipped: () -> Unit,
+    onAuthSkip: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = hiltViewModel(),
     onAuthSuccess: () -> Unit
@@ -64,7 +64,7 @@ fun AuthScreen(
                     shape = RoundedCornerShape(20.dp),
                     elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
                     onClick = {
-                        onAuthSkipped()
+                        onAuthSkip()
                     }
                 ) {
                     Text(
@@ -84,7 +84,7 @@ fun AuthScreen(
             state = state,
             event = events,
             onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
-            onGoogleSignInCompleted = { intent -> viewModel.onGoogleSignInCompleted(intent) }
+            onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) }
         )
     }
 }
@@ -96,12 +96,12 @@ fun AuthContent(
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
-    onGoogleSignInCompleted: (Intent) -> Unit
+    onGoogleSignInComplete: (Intent) -> Unit
 ) {
     SignIn(
         onAuthSuccess = onAuthSuccess,
         event = event,
-        onGoogleSignInCompleted = onGoogleSignInCompleted
+        onGoogleSignInComplete = onGoogleSignInComplete
     )
 
     Column(
@@ -120,32 +120,9 @@ fun AuthContent(
             painter = painterResource(id = R.drawable.graphic_pricing),
             contentDescription = "app icon"
         )
-        Column(
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.auth_welcome_to_tanga),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 41.dp)
-                    .padding(top = 10.dp)
-                    .weight(1f),
-                color = MaterialTheme.colorScheme.outline,
-                text = stringResource(id = R.string.auth_sign_up_with_google_message),
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
-            )
-        }
+        WelcomeMessageColumn(
+            modifier = Modifier.fillMaxWidth().weight(1f)
+        )
 
         // Google Sign In button
         GoogleSignInButton(state = state, onClick = onGoogleSignInButtonClick)
@@ -165,8 +142,35 @@ fun AuthContent(
     }
 }
 
+@Composable
+private fun WelcomeMessageColumn(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.auth_welcome_to_tanga),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 41.dp)
+                .padding(top = 10.dp)
+                .weight(1f),
+            color = MaterialTheme.colorScheme.outline,
+            text = stringResource(id = R.string.auth_sign_up_with_google_message),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 @Preview
 @Composable
-fun AuthScreenPreview() {
-    AuthScreen(onAuthSkipped = {}, onAuthSuccess = {})
+private fun AuthScreenPreview() {
+    AuthScreen(onAuthSkip = {}, onAuthSuccess = {})
 }

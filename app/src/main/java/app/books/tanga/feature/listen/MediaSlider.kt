@@ -18,7 +18,7 @@ import app.books.tanga.feature.audioplayer.PlaybackState
 fun MediaSlider(
     playbackState: PlaybackState?,
     modifier: Modifier = Modifier,
-    onSliderPositionChanged: (Long) -> Unit
+    onSliderPositionChange: (Long) -> Unit
 ) {
     // State variable to track whether the user is currently dragging the slider.
     var isDragging by remember { mutableStateOf(false) }
@@ -45,7 +45,7 @@ fun MediaSlider(
         onValueChangeFinished = {
             // Once the user stops dragging, update the playback position and reset the dragging state.
             isDragging = false
-            onSliderPositionChanged(dragValue.toLong())
+            onSliderPositionChange(dragValue.toLong())
         },
         valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f)
     )

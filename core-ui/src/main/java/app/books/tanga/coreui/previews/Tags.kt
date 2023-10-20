@@ -8,7 +8,7 @@ import app.books.tanga.coreui.components.Tag
 
 @Preview
 @Composable
-fun TagPreview() {
+private fun TagPreview() {
     Tag(
         text = "Business",
         icon = R.drawable.ic_indicator_graphic,

@@ -25,9 +25,9 @@ fun NavGraphBuilder.summaryDetails(
             summaryId = backStackEntry
                 .arguments
                 ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
-            onBackClicked = onBackClicked,
-            onPlayClicked = { summaryId -> onPlayClicked(summaryId) },
-            onRecommendationClicked = onRecommendationClicked
+            onBackClick = onBackClicked,
+            onPlayClick = { summaryId -> onPlayClicked(summaryId) },
+            onRecommendationClick = onRecommendationClicked
         )
     }
 }

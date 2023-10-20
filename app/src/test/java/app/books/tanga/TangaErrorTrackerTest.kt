@@ -1,4 +1,4 @@
-package app.books.tanga.session
+package app.books.tanga
 
 import android.content.Context
 import app.books.tanga.entity.UserId
@@ -16,7 +16,8 @@ import org.junit.jupiter.api.Test
 
 class TangaErrorTrackerTest {
 
-    private val firebaseCrashlyticsUserTracker: FirebaseCrashlyticsUserTracker = mockk(relaxed = true)
+    private val firebaseCrashlyticsUserTracker: FirebaseCrashlyticsUserTracker =
+        mockk(relaxed = true)
     private val sentryTracker: SentryTracker = mockk(relaxed = true)
     private val context: Context = mockk()
 
@@ -24,7 +25,8 @@ class TangaErrorTrackerTest {
 
     @BeforeEach
     fun setup() {
-        tangaErrorTracker = TangaErrorTracker(firebaseCrashlyticsUserTracker, sentryTracker, context)
+        tangaErrorTracker =
+            TangaErrorTracker(firebaseCrashlyticsUserTracker, sentryTracker, context)
     }
 
     @Test

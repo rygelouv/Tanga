@@ -7,7 +7,7 @@ import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.profile(onProClicked: () -> Unit = {}) {
     composable(route = NavigationScreen.BottomBarScreen.Profile.route) {
-        ProfileScreen(onProClicked = onProClicked)
+        ProfileScreen(onProClick = onProClicked)
     }
 }
 

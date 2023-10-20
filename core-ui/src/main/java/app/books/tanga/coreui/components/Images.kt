@@ -28,21 +28,21 @@ import com.bumptech.glide.integration.compose.placeholder
  *
  * @param modifier: An instance of [Modifier] that can be used to apply styling to the [Surface] and [Image] composable.
  * @param painter: The [Painter] object that represents the image to be displayed.
- * @param onSummaryClicked: The function to be executed when the image is clicked.
+ * @param onSummaryClick: The function to be executed when the image is clicked.
  * */
 @Composable
 fun SummaryImage(
     summaryId: String,
     painter: Painter,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     Surface(
         modifier =
         modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked(summaryId) },
+            .clickable { onSummaryClick(summaryId) },
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {
@@ -59,20 +59,19 @@ fun SummaryImage(
  * It uses Glide to load the image from a URL. If the URL is null, it uses a placeholder image.
  */
 @OptIn(ExperimentalGlideComposeApi::class)
-@Suppress("FunctionNaming")
 @Composable
 fun GlideSummaryImage(
     summaryId: String,
     modifier: Modifier = Modifier,
     url: String? = null,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     Surface(
         modifier =
         modifier
             .fillMaxWidth()
             .shadow(elevation = 10.dp)
-            .clickable { onSummaryClicked(summaryId) },
+            .clickable { onSummaryClick(summaryId) },
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     ) {

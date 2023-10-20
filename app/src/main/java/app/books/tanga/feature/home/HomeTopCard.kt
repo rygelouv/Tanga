@@ -43,7 +43,7 @@ import app.books.tanga.feature.summary.SummaryUi
 fun HomeTopCard(
     summaryUi: SummaryUi,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     val gradientColors =
         listOf(
@@ -56,7 +56,7 @@ fun HomeTopCard(
             .fillMaxWidth()
             .height(170.dp)
             .clickable {
-                onSummaryClicked(summaryUi.id.value)
+                onSummaryClick(summaryUi.id.value)
             },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
@@ -70,52 +70,63 @@ fun HomeTopCard(
                 ).padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(
-                modifier = Modifier.fillMaxHeight()
-            ) {
-                Tag(text = "Business", icon = TangaIcons.IndicatorGraphic)
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.home_top_card_title),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        color = Color.White,
-                        text = stringResource(id = R.string.home_top_card_action_text),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Icon(
-                        modifier = Modifier.size(18.dp),
-                        painter = painterResource(id = ic_right_arrow),
-                        contentDescription = null,
-                        tint = Color.White
-                    )
-                }
-            }
+            ContentColumn()
 
             SummaryImage(
                 summaryId = summaryUi.id.value,
                 modifier = Modifier.width(90.dp),
                 painter = painterResource(id = summaryUi.cover),
-                onSummaryClicked = onSummaryClicked
+                onSummaryClick = onSummaryClick
             )
         }
     }
 }
 
+@Composable
+private fun ContentColumn(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxHeight()
+    ) {
+        Tag(text = "Business", icon = TangaIcons.IndicatorGraphic)
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            modifier = Modifier.weight(1f),
+            text = stringResource(id = R.string.home_top_card_title),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.headlineSmall,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            maxLines = 2
+        )
+        ActionRow()
+    }
+}
+
+@Composable
+private fun ActionRow(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            color = Color.White,
+            text = stringResource(id = R.string.home_top_card_action_text),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Icon(
+            modifier = Modifier.size(18.dp),
+            painter = painterResource(id = ic_right_arrow),
+            contentDescription = null,
+            tint = Color.White
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-fun HomeTopCardPreview() {
-    HomeTopCard(summaryUi = FakeData.allSummaries().first(), onSummaryClicked = {})
+private fun HomeTopCardPreview() {
+    HomeTopCard(summaryUi = FakeData.allSummaries().first(), onSummaryClick = {})
 }

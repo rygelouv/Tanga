@@ -34,7 +34,7 @@ import app.books.tanga.feature.summary.SummaryUi
 @Composable
 fun SummaryItemBig(
     summary: SummaryUi,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     SummaryItem(
         summaryId = summary.id,
@@ -45,14 +45,14 @@ fun SummaryItemBig(
         hasGraphic = summary.hasGraphic,
         width = 134.dp,
         titleSize = 18.sp,
-        onSummaryClicked = onSummaryClicked
+        onSummaryClick = onSummaryClick
     )
 }
 
 @Composable
 fun SummaryItemSmall(
     summary: SummaryUi,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     SummaryItem(
         summaryId = summary.id,
@@ -63,7 +63,7 @@ fun SummaryItemSmall(
         hasGraphic = summary.hasGraphic,
         width = 120.dp,
         titleSize = 15.sp,
-        onSummaryClicked = onSummaryClicked
+        onSummaryClick = onSummaryClick
     )
 }
 
@@ -79,7 +79,7 @@ fun SummaryItem(
     width: Dp,
     titleSize: TextUnit,
     modifier: Modifier = Modifier,
-    onSummaryClicked: (String) -> Unit
+    onSummaryClick: (String) -> Unit
 ) {
     Column(
         modifier = modifier.width(width),
@@ -88,7 +88,7 @@ fun SummaryItem(
     ) {
         UrlDownloadableImage(
             summaryId = summaryId,
-            onSummaryClicked = onSummaryClicked,
+            onSummaryClick = onSummaryClick,
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
@@ -167,7 +167,7 @@ fun SummaryIndicators(
 
 @Preview
 @Composable
-fun SummaryItemPreview() {
+private fun SummaryItemPreview() {
     val summary = FakeData.allSummaries().first()
     SummaryItemBig(summary, {})
 }
