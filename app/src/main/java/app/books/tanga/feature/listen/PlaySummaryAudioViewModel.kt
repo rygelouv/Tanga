@@ -1,6 +1,5 @@
 package app.books.tanga.feature.listen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.errors.toUiError
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class PlaySummaryAudioViewModel @Inject constructor(
@@ -53,7 +53,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
                     val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
                     playerController.initPlayer(audioTrack, viewModelScope)
                 }.onFailure {
-                    Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
+                    Timber.e("Error loading summary with id: $summaryId", it)
                     _state.update { state ->
                         state.copy(error = it.toUiError())
                     }

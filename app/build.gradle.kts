@@ -116,6 +116,7 @@ dependencies {
     testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
 
     // Android Testing
     androidTestImplementation(libs.android.test.junit)
