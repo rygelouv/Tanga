@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtensionContext
 
 /**
  * This is JUnit5 extension class used to set the main dispatcher to a test dispatcher.
+ *
  * JUnit5 extensions are the equivalent of JUnit4 rules.
  */
 @ExperimentalCoroutinesApi
