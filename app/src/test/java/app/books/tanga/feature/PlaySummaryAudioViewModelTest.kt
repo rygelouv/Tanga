@@ -7,7 +7,7 @@ import app.books.tanga.feature.audioplayer.PlayerState
 import app.books.tanga.feature.listen.PlaySummaryAudioViewModel
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.fixtures.Fixtures
-import app.books.tanga.rule.MainCoroutineExtension
+import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.cash.turbine.test
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
 class PlaySummaryAudioViewModelTest {
 

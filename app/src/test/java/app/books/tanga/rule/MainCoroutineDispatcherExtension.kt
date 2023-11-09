@@ -9,8 +9,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
+/**
+ * This is JUnit5 extension class used to set the main dispatcher to a test dispatcher.
+ * JUnit5 extensions are the equivalent of JUnit4 rules.
+ */
 @ExperimentalCoroutinesApi
-class MainCoroutineExtension(
+class MainCoroutineDispatcherExtension(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 ) : BeforeAllCallback, ExtensionContext.Store.CloseableResource {
 

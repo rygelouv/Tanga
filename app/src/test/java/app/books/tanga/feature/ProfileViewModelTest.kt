@@ -5,7 +5,7 @@ import app.books.tanga.entity.User
 import app.books.tanga.entity.UserId
 import app.books.tanga.feature.auth.AuthenticationInteractor
 import app.books.tanga.feature.profile.ProfileViewModel
-import app.books.tanga.rule.MainCoroutineExtension
+import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionState
 import app.cash.turbine.test
 import io.mockk.coEvery
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
 @ExperimentalTime
 class ProfileViewModelTest {

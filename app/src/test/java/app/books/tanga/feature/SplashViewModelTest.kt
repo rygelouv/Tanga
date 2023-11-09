@@ -3,7 +3,7 @@ package app.books.tanga.feature
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.feature.splash.SplashViewModel
 import app.books.tanga.navigation.NavigationScreen
-import app.books.tanga.rule.MainCoroutineExtension
+import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionId
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
 class SplashViewModelTest {
 

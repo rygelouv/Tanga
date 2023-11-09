@@ -2,7 +2,7 @@ package app.books.tanga.feature
 
 import app.books.tanga.feature.main.MainUiEvent
 import app.books.tanga.feature.main.MainViewModel
-import app.books.tanga.rule.MainCoroutineExtension
+import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionId
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 class MainViewModelTest {

@@ -6,7 +6,7 @@ import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.library.LibraryViewModel
 import app.books.tanga.feature.library.toFavoriteUi
 import app.books.tanga.fixtures.Fixtures
-import app.books.tanga.rule.MainCoroutineExtension
+import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 private fun <E> List<E>.second(): E = this[1]
 
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
 @ExperimentalTime
 class LibraryViewModelTest {
