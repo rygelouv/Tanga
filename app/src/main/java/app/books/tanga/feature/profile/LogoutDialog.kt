@@ -4,9 +4,12 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.R
+import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
 fun LogoutDialog(
@@ -16,12 +19,12 @@ fun LogoutDialog(
     AlertDialog(
         onDismissRequest = { },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
+            TextButton(onClick = onConfirm, modifier = Modifier.testTag("confirm_button")) {
                 Text(text = stringResource(id = R.string.confirm))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = onDismiss, modifier = Modifier.testTag("dismiss_button")) {
                 Text(text = stringResource(id = R.string.cancel))
             }
         },
@@ -33,5 +36,7 @@ fun LogoutDialog(
 @Composable
 @Preview
 private fun LogoutDialogPreview() {
-    LogoutDialog({}, {})
+    TangaTheme {
+        LogoutDialog({}, {})
+    }
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,8 @@ fun ProfileContentAction(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true, color = MaterialTheme.colorScheme.navyTransparent)
             ) { onClick() }
-            .padding(horizontal = 30.dp, vertical = 15.dp),
+            .padding(horizontal = 30.dp, vertical = 15.dp)
+            .testTag("profile_action"),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
