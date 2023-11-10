@@ -52,6 +52,7 @@ accompanist-systemuicontroller-version = "0.28.0"
 coroutines-version = "1.6.4"
 
 # Google Services https://developers.google.com/android/guides/releases
+navigation-testing-version = "2.7.5"
 play-services-auth-version = "20.5.0"
 
 # Testing
@@ -157,6 +158,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine-version"
 android-test-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-junit-version" }
 android-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-version" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-version" }
+navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation-testing-version" }
 
 # Lint Checks
 slack-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "slack-compose-lint-ruleset-version" }

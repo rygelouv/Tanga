@@ -31,14 +31,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
-fun ProfileScreen(
+fun ProfileScreenContainer(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel(),
     onProClick: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    ProfileScreen(
+        state = state,
+        modifier = modifier,
+        onProClick = onProClick,
+        onLogout = { viewModel.onLogout() }
+    )
+}
+
+@Composable
+fun ProfileScreen(
+    state: ProfileUiState,
+    modifier: Modifier = Modifier,
+    onProClick: () -> Unit = {},
+    onLogout: () -> Unit = {}
+) {
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -67,8 +83,8 @@ fun ProfileScreen(
                     onProClick = onProClick
                 )
                 Spacer(modifier = Modifier.height(70.dp))
-                ProfileScreenContent {
-                    viewModel.onLogout()
+                ProfileScreenBody {
+                    onLogout()
                 }
             }
         }
@@ -76,7 +92,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileScreenContent(modifier: Modifier = Modifier, onLogout: () -> Unit) {
+fun ProfileScreenBody(modifier: Modifier = Modifier, onLogout: () -> Unit) {
     Surface(
         color = Color.White,
         modifier = modifier.fillMaxWidth(),
@@ -154,5 +170,12 @@ fun ProfileHeader(
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen()
+    TangaTheme {
+        ProfileScreen(
+            state = ProfileUiState(
+                fullName = "John Doe",
+                photoUrl = "https://picsum.photos/200/300"
+            )
+        )
+    }
 }

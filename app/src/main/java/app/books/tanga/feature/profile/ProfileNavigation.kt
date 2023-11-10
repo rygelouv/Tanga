@@ -5,9 +5,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
 
-fun NavGraphBuilder.profile(onProClicked: () -> Unit = {}) {
+fun NavGraphBuilder.profile(
+    onProClicked: () -> Unit = {}
+) {
     composable(route = NavigationScreen.BottomBarScreen.Profile.route) {
-        ProfileScreen(onProClick = onProClicked)
+        ProfileScreenContainer(onProClick = onProClicked)
     }
 }
 

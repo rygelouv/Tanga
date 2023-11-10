@@ -19,24 +19,28 @@ sealed class NavigationScreen(val route: String) {
     sealed class BottomBarScreen(
         route: String,
         @DrawableRes val unselectedIcon: Int,
-        @DrawableRes val selectedIcon: Int
+        @DrawableRes val selectedIcon: Int,
+        val testTag: String
     ) : NavigationScreen(route) {
         data object Home : BottomBarScreen(
             route = "home_screen",
             unselectedIcon = R.drawable.ic_bar_home_off,
-            selectedIcon = R.drawable.ic_bar_home_on
+            selectedIcon = R.drawable.ic_bar_home_on,
+            testTag = "home_screen"
         )
 
         data object Library : BottomBarScreen(
             route = "library_screen",
             unselectedIcon = R.drawable.ic_bar_library_off,
-            selectedIcon = R.drawable.ic_bar_library_on
+            selectedIcon = R.drawable.ic_bar_library_on,
+            testTag = "library_screen"
         )
 
         data object Profile : BottomBarScreen(
             route = "profile_screen",
             unselectedIcon = R.drawable.ic_bar_settings_off,
-            selectedIcon = R.drawable.ic_bar_settings_on
+            selectedIcon = R.drawable.ic_bar_settings_on,
+            testTag = "profile_screen"
         )
     }
 
