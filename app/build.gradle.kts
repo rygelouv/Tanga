@@ -192,6 +192,8 @@ sentry {
     includeSourceContext.set(true)
 }
 
+/*
 kover {
     useJacoco()
 }
+*/
