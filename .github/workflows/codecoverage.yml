@@ -24,7 +24,7 @@ jobs:
       - name: Load Google Services file
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA | base64 -di > app/google-services.json
+        run: echo $DATA | base64 -D > app/google-services.json
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.14.3
