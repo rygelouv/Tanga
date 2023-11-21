@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import app.books.tanga.feature.profile.ProfileScreen
 import app.books.tanga.feature.profile.ProfileUiState
+import org.junit.jupiter.api.Disabled
 import org.junit.Rule
 import org.junit.Test
 
