@@ -54,6 +54,30 @@ tasks.register<JacocoReport>("jacocoTestReport") {
     }
 }
 
+tasks.register<JacocoReport>("jacocoFullReport") {
+    dependsOn("jacocoTestReport", "createDebugCoverageReport")
+
+    additionalSourceDirs.setFrom(files("${project.projectDir}/src/main/java"))
+    sourceDirectories.setFrom(files("${project.projectDir}/src/main/java"))
+    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
+    executionData.setFrom(
+        files(
+            "$buildDir/jacoco/testDebugUnitTest.exec",
+            "$buildDir/outputs/code_coverage/debugAndroidTest/connected/*.ec"
+        )
+    )
+
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoFullReport"))
+    }
+
+    // Documentation for `reports`:
+    // `xml`, `csv`, `html`: Specify the types of reports you want to generate
+    // `html.outputLocation`: Specifies where the unified report will be generated
+}
+
 android {
     namespace = "app.books.tanga"
     compileSdk = 34
