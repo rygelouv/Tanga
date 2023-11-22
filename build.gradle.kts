@@ -4,8 +4,6 @@ buildscript {
     extra.set("hilt_version", "2.47")
 
     dependencies {
-        // Google Play Services
-        // classpath("com.google.gms:google-services:${rootProject.extra.get("google_services")}")
         // Hilt
         classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra.get("hilt_version")}")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1")
