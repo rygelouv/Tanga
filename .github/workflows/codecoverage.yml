@@ -42,7 +42,10 @@ jobs:
             #./gradlew createDebugCoverageReport:  
 
        # run: ./gradlew testDebugUnitTest
-        
+
+      - name: Run Kover
+        run: ./gradlew koverXmlReportDebug
+
       - name: Generate report
         uses: actions/upload-artifact@v2
         with:
@@ -61,6 +64,13 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: app/build/reports/coverage/androidTest/debug/connected/report.xml
+          fail_ci_if_error: true
+
+      - name: Upload Test Report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/kover/reportDebug.xml
           fail_ci_if_error: true
 
 #      - name: Upload Test Report
