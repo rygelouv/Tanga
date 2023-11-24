@@ -43,12 +43,12 @@ jobs:
 
        # run: ./gradlew testDebugUnitTest
         
-#      - name: Generate report
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: report
-#          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
-#         # path: app/build/test-results
+      - name: Generate report
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/androidTest/debug/connected/
+         # path: app/build/test-results
 
       - name: Download Test Reports Folder
         uses: actions/download-artifact@v2
