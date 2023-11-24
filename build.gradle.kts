@@ -24,7 +24,6 @@ plugins {
 }
 
 subprojects {
-    // Ktlint Gradle Plugin https://github.com/JLLeitschuh/ktlint-gradle
     project.apply("$rootDir/buildscripts/ktlint.gradle")
     project.apply("$rootDir/buildscripts/detekt.gradle")
 }

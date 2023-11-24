@@ -47,7 +47,6 @@ tasks.register<JacocoReport>("jacocoTestReport") {
             mapOf(
                 "dir" to buildDir,
                 "includes" to listOf(
-                    // "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec" - we collect onnly androidTest coverage
                     "outputs/code_coverage/debugAndroidTest/connected/*coverage.ec"
                 )
             )

@@ -1,0 +1,71 @@
+# This is a workflow to run Unit and Android tests and generate code coverage reports
+# It also uploads the reports to Codecov for later access
+
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request on the dev branch
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # This step installs JDK 17 using the Zulu distribution. It's necessary for building the app.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+        # Loads the Google Services configuration file from a secret, decodes it, and saves it to the app directory.
+        # This file is essential for making Firebase services work into the app.
+      - name: Load Google Services file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA | base64 -D > app/google-services.json
+
+        # Executes Android tests in an emulator.
+        # It uses an emulator with API level 29 and runs the 'jacocoTestReport' Gradle task for generating code coverage reports.
+      - name: Android Tests with Android Emulator Runner
+        uses: ReactiveCircus/android-emulator-runner@v2.14.3
+        with:
+          api-level: 29
+          script: ./gradlew jacocoTestReport
+
+        # Generates a Kotlin code coverage report using the Kover tool.
+        # This step is crucial for assessing the coverage of unit tests written in Kotlin.
+      - name: Run Unit Tests with Kover (Kotlin Code Coverage)
+        run: ./gradlew koverXmlReportDebug
+
+        # Uploads the generated Android instrumented test coverage reports as artifacts for later access.
+        # This step ensures that test results are stored and retrievable.
+      - name: Generate report
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/androidTest/debug/connected/
+
+        # Uploads the Android instrumented test coverage report to Codecov using a provided token.
+        # If there's an error in uploading, the CI process will fail.
+      - name: Upload Android Instrumented Test Report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/coverage/androidTest/debug/connected/report.xml
+          fail_ci_if_error: true
+
+        # Similar to the previous step, this uploads the Kotlin unit test coverage report to Codecov.
+        # It also fails the CI process if an error occurs during upload.
+      - name: Upload Unit Test Report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/kover/reportDebug.xml
+          fail_ci_if_error: true
