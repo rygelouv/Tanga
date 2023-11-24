@@ -38,25 +38,41 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.14.3
         with: 
             api-level: 29
-            script: ./gradlew connectedCheck
+            script: ./gradlew jacocoTestReport
             #./gradlew createDebugCoverageReport:  
 
        # run: ./gradlew testDebugUnitTest
-        
-      - name: generate report
+
+      - name: Run Kover
+        run: ./gradlew koverXmlReportDebug
+
+      - name: Generate report
         uses: actions/upload-artifact@v2
         with:
-          name: report 
-          path: app/build/reports/coverage/debug
-         # path: app/build/test-results
-            
-      
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
           name: report
-          path: app/build/reports/coverage/debug
-        
+          path: app/build/reports/coverage/androidTest/debug/connected/
+         # path: app/build/test-results
+
+#      - name: Download Test Reports Folder
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: report
+#          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
+
       - name: Upload Test Report
-        run:  bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
-        #
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/coverage/androidTest/debug/connected/report.xml
+          fail_ci_if_error: true
+
+      - name: Upload Test Report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/kover/reportDebug.xml
+          fail_ci_if_error: true
+
+#      - name: Upload Test Report
+#        run:  bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/androidTest/debug/connected/report.xml"
+#        #

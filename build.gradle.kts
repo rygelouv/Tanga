@@ -7,6 +7,7 @@ buildscript {
         // Hilt
         classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra.get("hilt_version")}")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1")
+        classpath("org.jacoco:org.jacoco.core:0.8.11")
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlinx.kover")
+    // / id("org.jetbrains.kotlinx.kover")
 }
 
 android {
@@ -19,6 +19,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -68,8 +72,4 @@ dependencies {
     debugApi(libs.compose.tooling)
     debugApi(libs.compose.test.manifest)
     lintChecks(libs.slack.compose.lint.checks)
-}
-
-kover {
-    useJacoco()
 }

@@ -10,6 +10,8 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
+apply(from = "${project.rootDir}/buildscripts/jacoco.gradle.kts")
+
 android {
     namespace = "app.books.tanga"
     compileSdk = 34
@@ -27,7 +29,16 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        // unitTests.isIncludeAndroidResources = true
+    }
+
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -36,19 +47,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -129,11 +145,7 @@ dependencies {
 }
 
 sentry {
-    // this will upload your source code to Sentry to show it as part of the stack traces
-    // disable if you don't want to expose your sources
+    // this will upload our source code to Sentry to show it as part of the stack traces
+    // we will disable if we don't want to expose our sources anymore
     includeSourceContext.set(true)
-}
-
-kover {
-    useJacoco()
 }
