@@ -50,11 +50,11 @@ jobs:
           path: app/build/reports/coverage/androidTest/debug/connected/
          # path: app/build/test-results
 
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
-          name: report
-          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
+#      - name: Download Test Reports Folder
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: report
+#          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
 
       - name: Upload Test Report
         uses: codecov/codecov-action@v3
