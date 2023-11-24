@@ -10,73 +10,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-tasks.register<JacocoReport>("jacocoTestReport") {
-    dependsOn("testDebugUnitTest", "createDebugCoverageReport")
-
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
-
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-        "**/*Module.*",
-        "**/*Dagger*.*",
-        "**/*MembersInjector*.*",
-        "**/*_Provide*Factory*.*",
-        "**/*_Factory.*",
-    )
-    val debugTree = fileTree(mapOf("dir" to "$buildDir/intermediates/classes/debug", "excludes" to fileFilter))
-    val mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(files(mainSrc))
-    classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(
-        fileTree(
-            mapOf(
-                "dir" to buildDir,
-                "includes" to listOf(
-                    "jacoco/testDebugUnitTest.exec",
-                    "outputs/code-coverage/connected/*coverage.ec"
-                )
-            )
-        )
-    )
-
-    doLast {
-        println("Wrote HTML coverage report to ${reports.html.entryPoint}")
-        println("Wrote XML coverage report to ${reports.xml.name}")
-    }
-}
-
-tasks.register<JacocoReport>("jacocoFullReport") {
-    dependsOn("jacocoTestReport", "createDebugCoverageReport")
-
-    additionalSourceDirs.setFrom(files("${project.projectDir}/src/main/java"))
-    sourceDirectories.setFrom(files("${project.projectDir}/src/main/java"))
-    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
-    executionData.setFrom(
-        files(
-            "$buildDir/jacoco/testDebugUnitTest.exec",
-            "$buildDir/outputs/code_coverage/debugAndroidTest/connected/*.ec"
-        )
-    )
-
-    reports {
-        xml.required.set(true)
-        csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoFullReport"))
-    }
-
-    // Documentation for `reports`:
-    // `xml`, `csv`, `html`: Specify the types of reports you want to generate
-    // `html.outputLocation`: Specifies where the unified report will be generated
-}
+apply(from = "${project.rootDir}/buildscripts/jacoco.gradle.kts")
 
 android {
     namespace = "app.books.tanga"
@@ -215,9 +149,3 @@ sentry {
     // we will disable if we don't want to expose our sources anymore
     includeSourceContext.set(true)
 }
-
-/*
-kover {
-    useJacoco()
-}
-*/

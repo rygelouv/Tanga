@@ -38,7 +38,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.14.3
         with: 
             api-level: 29
-            script: ./gradlew connectedCheck
+            script: ./gradlew jacocoTestReport
             #./gradlew createDebugCoverageReport:  
 
        # run: ./gradlew testDebugUnitTest
@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: report 
-          path: app/build/reports/coverage/debug
+          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
          # path: app/build/test-results
             
       
@@ -55,8 +55,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: report
-          path: app/build/reports/coverage/debug
+          path: app/build/reports/coverage/androidTest/debug/connected/report.xml
         
       - name: Upload Test Report
-        run:  bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
+        run:  bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/androidTest/debug/connected/report.xml"
         #
