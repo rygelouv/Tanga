@@ -1,3 +1,5 @@
+// A Jacoco configuration for Android projects. This task is used to generate code coverage reports.
+
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("createDebugCoverageReport")
 
