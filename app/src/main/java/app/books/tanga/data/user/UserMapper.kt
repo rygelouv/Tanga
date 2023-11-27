@@ -8,16 +8,40 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
 import java.util.Date
+import timber.log.Timber
 
-fun FirebaseUser.toUser(): User =
+fun FirebaseUser.toAnonymousUser(): User =
     User(
         id = UserId(uid),
-        fullName = requireNotNull(displayName),
-        email = requireNotNull(email),
+        fullName = "Anonymous",
+        email = "",
+        photoUrl = null,
+        isPro = false,
+        isAnonymous = true,
+        createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
+    )
+
+fun FirebaseUser.toUser(): User {
+    runCatching {
+        Timber.e("user id ====> $uid")
+        Timber.e("user email ====> $email")
+        Timber.e("user displayName ====> $displayName")
+        Timber.e("user photoUrl ====> $photoUrl")
+        Timber.e("user metadata ====> $metadata")
+        Timber.e("Create date ====> ${metadata?.creationTimestamp?.let { Date(it) } ?: Date()}")
+    }.onFailure {
+        Timber.e("Error ====> $it")
+    }
+
+    return User(
+        id = UserId(uid),
+        fullName = requireNotNull(displayName) { "User must have a display name" },
+        email = requireNotNull(email) { "User must have an email" },
         photoUrl = photoUrl?.toString(),
         isPro = false,
         createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
     )
+}
 
 fun User.toFireStoreUserData() =
     mapOf(

@@ -107,4 +107,14 @@ fun DomainError.toUiError(): UiError =
                 ),
                 throwable = throwable
             )
+
+        is DomainError.AuthenticationError ->
+            UiError(
+                info = UiErrorInfo(
+                    title = appMessage,
+                    message = TextResource.fromStringId(R.string.error_authentication_message),
+                    icon = null
+                ),
+                throwable = throwable
+            )
     }

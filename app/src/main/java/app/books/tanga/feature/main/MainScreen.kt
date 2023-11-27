@@ -17,7 +17,7 @@ import app.books.tanga.navigation.NavigationScreen
 
 @Composable
 fun MainScreen(
-    onLogout: () -> Unit,
+    onRedirectToAuth: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = hiltViewModel()
 ) {
@@ -27,7 +27,7 @@ fun MainScreen(
     when (event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
             LaunchedEffect(Unit) {
-                onLogout()
+                onRedirectToAuth()
             }
         }
         else -> Unit
@@ -40,7 +40,8 @@ fun MainScreen(
         Surface(modifier = Modifier.padding(it)) {
             MainNavigationGraph(
                 navController = navController,
-                startDestination = NavigationScreen.BottomBarScreen.Home
+                startDestination = NavigationScreen.BottomBarScreen.Home,
+                onRedirectToAuth = onRedirectToAuth
             )
         }
     }

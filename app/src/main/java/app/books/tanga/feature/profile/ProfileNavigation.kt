@@ -6,10 +6,11 @@ import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.profile(
-    onProClicked: () -> Unit = {}
+    onProClicked: () -> Unit = {},
+    onRedirectToAuth: () -> Unit
 ) {
     composable(route = NavigationScreen.BottomBarScreen.Profile.route) {
-        ProfileScreenContainer(onProClick = onProClicked)
+        ProfileScreenContainer(onNavigateToPricing = onProClicked, onNavigateToAuth = onRedirectToAuth)
     }
 }
 

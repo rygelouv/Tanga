@@ -95,6 +95,15 @@ sealed class DomainError(
         cause = throwable
     )
 
+    /** Represents an error indicating that an authentication operation has failed. */
+    data class AuthenticationError(
+        val throwable: Throwable? = null
+    ) : DomainError(
+        appMessage = TextResource.fromStringId(R.string.error_authentication_title),
+        exceptionMessage = "Authentication operation error",
+        cause = throwable
+    )
+
     /** Represents an error indicating that the favorite was not found */
     data class FavoriteNotFoundError(
         val throwable: Throwable? = null

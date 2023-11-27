@@ -11,6 +11,7 @@ data class User(
     val email: String,
     val photoUrl: String?,
     val isPro: Boolean,
+    val isAnonymous: Boolean = false,
     val createdAt: Date
 ) {
     val firsName: String

@@ -1,7 +1,6 @@
 package app.books.tanga.feature.auth
 
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
@@ -18,6 +17,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -39,8 +39,26 @@ class AuthViewModel @Inject constructor(
                 .onSuccess { initSignInResult ->
                     postEvent(AuthUiEvent.LaunchGoogleSignIn(signInResult = initSignInResult))
                 }.onFailure { error ->
-                    Log.e("AuthViewModel", "Init Google sign In failure: ${error.message}")
+                    Timber.e("Init Google sign In failure", error)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
+                    postEvent(AuthUiEvent.Error(error.toUiError()))
+                }
+        }
+    }
+
+    fun onSkipAuth() {
+        _state.update { it.copy(skipProgressState = ProgressState.Show) }
+        viewModelScope.launch {
+            interactor.signInAnonymously()
+                .onSuccess { user ->
+                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                    errorTracker.setUserDetails(
+                        userId = user.id,
+                        userCreationDate = user.createdAt
+                    )
+                }.onFailure { error ->
+                    _state.update { it.copy(skipProgressState = ProgressState.Hide) }
+                    Timber.e("Sign In Anonymously failure: ${error.message}", error)
                     postEvent(AuthUiEvent.Error(error.toUiError()))
                 }
         }
@@ -59,7 +77,7 @@ class AuthViewModel @Inject constructor(
                         userCreationDate = user.createdAt
                     )
                 }.onFailure { error ->
-                    Log.e("AuthViewModel", "Complete Google sign In failure: ${error.message}")
+                    Timber.e("Complete Google sign In failure", error)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     postEvent(AuthUiEvent.Error(error.toUiError()))
                 }

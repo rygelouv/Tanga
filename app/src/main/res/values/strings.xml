@@ -3,6 +3,7 @@
     <string name="contact_us">Contact Us</string>
     <string name="privay_and_terms">Privacy and Terms</string>
     <string name="notificaitons_label">Notifications</string>
+    <string name="sign_in">Sign In</string>
     <string name="logout">Logout</string>
     <string name="library">Library</string>
     <string name="library_empty">Your Library Is Empty</string>
@@ -76,4 +77,7 @@
     <string name="error_favorite_not_found_message">The summary was not found in your library of favorites</string>
     <string name="error_unable_to_sign_in_with_google_title">Unable to Sign in with Google</string>
     <string name="error_unable_to_sign_in_with_google_message">Sorry, we were not able to sign you in using Google. Please try again</string>
+    <string name="error_authentication_title">Authentication Error</string>
+    <string name="error_authentication_message">Sorry, there was an error during your authentication. Please try again</string>
+    <string name="profile_create_account">Create an Account</string>
 </resources>

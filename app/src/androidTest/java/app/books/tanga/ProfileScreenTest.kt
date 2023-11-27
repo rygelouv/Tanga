@@ -59,7 +59,7 @@ class ProfileScreenTest {
     @Test
     fun profileScreen_LogoutProcessInitiated() {
         composeTestRule.setContent {
-            ProfileScreen(state = ProfileUiState(), onLogout = { })
+            ProfileScreen(state = ProfileUiState(), onLogoutClick = { })
         }
 
         val logOutText = context.resources.getString(R.string.logout)

@@ -8,9 +8,9 @@ import app.books.tanga.navigation.NavigationScreen
 /**
  * Adds the main screen to the Nav Graph
  */
-fun NavGraphBuilder.mainScreen(onLogout: () -> Unit) {
+fun NavGraphBuilder.mainScreen(onRedirectToAuth: () -> Unit) {
     composable(route = NavigationScreen.Main.route) {
-        MainScreen(onLogout = onLogout)
+        MainScreen(onRedirectToAuth = onRedirectToAuth)
     }
 }
 

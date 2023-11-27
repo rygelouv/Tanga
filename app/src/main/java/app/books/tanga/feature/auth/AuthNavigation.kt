@@ -9,12 +9,10 @@ import app.books.tanga.navigation.NavigationScreen
  * Adds the Authentication screen to the Nav Graph
  */
 fun NavGraphBuilder.authentication(
-    onAuthSkipped: () -> Unit,
     onAuthSuccess: () -> Unit
 ) {
     composable(route = NavigationScreen.Authentication.route) {
-        AuthScreen(
-            onAuthSkip = onAuthSkipped,
+        AuthScreenContainer(
             onAuthSuccess = onAuthSuccess
         )
     }

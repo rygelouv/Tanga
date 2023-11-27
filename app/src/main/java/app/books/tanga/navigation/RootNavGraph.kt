@@ -20,8 +20,7 @@ fun NavigationGraph(
             OnboardingScreen(navController)
         }
         authentication(
-            onAuthSkipped = { navController.toMain(NavigationScreen.Authentication) },
-            onAuthSuccess = { navController.toMain(NavigationScreen.Authentication) }
+            onAuthSuccess = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) }
         )
         mainScreen {
             navController.toAuthentication(NavigationScreen.Main)

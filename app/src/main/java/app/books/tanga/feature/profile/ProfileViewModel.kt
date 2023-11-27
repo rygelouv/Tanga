@@ -6,8 +6,11 @@ import app.books.tanga.data.user.UserRepository
 import app.books.tanga.feature.auth.AuthenticationInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,8 +20,12 @@ class ProfileViewModel @Inject constructor(
     private val authInteractor: AuthenticationInteractor,
     private val userRepository: UserRepository
 ) : ViewModel() {
+
     private val _state: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState())
     val state: StateFlow<ProfileUiState> = _state.asStateFlow()
+
+    private val _events: MutableSharedFlow<ProfileUiEvent> = MutableSharedFlow()
+    val events: SharedFlow<ProfileUiEvent> = _events.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -27,16 +34,31 @@ class ProfileViewModel @Inject constructor(
                 _state.update { state ->
                     state.copy(
                         fullName = user.fullName,
-                        photoUrl = user.photoUrl
+                        photoUrl = user.photoUrl,
+                        isAnonymous = user.isAnonymous,
                     )
                 }
             }
         }
     }
 
+    fun onProUpgrade() {
+        postEvent(ProfileUiEvent.NavigateTo.ToPricingPlan(isAnonymous = state.value.isAnonymous))
+    }
+
+    fun onLogin() {
+        postEvent(ProfileUiEvent.NavigateTo.ToAuth(isAnonymous = state.value.isAnonymous))
+    }
+
     fun onLogout() {
         viewModelScope.launch {
             authInteractor.signOut().onSuccess {}
+        }
+    }
+
+    private fun postEvent(event: ProfileUiEvent) {
+        viewModelScope.launch {
+            _events.emit(event)
         }
     }
 }
