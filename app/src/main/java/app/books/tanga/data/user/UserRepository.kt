@@ -32,22 +32,29 @@ class UserRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : UserRepository, FirestoreOperationHandler by operationHandler {
     override suspend fun getUser(): Result<User?> {
-        val sessionId = prefDataStoreRepo.getSessionId().first() ?: return Result.success(null)
-        if (firebaseAuth.currentUser?.isAnonymous == true) {
-            return Result.success(firebaseAuth.currentUser?.toAnonymousUser())
+        val sessionId = prefDataStoreRepo.getSessionId().first()
+        val currentUser = firebaseAuth.currentUser
+        var result: Result<User?> = Result.success(null)
+
+        if (sessionId != null) {
+            result = if (currentUser?.isAnonymous == true) {
+                Result.success(currentUser.toAnonymousUser())
+            } else {
+                executeOperation {
+                    val uid = sessionId.value
+                    val userDocument =
+                        firestore
+                            .userCollection
+                            .document(uid)
+                            .get()
+                            .await()
+                    val userDataMap = userDocument.data
+                    userDataMap?.toUser(uid)
+                }
+            }
         }
 
-        return executeOperation {
-            val uid = sessionId.value
-            val userDocument =
-                firestore
-                    .userCollection
-                    .document(uid)
-                    .get()
-                    .await()
-            val userDataMap = userDocument.data
-            userDataMap?.toUser(uid)
-        }
+        return result
     }
 
     override suspend fun getUserId(): UserId? {
