@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -102,7 +103,7 @@ fun AuthScreen(
                         }
                         ProgressState.Show -> {
                             CircularProgressIndicator(
-                                modifier = Modifier.width(24.dp).padding(top = 6.dp),
+                                modifier = Modifier.width(24.dp).padding(top = 6.dp).testTag("ProgressIndicator"),
                                 color = MaterialTheme.colorScheme.surfaceVariant,
                                 trackColor = MaterialTheme.colorScheme.tertiary
                             )

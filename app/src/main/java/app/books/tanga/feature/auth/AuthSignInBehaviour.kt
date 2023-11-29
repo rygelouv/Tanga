@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -72,7 +73,8 @@ fun GoogleSignInButton(
         modifier = modifier
             .height(55.dp)
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
+            .padding(start = 16.dp, end = 16.dp)
+            .testTag("GoogleSignInButton"),
         onClick = {
             onClick()
         },
@@ -88,7 +90,7 @@ fun GoogleSignInButton(
             when (progressState) {
                 ProgressState.Show ->
                     CircularProgressIndicator(
-                        modifier = Modifier.size(30.dp),
+                        modifier = Modifier.size(30.dp).testTag("ProgressIndicator"),
                         color = Color.White
                     )
 

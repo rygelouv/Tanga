@@ -44,7 +44,7 @@ fun ProfileScreenContainer(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val event by viewModel.events.collectAsStateWithLifecycle(initialValue = ProfileUiEvent.Empty)
 
-    HandleEvents(event = event, onRedirectToAuth = onNavigateToAuth, onNavigateToPricing = onNavigateToPricing)
+    HandleEvents(event = event, onNavigateToAuth = onNavigateToAuth, onNavigateToPricing = onNavigateToPricing)
 
     ProfileScreen(
         state = state,
@@ -58,13 +58,13 @@ fun ProfileScreenContainer(
 @Composable
 fun HandleEvents(
     event: ProfileUiEvent,
-    onRedirectToAuth: () -> Unit,
+    onNavigateToAuth: () -> Unit,
     onNavigateToPricing: () -> Unit
 ) {
     when (event) {
         is ProfileUiEvent.NavigateTo.ToAuth -> {
             LaunchedEffect(Unit) {
-                onRedirectToAuth()
+                onNavigateToAuth()
             }
         }
 

@@ -5,13 +5,9 @@ import app.books.tanga.errors.UiError
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 
 data class AuthUiState(
-    val googleSignInButtonProgressState: ProgressState,
+    val googleSignInButtonProgressState: ProgressState = ProgressState.Hide,
     val skipProgressState: ProgressState = ProgressState.Hide,
-) {
-    companion object {
-        fun emptyState() = AuthUiState(googleSignInButtonProgressState = ProgressState.Hide)
-    }
-}
+)
 
 sealed interface AuthUiEvent {
     data object Empty : AuthUiEvent

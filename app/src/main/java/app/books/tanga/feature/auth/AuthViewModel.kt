@@ -25,7 +25,7 @@ class AuthViewModel @Inject constructor(
     private val signInClient: SignInClient,
     private val errorTracker: TangaErrorTracker
 ) : ViewModel() {
-    private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState.emptyState())
+    private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState())
     val state: StateFlow<AuthUiState> = _state.asStateFlow()
 
     private val _events: MutableSharedFlow<AuthUiEvent> = MutableSharedFlow()
