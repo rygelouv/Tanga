@@ -9,11 +9,21 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import app.books.tanga.R
+import app.books.tanga.feature.profile.HandleEvents
 import app.books.tanga.feature.profile.ProfileScreen
+import app.books.tanga.feature.profile.ProfileScreenContainer
+import app.books.tanga.feature.profile.ProfileUiEvent
 import app.books.tanga.feature.profile.ProfileUiState
+import app.books.tanga.feature.profile.ProfileViewModel
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 class ProfileScreenTest {
     @get:Rule
@@ -145,5 +155,63 @@ class ProfileScreenTest {
         composeTestRule.onNodeWithText(logOutText).performClick()
 
         composeTestRule.onNodeWithText(logOutDialogMessage).assertIsDisplayed()
+    }
+
+    @Test
+    fun profileScreenContainer_RendersCorrectlyWhenUserIsLoggedIn() {
+        val viewModel = mockk<ProfileViewModel>()
+        val mockState = mockk<StateFlow<ProfileUiState>>(relaxed = true)
+        val mockEvent = mockk<Flow<ProfileUiEvent>>(relaxed = true)
+
+        every { mockState.value } returns mockStateWithPermanentUser
+        every { viewModel.state } returns mockState
+        every { viewModel.events } returns mockEvent
+
+        composeTestRule.setContent {
+            ProfileScreenContainer(
+                onNavigateToAuth = {},
+                onNavigateToPricing = {},
+                viewModel = viewModel
+            )
+        }
+
+        composeTestRule.onNodeWithText("John Doe").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("profile_image").assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.profile_upgrade_to_pro)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.profile_create_account)).assertDoesNotExist()
+    }
+}
+
+class HandleEventsTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    private val mockOnNavigateToAuth: () -> Unit = mock()
+    private val mockOnNavigateToPricing: () -> Unit = mock()
+
+    @Test
+    fun navigateToAuthEvent_callsOnNavigateToAuth() {
+        composeTestRule.setContent {
+            HandleEvents(
+                event = ProfileUiEvent.NavigateTo.ToAuth(false),
+                onNavigateToAuth = mockOnNavigateToAuth,
+                onNavigateToPricing = {}
+            )
+        }
+
+        verify(mockOnNavigateToAuth).invoke()
+    }
+
+    @Test
+    fun navigateToPricingPlanEvent_callsOnNavigateToPricing() {
+        composeTestRule.setContent {
+            HandleEvents(
+                event = ProfileUiEvent.NavigateTo.ToPricingPlan(false),
+                onNavigateToAuth = {},
+                onNavigateToPricing = mockOnNavigateToPricing
+            )
+        }
+
+        verify(mockOnNavigateToPricing).invoke()
     }
 }
