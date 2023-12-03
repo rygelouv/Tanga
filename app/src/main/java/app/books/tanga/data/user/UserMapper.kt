@@ -9,15 +9,25 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
 import java.util.Date
 
-fun FirebaseUser.toUser(): User =
+fun FirebaseUser.toAnonymousUser(): User =
     User(
         id = UserId(uid),
-        fullName = requireNotNull(displayName),
-        email = requireNotNull(email),
-        photoUrl = photoUrl?.toString(),
+        fullName = "Anonymous",
+        email = "",
+        photoUrl = null,
         isPro = false,
+        isAnonymous = true,
         createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
     )
+
+fun FirebaseUser.toUser(): User = User(
+    id = UserId(uid),
+    fullName = requireNotNull(displayName) { "User must have a display name" },
+    email = requireNotNull(email) { "User must have an email" },
+    photoUrl = photoUrl?.toString(),
+    isPro = false,
+    createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
+)
 
 fun User.toFireStoreUserData() =
     mapOf(

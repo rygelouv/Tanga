@@ -1,6 +1,5 @@
-package app.books.tanga
+package app.books.tanga.profile
 
-import android.content.Context
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,46 +9,45 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.feature.profile.ProButton
+import app.books.tanga.feature.profile.ProfileAction
+import app.books.tanga.feature.profile.ProfileContentAction
 import org.junit.Rule
 import org.junit.Test
 
-class ProButtonTest {
+class ProfileActionTest {
+
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val text = context.resources.getString(R.string.profile_upgrade_to_pro)
+    private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
-    fun proButton_RendersCorrectly() {
+    fun profileContentAction_ContactRendersCorrectly() {
         composeTestRule.setContent {
             TangaTheme {
-                ProButton()
+                ProfileContentAction(action = ProfileAction.CONTACT)
             }
         }
 
+        val text = context.getString(ProfileAction.CONTACT.text)
+
+        // Assertions for CONTACT action
         composeTestRule.onNodeWithText(text).assertIsDisplayed()
-
-        // Verify that the icon is displayed
         composeTestRule.onNodeWithContentDescription("action icon").assertIsDisplayed()
-
-        // Verify that the button is clickable
-        composeTestRule.onNodeWithTag("pro_button").assertHasClickAction()
     }
 
     @Test
-    fun proButton_ClickTriggersAction() {
+    fun profileContentAction_ContactClickTriggersAction() {
         var clicked = false
 
         composeTestRule.setContent {
             TangaTheme {
-                ProButton(onClick = { clicked = true })
+                ProfileContentAction(action = ProfileAction.CONTACT, onClick = { clicked = true })
             }
         }
 
-        // Simulate user click on the ProButton
-        composeTestRule.onNodeWithText(text).performClick()
+        composeTestRule.onNodeWithTag("profile_action").assertHasClickAction()
+        composeTestRule.onNodeWithText("Contact Us").performClick()
 
         // Verify that the click triggers the onClick action
         assert(clicked)

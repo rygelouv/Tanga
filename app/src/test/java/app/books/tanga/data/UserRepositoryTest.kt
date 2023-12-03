@@ -10,6 +10,8 @@ import app.books.tanga.firestore.FirestoreOperationHandler
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.session.SessionId
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -31,6 +33,7 @@ class UserRepositoryTest {
     private val firestoreMock: FirebaseFirestore = mockk()
     private val prefDataStoreRepoMock: DefaultPrefDataStoreRepository = mockk()
     private val operationHandler: FirestoreOperationHandler = FakeFirestoreOperationHandler()
+    private val firebaseAuthMock: FirebaseAuth = mockk()
     private lateinit var userRepository: UserRepository
 
     @BeforeEach
@@ -38,7 +41,8 @@ class UserRepositoryTest {
         userRepository = UserRepositoryImpl(
             firestoreMock,
             prefDataStoreRepoMock,
-            operationHandler
+            operationHandler,
+            firebaseAuthMock
         )
         setupFirestoreMocks()
     }
@@ -48,8 +52,11 @@ class UserRepositoryTest {
         val mockDocumentReference = mockk<DocumentReference>()
         val mockCollectionReference = mockk<CollectionReference>()
         val mockTask = mockk<Task<DocumentSnapshot>>()
+        val mockFirebaseUser = mockk<FirebaseUser>()
         val mockVoidTask = mockk<Task<Void>>()
 
+        every { firebaseAuthMock.currentUser } returns mockFirebaseUser
+        every { mockFirebaseUser.isAnonymous } returns false
         every { firestoreMock.userCollection } returns mockCollectionReference
         every { mockCollectionReference.document(any()) } returns mockDocumentReference
         every { mockDocumentReference.get() } returns mockTask

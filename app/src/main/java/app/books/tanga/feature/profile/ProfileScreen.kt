@@ -31,29 +31,60 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
 fun ProfileScreenContainer(
+    onNavigateToAuth: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel(),
-    onProClick: () -> Unit = {}
+    onNavigateToPricing: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = ProfileUiEvent.Empty)
+
+    HandleEvents(event = event, onNavigateToAuth = onNavigateToAuth, onNavigateToPricing = onNavigateToPricing)
+
     ProfileScreen(
         state = state,
         modifier = modifier,
-        onProClick = onProClick,
-        onLogout = { viewModel.onLogout() }
+        onProClick = { viewModel.onProUpgrade() },
+        onLoginClick = { viewModel.onLogin() },
+        onLogoutClick = { viewModel.onLogout() }
     )
+}
+
+@Composable
+fun HandleEvents(
+    event: ProfileUiEvent,
+    onNavigateToAuth: () -> Unit,
+    onNavigateToPricing: () -> Unit
+) {
+    when (event) {
+        is ProfileUiEvent.NavigateTo.ToAuth -> {
+            LaunchedEffect(Unit) {
+                onNavigateToAuth()
+            }
+        }
+
+        is ProfileUiEvent.NavigateTo.ToPricingPlan -> {
+            LaunchedEffect(Unit) {
+                onNavigateToPricing()
+            }
+        }
+
+        else -> Unit
+    }
 }
 
 @Composable
 fun ProfileScreen(
     state: ProfileUiState,
+    onLoginClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onProClick: () -> Unit = {},
-    onLogout: () -> Unit = {}
+    onProClick: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier
@@ -80,19 +111,27 @@ fun ProfileScreen(
                     modifier = Modifier,
                     fullName = state.fullName,
                     photoUrl = state.photoUrl,
-                    onProClick = onProClick
+                    onProClick = onProClick,
+                    onLoginClick = onLoginClick,
+                    isAnonymous = state.isAnonymous
                 )
                 Spacer(modifier = Modifier.height(70.dp))
-                ProfileScreenBody {
-                    onLogout()
-                }
+                ProfileScreenBody(
+                    modifier = Modifier,
+                    onLogout = onLogoutClick,
+                    isAnonymous = state.isAnonymous
+                )
             }
         }
     }
 }
 
 @Composable
-fun ProfileScreenBody(modifier: Modifier = Modifier, onLogout: () -> Unit) {
+fun ProfileScreenBody(
+    isAnonymous: Boolean,
+    modifier: Modifier = Modifier,
+    onLogout: () -> Unit
+) {
     Surface(
         color = Color.White,
         modifier = modifier.fillMaxWidth(),
@@ -112,8 +151,10 @@ fun ProfileScreenBody(modifier: Modifier = Modifier, onLogout: () -> Unit) {
             ProfileContentAction(action = ProfileAction.CONTACT)
             ProfileContentAction(action = ProfileAction.PRIVACY_AND_TERMS)
             ProfileContentAction(action = ProfileAction.NOTIFICATIONS)
-            ProfileContentAction(action = ProfileAction.LOGOUT) {
-                openDialogState.value = true
+            if (isAnonymous.not()) {
+                ProfileContentAction(action = ProfileAction.LOGOUT) {
+                    openDialogState.value = true
+                }
             }
             Spacer(modifier = Modifier.height(60.dp))
 
@@ -138,6 +179,8 @@ fun ProfileScreenBody(modifier: Modifier = Modifier, onLogout: () -> Unit) {
 fun ProfileHeader(
     fullName: String?,
     photoUrl: String?,
+    isAnonymous: Boolean,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
     onProClick: () -> Unit = {}
 ) {
@@ -162,8 +205,17 @@ fun ProfileHeader(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        ProButton { onProClick() }
+        Spacer(modifier = Modifier.height(30.dp))
+        if (isAnonymous) {
+            TangaButtonLeftIcon(
+                text = stringResource(id = R.string.profile_create_account),
+                rightIcon = R.drawable.ic_mobile_user,
+                iconSize = 30.dp,
+                onClick = onLoginClick
+            )
+        } else {
+            ProButton { onProClick() }
+        }
     }
 }
 
@@ -175,7 +227,9 @@ private fun ProfileScreenPreview() {
             state = ProfileUiState(
                 fullName = "John Doe",
                 photoUrl = "https://picsum.photos/200/300"
-            )
+            ),
+            onLoginClick = {},
+            onLogoutClick = {}
         )
     }
 }

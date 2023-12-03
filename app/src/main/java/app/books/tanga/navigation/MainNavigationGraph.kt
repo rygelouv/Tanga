@@ -21,10 +21,11 @@ import app.books.tanga.feature.summary.toSummaryDetails
 @Composable
 fun MainNavigationGraph(
     navController: NavHostController,
-    startDestination: NavigationScreen.BottomBarScreen
+    startDestination: NavigationScreen.BottomBarScreen,
+    onRedirectToAuth: () -> Unit
 ) {
     NavHost(navController = navController, startDestination = startDestination.route) {
-        bottomBarNavGraph(navController = navController)
+        bottomBarNavGraph(navController = navController, onRedirectToAuth = onRedirectToAuth)
         summaryDetails(
             onBackClicked = { navController.popBackStack() },
             onPlayClicked = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
@@ -36,7 +37,7 @@ fun MainNavigationGraph(
     }
 }
 
-fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController, onRedirectToAuth: () -> Unit) {
     composable(route = NavigationScreen.BottomBarScreen.Home.route) {
         HomeScreen(
             onSearch = { navController.toSearch() },
@@ -50,5 +51,8 @@ fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController) {
             onFavoriteClick = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
     }
-    profile { navController.toPricingPlan() }
+    profile(
+        onProClicked = { navController.toPricingPlan() },
+        onRedirectToAuth = onRedirectToAuth
+    )
 }

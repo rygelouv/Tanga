@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,14 +32,38 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
-fun AuthScreen(
-    onAuthSkip: () -> Unit,
+fun AuthScreenContainer(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = hiltViewModel(),
     onAuthSuccess: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
+    AuthScreen(
+        state = state,
+        events = events,
+        modifier = modifier,
+        onAuthSkip = { viewModel.onSkipAuth() },
+        onAuthSuccess = onAuthSuccess,
+        onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
+        onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) }
+    )
+}
+
+@Composable
+fun AuthScreen(
+    state: AuthUiState,
+    events: AuthUiEvent,
+    onAuthSkip: () -> Unit,
+    onAuthSuccess: () -> Unit,
+    modifier: Modifier = Modifier,
+    onGoogleSignInButtonClick: () -> Unit = {},
+    onGoogleSignInComplete: (Intent) -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier,
@@ -67,24 +93,33 @@ fun AuthScreen(
                         onAuthSkip()
                     }
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.auth_skip),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                    when (state.skipProgressState) {
+                        ProgressState.Hide -> {
+                            Text(
+                                text = stringResource(id = R.string.auth_skip),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        ProgressState.Show -> {
+                            CircularProgressIndicator(
+                                modifier = Modifier.width(24.dp).padding(top = 6.dp).testTag("ProgressIndicator"),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                trackColor = MaterialTheme.colorScheme.tertiary
+                            )
+                        }
+                    }
                 }
             }
         }
     ) {
-        val state by viewModel.state.collectAsStateWithLifecycle()
-        val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
         AuthContent(
             modifier = Modifier.padding(it),
             onAuthSuccess = onAuthSuccess,
             state = state,
-            event = events,
-            onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
-            onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) }
+            events = events,
+            onGoogleSignInButtonClick = onGoogleSignInButtonClick,
+            onGoogleSignInComplete = onGoogleSignInComplete
         )
     }
 }
@@ -92,7 +127,7 @@ fun AuthScreen(
 @Composable
 fun AuthContent(
     state: AuthUiState,
-    event: AuthUiEvent,
+    events: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
@@ -100,7 +135,7 @@ fun AuthContent(
 ) {
     SignIn(
         onAuthSuccess = onAuthSuccess,
-        event = event,
+        event = events,
         onGoogleSignInComplete = onGoogleSignInComplete
     )
 
@@ -121,7 +156,9 @@ fun AuthContent(
             contentDescription = "app icon"
         )
         WelcomeMessageColumn(
-            modifier = Modifier.fillMaxWidth().weight(1f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
         )
 
         // Google Sign In button
@@ -172,5 +209,11 @@ private fun WelcomeMessageColumn(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun AuthScreenPreview() {
-    AuthScreen(onAuthSkip = {}, onAuthSuccess = {})
+    val state = AuthUiState(
+        googleSignInButtonProgressState = ProgressState.Hide
+    )
+    val events = AuthUiEvent.Empty
+    TangaTheme {
+        AuthScreen(onAuthSkip = {}, onAuthSuccess = {}, state = state, events = events)
+    }
 }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,14 +35,13 @@ fun SignIn(
     event: AuthUiEvent,
     onGoogleSignInComplete: (Intent) -> Unit
 ) {
-    val launcher =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartIntentSenderForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                result.data?.let(onGoogleSignInComplete)
-            }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.let(onGoogleSignInComplete)
         }
+    }
 
     when (event) {
         is AuthUiEvent.LaunchGoogleSignIn -> {
@@ -51,11 +51,13 @@ fun SignIn(
                 launcher.launch(intent)
             }
         }
+
         is AuthUiEvent.NavigateTo.ToHomeScreen -> {
             LaunchedEffect(Unit) {
                 onAuthSuccess()
             }
         }
+
         else -> Unit
     }
 }
@@ -71,7 +73,8 @@ fun GoogleSignInButton(
         modifier = modifier
             .height(55.dp)
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
+            .padding(start = 16.dp, end = 16.dp)
+            .testTag("GoogleSignInButton"),
         onClick = {
             onClick()
         },
@@ -87,9 +90,10 @@ fun GoogleSignInButton(
             when (progressState) {
                 ProgressState.Show ->
                     CircularProgressIndicator(
-                        modifier = Modifier.size(30.dp),
+                        modifier = Modifier.size(30.dp).testTag("ProgressIndicator"),
                         color = Color.White
                     )
+
                 else -> {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.google_logo),

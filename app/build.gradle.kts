@@ -138,6 +138,10 @@ dependencies {
     androidTestImplementation(libs.android.espresso.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.navigation.testing)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.mockk.agent)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.mockito.kotlin)
 
     // Lint Rules
     lintChecks(libs.slack.compose.lint.checks)

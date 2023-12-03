@@ -63,6 +63,9 @@ espresso-version = "3.5.1"
 # https://github.com/mockk/mockk/releases
 mockk-version = "1.13.8"
 
+mockito-android-version = "5.7.0"
+mockito-kotlin-version = "5.1.0"
+
 # Google Services
 # google-services-version = "4.3.15"
 
@@ -150,7 +153,11 @@ kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collect
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-version" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-version" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-version" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin-version" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito-android-version" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk-version" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk-version" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk-version" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-version" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine-version" }
 
