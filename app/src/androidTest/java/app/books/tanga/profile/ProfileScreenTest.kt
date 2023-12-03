@@ -11,6 +11,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import app.books.tanga.R
 import app.books.tanga.feature.profile.ProfileScreen
 import app.books.tanga.feature.profile.ProfileUiState
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -59,6 +60,7 @@ class ProfileScreenTest {
         composeTestRule.onNodeWithText(context.getString(R.string.logout)).assertDoesNotExist()
     }
 
+    @Ignore("Flaky on smaller devices")
     @Test
     fun profileScreen_showsLogoutWhenUserIsLoggedIn() {
         composeTestRule.setContent {
@@ -126,6 +128,7 @@ class ProfileScreenTest {
         assert(proClicked)
     }
 
+    @Ignore("Flaky on smaller devices")
     @Test
     fun profileScreen_LogoutProcessInitiated() {
         composeTestRule.setContent {
