@@ -1,10 +1,9 @@
-package app.books.tanga.feature
+package app.books.tanga.feature.profile
 
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.User
 import app.books.tanga.entity.UserId
 import app.books.tanga.feature.auth.AuthenticationInteractor
-import app.books.tanga.feature.profile.ProfileViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionState
 import app.cash.turbine.test
@@ -15,6 +14,7 @@ import java.util.Date
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -54,8 +54,9 @@ class ProfileViewModelTest {
         // Assert that the state flow emits the correct data
         viewModel.state.test {
             val item = awaitItem()
-            assert(item.fullName == user.fullName)
-            assert(item.photoUrl == user.photoUrl)
+            Assertions.assertTrue(item.fullName == user.fullName)
+            Assertions.assertTrue(item.photoUrl == user.photoUrl)
+            Assertions.assertFalse(item.isAnonymous)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -70,5 +71,31 @@ class ProfileViewModelTest {
 
         // Verify that signOut was called
         coVerify { authInteractor.signOut() }
+    }
+
+    @Test
+    fun `onProUpgrade triggers emission of NavigateToPricingPlan event`() = runTest {
+        // Call the onProUpgrade function
+        viewModel.onProUpgrade()
+
+        // Assert that the event flow emits the correct event
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is ProfileUiEvent.NavigateTo.ToPricingPlan)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onLogin triggers emission of NavigateToAuth event`() = runTest {
+        // Call the onLogin function
+        viewModel.onLogin()
+
+        // Assert that the event flow emits the correct event
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is ProfileUiEvent.NavigateTo.ToAuth)
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

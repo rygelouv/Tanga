@@ -6,12 +6,12 @@ import app.books.tanga.data.user.UserRepository
 import app.books.tanga.feature.auth.AuthenticationInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,8 +24,8 @@ class ProfileViewModel @Inject constructor(
     private val _state: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState())
     val state: StateFlow<ProfileUiState> = _state.asStateFlow()
 
-    private val _events: MutableSharedFlow<ProfileUiEvent> = MutableSharedFlow()
-    val events: SharedFlow<ProfileUiEvent> = _events.asSharedFlow()
+    private val _events: Channel<ProfileUiEvent> = Channel()
+    val events: Flow<ProfileUiEvent> = _events.receiveAsFlow()
 
     init {
         viewModelScope.launch {
@@ -58,7 +58,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun postEvent(event: ProfileUiEvent) {
         viewModelScope.launch {
-            _events.emit(event)
+            _events.send(event)
         }
     }
 }

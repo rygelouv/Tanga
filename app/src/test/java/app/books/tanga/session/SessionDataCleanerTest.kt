@@ -5,7 +5,8 @@ import app.books.tanga.errors.TangaErrorTracker
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
@@ -15,7 +16,9 @@ class SessionDataCleanerTest {
 
     private val favoriteInMemoryCache: FavoriteInMemoryCache = mockk(relaxed = true)
     private val errorTracker: TangaErrorTracker = mockk(relaxed = true)
-    private val ioDispatcher = TestCoroutineDispatcher()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val ioDispatcher = UnconfinedTestDispatcher()
 
     private lateinit var sessionDataCleaner: SessionDataCleaner
 
