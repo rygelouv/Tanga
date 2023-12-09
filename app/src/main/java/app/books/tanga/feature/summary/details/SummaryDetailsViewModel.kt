@@ -154,14 +154,13 @@ class SummaryDetailsViewModel @Inject constructor(
     }
 
     fun onPlayClick() {
-        postEvent(SummaryDetailsUiEvent.ShowAuthSuggestion)
-        /*viewModelScope.launch {
+        viewModelScope.launch {
             if (sessionManager.hasSession()) {
                 postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
             } else {
                 postEvent(SummaryDetailsUiEvent.ShowAuthSuggestion)
             }
-        }*/
+        }
     }
 
     private fun postEvent(event: SummaryDetailsUiEvent) {
