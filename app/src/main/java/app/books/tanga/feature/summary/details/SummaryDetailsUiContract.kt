@@ -1,6 +1,7 @@
 package app.books.tanga.feature.summary.details
 
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
 
@@ -19,3 +20,23 @@ data class SummaryDetailsUiState(
     val recommendations: List<SummaryUi> = emptyList(),
     val error: UiError? = null
 )
+
+sealed interface SummaryDetailsUiEvent {
+    data object Empty : SummaryDetailsUiEvent
+
+    data object ShowAuthSuggestion : SummaryDetailsUiEvent
+
+    sealed interface NavigateTo : SummaryDetailsUiEvent {
+        data class ToSummaryDetails(
+            val summaryId: SummaryId
+        ) : NavigateTo
+
+        data object ToPrevious : NavigateTo
+
+        data class ToAudioPlayer(
+            val summaryId: SummaryId
+        ) : NavigateTo
+
+        data object ToAuth : NavigateTo
+    }
+}

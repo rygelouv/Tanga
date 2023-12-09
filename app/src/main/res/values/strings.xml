@@ -80,4 +80,6 @@
     <string name="error_authentication_title">Authentication Error</string>
     <string name="error_authentication_message">Sorry, there was an error during your authentication. Please try again</string>
     <string name="profile_create_account">Create an Account</string>
+    <string name="auth_suggestion_title">Hold On, You Need to Sign In</string>
+    <string name="auth_suggestion_description">It seems like you don\'t have your Tanga Account created yet? Start by creating an account or sign in now. It won\'t take long</string>
 </resources>

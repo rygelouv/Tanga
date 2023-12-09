@@ -1,6 +1,7 @@
 package app.books.tanga.data.summary
 
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.CollectionReference
@@ -9,7 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
 
 interface SummaryRepository {
-    suspend fun getSummary(summaryId: String): Result<Summary>
+    suspend fun getSummary(summaryId: SummaryId): Result<Summary>
 
     /**
      * Get the list of summaries
@@ -28,12 +29,12 @@ class SummaryRepositoryImpl @Inject constructor(
     private val summaryInMemoryCache: SummaryInMemoryCache,
     private val operationHandler: FirestoreOperationHandler
 ) : SummaryRepository {
-    override suspend fun getSummary(summaryId: String): Result<Summary> =
+    override suspend fun getSummary(summaryId: SummaryId): Result<Summary> =
         operationHandler.executeOperation {
             val summary =
                 firestore
                     .summaryCollection
-                    .document(summaryId)
+                    .document(summaryId.value)
                     .get()
                     .await()
 

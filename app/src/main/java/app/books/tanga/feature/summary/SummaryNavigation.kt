@@ -5,13 +5,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import app.books.tanga.feature.summary.details.SummaryDetailsScreen
+import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.summary.details.SummaryDetailsScreenContainer
 import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.summaryDetails(
-    onBackClicked: () -> Unit,
-    onPlayClicked: (String) -> Unit,
-    onRecommendationClicked: (String) -> Unit
+    onNavigateToPreviousScreen: () -> Unit,
+    onNavigateToAuth: () -> Unit,
+    onNavigateToAudioPlayer: (SummaryId) -> Unit,
+    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
     composable(
         route = NavigationScreen.SummaryDetails.route,
@@ -21,13 +23,17 @@ fun NavGraphBuilder.summaryDetails(
             }
         )
     ) { backStackEntry ->
-        SummaryDetailsScreen(
-            summaryId = backStackEntry
+        val summaryId = SummaryId(
+            value = backStackEntry
                 .arguments
-                ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
-            onBackClick = onBackClicked,
-            onPlayClick = { summaryId -> onPlayClicked(summaryId) },
-            onRecommendationClick = onRecommendationClicked
+                ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!
+        )
+        SummaryDetailsScreenContainer(
+            summaryId = summaryId,
+            onNavigateToAuth = onNavigateToAuth,
+            onNavigateToPreviousScreen = onNavigateToPreviousScreen,
+            onNavigateToAudioPlayer = onNavigateToAudioPlayer,
+            onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
@@ -16,10 +17,13 @@ fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
             }
         )
     ) { backStackEntry ->
-        PlaySummaryAudioScreen(
-            summaryId = backStackEntry
+        val summaryId = SummaryId(
+            backStackEntry
                 .arguments
-                ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!,
+                ?.getString(NavigationScreen.SummaryDetails.SUMMARY_ID_KEY)!!
+        )
+        PlaySummaryAudioScreen(
+            summaryId = summaryId,
             onBackClick = onBackClicked
         )
     }

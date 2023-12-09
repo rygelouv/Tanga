@@ -29,6 +29,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -52,7 +55,9 @@ import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
+import app.books.tanga.feature.auth.AuthSuggestionBottomSheet
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.utils.openLink
@@ -60,21 +65,97 @@ import app.books.tanga.utils.shareSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-@Suppress("LongParameterList")
 @Composable
-fun SummaryDetailsScreen(
-    summaryId: String,
-    onBackClick: () -> Unit,
-    onPlayClick: (String) -> Unit,
+fun SummaryDetailsScreenContainer(
+    summaryId: SummaryId,
+    onNavigateToAuth: () -> Unit,
+    onNavigateToPreviousScreen: () -> Unit,
+    onNavigateToAudioPlayer: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
-    onRecommendationClick: (String) -> Unit
+    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         viewModel.loadSummary(summaryId)
     }
 
+    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = SummaryDetailsUiEvent.Empty)
+    HandleEvents(
+        event = event,
+        onNavigateToAuth = onNavigateToAuth,
+        onNavigateToPreviousScreen = onNavigateToPreviousScreen,
+        onNavigateToAudioPlayer = onNavigateToAudioPlayer,
+        onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
+    )
+
+    SummaryDetailsScreen(
+        state = state,
+        onBackClick = onNavigateToPreviousScreen,
+        onPlayClick = { viewModel.onPlayClick() },
+        modifier = modifier,
+        onRecommendationClick = onNavigateToRecommendedSummaryDetails
+    )
+}
+
+@Composable
+fun HandleEvents(
+    event: SummaryDetailsUiEvent,
+    onNavigateToAuth: () -> Unit,
+    onNavigateToPreviousScreen: () -> Unit,
+    onNavigateToAudioPlayer: (SummaryId) -> Unit,
+    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
+) {
+    var showAuthSuggestion by remember {
+        mutableStateOf(false)
+    }
+
+    if (showAuthSuggestion) {
+        AuthSuggestionBottomSheet(
+            onDismiss = { showAuthSuggestion = false }
+        )
+    }
+
+    when (event) {
+        is SummaryDetailsUiEvent.NavigateTo.ToAuth -> {
+            LaunchedEffect(Unit) {
+                onNavigateToAuth()
+            }
+        }
+        is SummaryDetailsUiEvent.NavigateTo.ToPrevious -> {
+            LaunchedEffect(Unit) {
+                onNavigateToPreviousScreen()
+            }
+        }
+        is SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer -> {
+            LaunchedEffect(Unit) {
+                onNavigateToAudioPlayer(event.summaryId)
+            }
+        }
+        is SummaryDetailsUiEvent.NavigateTo.ToSummaryDetails -> {
+            LaunchedEffect(Unit) {
+                onNavigateToRecommendedSummaryDetails(event.summaryId)
+            }
+        }
+        is SummaryDetailsUiEvent.ShowAuthSuggestion -> {
+            LaunchedEffect(Unit) {
+                showAuthSuggestion = true
+            }
+        }
+        else -> Unit
+    }
+}
+
+@Suppress("LongParameterList")
+@Composable
+fun SummaryDetailsScreen(
+    state: SummaryDetailsUiState,
+    onBackClick: () -> Unit,
+    onPlayClick: (SummaryId) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SummaryDetailsViewModel = hiltViewModel(),
+    onRecommendationClick: (SummaryId) -> Unit
+) {
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -89,20 +170,22 @@ fun SummaryDetailsScreen(
             )
         },
         floatingActionButton = {
-            PlayFloatingActionButton(
-                summaryId = summaryId,
-                onClick = onPlayClick
-            )
+            state.summary?.id?.let { summaryId ->
+                PlayFloatingActionButton(
+                    summaryId = summaryId,
+                    onClick = onPlayClick
+                )
+            }
         }
-    ) {
+    ) { paddingValues ->
         when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
             ProgressState.Hide ->
                 SummaryDetailsContent(
                     state = state,
-                    paddingValues = it,
+                    paddingValues = paddingValues,
                     onRecommendationClick = onRecommendationClick,
-                    onErrorButtonClick = { viewModel.loadSummary(summaryId) }
+                    onErrorButtonClick = { state.summary?.id?.let { viewModel.loadSummary(it) } }
                 )
         }
     }
@@ -112,7 +195,7 @@ fun SummaryDetailsScreen(
 private fun SummaryDetailsContent(
     state: SummaryDetailsUiState,
     paddingValues: PaddingValues,
-    onRecommendationClick: (String) -> Unit,
+    onRecommendationClick: (SummaryId) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
     state.summary?.let { summary ->
@@ -205,9 +288,9 @@ private fun SummaryTopAppBar(
 
 @Composable
 fun PlayFloatingActionButton(
-    summaryId: String,
+    summaryId: SummaryId,
     modifier: Modifier = Modifier,
-    onClick: (String) -> Unit
+    onClick: (SummaryId) -> Unit
 ) {
     FloatingActionButton(
         modifier = modifier,
@@ -437,7 +520,7 @@ private fun PurchaseButton(url: String) {
 fun Recommendations(
     recommendations: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
-    onRecommendationClick: (String) -> Unit
+    onRecommendationClick: (SummaryId) -> Unit
 ) {
     Column(modifier = modifier.padding(LocalSpacing.current.medium)) {
         Text(
@@ -451,7 +534,7 @@ fun Recommendations(
         SummaryRow(
             summaries = recommendations
         ) { summaryId ->
-            onRecommendationClick(summaryId)
+            onRecommendationClick(SummaryId(summaryId))
         }
     }
 }

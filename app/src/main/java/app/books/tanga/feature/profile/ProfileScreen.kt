@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.coreui.components.ProfileImage
-import app.books.tanga.coreui.components.TangaButtonLeftIcon
+import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
@@ -207,10 +207,8 @@ fun ProfileHeader(
         )
         Spacer(modifier = Modifier.height(30.dp))
         if (isAnonymous) {
-            TangaButtonLeftIcon(
+            TangaButton(
                 text = stringResource(id = R.string.profile_create_account),
-                rightIcon = R.drawable.ic_mobile_user,
-                iconSize = 30.dp,
                 onClick = onLoginClick
             )
         } else {

@@ -74,6 +74,41 @@ fun TangaButton(
 }
 
 /**
+ * This is a composable that displays a white button with text and a border.
+ */
+@Composable
+fun TangaLinedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = 64.dp,
+    elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
+    endPadding: Dp = 30.dp,
+    shape: RoundedCornerShape = RoundedCornerShape(16.dp)
+) {
+    Button(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = height),
+        onClick = onClick,
+        colors =
+        ButtonDefaults.buttonColors(
+            contentColor = MaterialTheme.colorScheme.primary,
+            containerColor = Color.White
+        ),
+        shape = shape,
+        elevation = elevation
+    ) {
+        Text(
+            modifier = Modifier.fillMaxWidth().padding(end = endPadding),
+            text = text,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.button
+        )
+    }
+}
+
+/**
  * This is a composable that displays a button with text and an icon on the right side.
  * The button has a rounded corner shape and a height of 64dp. When clicked, it triggers the onClick function.
  *

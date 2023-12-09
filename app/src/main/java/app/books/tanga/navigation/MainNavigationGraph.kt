@@ -27,9 +27,10 @@ fun MainNavigationGraph(
     NavHost(navController = navController, startDestination = startDestination.route) {
         bottomBarNavGraph(navController = navController, onRedirectToAuth = onRedirectToAuth)
         summaryDetails(
-            onBackClicked = { navController.popBackStack() },
-            onPlayClicked = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
-            onRecommendationClicked = { summaryId -> navController.toSummaryDetails(summaryId) }
+            onNavigateToAuth = onRedirectToAuth,
+            onNavigateToPreviousScreen = { navController.popBackStack() },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId.value) }
         )
         search()
         playSummaryAudio { navController.popBackStack() }

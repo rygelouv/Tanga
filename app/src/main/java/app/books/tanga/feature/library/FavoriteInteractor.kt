@@ -5,6 +5,7 @@ import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.DomainError
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -35,7 +36,7 @@ class FavoriteInteractor @Inject constructor(
     /**
      * Check if a given summary is a favorite.
      */
-    suspend fun isFavorite(summaryId: String): Result<Boolean> {
+    suspend fun isFavorite(summaryId: SummaryId): Result<Boolean> {
         val userId = userRepository.getUserId() ?: return Result.success(false)
         val favorite =
             favoriteRepository
@@ -68,7 +69,7 @@ class FavoriteInteractor @Inject constructor(
         )
     }
 
-    suspend fun deleteFavoriteBySummaryId(summaryId: String): Result<Unit> {
+    suspend fun deleteFavoriteBySummaryId(summaryId: SummaryId): Result<Unit> {
         val userId =
             userRepository.getUserId()
                 ?: return Result.failure(DomainError.UserNotAuthenticatedError())
