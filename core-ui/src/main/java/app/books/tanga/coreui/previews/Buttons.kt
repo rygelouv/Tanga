@@ -4,9 +4,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.R
 import app.books.tanga.coreui.components.SummaryActionButton
+import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaButtonRightIcon
+import app.books.tanga.coreui.components.TangaLinedButton
 import app.books.tanga.coreui.icons.TangaIcons
+
+@Preview
+@Composable
+private fun TangaButtonPreview() {
+    TangaButton(
+        text = "Get Started",
+        onClick = { }
+    )
+}
+
+@Preview
+@Composable
+private fun TangaLinedButtonPreview() {
+    TangaLinedButton(
+        text = "Get Started",
+        onClick = { },
+    )
+}
 
 @Preview
 @Composable

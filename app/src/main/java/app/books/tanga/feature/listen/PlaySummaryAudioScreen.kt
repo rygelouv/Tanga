@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.coreui.components.GlideSummaryImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.audioplayer.PlaybackState
 import app.books.tanga.feature.audioplayer.PlayerActions
 import app.books.tanga.feature.audioplayer.PlayerState
@@ -46,7 +47,7 @@ import app.books.tanga.utils.toTimeFormat
 
 @Composable
 fun PlaySummaryAudioScreen(
-    summaryId: String,
+    summaryId: SummaryId,
     modifier: Modifier = Modifier,
     viewModel: PlaySummaryAudioViewModel = hiltViewModel(),
     onBackClick: () -> Unit

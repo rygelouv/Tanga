@@ -2,6 +2,7 @@ package app.books.tanga.feature.listen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlayerActions
@@ -36,7 +37,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
         }
     }
 
-    fun loadSummary(summaryId: String) {
+    fun loadSummary(summaryId: SummaryId) {
         viewModelScope.launch {
             summaryInteractor
                 .getSummary(summaryId)

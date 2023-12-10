@@ -1,5 +1,6 @@
 package app.books.tanga.feature
 
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlaybackState
 import app.books.tanga.feature.audioplayer.PlayerController
@@ -58,7 +59,7 @@ class PlaySummaryAudioViewModelTest {
 
     @Test
     fun `Load summary successfully updates viewModel state and initializes player`() = runTest {
-        val summaryId = "1"
+        val summaryId = SummaryId("1")
         val summary = Fixtures.dummySummary1
         val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
 
@@ -71,7 +72,7 @@ class PlaySummaryAudioViewModelTest {
             viewModel.loadSummary(summaryId)
 
             val item = expectMostRecentItem()
-            assertEquals(summaryId, item.summaryId)
+            assertEquals(summaryId, SummaryId(item.summaryId!!))
             assertEquals("Content1", item.title)
             assertEquals("Author1", item.author)
             assertEquals("12:20", item.duration)
@@ -83,7 +84,7 @@ class PlaySummaryAudioViewModelTest {
 
     @Test
     fun `Loading summary failure updates viewModel state with error`() = runTest {
-        val summaryId = "summary123"
+        val summaryId = SummaryId("summary123")
         val exception = RuntimeException("Error")
 
         coEvery { summaryInteractor.getSummary(summaryId) } returns Result.failure(exception)

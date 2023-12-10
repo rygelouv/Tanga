@@ -4,6 +4,7 @@ import app.books.tanga.data.category.CategoryRepository
 import app.books.tanga.data.summary.SummaryRepository
 import app.books.tanga.entity.Category
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.utils.resultOf
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class SummaryInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val categoryRepository: CategoryRepository
 ) {
-    suspend fun getSummary(summaryId: String): Result<Summary> = summaryRepository.getSummary(summaryId)
+    suspend fun getSummary(summaryId: SummaryId): Result<Summary> = summaryRepository.getSummary(summaryId)
 
     /**
      * Get the list of summaries for the given category ids

@@ -3,6 +3,7 @@ package app.books.tanga.data.favorite
 import android.util.Log
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.firestore.FirestoreDatabase
 import app.books.tanga.firestore.FirestoreOperationHandler
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +35,7 @@ interface FavoriteRepository {
      * Get a favorite by its summary id
      */
     suspend fun getFavoriteBySummaryId(
-        summaryId: String,
+        summaryId: SummaryId,
         userId: String
     ): Result<Favorite?>
 
@@ -88,7 +89,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Get the favorite from the cache if it exists, otherwise get it from Firestore
      */
     override suspend fun getFavoriteBySummaryId(
-        summaryId: String,
+        summaryId: SummaryId,
         userId: String
     ): Result<Favorite?> =
         operationHandler.executeOperation {
@@ -126,7 +127,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      * Get the favorite from Firestore by its summary id
      */
     private suspend fun getFavoriteBySummaryIdFromFirestore(
-        summaryId: String,
+        summaryId: SummaryId,
         userId: String
     ): Result<Favorite?> =
         operationHandler.executeOperation {

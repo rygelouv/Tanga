@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+apply(from = "${project.rootDir}/buildscripts/jacoco.gradle.kts")
+
 android {
     namespace = "app.books.tanga.coreui"
     compileSdk = 34
@@ -44,6 +46,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    packagingOptions {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
+    }
 }
 
 dependencies {
@@ -71,4 +79,12 @@ dependencies {
     debugApi(libs.compose.tooling)
     debugApi(libs.compose.test.manifest)
     lintChecks(libs.slack.compose.lint.checks)
+
+    // Android Testing
+    androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(libs.android.espresso.core)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.navigation.testing)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.mockito.kotlin)
 }

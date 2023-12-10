@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <SmellBaseline>
+  <ManuallySuppressedIssues>
+    <ID>MatchingDeclarationName:Buttons.kt$Button</ID>
+    <ID>MatchingDeclarationName:ActionContent.kt$ActionData</ID>
+  </ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add graphic indicator support</ID>
     <ID>ForbiddenComment:LibraryScreen.kt$// TODO: Add video indicator support</ID>

@@ -2,6 +2,7 @@ package app.books.tanga.data.favorite
 
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.entity.SummaryId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +25,7 @@ class FavoriteInMemoryCache @Inject constructor() {
         cache.remove(favorite.id)
     }
 
-    fun getBySummaryId(summaryId: String): Favorite? = cache.values.find { it.summaryId == summaryId }
+    fun getBySummaryId(summaryId: SummaryId): Favorite? = cache.values.find { it.summaryId == summaryId.value }
 
     fun getAll(): List<Favorite> = cache.values.toList()
 
