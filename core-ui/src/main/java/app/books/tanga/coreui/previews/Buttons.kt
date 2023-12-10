@@ -12,7 +12,7 @@ import app.books.tanga.coreui.icons.TangaIcons
 
 @Preview
 @Composable
-fun TangaButtonPreview() {
+private fun TangaButtonPreview() {
     TangaButton(
         text = "Get Started",
         onClick = { }
@@ -21,7 +21,7 @@ fun TangaButtonPreview() {
 
 @Preview
 @Composable
-fun TangaLinedButtonPreview() {
+private fun TangaLinedButtonPreview() {
     TangaLinedButton(
         text = "Get Started",
         onClick = { },

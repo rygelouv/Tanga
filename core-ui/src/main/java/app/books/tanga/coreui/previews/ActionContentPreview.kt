@@ -11,7 +11,7 @@ import app.books.tanga.coreui.theme.TangaTheme
 
 @Preview
 @Composable
-fun ActionContentPreview() {
+private fun ActionContentPreview() {
     TangaTheme {
         ActionContent(
             data = ActionData(
