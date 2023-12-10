@@ -72,7 +72,7 @@ class PlaySummaryAudioViewModelTest {
             viewModel.loadSummary(summaryId)
 
             val item = expectMostRecentItem()
-            assertEquals(summaryId, item.summaryId)
+            assertEquals(summaryId, SummaryId(item.summaryId!!))
             assertEquals("Content1", item.title)
             assertEquals("Author1", item.author)
             assertEquals("12:20", item.duration)

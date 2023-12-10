@@ -1,6 +1,7 @@
 package app.books.tanga
 
 import app.books.tanga.data.favorite.FavoriteInMemoryCache
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.fixtures.Fixtures.dummyFavorite1
 import app.books.tanga.fixtures.Fixtures.dummyFavorite2
 import org.junit.jupiter.api.Assertions
@@ -20,7 +21,7 @@ class FavoriteInMemoryCacheTest {
     fun `adding favorite puts it in cache`() {
         val favorite = dummyFavorite1
         cache.add(favorite)
-        Assertions.assertEquals(favorite, cache.getBySummaryId("SummaryId1"))
+        Assertions.assertEquals(favorite, cache.getBySummaryId(SummaryId("SummaryId1")))
     }
 
     @Test
@@ -28,7 +29,7 @@ class FavoriteInMemoryCacheTest {
         val favorite = dummyFavorite1
         cache.add(favorite)
         cache.remove(favorite)
-        Assertions.assertNull(cache.getBySummaryId("Summary1"))
+        Assertions.assertNull(cache.getBySummaryId(SummaryId("SummaryId1")))
     }
 
     @Test
@@ -37,7 +38,7 @@ class FavoriteInMemoryCacheTest {
         val favorite2 = dummyFavorite2
         cache.add(favorite1)
         cache.add(favorite2)
-        Assertions.assertEquals(favorite2, cache.getBySummaryId("SummaryId2"))
+        Assertions.assertEquals(favorite2, cache.getBySummaryId(SummaryId("SummaryId2")))
     }
 
     @Test
