@@ -25,17 +25,6 @@ import app.books.tanga.coreui.resources.asString
 import app.books.tanga.coreui.theme.LocalSpacing
 
 /**
- * Represents the data needed to display an action content.
- */
-data class ActionData(
-    val title: TextResource,
-    val description: TextResource,
-    @DrawableRes val icon: Int,
-    val mainButton: Button,
-    val secondaryButton: Button? = null
-)
-
-/**
  * Action content is a component that is used to display a UI screen content with an image, title,
  * description and two buttons. The main button is always displayed. The secondary button is optional.
  */
@@ -92,3 +81,14 @@ fun ActionContent(
         }
     }
 }
+
+/**
+ * Represents the data needed to display an action content.
+ */
+data class ActionData(
+    val title: TextResource,
+    val description: TextResource,
+    @DrawableRes val icon: Int,
+    val mainButton: Button,
+    val secondaryButton: Button? = null
+)

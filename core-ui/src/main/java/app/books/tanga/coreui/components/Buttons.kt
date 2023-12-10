@@ -33,14 +33,6 @@ import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.coreui.theme.button
 
 /**
- * UI data class representation of a button.
- */
-data class Button(
-    val text: TextResource,
-    val onClick: () -> Unit
-)
-
-/**
  * This is a composable that displays a button with text.
  *
  * @param text: The text to be displayed on the button.
@@ -265,3 +257,11 @@ fun SummaryActionButton(
         )
     }
 }
+
+/**
+ * UI data class representation of a button.
+ */
+data class Button(
+    val text: TextResource,
+    val onClick: () -> Unit
+)
