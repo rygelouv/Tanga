@@ -13,7 +13,7 @@ import app.books.tanga.coreui.resources.TextResource
 
 @Preview
 @Composable
-fun TangaBottomSheetPreview() {
+private fun TangaBottomSheetPreview() {
     TangaBottomSheet(
         data = BottomSheetData(
             actionData = ActionData(
@@ -38,7 +38,7 @@ fun TangaBottomSheetPreview() {
 
 @Preview
 @Composable
-fun TangaBottomSheetContainerPreview() {
+private fun TangaBottomSheetContainerPreview() {
     TangaBottomSheetContainer(
         content = {
             ActionContent(
