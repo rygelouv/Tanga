@@ -21,19 +21,31 @@ fun SaveButton(
     isSaved: Boolean = false,
     onClick: () -> Unit
 ) {
-    IconButton(modifier = modifier.testTag("save_favorite"), onClick = { onClick() }) {
+    IconButton(modifier = modifier.testTag("save_favorite"), onClick = {
+        when (progressState) {
+            ProgressState.Hide -> {
+                onClick()
+            }
+
+            ProgressState.Show -> Unit
+        }
+    }) {
         when (progressState) {
             ProgressState.Hide -> {
                 if (isSaved) {
                     Icon(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .testTag("remove_favorite_icon"),
                         painter = painterResource(id = R.drawable.ic_save_filled),
                         tint = MaterialTheme.colorScheme.onTertiaryContainer,
                         contentDescription = "saved summary"
                     )
                 } else {
                     Icon(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .testTag("save_favorite_icon"),
                         painter = painterResource(id = R.drawable.ic_save),
                         tint = MaterialTheme.colorScheme.onTertiaryContainer,
                         contentDescription = "save summary"
@@ -43,7 +55,9 @@ fun SaveButton(
 
             ProgressState.Show -> {
                 CircularProgressIndicator(
-                    modifier = Modifier.width(24.dp),
+                    modifier = Modifier
+                        .width(24.dp)
+                        .testTag("saving_favorite_progress"),
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     trackColor = MaterialTheme.colorScheme.secondary
                 )

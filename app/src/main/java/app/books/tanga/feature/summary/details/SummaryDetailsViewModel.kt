@@ -1,6 +1,5 @@
 package app.books.tanga.feature.summary.details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
@@ -21,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class SummaryDetailsViewModel @Inject constructor(
@@ -38,7 +38,7 @@ class SummaryDetailsViewModel @Inject constructor(
     /**
      * Holding the domain summary object to help perform future operations
      */
-    lateinit var summary: Summary
+    private lateinit var summary: Summary
 
     /**
      * Load the summary with the given id then load the recommendations for this summary
@@ -59,7 +59,7 @@ class SummaryDetailsViewModel @Inject constructor(
                     loadFavoriteStatus(summaryId)
                     loadRecommendations(summary)
                 }.onFailure {
-                    Log.e("SummaryDetailsViewModel", "Error loading summary with id: $summaryId", it)
+                    Timber.e(it, "Error loading summary with id: $summaryId")
                     _state.update { state ->
                         state.copy(
                             progressState = ProgressState.Hide,
@@ -79,7 +79,7 @@ class SummaryDetailsViewModel @Inject constructor(
             .onSuccess { isFavorite ->
                 _state.update { it.copy(isFavorite = isFavorite) }
             }.onFailure { error ->
-                Log.e("SummaryDetailsViewModel", "Error loading favorite status", error)
+                Timber.e(error, "Error loading favorite status")
             }
     }
 
@@ -90,7 +90,7 @@ class SummaryDetailsViewModel @Inject constructor(
                 .onSuccess { recommendations ->
                     _state.update { it.copy(recommendations = recommendations.map { it.toSummaryUi() }) }
                 }.onFailure {
-                    Log.e("SummaryDetailsViewModel", "Error loading recommendations", it)
+                    Timber.e(it, "Error loading recommendations")
                     // TODO Post snackbar error event
                 }
         }
@@ -132,7 +132,7 @@ class SummaryDetailsViewModel @Inject constructor(
                 // TODO: Show a snackbar to notify the user that the summary is added to favorites
             }.onFailure { error ->
                 _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
-                Log.e("SummaryDetailsViewModel", "Error creating favorite", error)
+                Timber.e(error, "Error creating favorite")
             }
     }
 
@@ -149,7 +149,7 @@ class SummaryDetailsViewModel @Inject constructor(
                 // TODO: Show a snackbar to notify the user that the summary is removed from favorites
             }.onFailure { error ->
                 _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
-                Log.e("SummaryDetailsViewModel", "Error deleting favorite", error)
+                Timber.e(error, "Error deleting favorite")
             }
     }
 

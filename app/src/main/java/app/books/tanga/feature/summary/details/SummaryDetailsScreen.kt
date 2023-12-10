@@ -16,22 +16,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -43,8 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.common.ui.UrlDownloadableImage
@@ -55,99 +45,15 @@ import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.FakeData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
-import app.books.tanga.feature.auth.AuthSuggestionBottomSheet
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
 import app.books.tanga.utils.openLink
-import app.books.tanga.utils.shareSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-
-@Composable
-fun SummaryDetailsScreenContainer(
-    summaryId: SummaryId,
-    onNavigateToAuth: () -> Unit,
-    onNavigateToPreviousScreen: () -> Unit,
-    onNavigateToAudioPlayer: (SummaryId) -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: SummaryDetailsViewModel = hiltViewModel(),
-    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(Unit) {
-        viewModel.loadSummary(summaryId)
-    }
-
-    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = SummaryDetailsUiEvent.Empty)
-    HandleEvents(
-        event = event,
-        onNavigateToAuth = onNavigateToAuth,
-        onNavigateToPreviousScreen = onNavigateToPreviousScreen,
-        onNavigateToAudioPlayer = onNavigateToAudioPlayer,
-        onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
-    )
-
-    SummaryDetailsScreen(
-        state = state,
-        modifier = modifier,
-        onBackClick = onNavigateToPreviousScreen,
-        onPlayClick = { viewModel.onPlayClick() },
-        onLoadSummary = { viewModel.loadSummary(it) },
-        onToggleFavorite = { viewModel.toggleFavorite() },
-        onRecommendationClick = onNavigateToRecommendedSummaryDetails
-    )
-}
-
-@Composable
-fun HandleEvents(
-    event: SummaryDetailsUiEvent,
-    onNavigateToAuth: () -> Unit,
-    onNavigateToPreviousScreen: () -> Unit,
-    onNavigateToAudioPlayer: (SummaryId) -> Unit,
-    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
-) {
-    var showAuthSuggestion by remember {
-        mutableStateOf(false)
-    }
-
-    if (showAuthSuggestion) {
-        AuthSuggestionBottomSheet(
-            onDismiss = { showAuthSuggestion = false }
-        )
-    }
-
-    when (event) {
-        is SummaryDetailsUiEvent.NavigateTo.ToAuth -> {
-            LaunchedEffect(Unit) {
-                onNavigateToAuth()
-            }
-        }
-        is SummaryDetailsUiEvent.NavigateTo.ToPrevious -> {
-            LaunchedEffect(Unit) {
-                onNavigateToPreviousScreen()
-            }
-        }
-        is SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer -> {
-            LaunchedEffect(Unit) {
-                onNavigateToAudioPlayer(event.summaryId)
-            }
-        }
-        is SummaryDetailsUiEvent.NavigateTo.ToSummaryDetails -> {
-            LaunchedEffect(Unit) {
-                onNavigateToRecommendedSummaryDetails(event.summaryId)
-            }
-        }
-        is SummaryDetailsUiEvent.ShowAuthSuggestion -> {
-            LaunchedEffect(Unit) {
-                showAuthSuggestion = true
-            }
-        }
-        else -> Unit
-    }
-}
 
 @Suppress("LongParameterList")
 @Composable
@@ -241,63 +147,13 @@ private fun SummaryDetailsContent(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun SummaryTopAppBar(
-    summary: SummaryUi?,
-    isFavorite: Boolean,
-    favoriteProgressState: ProgressState,
-    onSaveClick: () -> Unit,
-    onBackClick: () -> Unit
-) {
-    TopAppBar(
-        title = {},
-        navigationIcon = {
-            IconButton(
-                onClick = { onBackClick() }
-            ) {
-                Icon(
-                    modifier = Modifier.size(26.dp).testTag("back_button"),
-                    painter = painterResource(id = TangaIcons.LeftArrow),
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                    contentDescription = "back navigation"
-                )
-            }
-        },
-        actions = {
-            SaveButton(
-                isSaved = isFavorite,
-                progressState = favoriteProgressState,
-                onClick = { onSaveClick() }
-            )
-            val context = LocalContext.current
-            IconButton(onClick = {
-                summary?.let {
-                    shareSummary(
-                        context = context,
-                        summaryTitle = it.title,
-                        summaryAuthor = it.author
-                    )
-                }
-            }) {
-                Icon(
-                    modifier = Modifier.size(24.dp).testTag("share"),
-                    painter = painterResource(id = R.drawable.ic_share_2),
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                    contentDescription = "share summary"
-                )
-            }
-        }
-    )
-}
-
-@Composable
 fun PlayFloatingActionButton(
     summaryId: SummaryId,
     modifier: Modifier = Modifier,
     onClick: (SummaryId) -> Unit
 ) {
     FloatingActionButton(
-        modifier = modifier,
+        modifier = modifier.testTag("play_button"),
         onClick = { onClick(summaryId) },
         containerColor = MaterialTheme.colorScheme.tertiary,
         shape = CircleShape,
@@ -336,7 +192,9 @@ fun SummaryDetailsHeader(
                 horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large)
             ) {
                 UrlDownloadableImage(
-                    modifier = Modifier.width(128.dp),
+                    modifier = Modifier
+                        .width(128.dp)
+                        .testTag("summary_cover_image"),
                     summaryId = summary.id,
                     onSummaryClick = {}
                 )
@@ -363,21 +221,25 @@ private fun SummaryActionButtonsSection(summary: SummaryUi) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         SummaryActionButton(
+            modifier = Modifier.testTag("read_button"),
             text = stringResource(id = R.string.summary_details_read),
             icon = TangaIcons.IndicatorRead,
             enabled = summary.textUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
+            modifier = Modifier.testTag("listen_button"),
             text = stringResource(id = R.string.summary_details_listen),
             icon = TangaIcons.IndicatorListen,
             enabled = summary.audioUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
+            modifier = Modifier.testTag("watch_button"),
             text = stringResource(id = R.string.summary_details_watch),
             icon = TangaIcons.IndicatorWatch,
             enabled = summary.videoUrl?.isNotEmpty() == true
         ) {}
         SummaryActionButton(
+            modifier = Modifier.testTag("visualize_button"),
             text = stringResource(id = R.string.summary_details_visualize),
             icon = TangaIcons.IndicatorGraphic,
             enabled = summary.graphicUrl?.isNotEmpty() == true
@@ -482,6 +344,7 @@ fun SummaryAuthor(
         ) {
             ProfileImage(
                 modifier = Modifier.size(40.dp),
+                tag = "author_image",
                 photoUrl = authorPictureUrl,
                 onClick = { }
             )
@@ -506,15 +369,10 @@ private fun PurchaseButton(url: String) {
     ) {
         val context = LocalContext.current
         TangaButtonLeftIcon(
+            modifier = Modifier.testTag("purchase_button"),
             text = "Purchase Book",
             rightIcon =
-            app
-                .books
-                .tanga
-                .coreui
-                .R
-                .drawable
-                .ic_trolley,
+            app.books.tanga.coreui.R.drawable.ic_trolley,
             onClick = { openLink(context = context, url = url) }
         )
     }
@@ -545,6 +403,21 @@ fun Recommendations(
 
 @Preview
 @Composable
-private fun SummaryHeaderPreview() {
-    SummaryDetailsHeader(modifier = Modifier, summary = FakeData.allSummaries().first())
+private fun SummaryDetailsScreenPreview() {
+    TangaTheme {
+        SummaryDetailsScreen(
+            state = SummaryDetailsUiState(
+                summary = FakeData.allSummaries().first().copy(purchaseBookUrl = "https://www.google.com"),
+                recommendations = FakeData.allSummaries().toImmutableList(),
+                progressState = ProgressState.Hide,
+                favoriteProgressState = ProgressState.Hide,
+                isFavorite = false
+            ),
+            onBackClick = {},
+            onPlayClick = {},
+            onLoadSummary = {},
+            onToggleFavorite = {},
+            onRecommendationClick = {}
+        )
+    }
 }

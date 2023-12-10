@@ -2,6 +2,7 @@ package app.books.tanga.feature.auth
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import app.books.tanga.R
 import app.books.tanga.coreui.components.ActionData
@@ -34,6 +35,6 @@ fun AuthSuggestionBottomSheet(
 
     TangaBottomSheet(
         data = data,
-        modifier = modifier
+        modifier = modifier.testTag("auth_suggestion_bottom_sheet")
     )
 }
