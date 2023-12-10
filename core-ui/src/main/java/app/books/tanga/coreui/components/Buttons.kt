@@ -27,9 +27,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.books.tanga.coreui.resources.TextResource
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.coreui.theme.button
+
+/**
+ * UI data class representation of a button.
+ */
+data class Button(
+    val text: TextResource,
+    val onClick: () -> Unit
+)
 
 /**
  * This is a composable that displays a button with text.

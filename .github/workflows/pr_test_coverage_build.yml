@@ -58,7 +58,8 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: app/build/reports/coverage/androidTest/debug/connected/report.xml
+          files: app/build/reports/coverage/androidTest/debug/connected/report.xml, core-ui/build/reports/coverage/androidTest/debug/connected/report.xml
+          flags: uitests
           fail_ci_if_error: true
 
         # Similar to the previous step, this uploads the Kotlin unit test coverage report to Codecov.
@@ -68,4 +69,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: app/build/reports/kover/reportDebug.xml
+          flags: unittests
           fail_ci_if_error: true

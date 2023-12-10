@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -91,9 +92,11 @@ fun SummaryDetailsScreenContainer(
 
     SummaryDetailsScreen(
         state = state,
+        modifier = modifier,
         onBackClick = onNavigateToPreviousScreen,
         onPlayClick = { viewModel.onPlayClick() },
-        modifier = modifier,
+        onLoadSummary = { viewModel.loadSummary(it) },
+        onToggleFavorite = { viewModel.toggleFavorite() },
         onRecommendationClick = onNavigateToRecommendedSummaryDetails
     )
 }
@@ -152,8 +155,9 @@ fun SummaryDetailsScreen(
     state: SummaryDetailsUiState,
     onBackClick: () -> Unit,
     onPlayClick: (SummaryId) -> Unit,
+    onLoadSummary: (SummaryId) -> Unit,
+    onToggleFavorite: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onRecommendationClick: (SummaryId) -> Unit
 ) {
     Scaffold(
@@ -166,7 +170,7 @@ fun SummaryDetailsScreen(
                 isFavorite = state.isFavorite,
                 favoriteProgressState = state.favoriteProgressState,
                 onBackClick = onBackClick,
-                onSaveClick = { viewModel.toggleFavorite() }
+                onSaveClick = { onToggleFavorite() }
             )
         },
         floatingActionButton = {
@@ -185,7 +189,7 @@ fun SummaryDetailsScreen(
                     state = state,
                     paddingValues = paddingValues,
                     onRecommendationClick = onRecommendationClick,
-                    onErrorButtonClick = { state.summary?.id?.let { viewModel.loadSummary(it) } }
+                    onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } }
                 )
         }
     }
@@ -252,7 +256,7 @@ private fun SummaryTopAppBar(
                 onClick = { onBackClick() }
             ) {
                 Icon(
-                    modifier = Modifier.size(26.dp),
+                    modifier = Modifier.size(26.dp).testTag("back_button"),
                     painter = painterResource(id = TangaIcons.LeftArrow),
                     tint = MaterialTheme.colorScheme.onTertiaryContainer,
                     contentDescription = "back navigation"
@@ -276,7 +280,7 @@ private fun SummaryTopAppBar(
                 }
             }) {
                 Icon(
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(24.dp).testTag("share"),
                     painter = painterResource(id = R.drawable.ic_share_2),
                     tint = MaterialTheme.colorScheme.onTertiaryContainer,
                     contentDescription = "share summary"
