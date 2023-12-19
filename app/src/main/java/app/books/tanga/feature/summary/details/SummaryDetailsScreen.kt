@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.common.ui.UrlDownloadableImage
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SummaryActionButton
@@ -403,6 +404,7 @@ fun Recommendations(
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun SummaryDetailsScreenPreview() {
     TangaTheme {
         SummaryDetailsScreen(

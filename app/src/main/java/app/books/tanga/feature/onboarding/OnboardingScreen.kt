@@ -26,8 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.TangaButtonRightIcon
 import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -37,13 +39,6 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 3
-
-@Preview
-@Composable
-private fun OnboardingScreenPreview() {
-    val navController = rememberNavController()
-    OnboardingScreen(navController)
-}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -153,5 +148,15 @@ fun FinishOnboardingButton(
                 text = stringResource(id = R.string.onboarding_get_started)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+@ExcludeFromJacocoGeneratedReport
+private fun OnboardingScreenPreview() {
+    val navController = rememberNavController()
+    TangaTheme {
+        OnboardingScreen(navController)
     }
 }

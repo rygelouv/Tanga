@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -208,6 +209,7 @@ private fun WelcomeMessageColumn(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun AuthScreenPreview() {
     val state = AuthUiState(
         googleSignInButtonProgressState = ProgressState.Hide

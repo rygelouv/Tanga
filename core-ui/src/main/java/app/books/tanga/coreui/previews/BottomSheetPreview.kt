@@ -3,6 +3,7 @@ package app.books.tanga.coreui.previews
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ActionContent
 import app.books.tanga.coreui.components.ActionData
 import app.books.tanga.coreui.components.BottomSheetData
@@ -13,6 +14,7 @@ import app.books.tanga.coreui.resources.TextResource
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun TangaBottomSheetPreview() {
     TangaBottomSheet(
         data = BottomSheetData(
@@ -38,6 +40,7 @@ private fun TangaBottomSheetPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun TangaBottomSheetContainerPreview() {
     TangaBottomSheetContainer(
         content = {

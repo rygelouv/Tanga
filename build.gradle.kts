@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.crash.afterEvaluate
 
 buildscript {
     // Hilt*/
@@ -10,6 +11,8 @@ buildscript {
         classpath("org.jacoco:org.jacoco.core:0.8.11")
     }
 }
+
+@Suppress("DSL_SCOPE_VIOLATION")
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false

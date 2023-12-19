@@ -1,0 +1,4 @@
+tanga-custom-rules:
+  active: true
+  PreviewAnnotationRule:
+    active: true

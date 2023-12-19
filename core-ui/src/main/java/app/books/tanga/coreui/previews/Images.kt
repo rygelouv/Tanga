@@ -7,6 +7,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SummaryImage
 
@@ -17,6 +18,7 @@ import app.books.tanga.coreui.components.SummaryImage
     device = "id:pixel_4a"
 )
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun SummaryImagePreview() {
     SummaryImage(
         summaryId = "1",
@@ -31,6 +33,7 @@ private fun SummaryImagePreview() {
     backgroundColor = 0xFFFFFFFF
 )
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ProfilePicturePreview() {
     ProfileImage(
         modifier = Modifier.size(100.dp),
