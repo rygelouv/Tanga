@@ -39,11 +39,24 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         "**/*\$Result.*",
         "**/*\$Result$*.*",
     )
-    val debugTree = fileTree(mapOf("dir" to "$buildDir/intermediates/classes/debug", "excludes" to fileFilter))
-    val mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories.setFrom(files(mainSrc))
-    classDirectories.setFrom(files(debugTree))
+    val debugTree = fileTree(mapOf("dir" to "$buildDir/intermediates/classes/debug", "excludes" to fileFilter))
+    val javaTree = fileTree(mapOf("dir" to "$buildDir/intermediates/javac/debug/classes", "excludes" to fileFilter))
+    val kotlinTree = fileTree(mapOf("dir" to "$buildDir/tmp/kotlin-classes/debug", "excludes" to fileFilter))
+
+    val appSrc = "${project.rootDir}/app/src/main/java"
+    val coreUiSrc = "${project.rootDir}/core-ui/src/main/java"
+
+    val appClassDirs = files(debugTree, javaTree, kotlinTree)
+    val coreUiClassDirs = files(
+        fileTree(mapOf("dir" to "${project.rootDir}/core-ui/build/intermediates/javac/debug/classes", "excludes" to fileFilter)),
+        fileTree(mapOf("dir" to "${project.rootDir}/core-ui/build/tmp/kotlin-classes/debug", "excludes" to fileFilter)),
+        fileTree(mapOf("dir" to "${project.rootDir}/core-ui/build/intermediates/classes/debug", "excludes" to fileFilter))
+    )
+
+    sourceDirectories.setFrom(files(appSrc, coreUiSrc))
+    classDirectories.setFrom(files(appClassDirs, coreUiClassDirs))
+
     executionData.setFrom(
         fileTree(
             mapOf(
@@ -59,4 +72,5 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         println("Wrote HTML coverage report to ${reports.html.entryPoint}")
         println("Wrote XML coverage report to ${reports.xml.name}")
     }
+
 }

@@ -3,6 +3,7 @@ package app.books.tanga.coreui.previews
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ActionContent
 import app.books.tanga.coreui.components.ActionData
 import app.books.tanga.coreui.components.Button
@@ -11,6 +12,7 @@ import app.books.tanga.coreui.theme.TangaTheme
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ActionContentPreview() {
     TangaTheme {
         ActionContent(

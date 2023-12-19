@@ -33,13 +33,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.Cerulean
 import app.books.tanga.coreui.theme.Cultured
 import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.TangaTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -249,5 +252,15 @@ private fun BestValueLabel() {
             color = Color.White,
             fontWeight = FontWeight.SemiBold
         )
+    }
+}
+
+@Preview
+@Composable
+@ExcludeFromJacocoGeneratedReport
+private fun PricingPlanScreenPreview() {
+    TangaTheme {
+        PricingPlanScreen {
+        }
     }
 }

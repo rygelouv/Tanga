@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.theme.TangaTheme
@@ -219,6 +220,7 @@ fun ProfileHeader(
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ProfileScreenPreview() {
     TangaTheme {
         ProfileScreen(

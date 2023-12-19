@@ -52,6 +52,7 @@ accompanist-systemuicontroller-version = "0.28.0"
 coroutines-version = "1.6.4"
 
 # Google Services https://developers.google.com/android/guides/releases
+lint-api = "31.2.0"
 navigation-testing-version = "2.7.5"
 play-services-auth-version = "20.5.0"
 
@@ -168,8 +169,10 @@ compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", versio
 navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation-testing-version" }
 
 # Lint Checks
+lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint-api" }
 slack-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "slack-compose-lint-ruleset-version" }
 detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt-cli" }
+detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt-version" }
 detekt-rules-compose = { module = "ru.kode:detekt-rules-compose", version.ref = "detekt-rules-compose" }
 
 # Debug tools

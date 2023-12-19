@@ -785,3 +785,8 @@ style:
     active: true
     excludeImports:
       - 'java.util.*'
+
+tanga-custom-rules:
+  active: true
+  PreviewAnnotationRule:
+    active: true
