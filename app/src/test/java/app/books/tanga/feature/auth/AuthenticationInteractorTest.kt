@@ -80,7 +80,7 @@ class AuthenticationInteractorTest {
         val mockUser = Fixtures.dummyUser
         val mockAuthResult = AuthResult(mockUser, true)
 
-        coEvery { googleAuthService.completeSignIn(any(), any()) } returns mockAuthResult
+        coEvery { googleAuthService.completeSignIn(any()) } returns mockAuthResult
 
         val result = interactor.completeGoogleSignIn(mockCredentials)
 
@@ -92,7 +92,7 @@ class AuthenticationInteractorTest {
     fun `completeGoogleSignIn should handle failure`() = runTest {
         val mockCredentials = mockk<SignInCredential>(relaxed = true)
         val exception = RuntimeException("Test Exception")
-        coEvery { googleAuthService.completeSignIn(any(), any()) } throws exception
+        coEvery { googleAuthService.completeSignIn(any()) } throws exception
 
         val result = interactor.completeGoogleSignIn(mockCredentials)
 
@@ -126,5 +126,23 @@ class AuthenticationInteractorTest {
 
         Assertions.assertTrue(result.isSuccess)
         Assertions.assertEquals(SessionState.SignedOut, result.getOrNull())
+    }
+
+    @Test
+    fun `isUserAnonymous - when user is anonymous`() = runTest {
+        coEvery { anonymousAuthService.isUserAnonymous() } returns true
+
+        val result = interactor.isUserAnonymous()
+
+        Assertions.assertTrue(result)
+    }
+
+    @Test
+    fun `isUserAnonymous - when user is not anonymous`() = runTest {
+        coEvery { anonymousAuthService.isUserAnonymous() } returns false
+
+        val result = interactor.isUserAnonymous()
+
+        Assertions.assertFalse(result)
     }
 }

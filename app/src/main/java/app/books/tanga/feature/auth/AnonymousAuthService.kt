@@ -13,6 +13,8 @@ typealias FirebaseAuthResult = com.google.firebase.auth.AuthResult
 
 interface AnonymousAuthService {
 
+    fun isUserAnonymous(): Boolean
+
     suspend fun signInAnonymously(): AuthResult
 
     suspend fun linkAnonymousAccountToGoogleAccount(authCredential: AuthCredential): AuthResult
@@ -21,6 +23,8 @@ interface AnonymousAuthService {
 class AnonymousAuthServiceImpl @Inject constructor(
     private val auth: FirebaseAuth
 ) : AnonymousAuthService {
+
+    override fun isUserAnonymous(): Boolean = auth.currentUser?.isAnonymous == true
 
     @Suppress("TooGenericExceptionThrown")
     override suspend fun signInAnonymously(): AuthResult {

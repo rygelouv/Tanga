@@ -27,10 +27,10 @@ class AuthenticationInteractor @Inject constructor(
     private val anonymousAuthService: AnonymousAuthService
 ) {
 
+    fun isUserAnonymous(): Boolean = anonymousAuthService.isUserAnonymous()
+
     suspend fun signInAnonymously(): Result<User> = resultOf {
         val authResult = anonymousAuthService.signInAnonymously()
-        val sessionId = SessionId(authResult.user.id.value)
-        sessionManager.openSession(sessionId)
         authResult.user
     }.onFailure {
         Timber.e("Anonymous sign in failed", it)
@@ -41,9 +41,7 @@ class AuthenticationInteractor @Inject constructor(
      * Initializes the Google sign-in process.
      */
     suspend fun initGoogleSignIn(): Result<BeginSignInResult> {
-        val result = resultOf {
-            googleAuthService.initSignIn()
-        }
+        val result = resultOf { googleAuthService.initSignIn() }
 
         return if (result.isSuccess) {
             result
@@ -59,19 +57,13 @@ class AuthenticationInteractor @Inject constructor(
      * Then Open a new session for the user.
      */
     suspend fun completeGoogleSignIn(credentials: SignInCredential): Result<User> = resultOf {
-        val authResult = googleAuthService.completeSignIn(credentials) { credentials ->
-            anonymousAuthService.linkAnonymousAccountToGoogleAccount(credentials)
-        }
+        val authResult = googleAuthService.completeSignIn(credentials)
 
-        if (authResult.isNewUser) {
-            userRepository.createUser(user = authResult.user)
-        }
-
-        authResult.user.id.let {
-            val sessionId = SessionId(it.value)
-            sessionManager.openSession(sessionId)
-            authResult.user
-        }
+        val user = authResult.user
+        userRepository.createUser(user)
+        val sessionId = SessionId(user.id.value)
+        sessionManager.openSession(sessionId)
+        user
     }.onFailure {
         return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
     }

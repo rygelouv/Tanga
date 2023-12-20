@@ -1,5 +1,6 @@
 package app.books.tanga.utils
 
+import java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
@@ -15,3 +16,5 @@ inline fun <R> resultOf(block: () -> R): Result<R> =
     } catch (e: Exception) {
         Result.failure(e)
     }
+
+fun randomUid() = UUID.randomUUID().toString()

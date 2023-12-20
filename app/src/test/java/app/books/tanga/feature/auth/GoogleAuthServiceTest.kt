@@ -6,7 +6,6 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.identity.SignInCredential
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.Runs
@@ -32,8 +31,10 @@ class GoogleAuthServiceTest {
     private val signInClient: SignInClient = mockk(relaxed = true)
     private val signInRequest: BeginSignInRequest = mockk(relaxed = true)
     private val signUpRequest: BeginSignInRequest = mockk(relaxed = true)
+    private val anonymousAuthService: AnonymousAuthService = mockk(relaxed = true)
 
-    private val googleAuthService = GoogleAuthServiceImpl(auth, signInClient, signInRequest, signUpRequest)
+    private val googleAuthService =
+        GoogleAuthServiceImpl(auth, signInClient, signInRequest, signUpRequest, anonymousAuthService)
 
     @BeforeEach
     fun setUp() {
@@ -69,10 +70,9 @@ class GoogleAuthServiceTest {
         every { auth.currentUser } returns mockUser
         every { mockUser.isAnonymous } returns true
         every { mockCredentials.googleIdToken } returns "some google id token"
+        coEvery { anonymousAuthService.linkAnonymousAccountToGoogleAccount(any()) } returns mockAuthResult
 
-        val linkAnonymousAccount: suspend (AuthCredential) -> AuthResult = { mockAuthResult }
-
-        val result = googleAuthService.completeSignIn(mockCredentials, linkAnonymousAccount)
+        val result = googleAuthService.completeSignIn(mockCredentials)
 
         Assertions.assertEquals(mockAuthResult, result)
     }
@@ -82,7 +82,6 @@ class GoogleAuthServiceTest {
         val mockCredentials = mockk<SignInCredential>(relaxed = true)
         val mockFirebaseAuthResult = mockk<FirebaseAuthResult>(relaxed = true)
         val mockUser = mockk<FirebaseUser>(relaxed = true)
-        val mockAuthResultForAnonymous = mockk<AuthResult>()
 
         every { auth.currentUser } returns mockUser
         every { mockUser.isAnonymous } returns false
@@ -109,7 +108,8 @@ class GoogleAuthServiceTest {
         every { mockCredentials.googleIdToken } returns "some google id token"
         coEvery { auth.signInWithCredential(any()).await() } returns mockFirebaseAuthResult
 
-        val result = googleAuthService.completeSignIn(mockCredentials) { mockAuthResultForAnonymous }
+        // { mockAuthResultForAnonymous }
+        val result = googleAuthService.completeSignIn(mockCredentials)
 
         Assertions.assertEquals(mockAuthResult, result)
     }

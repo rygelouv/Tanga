@@ -4,10 +4,14 @@ import androidx.annotation.StringRes
 import app.books.tanga.R
 
 data class ProfileUiState(
-    val fullName: String? = null,
-    val photoUrl: String? = null,
-    val isAnonymous: Boolean = false,
+    val userInfo: UserInfoUi? = null,
     @StringRes val accountTypeRes: Int = R.string.freemium
+)
+
+data class UserInfoUi(
+    val fullName: String,
+    val photoUrl: String?,
+    val isAnonymous: Boolean?
 )
 
 sealed interface ProfileUiEvent {
@@ -18,12 +22,8 @@ sealed interface ProfileUiEvent {
     ) : ProfileUiEvent
 
     sealed interface NavigateTo : ProfileUiEvent {
-        data class ToPricingPlan(
-            val isAnonymous: Boolean
-        ) : NavigateTo
+        data object ToPricingPlan : NavigateTo
 
-        data class ToAuth(
-            val isAnonymous: Boolean
-        ) : NavigateTo
+        data object ToAuth : NavigateTo
     }
 }

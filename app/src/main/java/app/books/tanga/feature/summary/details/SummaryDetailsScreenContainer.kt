@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,7 +55,7 @@ fun HandleEvents(
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
-    var showAuthSuggestion by remember {
+    var showAuthSuggestion by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -91,7 +91,7 @@ fun HandleEvents(
         }
 
         is SummaryDetailsUiEvent.ShowAuthSuggestion -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(event.id) {
                 showAuthSuggestion = true
             }
         }

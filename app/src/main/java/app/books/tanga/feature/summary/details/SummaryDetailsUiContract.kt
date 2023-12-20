@@ -4,6 +4,7 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.utils.randomUid
 
 /**
  * @param summary the summary to display
@@ -24,7 +25,7 @@ data class SummaryDetailsUiState(
 sealed interface SummaryDetailsUiEvent {
     data object Empty : SummaryDetailsUiEvent
 
-    data object ShowAuthSuggestion : SummaryDetailsUiEvent
+    data class ShowAuthSuggestion(val id: String = randomUid()) : SummaryDetailsUiEvent
 
     sealed interface NavigateTo : SummaryDetailsUiEvent {
         data class ToSummaryDetails(

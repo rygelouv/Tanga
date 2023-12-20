@@ -27,7 +27,7 @@ fun AuthSuggestionBottomSheet(
             ),
             secondaryButton = Button(
                 text = TextResource.fromText("Not Now"),
-                onClick = { }
+                onClick = onDismiss
             )
         ),
         onDismiss = onDismiss

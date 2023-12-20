@@ -32,7 +32,7 @@ class SummaryDetailsViewModel @Inject constructor(
         MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
 
-    private val _events: Channel<SummaryDetailsUiEvent> = Channel()
+    private val _events: Channel<SummaryDetailsUiEvent> = Channel(Channel.BUFFERED)
     val events: Flow<SummaryDetailsUiEvent> = _events.receiveAsFlow()
 
     /**
@@ -101,20 +101,22 @@ class SummaryDetailsViewModel @Inject constructor(
      * toggle the favorite status
      */
     fun toggleFavorite() {
-        // Do nothing if the summary is not initialized
-        if (this::summary.isInitialized.not()) return
+        shouldShowAuthSuggestionOrProceed {
+            // Do nothing if the summary is not initialized
+            if (this::summary.isInitialized.not()) return@shouldShowAuthSuggestionOrProceed
 
-        // Show saving progress
-        _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
+            // Show saving progress
+            _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
 
-        // Get the current favorite status
-        val isFavorite = _state.value.isFavorite
+            // Get the current favorite status
+            val isFavorite = _state.value.isFavorite
 
-        viewModelScope.launch {
-            if (isFavorite) {
-                removeFavorite()
-            } else {
-                saveFavorite()
+            viewModelScope.launch {
+                if (isFavorite) {
+                    removeFavorite()
+                } else {
+                    saveFavorite()
+                }
             }
         }
     }
@@ -154,11 +156,17 @@ class SummaryDetailsViewModel @Inject constructor(
     }
 
     fun onPlayClick() {
+        shouldShowAuthSuggestionOrProceed {
+            postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
+        }
+    }
+
+    private fun shouldShowAuthSuggestionOrProceed(action: () -> Unit) {
         viewModelScope.launch {
             if (sessionManager.hasSession()) {
-                postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
+                action()
             } else {
-                postEvent(SummaryDetailsUiEvent.ShowAuthSuggestion)
+                postEvent(SummaryDetailsUiEvent.ShowAuthSuggestion())
             }
         }
     }

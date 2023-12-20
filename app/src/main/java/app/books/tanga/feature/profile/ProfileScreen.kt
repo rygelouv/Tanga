@@ -110,17 +110,15 @@ fun ProfileScreen(
             ) {
                 ProfileHeader(
                     modifier = Modifier,
-                    fullName = state.fullName,
-                    photoUrl = state.photoUrl,
+                    userInfo = state.userInfo,
                     onProClick = onProClick,
-                    onLoginClick = onLoginClick,
-                    isAnonymous = state.isAnonymous
+                    onLoginClick = onLoginClick
                 )
                 Spacer(modifier = Modifier.height(70.dp))
                 ProfileScreenBody(
+                    userInfo = state.userInfo,
                     modifier = Modifier,
-                    onLogout = onLogoutClick,
-                    isAnonymous = state.isAnonymous
+                    onLogout = onLogoutClick
                 )
             }
         }
@@ -129,7 +127,7 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileScreenBody(
-    isAnonymous: Boolean,
+    userInfo: UserInfoUi?,
     modifier: Modifier = Modifier,
     onLogout: () -> Unit
 ) {
@@ -152,7 +150,7 @@ fun ProfileScreenBody(
             ProfileContentAction(action = ProfileAction.CONTACT)
             ProfileContentAction(action = ProfileAction.PRIVACY_AND_TERMS)
             ProfileContentAction(action = ProfileAction.NOTIFICATIONS)
-            if (isAnonymous.not()) {
+            if (userInfo != null) {
                 ProfileContentAction(action = ProfileAction.LOGOUT) {
                     openDialogState.value = true
                 }
@@ -178,9 +176,7 @@ fun ProfileScreenBody(
 
 @Composable
 fun ProfileHeader(
-    fullName: String?,
-    photoUrl: String?,
-    isAnonymous: Boolean,
+    userInfo: UserInfoUi?,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
     onProClick: () -> Unit = {}
@@ -194,20 +190,20 @@ fun ProfileHeader(
     ) {
         Spacer(modifier = Modifier.height(80.dp))
         ProfileImage(
-            photoUrl = photoUrl,
+            photoUrl = userInfo?.photoUrl,
             onClick = { }
         )
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = fullName ?: stringResource(id = R.string.anonymous),
+            text = userInfo?.fullName ?: stringResource(id = R.string.anonymous),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Spacer(modifier = Modifier.height(30.dp))
-        if (isAnonymous) {
+        if (userInfo == null) {
             TangaButton(
                 text = stringResource(id = R.string.profile_create_account),
                 onClick = onLoginClick
@@ -225,8 +221,11 @@ private fun ProfileScreenPreview() {
     TangaTheme {
         ProfileScreen(
             state = ProfileUiState(
-                fullName = "John Doe",
-                photoUrl = "https://picsum.photos/200/300"
+                userInfo = UserInfoUi(
+                    fullName = "John Doe",
+                    photoUrl = "https://picsum.photos/200/300",
+                    isAnonymous = false
+                )
             ),
             onLoginClick = {},
             onLogoutClick = {}

@@ -111,7 +111,7 @@ class SummaryDetailsScreenHandleEventsTest {
 
         composeTestRule.setContent {
             HandleEvents(
-                event = SummaryDetailsUiEvent.ShowAuthSuggestion,
+                event = SummaryDetailsUiEvent.ShowAuthSuggestion(),
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},

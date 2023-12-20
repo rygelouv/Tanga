@@ -8,7 +8,6 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import javax.inject.Inject
@@ -22,10 +21,7 @@ import timber.log.Timber
 interface GoogleAuthService {
     suspend fun initSignIn(): BeginSignInResult
 
-    suspend fun completeSignIn(
-        credentials: SignInCredential,
-        linkAnonymousAccount: suspend (AuthCredential) -> AuthResult
-    ): AuthResult
+    suspend fun completeSignIn(credentials: SignInCredential): AuthResult
 
     suspend fun signOut()
 }
@@ -36,7 +32,8 @@ class GoogleAuthServiceImpl @Inject constructor(
     @Named(GoogleSignInModule.GOOGLE_SIGN_IN_REQUEST)
     private var signInRequest: BeginSignInRequest,
     @Named(GoogleSignInModule.GOOGLE_SIGN_UP_REQUEST)
-    private var signUpRequest: BeginSignInRequest
+    private var signUpRequest: BeginSignInRequest,
+    private val anonymousAuthService: AnonymousAuthService
 ) : GoogleAuthService {
     /**
      * If initialization of Sign in request fails, then try sign up request
@@ -45,7 +42,7 @@ class GoogleAuthServiceImpl @Inject constructor(
         try {
             signInClient.beginSignIn(signInRequest).await()
         } catch (e: Exception) {
-            Timber.e("Unable to get sign in result. Attempt sign up", e)
+            Timber.e(e, "Unable to get sign in result. Attempt sign up")
             logGoogleError(e)
             signInClient.beginSignIn(signUpRequest).await()
         }
@@ -55,16 +52,14 @@ class GoogleAuthServiceImpl @Inject constructor(
      * Convert the Firebase user to our own User model and check if user is new.
      */
     @Throws(UnableToSignInWithGoogleError::class)
-    override suspend fun completeSignIn(
-        credentials: SignInCredential,
-        linkAnonymousAccount: suspend (AuthCredential) -> AuthResult
-    ): AuthResult {
+    override suspend fun completeSignIn(credentials: SignInCredential): AuthResult {
         // Get Google credentials
         val googleCredentials =
             GoogleAuthProvider.getCredential(credentials.googleIdToken, null)
 
+        // Link anonymous account to Google account
         if (auth.currentUser?.isAnonymous == true) {
-            return linkAnonymousAccount(googleCredentials)
+            return anonymousAuthService.linkAnonymousAccountToGoogleAccount(googleCredentials)
         }
 
         // Sign-in with firebase auth
@@ -87,8 +82,8 @@ class GoogleAuthServiceImpl @Inject constructor(
     private fun logGoogleError(error: Throwable) {
         if (error is ApiException) {
             Timber.d(
+                error,
                 "Google ApiException with code ${error.statusCode} and message ${error.message}",
-                error
             )
         }
     }
