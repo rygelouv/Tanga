@@ -1,5 +1,6 @@
 package app.books.tanga.feature
 
+import app.books.tanga.feature.auth.AuthenticationInteractor
 import app.books.tanga.feature.main.MainUiEvent
 import app.books.tanga.feature.main.MainViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
@@ -24,12 +25,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class MainViewModelTest {
 
     private lateinit var sessionManager: SessionManager
+    private lateinit var authInteractor: AuthenticationInteractor
     private lateinit var viewModel: MainViewModel
 
     @BeforeEach
     fun setup() {
         // relaxed = true will allow returning default answers for non-mocked calls
         sessionManager = mockk(relaxed = true)
+        authInteractor = mockk(relaxed = true)
     }
 
     @Test
@@ -37,7 +40,7 @@ class MainViewModelTest {
         val sessionStateFlow = MutableSharedFlow<SessionState>()
         coEvery { sessionManager.sessionState() } returns sessionStateFlow.asSharedFlow()
 
-        viewModel = MainViewModel(sessionManager)
+        viewModel = MainViewModel(sessionManager, authInteractor)
 
         viewModel.event.test {
             sessionStateFlow.emit(SessionState.SignedOut)
@@ -51,7 +54,7 @@ class MainViewModelTest {
         val sessionStateFlow = MutableSharedFlow<SessionState>()
         coEvery { sessionManager.sessionState() } returns sessionStateFlow.asSharedFlow()
 
-        viewModel = MainViewModel(sessionManager)
+        viewModel = MainViewModel(sessionManager, authInteractor)
 
         viewModel.event.test {
             sessionStateFlow.emit(SessionState.SignedIn(SessionId("SomeSessionID")))
@@ -65,7 +68,7 @@ class MainViewModelTest {
         val sessionStateFlow = MutableSharedFlow<SessionState>()
         coEvery { sessionManager.sessionState() } returns sessionStateFlow.asSharedFlow()
 
-        viewModel = MainViewModel(sessionManager)
+        viewModel = MainViewModel(sessionManager, authInteractor)
 
         viewModel.event.test {
             expectNoEvents()
@@ -78,7 +81,7 @@ class MainViewModelTest {
         val sessionStateFlow = MutableSharedFlow<SessionState>()
         coEvery { sessionManager.sessionState() } returns sessionStateFlow.asSharedFlow()
 
-        viewModel = MainViewModel(sessionManager)
+        viewModel = MainViewModel(sessionManager, authInteractor)
 
         viewModel.event.test {
             sessionStateFlow.emit(SessionState.SignedIn(SessionId("SomeSessionID")))

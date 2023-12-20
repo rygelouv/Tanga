@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.common.ui.ShimmerSummaryItem
 import app.books.tanga.common.ui.ShimmerSummaryListRow
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 
 @Composable
 fun AnimatedShimmerLoader(modifier: Modifier = Modifier) {
@@ -63,6 +64,7 @@ fun AnimatedShimmerLoader(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ShimmerPreview() {
     Row {
         repeat(4) {

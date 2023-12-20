@@ -41,31 +41,34 @@ class ProfileViewModelTest {
     fun setUp() {
         authInteractor = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
+    }
 
+    @Test
+    fun `Profile state is updated when user data is fetched successfully`() = runTest {
         // Set up the userRepository to return the user object when getUser is called
         // Use the ofType matcher to specify the exact type expected for the return value
         coEvery { userRepository.getUser() } returns Result.success(user)
 
         viewModel = ProfileViewModel(authInteractor, userRepository)
-    }
 
-    @Test
-    fun `Profile state is updated when user data is fetched successfully`() = runTest {
         // Assert that the state flow emits the correct data
         viewModel.state.test {
             val item = awaitItem()
-            Assertions.assertTrue(item.fullName == user.fullName)
-            Assertions.assertTrue(item.photoUrl == user.photoUrl)
-            Assertions.assertFalse(item.isAnonymous)
+            Assertions.assertTrue(item.userInfo?.fullName == user.fullName)
+            Assertions.assertTrue(item.userInfo?.photoUrl == user.photoUrl)
+            Assertions.assertFalse(item.userInfo?.isAnonymous == true)
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `onLogout triggers signOut in the authInteractor`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.success(user)
+
         // Set up the authInteractor to do nothing (already done by `relaxed = true`)
         coEvery { authInteractor.signOut() } returns Result.success(SessionState.SignedOut)
 
+        viewModel = ProfileViewModel(authInteractor, userRepository)
         // Call the onLogout function
         viewModel.onLogout()
 
@@ -75,6 +78,9 @@ class ProfileViewModelTest {
 
     @Test
     fun `onProUpgrade triggers emission of NavigateToPricingPlan event`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.success(user)
+
+        viewModel = ProfileViewModel(authInteractor, userRepository)
         // Call the onProUpgrade function
         viewModel.onProUpgrade()
 
@@ -88,6 +94,9 @@ class ProfileViewModelTest {
 
     @Test
     fun `onLogin triggers emission of NavigateToAuth event`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.success(user)
+
+        viewModel = ProfileViewModel(authInteractor, userRepository)
         // Call the onLogin function
         viewModel.onLogin()
 
@@ -95,6 +104,47 @@ class ProfileViewModelTest {
         viewModel.events.test {
             val event = expectMostRecentItem()
             Assertions.assertTrue(event is ProfileUiEvent.NavigateTo.ToAuth)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `Profile state is updated when user data is not fetched successfully`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.failure(Exception())
+
+        viewModel = ProfileViewModel(authInteractor, userRepository)
+
+        viewModel.state.test {
+            val item = awaitItem()
+            Assertions.assertNull(item.userInfo)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when user is anonymous state userInfo is null`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.success(null)
+
+        viewModel = ProfileViewModel(authInteractor, userRepository)
+
+        viewModel.state.test {
+            val item = awaitItem()
+            Assertions.assertNull(item.userInfo)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onLogout - when signOut fails`() = runTest {
+        coEvery { userRepository.getUser() } returns Result.success(user)
+        coEvery { authInteractor.signOut() } returns Result.failure(Exception())
+
+        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel.onLogout()
+
+        viewModel.state.test {
+            val item = awaitItem()
+            Assertions.assertNotNull(item.userInfo)
             cancelAndIgnoreRemainingEvents()
         }
     }

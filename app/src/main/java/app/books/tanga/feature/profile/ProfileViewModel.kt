@@ -33,9 +33,11 @@ class ProfileViewModel @Inject constructor(
                 val user = it ?: return@launch
                 _state.update { state ->
                     state.copy(
-                        fullName = user.fullName,
-                        photoUrl = user.photoUrl,
-                        isAnonymous = user.isAnonymous,
+                        userInfo = UserInfoUi(
+                            fullName = user.fullName,
+                            photoUrl = user.photoUrl,
+                            isAnonymous = user.isAnonymous,
+                        )
                     )
                 }
             }
@@ -43,11 +45,11 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onProUpgrade() {
-        postEvent(ProfileUiEvent.NavigateTo.ToPricingPlan(isAnonymous = state.value.isAnonymous))
+        postEvent(ProfileUiEvent.NavigateTo.ToPricingPlan)
     }
 
     fun onLogin() {
-        postEvent(ProfileUiEvent.NavigateTo.ToAuth(isAnonymous = state.value.isAnonymous))
+        postEvent(ProfileUiEvent.NavigateTo.ToAuth)
     }
 
     fun onLogout() {

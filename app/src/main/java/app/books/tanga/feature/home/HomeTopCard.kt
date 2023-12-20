@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.coreui.R.drawable.ic_right_arrow
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.SummaryImage
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.icons.TangaIcons
@@ -127,6 +128,7 @@ private fun ActionRow(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun HomeTopCardPreview() {
     HomeTopCard(summaryUi = FakeData.allSummaries().first(), onSummaryClick = {})
 }

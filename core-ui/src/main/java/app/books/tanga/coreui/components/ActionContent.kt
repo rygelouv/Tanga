@@ -31,11 +31,17 @@ import app.books.tanga.coreui.theme.LocalSpacing
 @Composable
 fun ActionContent(
     data: ActionData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    shouldShowWhiteBackground: Boolean = true
 ) {
+    val contentModifier = if (shouldShowWhiteBackground) {
+        modifier.background(Color.White)
+    } else {
+        modifier
+    }
+
     Column(
-        modifier = modifier
-            .background(Color.White)
+        modifier = contentModifier
             .padding(
                 horizontal = LocalSpacing.current.medium,
                 vertical = LocalSpacing.current.small

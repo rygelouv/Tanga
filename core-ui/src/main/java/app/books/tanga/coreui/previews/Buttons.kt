@@ -23,6 +23,7 @@ private fun TangaButtonPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun TangaLinedButtonPreview() {
     TangaLinedButton(
         text = "Get Started",
@@ -32,6 +33,7 @@ private fun TangaLinedButtonPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun TangaButtonLeftIconPreview() {
     TangaButtonRightIcon(
         text = "Get Started",
@@ -42,6 +44,7 @@ private fun TangaButtonLeftIconPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun TangaButtonRightIconPreview() {
     TangaButtonLeftIcon(
         text = "Explore summaries",
@@ -52,6 +55,7 @@ private fun TangaButtonRightIconPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun SummaryActionButtonPreview() {
     SummaryActionButton(text = "Read", icon = TangaIcons.IndicatorRead) {}
 }

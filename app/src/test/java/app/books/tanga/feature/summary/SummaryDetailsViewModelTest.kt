@@ -86,6 +86,7 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.createFavorite(summary) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(false)
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
+        coEvery { sessionManager.hasSession() } returns true
 
         viewModel.loadSummary(summaryId) // Load the summary
 
@@ -115,6 +116,7 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
+        coEvery { sessionManager.hasSession() } returns true
 
         viewModel.loadSummary(summaryId) // Load the summary
 
@@ -157,7 +159,20 @@ class SummaryDetailsViewModelTest {
     }
 
     @Test
-    fun `onPlayClick - without session`() = runTest {
+    fun `toggleFavorite -  when sessionManager has no session`() = runTest {
+        coEvery { sessionManager.hasSession() } returns false
+
+        viewModel.toggleFavorite()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.ShowAuthSuggestion)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onPlayClick - when sessionManager has no session`() = runTest {
         coEvery { sessionManager.hasSession() } returns false
 
         viewModel.onPlayClick()

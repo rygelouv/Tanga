@@ -15,6 +15,7 @@ import app.books.tanga.feature.profile.ProfileScreenContainer
 import app.books.tanga.feature.profile.ProfileUiEvent
 import app.books.tanga.feature.profile.ProfileUiState
 import app.books.tanga.feature.profile.ProfileViewModel
+import app.books.tanga.feature.profile.UserInfoUi
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
@@ -30,13 +31,14 @@ class ProfileScreenTest {
     val composeTestRule = createComposeRule()
 
     private val mockStateWithPermanentUser = ProfileUiState(
-        fullName = "John Doe",
-        photoUrl = "https://example.com/photo.jpg"
+        userInfo = UserInfoUi(
+            fullName = "John Doe",
+            photoUrl = "https://example.com/photo.jpg",
+            isAnonymous = false
+        )
     )
     private val mockStateWithAnonymousUser = ProfileUiState(
-        fullName = "Anonymous",
-        photoUrl = null,
-        isAnonymous = true
+        userInfo = null
     )
 
     private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -125,7 +127,9 @@ class ProfileScreenTest {
 
         composeTestRule.setContent {
             ProfileScreen(
-                state = ProfileUiState(),
+                state = ProfileUiState(
+                    userInfo = mockStateWithPermanentUser.userInfo,
+                ),
                 onLoginClick = { },
                 onLogoutClick = { },
                 onProClick = { proClicked = true }
@@ -180,6 +184,46 @@ class ProfileScreenTest {
         composeTestRule.onNodeWithText(context.getString(R.string.profile_upgrade_to_pro)).assertIsDisplayed()
         composeTestRule.onNodeWithText(context.getString(R.string.profile_create_account)).assertDoesNotExist()
     }
+
+    @Test
+    fun clickingOnLoginButtonTriggersOnLoginClick() {
+        var loginClicked = false
+
+        composeTestRule.setContent {
+            ProfileScreen(
+                state = mockStateWithAnonymousUser,
+                onLoginClick = { loginClicked = true },
+                onLogoutClick = { },
+            )
+        }
+
+        composeTestRule.onNodeWithText(context.getString(R.string.profile_create_account)).performClick()
+
+        assert(loginClicked)
+    }
+
+    @Test
+    fun rendersCorrectlyWhenUserIsAnonymous() {
+        val viewModel = mockk<ProfileViewModel>()
+        val mockState = mockk<StateFlow<ProfileUiState>>(relaxed = true)
+        val mockEvent = mockk<Flow<ProfileUiEvent>>(relaxed = true)
+
+        every { mockState.value } returns mockStateWithAnonymousUser
+        every { viewModel.state } returns mockState
+        every { viewModel.events } returns mockEvent
+
+        composeTestRule.setContent {
+            ProfileScreenContainer(
+                onNavigateToAuth = {},
+                onNavigateToPricing = {},
+                viewModel = viewModel
+            )
+        }
+
+        composeTestRule.onNodeWithText("Anonymous").assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.profile_create_account)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.profile_upgrade_to_pro)).assertDoesNotExist()
+    }
 }
 
 class HandleEventsTest {
@@ -193,7 +237,7 @@ class HandleEventsTest {
     fun navigateToAuthEvent_callsOnNavigateToAuth() {
         composeTestRule.setContent {
             HandleEvents(
-                event = ProfileUiEvent.NavigateTo.ToAuth(false),
+                event = ProfileUiEvent.NavigateTo.ToAuth,
                 onNavigateToAuth = mockOnNavigateToAuth,
                 onNavigateToPricing = {}
             )
@@ -206,7 +250,7 @@ class HandleEventsTest {
     fun navigateToPricingPlanEvent_callsOnNavigateToPricing() {
         composeTestRule.setContent {
             HandleEvents(
-                event = ProfileUiEvent.NavigateTo.ToPricingPlan(false),
+                event = ProfileUiEvent.NavigateTo.ToPricingPlan,
                 onNavigateToAuth = {},
                 onNavigateToPricing = mockOnNavigateToPricing
             )

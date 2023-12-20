@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.resources.TextResource
 import app.books.tanga.coreui.resources.asString
@@ -178,6 +179,7 @@ fun ErrorContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ErrorContentPreview() {
     val errorInfo =
         UiErrorInfo(
@@ -190,6 +192,7 @@ private fun ErrorContentPreview() {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ErrorBottomSheetModalPreview() {
     val errorInfo =
         UiErrorInfo(
@@ -202,6 +205,7 @@ private fun ErrorBottomSheetModalPreview() {
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun ShowSnackbarErrorPreview() {
     val errorInfo =
         UiErrorInfo(
