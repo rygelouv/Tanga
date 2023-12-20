@@ -246,6 +246,7 @@ fun HomeSection(
 
 @Preview(showBackground = true)
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun HomeSectionPreview() {
     HomeSection(
         sectionTitle = "Personal Growth",

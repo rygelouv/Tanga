@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.ui.UrlDownloadableImage
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
@@ -167,6 +168,7 @@ fun SummaryIndicators(
 
 @Preview
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun SummaryItemPreview() {
     val summary = FakeData.allSummaries().first()
     SummaryItemBig(summary, {})
