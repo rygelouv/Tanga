@@ -39,11 +39,15 @@ android {
             enableAndroidTestCoverage = true
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug") // Configures the signing with the release key
+            isDebuggable = false // Disables debugging for security reasons
+            isShrinkResources = true // Further reduces the size of the APK by removing unused resources
+            // versionNameSuffix = "-release" // Optional: Adds a suffix to the version name for differentiation
         }
     }
 

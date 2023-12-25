@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,6 +58,15 @@ fun OnboardingScreen(
 
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
+    val onNextClick: () -> Unit = remember {
+        {
+            scope.launch {
+                if (pagerState.currentPage < MAX_PAGER_INDEX) {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -85,11 +95,7 @@ fun OnboardingScreen(
         FinishOnboardingButton(
             modifier = Modifier.weight(1f),
             pagerState = pagerState,
-            onNextClick = {
-                scope.launch {
-                    pagerState.animateScrollToPage(pagerState.currentPage.inc())
-                }
-            },
+            onNextClick = onNextClick,
             onFinishClick = {
                 onboardingViewModel.onOnboardingCompleted()
                 navController.popBackStack()
