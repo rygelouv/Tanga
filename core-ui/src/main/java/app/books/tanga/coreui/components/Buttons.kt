@@ -1,5 +1,6 @@
 package app.books.tanga.coreui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,14 +25,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.books.tanga.coreui.R
+import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.resources.TextResource
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
+import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.button
+import app.books.tanga.coreui.theme.extraExtraExtraLarge
 
 /**
  * This is a composable that displays a button with text.
@@ -49,7 +56,6 @@ fun TangaButton(
     modifier: Modifier = Modifier,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-    endPadding: Dp = 30.dp,
     shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
     Button(
@@ -66,7 +72,7 @@ fun TangaButton(
         elevation = elevation
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth().padding(end = endPadding),
+            modifier = Modifier.fillMaxWidth(),
             text = text,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.button
@@ -84,7 +90,6 @@ fun TangaLinedButton(
     modifier: Modifier = Modifier,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-    endPadding: Dp = 30.dp,
     shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
     Button(
@@ -101,7 +106,7 @@ fun TangaLinedButton(
         elevation = elevation
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth().padding(end = endPadding),
+            modifier = Modifier.fillMaxWidth(),
             text = text,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.button
@@ -254,6 +259,42 @@ fun SummaryActionButton(
             style = MaterialTheme.typography.labelLarge,
             color = if (enabled) MaterialTheme.colorScheme.primary else LocalTintColor.current.disabled,
             fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+/**
+ * This is a composable that show the search button which is made up of the search icon and text.
+ *
+ * @param onSearch: The function to be executed when the button is clicked.
+ */
+@Composable
+fun SearchButton(
+    onSearch: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                shape = Shapes.extraExtraExtraLarge
+            )
+            .clickable { onSearch() }
+            .padding(horizontal = LocalSpacing.current.medium, vertical = LocalSpacing.current.small),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(id = TangaIcons.Search),
+            contentDescription = "search icon",
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = stringResource(id = R.string.search),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
         )
     }
 }

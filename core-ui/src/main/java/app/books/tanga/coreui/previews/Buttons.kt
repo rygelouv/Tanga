@@ -4,12 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
+import app.books.tanga.coreui.components.SearchButton
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaButtonRightIcon
 import app.books.tanga.coreui.components.TangaLinedButton
 import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.TangaTheme
 
 @Preview
 @Composable
@@ -58,4 +60,13 @@ private fun TangaButtonRightIconPreview() {
 @ExcludeFromJacocoGeneratedReport
 private fun SummaryActionButtonPreview() {
     SummaryActionButton(text = "Read", icon = TangaIcons.IndicatorRead) {}
+}
+
+@Preview(device = "id:pixel_5")
+@Composable
+@ExcludeFromJacocoGeneratedReport
+private fun SearchButtonPreview() {
+    TangaTheme {
+        SearchButton(onSearch = { /*TODO*/ })
+    }
 }

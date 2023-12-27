@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -21,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,6 +37,8 @@ import app.books.tanga.coreui.components.SummaryImage
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalGradientColors
+import app.books.tanga.coreui.theme.Shapes
+import app.books.tanga.coreui.theme.extraExtraLarge
 import app.books.tanga.data.FakeData
 import app.books.tanga.feature.summary.SummaryUi
 
@@ -56,11 +58,16 @@ fun HomeTopCard(
         modifier = modifier
             .fillMaxWidth()
             .height(170.dp)
+            .shadow(
+                elevation = 20.dp,
+                ambientColor = MaterialTheme.colorScheme.primary,
+                spotColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                shape = Shapes.extraExtraLarge
+            )
             .clickable {
                 onSummaryClick(summaryUi.id.value)
             },
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(10.dp),
+        shape = Shapes.extraExtraLarge,
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)
     ) {
         Row(

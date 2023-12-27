@@ -1,7 +1,6 @@
 package app.books.tanga.feature.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -41,7 +38,7 @@ import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
-import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.components.SearchButton
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.data.FakeData
 import app.books.tanga.errors.ErrorContent
@@ -115,13 +112,10 @@ fun HomeTopBar(
             .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painter = painterResource(id = TangaIcons.Search),
-            contentDescription = "home search icon",
-            tint = MaterialTheme.colorScheme.onTertiaryContainer,
-            modifier = Modifier.clickable { onSearch() }
-        )
+        SearchButton(onSearch = onSearch)
+
         Spacer(modifier = Modifier.weight(5f))
+
         ProfileImage(
             photoUrl = photoUrl,
             shape = CircleShape,
@@ -139,23 +133,24 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
 ) {
-    val dailySummary =
-        remember {
-            FakeData.allSummaries().first()
-        }
+    val dailySummary = remember {
+        FakeData.allSummaries().first()
+    }
     Column(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
             .padding(0.dp)
     ) {
-        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
         val userFirstName = state.userFirstName ?: stringResource(id = R.string.anonymous)
         Text(
             color = MaterialTheme.colorScheme.outline,
             text = getWelcomeMessage(firstName = userFirstName),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Normal
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         LazyColumn(
@@ -201,7 +196,7 @@ fun getWelcomeMessage(firstName: String): AnnotatedString {
         withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.outline)) {
             append(firstPart)
         }
-        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)) {
             append(firstName)
         }
     }

@@ -145,6 +145,7 @@ dependencies {
 
     // Lint Rules
     lintChecks(libs.slack.compose.lint.checks)
+    lintChecks(project(":code-checks"))
 }
 
 sentry {
