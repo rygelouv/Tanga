@@ -17,3 +17,4 @@ rootProject.name = "Tanga"
 include(":app")
 include(":core-ui")
 include(":code-checks")
+include(":benchmark")

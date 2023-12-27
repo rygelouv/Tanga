@@ -40,7 +40,7 @@ hilt-version = "2.47"
 
 # Firebase and Data
 # https://firebase.google.com/support/release-notes/android
-firebase-bom-version = "31.2.0"
+firebase-bom-version = "32.7.0"
 # https://developer.android.com/jetpack/androidx/releases/datastore
 datastore-version = "1.0.0"
 
@@ -66,6 +66,11 @@ mockk-version = "1.13.8"
 
 mockito-android-version = "5.7.0"
 mockito-kotlin-version = "5.1.0"
+
+# Performance Testing
+uiautomator = "2.2.0"
+benchmark-macro-junit4 = "1.2.2"
+
 
 # Google Services
 # google-services-version = "4.3.15"
@@ -167,6 +172,8 @@ android-test-junit = { module = "androidx.test.ext:junit", version.ref = "androi
 android-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-version" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-version" }
 navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation-testing-version" }
+uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
+benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 
 # Lint Checks
 lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint-api" }
@@ -189,3 +196,4 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-version" 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt-version" }
 junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "junit5-version" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover-version" }
+androidTest = { id = "com.android.test", version.ref = "android-plugin-gradle-version" }

@@ -35,8 +35,16 @@ android {
 
     buildTypes {
         debug {
+            isDebuggable = true
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
+            // versionNameSuffix = "-release" // Optional: Adds a suffix to the version name for differentiation
+            buildConfigField("Boolean", "IS_DEVELOPER_MODE_ENABLED", "true")
+        }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
         }
         release {
             isMinifyEnabled = true
@@ -44,10 +52,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug") // Configures the signing with the release key
+            // Configures the signing with the debug key for now so that we can run the release build
+            signingConfig = signingConfigs.getByName("debug")
             isDebuggable = false // Disables debugging for security reasons
             isShrinkResources = true // Further reduces the size of the APK by removing unused resources
-            // versionNameSuffix = "-release" // Optional: Adds a suffix to the version name for differentiation
+            buildConfigField("Boolean", "IS_DEVELOPER_MODE_ENABLED", "false")
         }
     }
 

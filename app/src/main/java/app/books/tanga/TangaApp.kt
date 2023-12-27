@@ -1,6 +1,7 @@
 package app.books.tanga
 
 import android.app.Application
+import android.os.StrictMode
 import app.books.tanga.di.TimberTrees
 import app.books.tanga.di.plantAll
 import app.books.tanga.errors.TangaErrorTracker
@@ -22,5 +23,30 @@ class TangaApp : Application() {
 
         // Initialize the error tracker
         errorTracker.init()
+
+        configureStrictMode()
+    }
+
+    private fun configureStrictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .penaltyFlashScreen()
+                    .build()
+            )
+
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .build()
+            )
+        }
     }
 }

@@ -1,5 +1,6 @@
 package app.books.tanga.common.urls
 
+import app.books.tanga.di.IoDispatcher
 import app.books.tanga.entity.SummaryId
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -11,7 +12,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
@@ -35,7 +39,8 @@ interface DownloadUrlGenerator {
  * using Firebase Storage.
  */
 class StorageDownloadUrlGenerator @Inject constructor(
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : DownloadUrlGenerator {
 
     /**
@@ -44,10 +49,12 @@ class StorageDownloadUrlGenerator @Inject constructor(
      */
     override suspend fun generateCoverDownloadUrl(
         summaryId: SummaryId
-    ): String? = SummaryCoverUrlCache.get(summaryId) ?: getSummaryReference(summaryId).generateDownloadUrl(
-        path = SummaryFormatType.COVER.filename
-    ).also { url ->
-        url?.let { SummaryCoverUrlCache.put(summaryId, it) }
+    ): String? = withContext(ioDispatcher) {
+        SummaryCoverUrlCache.get(summaryId) ?: getSummaryReference(summaryId).generateDownloadUrl(
+            path = SummaryFormatType.COVER.filename
+        ).also { url ->
+            url?.let { SummaryCoverUrlCache.put(summaryId, it) }
+        }
     }
 
     override suspend fun generateTextDownloadUrl(summaryId: SummaryId): String? = getSummaryReference(
@@ -86,7 +93,7 @@ class StorageDownloadUrlGenerator @Inject constructor(
          * Singleton instance of [StorageDownloadUrlGenerator] for convenience in places where when can't use Hilt DI.
          */
         val instance: StorageDownloadUrlGenerator
-            get() = StorageDownloadUrlGenerator(storage = Firebase.storage)
+            get() = StorageDownloadUrlGenerator(storage = Firebase.storage, ioDispatcher = Dispatchers.IO)
     }
 }
 

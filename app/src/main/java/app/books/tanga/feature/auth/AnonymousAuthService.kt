@@ -29,7 +29,7 @@ class AnonymousAuthServiceImpl @Inject constructor(
     @Suppress("TooGenericExceptionThrown")
     override suspend fun signInAnonymously(): AuthResult {
         val result = auth.signInAnonymously().await()
-        val firebaseUser = result.user ?: throw Throwable("Failed to sign in anonymously")
+        val firebaseUser = result.user ?: throw Throwable("Anonymous sign in returned null user")
 
         val user = firebaseUser.toAnonymousUser()
 
