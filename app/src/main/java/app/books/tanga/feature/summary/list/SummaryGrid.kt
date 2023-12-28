@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.FakeData
@@ -77,7 +78,8 @@ fun ImmutableList<SummaryUi>.toSummaryGridItems(): ImmutableList<SummaryGridItem
 
 @Preview(showBackground = true)
 @Composable
-fun SummaryGridPreview() {
+@ExcludeFromJacocoGeneratedReport
+private fun SummaryGridPreview() {
     TangaTheme {
         SummaryGrid(
             summaries = FakeData.allSummaries().toImmutableList(),

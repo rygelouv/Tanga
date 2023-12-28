@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
@@ -113,7 +114,8 @@ fun ShimmerFavoriteItem(
 
 @Preview(device = "id:pixel_5", showBackground = true)
 @Composable
-fun LibraryShimmerLoaderPreview() {
+@ExcludeFromJacocoGeneratedReport
+private fun LibraryShimmerLoaderPreview() {
     TangaTheme {
         LibraryShimmerLoader()
     }

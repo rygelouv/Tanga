@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
@@ -234,6 +235,7 @@ private fun SearchBox(onSearch: (String) -> Unit) {
 
 @Preview(device = "id:pixel_7")
 @Composable
+@ExcludeFromJacocoGeneratedReport
 private fun SearchScreenPreview() {
     val state = SearchUiState(
         query = "query",

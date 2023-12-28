@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@Suppress("TooManyFunctions")
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor
