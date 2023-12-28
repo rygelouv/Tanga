@@ -23,7 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
 fun LibraryShimmerLoader(modifier: Modifier = Modifier) {
@@ -106,5 +108,13 @@ fun ShimmerFavoriteItem(
                 .clip(RoundedCornerShape(5.dp))
                 .background(brush)
         )
+    }
+}
+
+@Preview(device = "id:pixel_5", showBackground = true)
+@Composable
+fun LibraryShimmerLoaderPreview() {
+    TangaTheme {
+        LibraryShimmerLoader()
     }
 }

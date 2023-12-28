@@ -23,12 +23,12 @@
     <string name="auth_sign_up_with_google_message">Sign in or Sign up with Google to start enjoying Tanga Now</string>
     <string name="auth_terms_and_conditions">Terms and Conditions</string>
     <string name="auth_sign_in_with_google">Sign in with Google</string>
-    <string name="home_top_card_title">Summary Of \nThe Day!</string>
+    <string name="home_top_card_title">Your Free Weekly \nSummary</string>
     <string name="home_top_card_action_text">Check It Out Now!</string>
     <string name="onboarding_get_started">Get Started</string>
     <string name="auth_skip">Skip</string>
     <string name="explore">Explore</string>
-    <string name="explore_search">Search</string>
+    <string name="explore_search">Book title, author name</string>
     <string name="explore_categories">Categories</string>
     <string name="business">Business</string>
     <string name="productivity">Productivity</string>

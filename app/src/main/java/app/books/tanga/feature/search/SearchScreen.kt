@@ -4,16 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
@@ -25,98 +26,89 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.TangaTheme
+import app.books.tanga.data.FakeData
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
-import app.books.tanga.errors.ShowSnackbarError
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.list.SummaryGrid
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hiltViewModel()) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
-
+fun SearchScreen(
+    state: SearchUiState,
+    snackBarHostState: SnackbarHostState,
+    onSearch: (String) -> Unit,
+    onNavigateToPreviousScreen: () -> Unit,
+    onCategorySelect: (CategoryUi) -> Unit,
+    onCategoryUnselect: (CategoryUi) -> Unit,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onNavigateToSummary: (SummaryId) -> Unit,
+) {
     Scaffold(
+        topBar = {
+            SearchTopBar {
+                onNavigateToPreviousScreen()
+            }
+        },
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(hostState = snackBarHostState)
         }
     ) { paddingValues ->
-
-        HandleEvents(event = event, snackbarHostState = snackbarHostState)
 
         Column(
             modifier = modifier
                 .padding(paddingValues)
                 .background(color = MaterialTheme.colorScheme.background)
-                .padding(start = 14.dp, end = 14.dp, top = 44.dp, bottom = 14.dp)
+                .padding(14.dp)
         ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.explore),
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(LocalSpacing.current.small))
-
-            SearchBox { viewModel.onSearch(it) }
-
-            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-
-            if (state.shouldShowCategories) {
-                state.categories?.let {
-                    CategoriesSection(
-                        categories = it.toImmutableList(),
-                        onCategorySelect = { category ->
-                            viewModel.onCategorySelected(category)
-                        },
-                        onCategoryUnselect = { category ->
-                            viewModel.onCategoryDeselected(category)
-                        }
-                    )
-                }
+            SearchBox { query ->
+                onSearch(query)
             }
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
             when (state.progressState) {
-                ProgressState.Show ->
-                    LibraryShimmerLoader(
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                ProgressState.Show -> LibraryShimmerLoader(modifier = Modifier.fillMaxWidth())
 
                 ProgressState.Hide -> {
                     state.summaries?.let {
-                        if (state.summaries?.isEmpty() == true && state.error == null) {
+                        if (it.isEmpty() && state.error == null) {
                             EmptySearchScreen(query = state.query ?: "")
                         } else {
                             SummaryGrid(
                                 modifier = Modifier,
-                                summaries = it.toImmutableList()
-                            ) {}
+                                summaries = it.toImmutableList(),
+                                header = {
+                                    SearchCategoryHeader(
+                                        shouldShowCategories = state.shouldShowCategories,
+                                        categories = state.categories?.toImmutableList(),
+                                        onCategorySelect = onCategorySelect,
+                                        onCategoryUnselect = onCategoryUnselect
+                                    )
+                                }
+                            ) { id -> onNavigateToSummary(SummaryId(id)) }
                         }
                     }
                     state.error?.let {
                         ErrorContent(
                             errorInfo = it.info,
                             canRetry = true,
-                            onClick = { viewModel.onRetry() }
+                            onClick = { onRetry() }
                         )
                     }
                 }
@@ -125,55 +117,61 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: SearchViewModel = hil
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CategoriesSection(
-    categories: ImmutableList<CategoryUi>,
-    modifier: Modifier = Modifier,
-    onCategorySelect: (CategoryUi) -> Unit = {},
-    onCategoryUnselect: (CategoryUi) -> Unit = {}
+fun SearchCategoryHeader(
+    shouldShowCategories: Boolean?,
+    categories: ImmutableList<CategoryUi>?,
+    onCategorySelect: (CategoryUi) -> Unit,
+    onCategoryUnselect: (CategoryUi) -> Unit
 ) {
-    Column(modifier = modifier) {
-        Text(
-            text = stringResource(id = R.string.explore_categories),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
-            verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small)
-        ) {
-            categories.forEach {
-                Tag(
-                    text = it.name,
-                    modifier = Modifier.height(40.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    hasBorder = true,
-                    icon = it.icon,
-                    onSelect = { onCategorySelect(it) },
-                    onUnselect = { onCategoryUnselect(it) }
-                )
-            }
+    if (shouldShowCategories == true) {
+        categories?.let {
+            CategoriesSection(
+                categories = it.toImmutableList(),
+                onCategorySelect = { category ->
+                    onCategorySelect(category)
+                },
+                onCategoryUnselect = { category ->
+                    onCategoryUnselect(category)
+                }
+            )
         }
     }
 }
 
 @Composable
-private fun HandleEvents(
-    event: SearchUiEvent?,
-    snackbarHostState: SnackbarHostState
+private fun SearchTopBar(
+    modifier: Modifier = Modifier,
+    onNavigateToPreviousScreen: () -> Unit
 ) {
-    when (event) {
-        is SearchUiEvent.ShowSnackError -> {
-            ShowSnackbarError(errorInfo = event.error.info, snackbarHostState = snackbarHostState)
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 34.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(
+            onClick = { onNavigateToPreviousScreen() }
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(26.dp)
+                    .testTag("back_button"),
+                painter = painterResource(id = TangaIcons.LeftArrow),
+                tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                contentDescription = "back navigation"
+            )
         }
+        Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
 
-        null -> Unit
+        Text(
+            modifier = Modifier.weight(1f),
+            text = stringResource(id = R.string.explore),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -231,5 +229,29 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         },
         shape = RoundedCornerShape(size = 8.dp)
     ) {
+    }
+}
+
+@Preview(device = "id:pixel_7")
+@Composable
+private fun SearchScreenPreview() {
+    val state = SearchUiState(
+        query = "query",
+        categories = FakeData.allCategories(),
+        summaries = FakeData.allSummaries(),
+        progressState = ProgressState.Hide
+    )
+    val snackBarHostState = SnackbarHostState()
+    TangaTheme {
+        SearchScreen(
+            state = state,
+            snackBarHostState = snackBarHostState,
+            onSearch = {},
+            onNavigateToPreviousScreen = {},
+            onCategorySelect = {},
+            onCategoryUnselect = {},
+            onRetry = {},
+            onNavigateToSummary = {}
+        )
     }
 }

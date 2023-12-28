@@ -1,9 +1,9 @@
 package app.books.tanga.feature.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -55,7 +56,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }.onFailure { error ->
-                Log.e("SearchViewModel", "Error loading categories", error)
+                Timber.e(error, "SearchViewModel", "Error loading categories")
                 postEvent(SearchUiEvent.ShowSnackError(error.toUiError()))
             }
     }
@@ -74,7 +75,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }.onFailure { error ->
-                Log.e("SearchViewModel", "Error loading summaries", error)
+                Timber.e(error, "SearchViewModel", "Error loading summaries")
                 _state.update {
                     it.copy(
                         progressState = ProgressState.Hide,
@@ -113,7 +114,7 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                 }.onFailure {
-                    Log.e("SearchViewModel", "Error searching summaries", it)
+                    Timber.e(it, "SearchViewModel", "Error searching summaries")
                 }
         }
     }
@@ -130,7 +131,7 @@ class SearchViewModel @Inject constructor(
      * When a category is deselected, we need remove the category from the selected categories list
      * and load the summaries for the selected categories
      */
-    fun onCategoryDeselected(category: CategoryUi) {
+    fun onCategoryUnselected(category: CategoryUi) {
         updateSelectedCategoriesAndLoadSummaries { it.remove(category) }
     }
 
@@ -165,12 +166,16 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                 }.onFailure {
-                    Log.e("SearchViewModel", "Error getting summaries by category", it)
+                    Timber.e(it, "SearchViewModel", "Error getting summaries by category")
                     _state.update { state ->
                         state.copy(error = it.toUiError())
                     }
                 }
         }
+    }
+
+    fun onNavigateToSummary(summaryId: SummaryId) {
+        postEvent(SearchUiEvent.NavigateTo.ToSummary(summaryId))
     }
 
     private fun postEvent(event: SearchUiEvent) {

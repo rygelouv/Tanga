@@ -32,7 +32,10 @@ fun MainNavigationGraph(
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
             onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId.value) }
         )
-        search()
+        search(
+            onNavigateToPreviousScreen = { navController.popBackStack() },
+            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) }
+        )
         playSummaryAudio { navController.popBackStack() }
         pricingPlan { navController.popBackStack() }
     }

@@ -109,7 +109,7 @@ fun HomeTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background).padding(top = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         SearchButton(onSearch = onSearch)

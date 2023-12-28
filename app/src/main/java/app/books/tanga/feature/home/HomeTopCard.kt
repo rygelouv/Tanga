@@ -101,7 +101,7 @@ private fun ContentColumn(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f),
             text = stringResource(id = R.string.home_top_card_title),
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleMedium,
             color = Color.White,
             fontWeight = FontWeight.Bold,
             maxLines = 2

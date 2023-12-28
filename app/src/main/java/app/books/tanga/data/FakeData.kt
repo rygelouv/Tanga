@@ -2,10 +2,43 @@ package app.books.tanga.data
 
 import app.books.tanga.R
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
 object FakeData {
+    fun allCategories() =
+        buildList {
+            add(
+                CategoryUi(
+                    id = "1",
+                    name = "Business",
+                    icon = app.books.tanga.coreui.R.drawable.ic_business
+                )
+            )
+            add(
+                CategoryUi(
+                    id = "2",
+                    name = "Personal Development",
+                    icon = app.books.tanga.coreui.R.drawable.ic_self_development
+                )
+            )
+            add(
+                CategoryUi(
+                    id = "3",
+                    name = "Psychology",
+                    icon = app.books.tanga.coreui.R.drawable.ic_productivity
+                )
+            )
+            add(
+                CategoryUi(
+                    id = "4",
+                    name = "Financial Education",
+                    icon = app.books.tanga.coreui.R.drawable.ic_financial_education
+                )
+            )
+        }
+
     fun allSummaries() =
         buildList<SummaryUi> {
             add(
