@@ -12,13 +12,16 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class StorageDownloadUrlGeneratorTest {
 
     private lateinit var generator: StorageDownloadUrlGenerator
@@ -27,6 +30,8 @@ class StorageDownloadUrlGeneratorTest {
     private val mockStorageReference = mockk<StorageReference>()
     private val mockkStorageReferenceSummary = mockk<StorageReference>()
     private val mockkStorageReferenceSummaryCover = mockk<StorageReference>()
+
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     @BeforeEach
     fun setUp() {
@@ -37,7 +42,7 @@ class StorageDownloadUrlGeneratorTest {
         every { mockkStorageReferenceSummary.child(any()) } returns mockkStorageReferenceSummaryCover
         coEvery { mockkStorageReferenceSummaryCover.downloadUrl.await().toString() } returns mockUrl
 
-        generator = StorageDownloadUrlGenerator(storage = mockStorage)
+        generator = StorageDownloadUrlGenerator(storage = mockStorage, testDispatcher)
     }
 
     @Test

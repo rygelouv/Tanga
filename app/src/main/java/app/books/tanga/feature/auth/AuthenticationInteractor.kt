@@ -33,7 +33,7 @@ class AuthenticationInteractor @Inject constructor(
         val authResult = anonymousAuthService.signInAnonymously()
         authResult.user
     }.onFailure {
-        Timber.e("Anonymous sign in failed", it)
+        Timber.e(it, "Anonymous sign in failed")
         return Result.failure(DomainError.AuthenticationError(it))
     }
 
@@ -65,6 +65,7 @@ class AuthenticationInteractor @Inject constructor(
         sessionManager.openSession(sessionId)
         user
     }.onFailure {
+        Timber.e(it, "Complete Google sign in failed")
         return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
     }
 

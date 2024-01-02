@@ -38,7 +38,7 @@ class GoogleSignInModule {
                 .builder()
                 .setSupported(true)
                 .setServerClientId(clientId)
-                .setFilterByAuthorizedAccounts(true)
+                .setFilterByAuthorizedAccounts(false)
                 .build()
         ).setAutoSelectEnabled(true)
         .build()
@@ -55,7 +55,7 @@ class GoogleSignInModule {
                 .builder()
                 .setSupported(true)
                 .setServerClientId(clientId)
-                .setFilterByAuthorizedAccounts(true)
+                .setFilterByAuthorizedAccounts(false)
                 .build()
         ).build()
 
