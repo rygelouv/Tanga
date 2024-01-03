@@ -5,7 +5,7 @@ package app.books.tanga.common.urls
  * and their associated filenames.
  */
 enum class SummaryFormatType(val filename: String) {
-    COVER("cover.jpeg"),
+    COVER("cover.jpg"),
     TEXT("summary.pdf"),
     AUDIO("audio.mp3"),
     GRAPHIC("graphic.jpg"),

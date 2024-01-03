@@ -11,14 +11,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -56,43 +60,28 @@ fun SummaryImage(
 
 /**
  * This is a composable that displays an image of a book summary cover.
- * It uses Glide to load the image from a URL. If the URL is null, it uses a placeholder image.
+ * It uses Coil to load the image from a URL. If the URL is null, it uses a placeholder image.
  */
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun GlideSummaryImage(
+fun TangaAsyncImage(
     summaryId: String,
     modifier: Modifier = Modifier,
     url: String? = null,
     onSummaryClick: (String) -> Unit
 ) {
-    Surface(
-        modifier =
-        modifier
-            .fillMaxWidth()
+    AsyncImage(
+        modifier = modifier
             .shadow(elevation = 10.dp)
-            .clickable { onSummaryClick(summaryId) },
-        shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-    ) {
-        if (url != null) {
-            GlideImage(
-                model = url,
-                contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth(),
-                loading = placeholder(R.drawable.tanga_cover_placeholder),
-                failure = placeholder(R.drawable.tanga_cover_placeholder),
-            )
-        } else {
-            // We could have used only failure and it would have been enough but when url is null and failure
-            // is displayed, it shows up with extra top and bottom padding/borders that gives a weird look.
-            Image(
-                painter = painterResource(id = R.drawable.tanga_cover_placeholder),
-                contentDescription = "summary cover",
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
+            .clickable { onSummaryClick(summaryId) }
+            .clip(RoundedCornerShape(10.dp)),
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .crossfade(true)
+            .build(),
+        placeholder = painterResource(id = R.drawable.tanga_default_cover),
+        error = painterResource(id = R.drawable.tanga_default_cover),
+        contentDescription = "summary cover",
+    )
 }
 
 /**

@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
@@ -169,7 +169,7 @@ fun PlaySummaryAudioContent(
                 AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
             }
         }
-        GlideSummaryImage(
+        TangaAsyncImage(
             summaryId = summaryId ?: "",
             modifier =
             Modifier

@@ -1,8 +1,10 @@
 package app.books.tanga.fixtures
 
+import app.books.tanga.entity.Category
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
@@ -87,5 +89,41 @@ object Fixtures {
         FirestoreDatabase.Users.Fields.EMAIL to "some@mail.com",
         FirestoreDatabase.Users.Fields.PHOTO_URL to "https://someurl.com",
         FirestoreDatabase.Users.Fields.CREATED_AT to Timestamp(1697806449, 0)
+    )
+
+    val dummyCategory1 = Category(
+        id = CategoryId("1"),
+        name = "Category1"
+    )
+
+    val dummyCategory2 = Category(
+        id = CategoryId("2"),
+        name = "Category2"
+    )
+
+    val dummySection1 = Section(
+        category = dummyCategory1,
+        summaries = listOf(
+            dummySummary1.copy(categories = listOf(CategoryId("1"))),
+            dummySummary2.copy(categories = listOf(CategoryId("1")))
+        )
+    )
+
+    val dummySection2 = Section(
+        category = dummyCategory2,
+        summaries = listOf(
+            dummySummary1.copy(categories = listOf(CategoryId("2"))),
+            dummySummary2.copy(categories = listOf(CategoryId("2")))
+        )
+    )
+
+    val summariesForCategory1 = listOf(
+        dummySummary1.copy(categories = listOf(CategoryId("1"))),
+        dummySummary2.copy(categories = listOf(CategoryId("1"))),
+    )
+
+    val summariesForCategory2 = listOf(
+        dummySummary1.copy(categories = listOf(CategoryId("2"))),
+        dummySummary2.copy(categories = listOf(CategoryId("2"))),
     )
 }

@@ -88,7 +88,9 @@ class SummaryDetailsViewModel @Inject constructor(
             summaryInteractor
                 .getRecommendationsForSummary(summary)
                 .onSuccess { recommendations ->
-                    _state.update { it.copy(recommendations = recommendations.map { it.toSummaryUi() }) }
+                    _state.update { uiState ->
+                        uiState.copy(recommendations = recommendations.map { it.toSummaryUi() })
+                    }
                 }.onFailure {
                     Timber.e(it, "Error loading recommendations")
                     // TODO Post snackbar error event

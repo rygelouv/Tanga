@@ -44,7 +44,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_crazt_at_work,
+                    cover = app.books.tanga.coreui.R.drawable.atomic_habits_cover,
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",

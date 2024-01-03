@@ -18,7 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -133,9 +132,6 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
 ) {
-    val dailySummary = remember {
-        FakeData.allSummaries().first()
-    }
     Column(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -160,8 +156,10 @@ fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
-            item {
-                HomeTopCard(summaryUi = dailySummary, onSummaryClick = onSummaryClick)
+            state.weeklySummary?.let {
+                item {
+                    HomeTopCard(summaryUi = it, onSummaryClick = onSummaryClick)
+                }
             }
             state.sections?.let {
                 items(it.size) { index ->

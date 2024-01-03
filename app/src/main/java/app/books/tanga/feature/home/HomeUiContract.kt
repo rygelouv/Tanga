@@ -10,6 +10,7 @@ data class HomeUiState(
     val progressState: ProgressState = ProgressState.Hide,
     val userFirstName: String? = null,
     val userPhotoUrl: String? = null,
+    val weeklySummary: SummaryUi? = null,
     val sections: List<HomeSectionUi>? = null,
     val error: UiError? = null
 )

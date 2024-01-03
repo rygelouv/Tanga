@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -241,12 +242,24 @@ fun SummaryActionButton(
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
+    val roundedCornerModifier = modifier.size(80.dp)
+        .background(
+            color = if (enabled) {
+                MaterialTheme.colorScheme.primary.copy(
+                    alpha = 0.1f
+                )
+            } else {
+                LocalTintColor.current.disabled.copy(alpha = 0.1f)
+            },
+            shape = Shapes.extraLarge
+        )
     Column(
-        modifier = if (enabled) modifier.clickable { onClick() } else modifier,
+        modifier = if (enabled) roundedCornerModifier.clickable { onClick() } else roundedCornerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
+            modifier = Modifier.offset(y = 4.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled
