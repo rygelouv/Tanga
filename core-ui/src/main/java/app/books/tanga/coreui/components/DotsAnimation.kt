@@ -1,4 +1,4 @@
-package com.sendwave.remit.feature.support.chat
+package app.books.tanga.coreui.components
 
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
