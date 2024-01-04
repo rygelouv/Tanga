@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Suppress("MagicNumber")
@@ -67,6 +68,6 @@ private fun Dot(scaleValue: Float) {
         modifier = Modifier
             .size(8.dp)
             .scale(scaleValue)
-            .background(MaterialTheme.colorScheme.tertiary, CircleShape)
+            .background(MaterialTheme.colorScheme.tertiary, CircleShape).testTag("Dot")
     )
 }
