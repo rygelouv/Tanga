@@ -154,7 +154,7 @@ fun SummariesByCategoryContent(
 @Preview
 @Composable
 @ExcludeFromJacocoGeneratedReport
-fun SummariesByCategoryScreenPreview() {
+private fun SummariesByCategoryScreenPreview() {
     TangaTheme {
         SummariesByCategoryScreen(
             state = SummariesByCategoryUiState(
