@@ -37,7 +37,7 @@ class SummaryInteractor @Inject constructor(
 
     suspend fun search(query: String): Result<List<Summary>> = summaryRepository.searchSummaryInMemoryCache(query)
 
-    private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
+    suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
         summaryRepository
             .getSummariesByCategory(
                 categoryId

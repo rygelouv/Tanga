@@ -1,6 +1,7 @@
 package app.books.tanga.feature.home
 
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Section
 import app.books.tanga.errors.UiError
 import app.books.tanga.feature.summary.SummaryUi
@@ -21,12 +22,14 @@ data class HomeUiState(
  * summaries: the list of summaries in the section and that belong to the category
  */
 data class HomeSectionUi(
+    val categoryId: CategoryId,
     val title: String,
     val summaries: List<SummaryUi>
 )
 
 fun Section.toHomeSectionUi(): HomeSectionUi =
     HomeSectionUi(
+        categoryId = category.id,
         title = category.name,
         summaries = summaries.map { it.toSummaryUi() }
     )

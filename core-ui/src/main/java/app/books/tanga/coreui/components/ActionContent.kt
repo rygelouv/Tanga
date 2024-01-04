@@ -73,7 +73,7 @@ fun ActionContent(
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
+        Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
         TangaButton(
             text = data.mainButton.text.asString(context.resources),
             onClick = data.mainButton.onClick
