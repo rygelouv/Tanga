@@ -5,8 +5,6 @@ plugins {
     alias(libs.plugins.detekt) apply false
 }
 
-apply(from = "${project.rootDir}/buildscripts/jacoco.gradle.kts")
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
