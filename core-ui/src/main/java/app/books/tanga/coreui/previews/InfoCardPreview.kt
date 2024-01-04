@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.InfoCard
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -15,7 +16,8 @@ import app.books.tanga.coreui.theme.TangaTheme
     device = "id:pixel_4a",
 )
 @Composable
-fun InfoCardPreview() {
+@ExcludeFromJacocoGeneratedReport
+private fun InfoCardPreview() {
     TangaTheme {
         Box(
             modifier = Modifier.padding(16.dp)
