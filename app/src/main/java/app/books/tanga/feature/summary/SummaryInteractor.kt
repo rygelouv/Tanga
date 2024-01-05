@@ -8,8 +8,6 @@ import app.books.tanga.entity.SummaryId
 import app.books.tanga.utils.resultOf
 import javax.inject.Inject
 
-private const val RECOMMENDED_SUMMARIES_COUNT = 5
-
 class SummaryInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val categoryRepository: CategoryRepository
@@ -39,7 +37,7 @@ class SummaryInteractor @Inject constructor(
 
     suspend fun search(query: String): Result<List<Summary>> = summaryRepository.searchSummaryInMemoryCache(query)
 
-    private suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
+    suspend fun getSummariesByCategory(categoryId: String): Result<List<Summary>> =
         summaryRepository
             .getSummariesByCategory(
                 categoryId
@@ -58,13 +56,13 @@ class SummaryInteractor @Inject constructor(
             }
             // Remove the summary itself from the list and
             // Remove duplicates and shuffle the list then take only a subset of the list
-            recommendedSummaries
+            val filteredRecommendations = recommendedSummaries
                 .removeSummary(summary)
                 .toSet()
                 .toList()
                 .shuffled()
                 .take(RECOMMENDED_SUMMARIES_COUNT)
-            return Result.success(recommendedSummaries)
+            return Result.success(filteredRecommendations)
         }
 
     /**
@@ -80,7 +78,11 @@ class SummaryInteractor @Inject constructor(
     suspend fun getCategories(): Result<List<Category>> = categoryRepository.getCategories()
 
     private fun MutableList<Summary>.removeSummary(summary: Summary): MutableList<Summary> {
-        this.remove(summary)
+        this.removeAll { it.id == summary.id }
         return this
+    }
+
+    companion object {
+        const val RECOMMENDED_SUMMARIES_COUNT = 5
     }
 }

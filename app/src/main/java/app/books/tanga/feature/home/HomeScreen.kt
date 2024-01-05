@@ -1,6 +1,7 @@
 package app.books.tanga.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,7 +40,9 @@ import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SearchButton
 import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.FakeData
+import app.books.tanga.entity.CategoryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.list.SummaryRow
@@ -51,6 +53,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun HomeScreen(
     onSearch: () -> Unit,
     onProfilePictureClick: () -> Unit,
+    onNavigateToSummariesByCategory: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onSummaryClick: (String) -> Unit
@@ -73,7 +76,8 @@ fun HomeScreen(
             modifier = Modifier.padding(it),
             state = state,
             onSummaryClick = onSummaryClick,
-            onErrorButtonClick = { viewModel.onRetry() }
+            onErrorButtonClick = { viewModel.onRetry() },
+            onSeeAllClick = onNavigateToSummariesByCategory
         )
     }
 }
@@ -82,6 +86,7 @@ fun HomeScreen(
 fun LoadHomeContent(
     state: HomeUiState,
     onSummaryClick: (String) -> Unit,
+    onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
 ) {
@@ -93,7 +98,8 @@ fun LoadHomeContent(
                 modifier = modifier,
                 state = state,
                 onSummaryClick = onSummaryClick,
-                onErrorButtonClick = onErrorButtonClick
+                onErrorButtonClick = onErrorButtonClick,
+                onSeeAllClick = onSeeAllClick
             )
         }
     }
@@ -109,7 +115,8 @@ fun HomeTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background).padding(top = 24.dp),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         SearchButton(onSearch = onSearch)
@@ -130,12 +137,10 @@ fun HomeTopBar(
 fun HomeContent(
     state: HomeUiState,
     onSummaryClick: (String) -> Unit,
+    onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
 ) {
-    val dailySummary = remember {
-        FakeData.allSummaries().first()
-    }
     Column(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -160,17 +165,21 @@ fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
-            item {
-                HomeTopCard(summaryUi = dailySummary, onSummaryClick = onSummaryClick)
+            state.weeklySummary?.let {
+                item {
+                    HomeTopCard(summaryUi = it, onSummaryClick = onSummaryClick)
+                }
             }
             state.sections?.let {
                 items(it.size) { index ->
                     val section = state.sections[index]
                     HomeSection(
+                        sectionId = section.categoryId,
                         sectionTitle = section.title,
                         isFirst = index == 0,
                         summaries = section.summaries.toImmutableList(),
-                        onSummaryClick = onSummaryClick
+                        onSummaryClick = onSummaryClick,
+                        onSeeAllClick = onSeeAllClick
                     )
                 }
             }
@@ -204,8 +213,10 @@ fun getWelcomeMessage(firstName: String): AnnotatedString {
 
 @Composable
 fun HomeSection(
+    sectionId: CategoryId,
     sectionTitle: String,
     summaries: ImmutableList<SummaryUi>,
+    onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     isFirst: Boolean = false,
     onSummaryClick: (String) -> Unit
@@ -227,6 +238,7 @@ fun HomeSection(
             )
 
             Text(
+                modifier = Modifier.clickable { onSeeAllClick(sectionId, sectionTitle) },
                 text = stringResource(id = R.string.home_see_all),
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.End,
@@ -244,15 +256,25 @@ fun HomeSection(
 @ExcludeFromJacocoGeneratedReport
 private fun HomeSectionPreview() {
     HomeSection(
+        sectionId = CategoryId("1"),
         sectionTitle = "Personal Growth",
         isFirst = true,
-        summaries = FakeData.allSummaries().toImmutableList()
-    ) {}
+        summaries = FakeData.allSummaries().toImmutableList(),
+        onSeeAllClick = { _, _ -> },
+        onSummaryClick = {}
+    )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 @ExcludeFromJacocoGeneratedReport
 private fun HomeScreenPreview() {
-    HomeScreen({}, {}, onSummaryClick = {})
+    TangaTheme {
+        HomeScreen(
+            onSearch = {},
+            onProfilePictureClick = {},
+            onNavigateToSummariesByCategory = { _, _ -> },
+            onSummaryClick = {}
+        )
+    }
 }

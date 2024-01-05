@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
+import app.books.tanga.coreui.components.DotsAnimation
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -103,10 +103,8 @@ fun AuthScreen(
                             )
                         }
                         ProgressState.Show -> {
-                            CircularProgressIndicator(
-                                modifier = Modifier.width(24.dp).padding(top = 6.dp).testTag("ProgressIndicator"),
-                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                trackColor = MaterialTheme.colorScheme.tertiary
+                            DotsAnimation(
+                                modifier = Modifier.testTag("ProgressIndicator")
                             )
                         }
                     }

@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.entity.Category
+import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
@@ -25,7 +26,7 @@ data class CategoryUi(
     @DrawableRes val icon: Int
 )
 
-fun Category.toCategoryUi(): CategoryUi =
+fun Category.toSearchCategoryUi(): CategoryUi =
     CategoryUi(
         id = id.value,
         name = name,
@@ -37,6 +38,15 @@ fun Category.toCategoryUi(): CategoryUi =
             else -> TangaIcons.SelfDevelopment
         }
     )
+
+fun getCategoryIllustration(categoryId: CategoryId): Int =
+    when (categoryId.value) {
+        PredefinedCategory.BUSINESS.id -> app.books.tanga.coreui.R.drawable.graphic_business_simple
+        PredefinedCategory.PERSONAL_DEVELOPMENT.id -> app.books.tanga.coreui.R.drawable.graphic_personal_goals_checklist
+        PredefinedCategory.PSYCHOLOGY.id -> app.books.tanga.coreui.R.drawable.graphic_questions_simple
+        PredefinedCategory.FINANCIAL_EDUCATION.id -> app.books.tanga.coreui.R.drawable.graphic_investing_finance
+        else -> app.books.tanga.coreui.R.drawable.graphic_career_simple
+    }
 
 sealed class SearchUiEvent {
     data class ShowSnackError(

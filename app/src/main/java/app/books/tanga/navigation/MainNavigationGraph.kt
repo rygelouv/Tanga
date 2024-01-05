@@ -15,6 +15,8 @@ import app.books.tanga.feature.profile.profile
 import app.books.tanga.feature.profile.toProfile
 import app.books.tanga.feature.search.search
 import app.books.tanga.feature.search.toSearch
+import app.books.tanga.feature.summary.list.summariesByCategory
+import app.books.tanga.feature.summary.list.toSummariesByCategory
 import app.books.tanga.feature.summary.summaryDetails
 import app.books.tanga.feature.summary.toSummaryDetails
 
@@ -25,7 +27,10 @@ fun MainNavigationGraph(
     onRedirectToAuth: () -> Unit
 ) {
     NavHost(navController = navController, startDestination = startDestination.route) {
-        bottomBarNavGraph(navController = navController, onRedirectToAuth = onRedirectToAuth)
+        bottomBarNavGraph(
+            navController = navController,
+            onRedirectToAuth = onRedirectToAuth
+        )
         summaryDetails(
             onNavigateToAuth = onRedirectToAuth,
             onNavigateToPreviousScreen = { navController.popBackStack() },
@@ -38,15 +43,26 @@ fun MainNavigationGraph(
         )
         playSummaryAudio { navController.popBackStack() }
         pricingPlan { navController.popBackStack() }
+        summariesByCategory(
+            onNavigateToPreviousScreen = { navController.popBackStack() },
+            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) },
+            onNavigateToSearch = { navController.toSearch() }
+        )
     }
 }
 
-fun NavGraphBuilder.bottomBarNavGraph(navController: NavHostController, onRedirectToAuth: () -> Unit) {
+fun NavGraphBuilder.bottomBarNavGraph(
+    navController: NavHostController,
+    onRedirectToAuth: () -> Unit
+) {
     composable(route = NavigationScreen.BottomBarScreen.Home.route) {
         HomeScreen(
             onSearch = { navController.toSearch() },
             onProfilePictureClick = { navController.toProfile() },
-            onSummaryClick = { summaryId -> navController.toSummaryDetails(summaryId) }
+            onSummaryClick = { summaryId -> navController.toSummaryDetails(summaryId) },
+            onNavigateToSummariesByCategory = { categoryId, categoryName ->
+                navController.toSummariesByCategory(categoryId, categoryName)
+            }
         )
     }
     composable(route = NavigationScreen.BottomBarScreen.Library.route) {

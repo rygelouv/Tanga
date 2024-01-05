@@ -4,9 +4,12 @@ import app.books.tanga.data.category.CategoryRepository
 import app.books.tanga.data.summary.SummaryRepository
 import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
 import app.books.tanga.feature.profile.ProfileInteractor
 import javax.inject.Inject
+
+private const val SECTION_SUMMARIES_COUNT = 5
 
 class HomeInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
@@ -18,33 +21,30 @@ class HomeInteractor @Inject constructor(
      */
     suspend fun getSummarySections(): Result<List<Section>> {
         val categories = categoryRepository.getCategories()
-        val summaries = summaryRepository.getAllSummaries().getOrNull()
 
         val sections = mutableListOf<Section>()
 
-        categories
-            .map {
-                it.forEach { category ->
-                    val summariesByCategory =
-                        summaries?.filter { summary ->
-                            summary.categories.contains(category.id)
-                        } ?: emptyList()
-
+        categories.map {
+            it.forEach { category ->
+                val summariesByCategory = summaryRepository.getSummariesByCategory(category.id.value).getOrNull()
+                summariesByCategory?.let { summaries ->
                     sections.add(
                         Section(
                             category = category,
-                            summaries = summariesByCategory
+                            summaries = summaries.take(SECTION_SUMMARIES_COUNT)
                         )
                     )
                 }
-            }.onFailure {
-                return Result.failure(it)
             }
+        }.onFailure {
+            return Result.failure(it)
+        }
 
         return Result.success(sections)
     }
 
-    suspend fun getDailySummary(): Result<Summary> = TODO("Not yet implemented")
+    // TODO to be implemented
+    suspend fun getWeeklySummary(): Result<Summary> = summaryRepository.getSummary(SummaryId("atomic_habits"))
 
     suspend fun getUserInfo(): Result<User?> = profileInteractor.getUserInfo()
 }

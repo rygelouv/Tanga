@@ -48,6 +48,13 @@ sealed class NavigationScreen(val route: String) {
         const val SUMMARY_ID_KEY = "summaryId"
     }
 
+    data object SummariesByCategory : NavigationScreen(
+        "summaries_by_category_screen?category_id={categoryId}&category_name={categoryName}"
+    ) {
+        const val CATEGORY_ID_KEY = "categoryId"
+        const val CATEGORY_NAME_KEY = "categoryName"
+    }
+
     data object Search : NavigationScreen("search_screen")
 
     data object PlaySummaryAudio : NavigationScreen("play_summary_audio_screen/summary_id={summaryId}")

@@ -60,7 +60,7 @@ class AuthScreenTest {
 
         launchAuthScreen(state = state)
 
-        composeTestRule.onNodeWithTag("ProgressIndicator").assertExists()
+        composeTestRule.onNodeWithTag("ProgressIndicator", useUnmergedTree = true).assertExists()
     }
 
     @Test

@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import app.books.tanga.common.urls.StorageDownloadUrlGenerator
-import app.books.tanga.coreui.components.GlideSummaryImage
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.entity.SummaryId
 
 /**
@@ -32,7 +32,7 @@ fun UrlDownloadableImage(
         imageUrlState.value = url
     }
 
-    GlideSummaryImage(
+    TangaAsyncImage(
         modifier = modifier,
         summaryId = summaryId.value,
         url = imageUrlState.value,

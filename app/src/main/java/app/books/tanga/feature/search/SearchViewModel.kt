@@ -52,7 +52,7 @@ class SearchViewModel @Inject constructor(
                     it.copy(
                         categories =
                         categories.map { category ->
-                            category.toCategoryUi()
+                            category.toSearchCategoryUi()
                         }
                     )
                 }

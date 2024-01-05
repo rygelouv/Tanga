@@ -1,11 +1,11 @@
 package app.books.tanga.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
+import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -32,7 +33,23 @@ class HomeViewModel @Inject constructor(
     private fun loadHomeData() {
         viewModelScope.launch {
             loadUserInfo()
+            loadWeeklySummary()
             loadSections()
+        }
+    }
+
+    private fun loadWeeklySummary() {
+        viewModelScope.launch {
+            homeInteractor
+                .getWeeklySummary()
+                .onSuccess { summary ->
+                    _state.update { it.copy(weeklySummary = summary.toSummaryUi()) }
+                }.onFailure {
+                    Timber.e(it, "HomeViewModel", "Error loading weekly summary")
+                    _state.update { state ->
+                        state.copy(error = it.toUiError())
+                    }
+                }
         }
     }
 
@@ -50,9 +67,12 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                Log.e("HomeViewModel", "Error loading home sections", it)
+                Timber.e(it, "HomeViewModel", "Error loading home sections")
                 _state.update { state ->
-                    state.copy(error = it.toUiError())
+                    state.copy(
+                        progressState = ProgressState.Hide,
+                        error = it.toUiError()
+                    )
                 }
             }
     }
@@ -74,7 +94,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                Log.e("HomeViewModel", "Error loading user info", it)
+                Timber.e(it, "HomeViewModel", "Error loading user info")
             }
     }
 
@@ -83,9 +103,9 @@ class HomeViewModel @Inject constructor(
             favoriteInteractor
                 .getFavorites()
                 .onSuccess { favorites ->
-                    Log.i("HomeViewModel", "Favorites loaded: $favorites")
+                    Timber.i("HomeViewModel", "Favorites loaded: $favorites")
                 }.onFailure {
-                    Log.e("HomeViewModel", "Error loading favorites", it)
+                    Timber.e(it, "HomeViewModel", "Error loading favorites")
                 }
         }
     }

@@ -1,4 +1,4 @@
-package app.books.tanga.data
+package app.books.tanga.fixtures
 
 import app.books.tanga.R
 import app.books.tanga.entity.SummaryId
@@ -6,8 +6,8 @@ import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
-object FakeData {
-    fun allCategories() =
+object FakeUiData {
+    fun categories() =
         buildList {
             add(
                 CategoryUi(

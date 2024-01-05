@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -163,7 +165,7 @@ fun TangaButtonRightIcon(
                 style = MaterialTheme.typography.button
             )
             Icon(
-                modifier = Modifier.size(iconSize),
+                modifier = Modifier.size(iconSize).testTag("button_right_icon"),
                 painter = painterResource(id = leftIcon),
                 contentDescription = "explore summaries icon"
             )
@@ -211,7 +213,7 @@ fun TangaButtonLeftIcon(
     ) {
         Box(modifier = Modifier.padding(start = startPadding)) {
             Icon(
-                modifier = Modifier.size(iconSize),
+                modifier = Modifier.size(iconSize).testTag("button_left_icon"),
                 painter = painterResource(id = rightIcon),
                 contentDescription = null
             )
@@ -241,12 +243,24 @@ fun SummaryActionButton(
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
+    val roundedCornerModifier = modifier.size(80.dp)
+        .background(
+            color = if (enabled) {
+                MaterialTheme.colorScheme.primary.copy(
+                    alpha = 0.1f
+                )
+            } else {
+                LocalTintColor.current.disabled.copy(alpha = 0.1f)
+            },
+            shape = Shapes.extraLarge
+        ).testTag("summary_action_button")
     Column(
-        modifier = if (enabled) modifier.clickable { onClick() } else modifier,
+        modifier = if (enabled) roundedCornerModifier.clickable { onClick() } else roundedCornerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
+            modifier = Modifier.offset(y = 4.dp).testTag("summary_action_button_icon"),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled
@@ -284,6 +298,7 @@ fun SearchButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
+            modifier = Modifier.testTag("search_icon"),
             painter = painterResource(id = TangaIcons.Search),
             contentDescription = "search icon",
             tint = MaterialTheme.colorScheme.primary

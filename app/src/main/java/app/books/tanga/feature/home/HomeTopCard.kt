@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,9 +32,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
+import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.R.drawable.ic_right_arrow
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.SummaryImage
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalGradientColors
@@ -80,10 +81,9 @@ fun HomeTopCard(
         ) {
             ContentColumn()
 
-            SummaryImage(
-                summaryId = summaryUi.id.value,
-                modifier = Modifier.width(90.dp),
-                painter = painterResource(id = summaryUi.cover),
+            UrlDownloadableImage(
+                summaryId = summaryUi.id,
+                modifier = Modifier.offset(y = 8.dp).width(90.dp),
                 onSummaryClick = onSummaryClick
             )
         }
