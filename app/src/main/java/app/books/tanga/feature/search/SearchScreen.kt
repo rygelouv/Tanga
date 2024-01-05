@@ -87,33 +87,48 @@ fun SearchScreen(
                 ProgressState.Show -> LibraryShimmerLoader(modifier = Modifier.fillMaxWidth())
 
                 ProgressState.Hide -> {
-                    state.summaries?.let {
-                        if (it.isEmpty() && state.error == null) {
-                            EmptySearchScreen(query = state.query ?: "")
-                        } else {
-                            SummaryGrid(
-                                modifier = Modifier,
-                                summaries = it.toImmutableList(),
-                                header = {
-                                    SearchCategoryHeader(
-                                        shouldShowCategories = state.shouldShowCategories,
-                                        categories = state.categories?.toImmutableList(),
-                                        onCategorySelect = onCategorySelect,
-                                        onCategoryUnselect = onCategoryUnselect
-                                    )
-                                }
-                            ) { id -> onNavigateToSummary(SummaryId(id)) }
-                        }
-                    }
-                    state.error?.let {
-                        ErrorContent(
-                            errorInfo = it.info,
-                            canRetry = true,
-                            onClick = { onRetry() }
-                        )
-                    }
+                    DisplayContent(state, onCategorySelect, onCategoryUnselect, onNavigateToSummary, onRetry)
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun DisplayContent(
+    state: SearchUiState,
+    onCategorySelect: (CategoryUi) -> Unit,
+    onCategoryUnselect: (CategoryUi) -> Unit,
+    onNavigateToSummary: (SummaryId) -> Unit,
+    onRetry: () -> Unit
+) {
+    when {
+        state.summaries?.isEmpty() == true && state.error == null -> {
+            EmptySearchScreen(query = state.query ?: "")
+        }
+
+        state.summaries != null || state.categories != null -> {
+            val summaries = state.summaries ?: emptyList()
+            SummaryGrid(
+                modifier = Modifier,
+                summaries = summaries.toImmutableList(),
+                header = {
+                    SearchCategoryHeader(
+                        shouldShowCategories = state.shouldShowCategories,
+                        categories = state.categories?.toImmutableList(),
+                        onCategorySelect = onCategorySelect,
+                        onCategoryUnselect = onCategoryUnselect
+                    )
+                }
+            ) { id -> onNavigateToSummary(SummaryId(id)) }
+        }
+
+        state.error != null -> {
+            ErrorContent(
+                errorInfo = state.error.info,
+                canRetry = true,
+                onClick = { onRetry() }
+            )
         }
     }
 }
