@@ -7,7 +7,6 @@ import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.utils.resultOf
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 
 class SummaryInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
@@ -71,7 +70,6 @@ class SummaryInteractor @Inject constructor(
      * Once the summaries are retrieved from the repository, save them in the in memory cache
      */
     suspend fun getAllSummaries(): Result<List<Summary>> {
-        delay(3000)
         val summaries = summaryRepository.getAllSummaries()
         summaryRepository.saveSummariesInMemoryCache(summaries.getOrNull() ?: emptyList())
         return summaries
