@@ -43,10 +43,11 @@ fun Tag(
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
     tint: Color = LocalTintColor.current.color,
     hasBorder: Boolean = false,
+    isSelected: Boolean = false,
     onSelect: () -> Unit = {},
     onUnselect: () -> Unit = {}
 ) {
-    var selected by remember { mutableStateOf(false) }
+    var selected by remember { mutableStateOf(isSelected) }
 
     val borderModifier = if (hasBorder) Modifier.border(1.dp, tint, shape) else Modifier
     val backgroundModifier =

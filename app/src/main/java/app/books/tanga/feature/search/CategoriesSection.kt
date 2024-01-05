@@ -19,12 +19,14 @@ import app.books.tanga.R
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.theme.LocalSpacing
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CategoriesSection(
     categories: ImmutableList<CategoryUi>,
     modifier: Modifier = Modifier,
+    selectedCategories: ImmutableList<CategoryUi> = emptyList<CategoryUi>().toImmutableList(),
     onCategorySelect: (CategoryUi) -> Unit = {},
     onCategoryUnselect: (CategoryUi) -> Unit = {}
 ) {
@@ -50,6 +52,7 @@ fun CategoriesSection(
                     shape = RoundedCornerShape(8.dp),
                     hasBorder = true,
                     icon = it.icon,
+                    isSelected = selectedCategories.contains(it),
                     onSelect = { onCategorySelect(it) },
                     onUnselect = { onCategoryUnselect(it) }
                 )

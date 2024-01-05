@@ -84,7 +84,18 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
             when (state.progressState) {
-                ProgressState.Show -> LibraryShimmerLoader(modifier = Modifier.fillMaxWidth())
+                ProgressState.Show -> {
+                    state.categories?.let {
+                        SearchCategoryHeader(
+                            shouldShowCategories = state.shouldShowCategories,
+                            categories = it.toImmutableList(),
+                            selectedCategories = state.selectedCategories.toImmutableList(),
+                            onCategorySelect = onCategorySelect,
+                            onCategoryUnselect = onCategoryUnselect
+                        )
+                    }
+                    LibraryShimmerLoader(modifier = Modifier.fillMaxWidth().testTag("shimmer_loader"))
+                }
 
                 ProgressState.Hide -> {
                     DisplayContent(state, onCategorySelect, onCategoryUnselect, onNavigateToSummary, onRetry)
@@ -107,18 +118,21 @@ private fun DisplayContent(
             EmptySearchScreen(query = state.query ?: "")
         }
 
-        state.summaries != null || state.categories != null -> {
-            val summaries = state.summaries ?: emptyList()
+        state.summaries != null -> {
+            val summaries = state.summaries.toImmutableList()
             SummaryGrid(
                 modifier = Modifier,
-                summaries = summaries.toImmutableList(),
+                summaries = summaries,
                 header = {
-                    SearchCategoryHeader(
-                        shouldShowCategories = state.shouldShowCategories,
-                        categories = state.categories?.toImmutableList(),
-                        onCategorySelect = onCategorySelect,
-                        onCategoryUnselect = onCategoryUnselect
-                    )
+                    state.categories?.let {
+                        SearchCategoryHeader(
+                            shouldShowCategories = state.shouldShowCategories,
+                            categories = it.toImmutableList(),
+                            selectedCategories = state.selectedCategories.toImmutableList(),
+                            onCategorySelect = onCategorySelect,
+                            onCategoryUnselect = onCategoryUnselect
+                        )
+                    }
                 }
             ) { id -> onNavigateToSummary(SummaryId(id)) }
         }
@@ -136,22 +150,22 @@ private fun DisplayContent(
 @Composable
 fun SearchCategoryHeader(
     shouldShowCategories: Boolean?,
-    categories: ImmutableList<CategoryUi>?,
+    categories: ImmutableList<CategoryUi>,
+    selectedCategories: ImmutableList<CategoryUi>,
     onCategorySelect: (CategoryUi) -> Unit,
     onCategoryUnselect: (CategoryUi) -> Unit
 ) {
     if (shouldShowCategories == true) {
-        categories?.let {
-            CategoriesSection(
-                categories = it.toImmutableList(),
-                onCategorySelect = { category ->
-                    onCategorySelect(category)
-                },
-                onCategoryUnselect = { category ->
-                    onCategoryUnselect(category)
-                }
-            )
-        }
+        CategoriesSection(
+            categories = categories.toImmutableList(),
+            selectedCategories = selectedCategories,
+            onCategorySelect = { category ->
+                onCategorySelect(category)
+            },
+            onCategoryUnselect = { category ->
+                onCategoryUnselect(category)
+            }
+        )
     }
 }
 

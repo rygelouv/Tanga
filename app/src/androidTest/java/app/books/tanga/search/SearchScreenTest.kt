@@ -1,7 +1,9 @@
 package app.books.tanga.search
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
@@ -23,6 +25,26 @@ class SearchScreenTest {
     val composeTestRule = createComposeRule()
 
     val context = InstrumentationRegistry.getInstrumentation().targetContext
+
+    @Test
+    fun searchScreen_DisplaysShimmerLoaderWhenProgressStateIsShow() {
+        val state = SearchUiState(progressState = ProgressState.Show)
+        composeTestRule.setContent {
+            SearchScreen(
+                state = state,
+                snackBarHostState = SnackbarHostState(),
+                onSearch = {},
+                onNavigateToPreviousScreen = {},
+                onCategorySelect = {},
+                onCategoryUnselect = {},
+                onRetry = {},
+                onNavigateToSummary = {}
+            )
+        }
+
+        composeTestRule.onNodeWithTag("shimmer_loader").assertExists()
+        composeTestRule.onNodeWithTag("shimmer_loader").assertIsDisplayed()
+    }
 
     @Test
     fun searchScreen_Displays_search_box() {
