@@ -9,7 +9,7 @@
  </a>
 </p>
 
-![tanga_banner_v2_updated](https://user-images.githubusercontent.com/7549316/227764073-7e88f504-710e-46a6-9a43-e18521200f4d.png)
+![tanga_banner_v2_updated](https://github.com/rygelouv/Tanga/blob/dev/art/tanga_banner.png)
 
 
 <p align="center">
@@ -17,39 +17,50 @@
 </p>
 
 ## 🚧 **This project is still under construction** 🚧
-You can come back in a few months to see considerable progress. In the meantime, here are our recent achievements
+You can come back in a few months to see considerable progress. In the meantime, here are our recent achievements (this list is not always up to date)
 
-- [Use real data from firebase](https://github.com/users/rygelouv/projects/3/views/1)
-- [Build an Error management system](https://github.com/users/rygelouv/projects/5/views/1?layout=board)
-- [Gradle Migration](https://github.com/users/rygelouv/projects/2)
-- [Build the audio player https](https://github.com/users/rygelouv/projects/4)
-- [Static Code Analysis the CI/CD and testing infrastructure](https://github.com/users/rygelouv/projects/6/views/1)
+- [Enabled more user-centric features such as search, summaries by categories, etc](https://github.com/users/rygelouv/projects/3/views/1)
+- [Enabled Anonymous Authentication capabilities](https://github.com/users/rygelouv/projects/9)
+- [Added more unit tests and UI tests](https://github.com/users/rygelouv/projects/7)
+- [Worked on our test coverage infrastructure](https://github.com/users/rygelouv/projects/6)
+- [Worked on some performance investigation and improvements](https://github.com/users/rygelouv/projects/10)
+
+The other projects can be found here:  
+- [Tanga Projects](https://github.com/rygelouv?tab=projects)
 
 ## Next steps on UI:
 - We need to activate the remaning buttons on Summary details screen. Those are "Read", "Watch" and "Visualize"
-- We need to enable the "see all" buttons on home screen. Clicking on them opens up a new screen with all summaries for the category selected
-- We need to work on the "daily summary" logic for the home screen
-- We need to enable click on summary from the search screen
+- We need to work on the "weekly summary" logic for the home screen
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
 
 ## Infrastructure work
-- [x] Add a CI (Bitrise)
-- [x] Add Spotless and ktlint
+- [x] Add a CI (Bitrise and Github Actions)
+- [x] Add Ktlint
 - [x] Add Detekt
 - [x] Add SonarCloud
+- [x] Add Codecove for test coverage tracking
 - [x] Add error tracking system with Sentry and Crashlytics
-- [ ] Add Detekt To Bitrise
+- [ ] Add Detekt Step to CI
+- [ ] Add full Android build on Github Action workflow
 
 ## Testing
 We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
 - [x] Add JUnit 5
 - [X] Add Mockk 
 - [x] Add Codecov for tracking project coverage
-- [x] Add Kover for generating coverage reports
+- [x] Add Kover and Jacoco for generating coverage reports
 - [x] Start adding unit tests.
-- [ ] We need to UI test the screen composables with Espresso
-- [ ] We only have 3% coverage so far 🙈, we need to add more unit tests and increase the coverage.
+- [x] We need to UI test the screen composables
+- [ ] Reach 50% coverage
+- [ ] Add Screenshot tests
 - [ ] Add Maestro tests
+
+## Performances
+- On debug build, the app is very slow on physical devices. This is need to be investigated. We started here: https://github.com/rygelouv/Tanga/pull/92
+- [ ] Add macrobenchmark for Home screen
+- [ ] Add baselie profiles if necessary
+- [ ] Enable StrictMode to make sure no blocking work is done on the UI thread
+- [ ] Track Memory leaks with Leak canary
 
 # License
 ```xml
