@@ -6,7 +6,7 @@ import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.search.getCategoryIllustration
 import app.books.tanga.feature.summary.list.SummariesByCategoryUiState
-import app.books.tanga.feature.summary.list.SummaryByCategoryViewModel
+import app.books.tanga.feature.summary.list.SummariesByCategoryViewModel
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.cash.turbine.test
@@ -22,15 +22,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
-class SummaryByCategoryViewModelTest {
+class SummariesByCategoryViewModelTest {
 
     private lateinit var summaryInteractor: SummaryInteractor
-    private lateinit var summaryByCategoryViewModel: SummaryByCategoryViewModel
+    private lateinit var summariesByCategoryViewModel: SummariesByCategoryViewModel
 
     @BeforeEach
     fun setup() {
         summaryInteractor = mockk()
-        summaryByCategoryViewModel = SummaryByCategoryViewModel(summaryInteractor)
+        summariesByCategoryViewModel = SummariesByCategoryViewModel(summaryInteractor)
     }
 
     @Test
@@ -51,9 +51,9 @@ class SummaryByCategoryViewModelTest {
             summaryInteractor.getSummariesByCategory(any())
         } returns Result.success(listOf(Fixtures.dummySummary1))
 
-        summaryByCategoryViewModel.loadSummaries(categoryId, categoryName)
+        summariesByCategoryViewModel.loadSummaries(categoryId, categoryName)
 
-        summaryByCategoryViewModel.state.test {
+        summariesByCategoryViewModel.state.test {
             assertEquals(expectedState, awaitItem())
         }
     }
@@ -75,9 +75,9 @@ class SummaryByCategoryViewModelTest {
         )
         coEvery { summaryInteractor.getSummariesByCategory(any()) } returns Result.failure(error)
 
-        summaryByCategoryViewModel.loadSummaries(categoryId, categoryName)
+        summariesByCategoryViewModel.loadSummaries(categoryId, categoryName)
 
-        summaryByCategoryViewModel.state.test {
+        summariesByCategoryViewModel.state.test {
             assertEquals(expectedState, awaitItem())
         }
     }

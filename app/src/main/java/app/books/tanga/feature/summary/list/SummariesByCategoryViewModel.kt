@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SummaryByCategoryViewModel @Inject constructor(
+class SummariesByCategoryViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor
 ) : ViewModel() {
 

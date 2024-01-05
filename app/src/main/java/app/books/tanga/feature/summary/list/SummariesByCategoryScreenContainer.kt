@@ -15,7 +15,7 @@ fun SummariesByCategoryScreenContainer(
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToSummary: (SummaryId) -> Unit,
     onNavigateToSearch: () -> Unit,
-    viewModel: SummaryByCategoryViewModel = hiltViewModel()
+    viewModel: SummariesByCategoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
