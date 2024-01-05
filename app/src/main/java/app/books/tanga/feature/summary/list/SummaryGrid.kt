@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
@@ -42,7 +43,7 @@ fun SummaryGrid(
 ) {
     val items = summaries.toSummaryGridItems()
     LazyVerticalGrid(
-        modifier = modifier,
+        modifier = modifier.testTag("SummaryGrid"),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.extraLarge),
         verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium)
