@@ -45,7 +45,7 @@ import app.books.tanga.data.FakeData
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
-import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.feature.summary.components.SummaryRow
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 

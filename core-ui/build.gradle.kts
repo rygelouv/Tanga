@@ -68,6 +68,7 @@ dependencies {
      * Firebase Cloud Storage Images. Once it does, we can remove Glide.
      */
     api(libs.coil.compose)
+    api(libs.coil.gif)
     // Glide
     api(libs.glide)
     // Glide Compose
@@ -75,6 +76,9 @@ dependencies {
     /************** End Image loading *****************/
 
     implementation(libs.kotlin.immutable.collections)
+
+    // Markdown
+    implementation(libs.commonmark)
 
     // Debug dependencies
     debugApi(libs.compose.tooling)

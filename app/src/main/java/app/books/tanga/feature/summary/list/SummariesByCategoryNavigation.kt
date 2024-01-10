@@ -50,9 +50,7 @@ fun NavController.toSummariesByCategory(
     isInclusive: Boolean = true
 ) {
     navigate(
-        route = NavigationScreen
-            .SummariesByCategory
-            .route
+        route = NavigationScreen.SummariesByCategory.route
             .replace(
                 oldValue = "{${NavigationScreen.SummariesByCategory.CATEGORY_ID_KEY}}",
                 newValue = categoryId.value

@@ -163,6 +163,11 @@ class SummaryDetailsViewModel @Inject constructor(
         }
     }
 
+    fun onReadClick() {
+        postEvent(SummaryDetailsUiEvent.NavigateTo.ToReadSummary(summary.id))
+        // shouldShowAuthSuggestionOrProceed {}
+    }
+
     private fun shouldShowAuthSuggestionOrProceed(action: () -> Unit) {
         viewModelScope.launch {
             if (sessionManager.hasSession()) {

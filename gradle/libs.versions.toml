@@ -87,6 +87,9 @@ exoplayer-media3-version = "1.1.1"
 timber-version = "5.0.1"
 turbine-version = "1.0.0"
 
+# Markdown
+commonmark-version = "0.21.0"
+
 [libraries]
 # Core Libraries
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-version-ktx" }
@@ -126,6 +129,7 @@ firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
 
 # Image loading
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil-compose-version" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide-version" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose-version" }
 
@@ -149,6 +153,9 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber-versi
 
 # Kotlin Immutable Collections
 kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutable-collections-version" }
+
+# Markdown
+commonmark = { module = "org.commonmark:commonmark", version.ref = "commonmark-version" }
 
 # Testing
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-version" }

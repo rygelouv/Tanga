@@ -35,6 +35,7 @@ import app.books.tanga.data.FakeData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.search.CategoryUi
+import app.books.tanga.feature.summary.components.SummaryGrid
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable

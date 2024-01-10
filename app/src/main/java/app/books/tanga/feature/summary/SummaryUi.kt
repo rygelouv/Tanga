@@ -1,8 +1,10 @@
 package app.books.tanga.feature.summary
 
 import androidx.annotation.DrawableRes
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.errors.UiError
 
 data class SummaryUi(
     val id: SummaryId,
@@ -41,3 +43,13 @@ fun Summary.toSummaryUi(): SummaryUi =
         authorPictureUrl = authorPictureUrl,
         purchaseBookUrl = purchaseBookUrl
     )
+
+data class SummaryContentState(
+    val summary: SummaryUi? = null,
+    val isFavorite: Boolean = false,
+    val favoriteProgressState: ProgressState = ProgressState.Hide,
+    val error: UiError? = null
+) {
+    val summaryId: SummaryId?
+        get() = summary?.id
+}

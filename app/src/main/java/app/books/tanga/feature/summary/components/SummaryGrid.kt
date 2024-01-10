@@ -1,4 +1,4 @@
-package app.books.tanga.feature.summary.list
+package app.books.tanga.feature.summary.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells

@@ -18,6 +18,7 @@ fun SummaryDetailsScreenContainer(
     onNavigateToAuth: () -> Unit,
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
+    onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
@@ -33,6 +34,7 @@ fun SummaryDetailsScreenContainer(
         onNavigateToAuth = onNavigateToAuth,
         onNavigateToPreviousScreen = onNavigateToPreviousScreen,
         onNavigateToAudioPlayer = onNavigateToAudioPlayer,
+        onNavigateToReadSummaryScreen = onNavigateToReadSummaryScreen,
         onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
     )
 
@@ -41,6 +43,7 @@ fun SummaryDetailsScreenContainer(
         modifier = modifier,
         onBackClick = onNavigateToPreviousScreen,
         onPlayClick = { viewModel.onPlayClick() },
+        onReadClick = { viewModel.onReadClick() },
         onLoadSummary = { viewModel.loadSummary(it) },
         onToggleFavorite = { viewModel.toggleFavorite() },
         onRecommendationClick = onNavigateToRecommendedSummaryDetails
@@ -53,6 +56,7 @@ fun HandleEvents(
     onNavigateToAuth: () -> Unit,
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
+    onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
     var showAuthSuggestion by rememberSaveable {
@@ -81,6 +85,12 @@ fun HandleEvents(
         is SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer -> {
             LaunchedEffect(Unit) {
                 onNavigateToAudioPlayer(event.summaryId)
+            }
+        }
+
+        is SummaryDetailsUiEvent.NavigateTo.ToReadSummary -> {
+            LaunchedEffect(Unit) {
+                onNavigateToReadSummaryScreen(event.summaryId)
             }
         }
 

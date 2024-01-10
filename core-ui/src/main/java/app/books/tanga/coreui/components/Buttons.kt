@@ -1,5 +1,6 @@
 package app.books.tanga.coreui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,13 +19,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,9 +36,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.books.tanga.coreui.R
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.resources.TextResource
+import app.books.tanga.coreui.resources.asString
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.coreui.theme.Shapes
@@ -165,7 +171,9 @@ fun TangaButtonRightIcon(
                 style = MaterialTheme.typography.button
             )
             Icon(
-                modifier = Modifier.size(iconSize).testTag("button_right_icon"),
+                modifier = Modifier
+                    .size(iconSize)
+                    .testTag("button_right_icon"),
                 painter = painterResource(id = leftIcon),
                 contentDescription = "explore summaries icon"
             )
@@ -213,7 +221,9 @@ fun TangaButtonLeftIcon(
     ) {
         Box(modifier = Modifier.padding(start = startPadding)) {
             Icon(
-                modifier = Modifier.size(iconSize).testTag("button_left_icon"),
+                modifier = Modifier
+                    .size(iconSize)
+                    .testTag("button_left_icon"),
                 painter = painterResource(id = rightIcon),
                 contentDescription = null
             )
@@ -243,7 +253,8 @@ fun SummaryActionButton(
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
-    val roundedCornerModifier = modifier.size(80.dp)
+    val roundedCornerModifier = modifier
+        .size(80.dp)
         .background(
             color = if (enabled) {
                 MaterialTheme.colorScheme.primary.copy(
@@ -253,14 +264,17 @@ fun SummaryActionButton(
                 LocalTintColor.current.disabled.copy(alpha = 0.1f)
             },
             shape = Shapes.extraLarge
-        ).testTag("summary_action_button")
+        )
+        .testTag("summary_action_button")
     Column(
         modifier = if (enabled) roundedCornerModifier.clickable { onClick() } else roundedCornerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
-            modifier = Modifier.offset(y = 4.dp).testTag("summary_action_button_icon"),
+            modifier = Modifier
+                .offset(y = 4.dp)
+                .testTag("summary_action_button_icon"),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = if (enabled) LocalTintColor.current.color else LocalTintColor.current.disabled
@@ -314,10 +328,61 @@ fun SearchButton(
     }
 }
 
+@Composable
+fun TangaPlayAudioFab(
+    onNavigateToAudioPlayer: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val button = Button(
+        text = TextResource.fromStringId(R.string.audio_play),
+        icon = R.drawable.ic_indicator_listen,
+        onClick = onNavigateToAudioPlayer
+    )
+    TangaFloatingActionButton(button = button, modifier = modifier)
+}
+
+/**
+ * This is the composable for rendering the floating action button
+ *
+ * @param button: The button object that contains the text, icon and onClick function.
+ */
+@Composable
+fun TangaFloatingActionButton(
+    button: Button,
+    modifier: Modifier = Modifier
+) {
+    ExtendedFloatingActionButton(
+        modifier = modifier,
+        onClick = { button.onClick() },
+        containerColor = MaterialTheme.colorScheme.tertiary,
+        shape = RoundedCornerShape(48.dp),
+    ) {
+        button.icon?.let {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp),
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        }
+        Text(
+            text = button.text.asString(LocalContext.current.resources),
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color = Color.White
+        )
+    }
+}
+
 /**
  * UI data class representation of a button.
  */
 data class Button(
     val text: TextResource,
+    @DrawableRes val icon: Int? = null,
     val onClick: () -> Unit
 )

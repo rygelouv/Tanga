@@ -13,11 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -43,6 +40,7 @@ import app.books.tanga.coreui.components.ExpendableText
 import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
+import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
@@ -51,7 +49,7 @@ import app.books.tanga.data.FakeData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
-import app.books.tanga.feature.summary.list.SummaryRow
+import app.books.tanga.feature.summary.components.SummaryRow
 import app.books.tanga.utils.openLink
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -62,6 +60,7 @@ fun SummaryDetailsScreen(
     state: SummaryDetailsUiState,
     onBackClick: () -> Unit,
     onPlayClick: (SummaryId) -> Unit,
+    onReadClick: (SummaryId) -> Unit,
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
     modifier: Modifier = Modifier,
@@ -95,6 +94,7 @@ fun SummaryDetailsScreen(
                 SummaryDetailsContent(
                     state = state,
                     paddingValues = paddingValues,
+                    onReadClick = onReadClick,
                     onRecommendationClick = onRecommendationClick,
                     onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } }
                 )
@@ -106,6 +106,7 @@ fun SummaryDetailsScreen(
 private fun SummaryDetailsContent(
     state: SummaryDetailsUiState,
     paddingValues: PaddingValues,
+    onReadClick: (SummaryId) -> Unit,
     onRecommendationClick: (SummaryId) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
@@ -116,7 +117,11 @@ private fun SummaryDetailsContent(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            SummaryDetailsHeader(modifier = Modifier.padding(paddingValues), summary = summary)
+            SummaryDetailsHeader(
+                modifier = Modifier.padding(paddingValues),
+                summary = summary,
+                onReadClick = onReadClick
+            )
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
             SummaryIntroduction(summary = summary)
@@ -153,28 +158,18 @@ fun PlayFloatingActionButton(
     modifier: Modifier = Modifier,
     onClick: (SummaryId) -> Unit
 ) {
-    FloatingActionButton(
+    TangaPlayAudioFab(
         modifier = modifier.testTag("play_button"),
-        onClick = { onClick(summaryId) },
-        containerColor = MaterialTheme.colorScheme.tertiary,
-        shape = CircleShape,
-        elevation = FloatingActionButtonDefaults.elevation(18.dp)
-    ) {
-        Icon(
-            modifier = Modifier.size(24.dp),
-            painter =
-            painterResource(
-                id = app.books.tanga.coreui.R.drawable.ic_indicator_listen
-            ),
-            tint = MaterialTheme.colorScheme.onPrimary,
-            contentDescription = "play summary"
-        )
-    }
+        onNavigateToAudioPlayer = {
+            onClick(summaryId)
+        }
+    )
 }
 
 @Composable
 fun SummaryDetailsHeader(
     summary: SummaryUi,
+    onReadClick: (SummaryId) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -208,7 +203,7 @@ fun SummaryDetailsHeader(
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
-            SummaryActionButtonsSection(summary)
+            SummaryActionButtonsSection(summary, onReadClick)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         }
@@ -216,7 +211,7 @@ fun SummaryDetailsHeader(
 }
 
 @Composable
-private fun SummaryActionButtonsSection(summary: SummaryUi) {
+private fun SummaryActionButtonsSection(summary: SummaryUi, onReadClick: (SummaryId) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -226,7 +221,9 @@ private fun SummaryActionButtonsSection(summary: SummaryUi) {
             text = stringResource(id = R.string.summary_details_read),
             icon = TangaIcons.IndicatorRead,
             enabled = summary.textUrl?.isNotEmpty() == true
-        ) {}
+        ) {
+            onReadClick(summary.id)
+        }
         SummaryActionButton(
             modifier = Modifier.testTag("listen_button"),
             text = stringResource(id = R.string.summary_details_listen),
@@ -417,6 +414,7 @@ private fun SummaryDetailsScreenPreview() {
             ),
             onBackClick = {},
             onPlayClick = {},
+            onReadClick = {},
             onLoadSummary = {},
             onToggleFavorite = {},
             onRecommendationClick = {}

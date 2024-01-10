@@ -13,6 +13,8 @@ import app.books.tanga.feature.pricing.pricingPlan
 import app.books.tanga.feature.pricing.toPricingPlan
 import app.books.tanga.feature.profile.profile
 import app.books.tanga.feature.profile.toProfile
+import app.books.tanga.feature.read.readSummaryScreen
+import app.books.tanga.feature.read.toReadSummaryScreen
 import app.books.tanga.feature.search.search
 import app.books.tanga.feature.search.toSearch
 import app.books.tanga.feature.summary.list.summariesByCategory
@@ -31,22 +33,34 @@ fun MainNavigationGraph(
             navController = navController,
             onRedirectToAuth = onRedirectToAuth
         )
+
         summaryDetails(
             onNavigateToAuth = onRedirectToAuth,
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
             onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId.value) }
         )
+
         search(
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) }
         )
+
         playSummaryAudio { navController.popBackStack() }
+
         pricingPlan { navController.popBackStack() }
+
         summariesByCategory(
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) },
             onNavigateToSearch = { navController.toSearch() }
+        )
+
+        readSummaryScreen(
+            onNavigateToPreviousScreen = { navController.popBackStack() },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToPricingPlans = { navController.toPricingPlan() }
         )
     }
 }

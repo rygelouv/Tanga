@@ -1,5 +1,6 @@
-package app.books.tanga.common.urls
+package app.books.tanga.data.download
 
+import app.books.tanga.data.SummaryFormatType
 import app.books.tanga.entity.SummaryId
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage

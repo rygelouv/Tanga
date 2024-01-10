@@ -1,6 +1,8 @@
 package app.books.tanga.feature.onboarding
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -115,7 +117,9 @@ fun FinishOnboardingButton(
     ) {
         AnimatedVisibility(
             visible = pagerState.currentPage != MAX_PAGER_INDEX,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
+            enter = scaleIn(),
+            exit = scaleOut()
         ) {
             Button(
                 modifier = Modifier
@@ -140,7 +144,9 @@ fun FinishOnboardingButton(
 
         AnimatedVisibility(
             visible = pagerState.currentPage == MAX_PAGER_INDEX,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enter = scaleIn(),
+            exit = scaleOut()
         ) {
             TangaButtonRightIcon(
                 onClick = onFinishClick,
