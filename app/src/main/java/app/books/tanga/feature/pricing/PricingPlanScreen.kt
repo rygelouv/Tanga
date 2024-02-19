@@ -23,7 +23,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,13 +36,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
+import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.icons.TangaIcons
-import app.books.tanga.coreui.theme.Cerulean
-import app.books.tanga.coreui.theme.Cultured
 import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
@@ -66,30 +63,6 @@ fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
     ) {
         PricingPlanTopBar(onCloseClick = onCloseClick)
         PricingPlanContent()
-    }
-}
-
-/**
- * This composable is used to hide the status bar and the navigation bar.
- * */
-@Composable
-private fun SystemBarsVisibility() {
-    val systemUiController = rememberSystemUiController()
-
-    DisposableEffect(key1 = true) {
-        // Navigation bar id hidden
-        systemUiController.isNavigationBarVisible = false
-        // Status bar color is changed to get the same color as the screen background
-        systemUiController.setStatusBarColor(
-            color = Cerulean
-        )
-        onDispose {
-            systemUiController.isNavigationBarVisible = true // Navigation bar is visible
-            // put back original status bar color
-            systemUiController.setStatusBarColor(
-                color = Cultured
-            )
-        }
     }
 }
 

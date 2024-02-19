@@ -8,7 +8,7 @@ import app.books.tanga.R
 import app.books.tanga.coreui.components.InfoCard
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.feature.summary.list.SummaryGrid
+import app.books.tanga.feature.summary.components.SummaryGrid
 import app.books.tanga.fixtures.FakeUiData
 import kotlinx.collections.immutable.toImmutableList
 import org.junit.Rule

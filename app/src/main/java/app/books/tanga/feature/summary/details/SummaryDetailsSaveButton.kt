@@ -8,6 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ fun SaveButton(
     progressState: ProgressState,
     modifier: Modifier = Modifier,
     isSaved: Boolean = false,
+    tintColor: Color = MaterialTheme.colorScheme.onTertiaryContainer,
     onClick: () -> Unit
 ) {
     IconButton(modifier = modifier.testTag("save_favorite"), onClick = {
@@ -38,7 +40,7 @@ fun SaveButton(
                             .size(24.dp)
                             .testTag("remove_favorite_icon"),
                         painter = painterResource(id = R.drawable.ic_save_filled),
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                        tint = tintColor,
                         contentDescription = "saved summary"
                     )
                 } else {
@@ -47,7 +49,7 @@ fun SaveButton(
                             .size(24.dp)
                             .testTag("save_favorite_icon"),
                         painter = painterResource(id = R.drawable.ic_save),
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                        tint = tintColor,
                         contentDescription = "save summary"
                     )
                 }

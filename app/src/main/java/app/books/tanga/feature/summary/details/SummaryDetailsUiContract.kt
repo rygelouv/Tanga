@@ -38,6 +38,10 @@ sealed interface SummaryDetailsUiEvent {
             val summaryId: SummaryId
         ) : NavigateTo
 
+        data class ToReadSummary(
+            val summaryId: SummaryId
+        ) : NavigateTo
+
         data object ToAuth : NavigateTo
     }
 }

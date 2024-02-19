@@ -1,7 +1,7 @@
 package app.books.tanga
 
-import app.books.tanga.common.urls.StorageDownloadUrlGenerator
-import app.books.tanga.common.urls.SummaryCoverUrlCache
+import app.books.tanga.data.download.StorageDownloadUrlGenerator
+import app.books.tanga.data.download.SummaryCoverUrlCache
 import app.books.tanga.entity.SummaryId
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference

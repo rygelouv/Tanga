@@ -1,4 +1,4 @@
-package app.books.tanga.common.urls
+package app.books.tanga.data.download
 
 import app.books.tanga.entity.SummaryId
 

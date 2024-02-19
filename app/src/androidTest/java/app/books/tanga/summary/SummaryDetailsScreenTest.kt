@@ -32,6 +32,7 @@ class SummaryDetailsScreenTest {
     val composeTestRule = createComposeRule()
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
+    private val viewModel: SummaryDetailsViewModel = mockk(relaxed = true)
 
     private val state1 = SummaryDetailsUiState(
         summary = SummaryUi(
@@ -186,7 +187,6 @@ class SummaryDetailsScreenTest {
     @Test
     fun verifySummaryDetailsScreenContainerRendersContentCorrectly() {
         val summaryId = SummaryId("1")
-        val viewModel: SummaryDetailsViewModel = mockk(relaxed = true)
 
         every { viewModel.state } returns MutableStateFlow(state1).asStateFlow()
         every { viewModel.events } returns flowOf()
@@ -201,6 +201,7 @@ class SummaryDetailsScreenTest {
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = {}
             )
         }
@@ -226,9 +227,10 @@ class SummaryDetailsScreenTest {
             SummaryDetailsScreen(
                 state = state,
                 onBackClick = {},
-                onPlayClick = {},
+                onPlayClick = { viewModel.onPlayClick() },
                 onLoadSummary = {},
                 onToggleFavorite = {},
+                onReadClick = {},
                 onRecommendationClick = {}
             )
         }

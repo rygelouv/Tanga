@@ -183,4 +183,40 @@ class SummaryDetailsViewModelTest {
             cancelAndConsumeRemainingEvents()
         }
     }
+
+    @Test
+    fun onReadClick_withSession() = runTest {
+        val summaryId = SummaryId("1")
+        val summary = Fixtures.dummySummary1
+
+        coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
+        coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
+        coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
+        coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
+
+        coEvery { sessionManager.hasSession() } returns true
+
+        viewModel.loadSummary(summaryId)
+
+        viewModel.onReadClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToReadSummary)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun onReadClick_whenSessionManagerHasNoSession() = runTest {
+        coEvery { sessionManager.hasSession() } returns false
+
+        viewModel.onReadClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.ShowAuthSuggestion)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
 }
