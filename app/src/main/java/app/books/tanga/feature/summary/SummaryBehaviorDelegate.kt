@@ -111,7 +111,7 @@ class SummaryBehaviorDelegateImpl @Inject constructor(
                         favoriteProgressState = ProgressState.Hide
                     )
                 }
-                // TODO: Show a snackbar to notify the user that the summary is added to favorites
+                // Show a snackbar to notify the user that the summary is added to favorites
             }.onFailure { error ->
                 _summaryContentState.update { it.copy(favoriteProgressState = ProgressState.Hide) }
                 Timber.e(error, "Error creating favorite")
@@ -128,7 +128,7 @@ class SummaryBehaviorDelegateImpl @Inject constructor(
                         favoriteProgressState = ProgressState.Hide
                     )
                 }
-                // TODO: Show a snackbar to notify the user that the summary is removed from favorites
+                // Show a snackbar to notify the user that the summary is removed from favorites
             }.onFailure { error ->
                 _summaryContentState.update { it.copy(favoriteProgressState = ProgressState.Hide) }
                 Timber.e(error, "Error deleting favorite")

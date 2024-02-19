@@ -8,6 +8,7 @@ import kotlinx.coroutines.tasks.await
 
 const val ONE_MEGABYTE: Long = 1024 * 1024
 
+@Suppress("TooGenericExceptionCaught")
 class FileDownloader @Inject constructor(
     private val storage: FirebaseStorage
 ) {

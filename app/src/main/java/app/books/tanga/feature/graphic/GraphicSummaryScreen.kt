@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.DisplayGifAsset
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaPlayAudioFab
@@ -170,9 +171,10 @@ fun GraphicSummaryTopBar(
     )
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview
 @Composable
-fun GraphicSummaryScreenPreview() {
+private fun GraphicSummaryScreenPreview() {
     TangaTheme {
         GraphicSummaryScreen(
             state = GraphicSummaryUiState(
@@ -180,7 +182,7 @@ fun GraphicSummaryScreenPreview() {
                     isFavorite = false,
                     favoriteProgressState = ProgressState.Hide
                 ),
-                summaryGraphicImage = FakeData.summaryText,
+                summaryGraphicImage = FakeData.SUMMARY_TEXT,
                 progressState = ProgressState.Hide
             ),
             onNavigateToPreviousScreen = {},

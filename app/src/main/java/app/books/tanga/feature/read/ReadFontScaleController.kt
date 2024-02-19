@@ -1,5 +1,6 @@
 package app.books.tanga.feature.read
 
+@Suppress("MagicNumber")
 enum class TextScaleFactor(val value: Float) {
     EXTRA_SMALL(0.75f),
     SMALL(0.875f),

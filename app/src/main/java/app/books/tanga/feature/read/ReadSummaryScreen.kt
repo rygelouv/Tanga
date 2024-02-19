@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.DisplayGifAsset
 import app.books.tanga.coreui.components.MarkdownText
 import app.books.tanga.coreui.components.SystemBarsVisibility
@@ -284,9 +285,10 @@ fun ReadSummaryTopBar(
     )
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview
 @Composable
-fun ReadSummaryScreenPreview() {
+private fun ReadSummaryScreenPreview() {
     TangaTheme {
         ReadSummaryScreen(
             state = ReadSummaryUiState(
@@ -294,7 +296,7 @@ fun ReadSummaryScreenPreview() {
                     isFavorite = false,
                     favoriteProgressState = ProgressState.Hide
                 ),
-                summaryTextContent = FakeData.summaryText,
+                summaryTextContent = FakeData.SUMMARY_TEXT,
                 progressState = ProgressState.Hide
             ),
             onNavigateToPreviousScreen = {},
