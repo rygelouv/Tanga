@@ -6,7 +6,6 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +19,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -39,15 +37,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.DisplayGifAsset
+import app.books.tanga.coreui.components.DotsAnimation
 import app.books.tanga.coreui.components.MarkdownText
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
-import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.FakeData
 import app.books.tanga.entity.SummaryId
@@ -165,13 +161,9 @@ fun LoadingAnimation(
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Diving into the summary",
-            color = Color.White,
-            fontSize = 18.sp
+        DotsAnimation(
+            dotColor = Color.White
         )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-        DisplayGifAsset(assetName = "diving_dark_blue.gif")
     }
 }
 

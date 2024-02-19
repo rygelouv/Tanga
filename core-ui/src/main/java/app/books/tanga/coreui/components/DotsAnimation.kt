@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
@@ -27,10 +28,11 @@ import androidx.compose.ui.unit.dp
 fun DotsAnimation(
     modifier: Modifier = Modifier,
     animationDuration: Int = 300,
-    numberOfDots: Int = 3
+    numberOfDots: Int = 3,
+    dotColor: Color = MaterialTheme.colorScheme.tertiary
 ) {
     // Create an infinite transition that repeats the animation
-    val infiniteTransition = rememberInfiniteTransition(label = "typing_indicator")
+    val infiniteTransition = rememberInfiniteTransition(label = "loading_indicator")
     val dotAnimations = List(numberOfDots) { index ->
         infiniteTransition.animateFloat(
             initialValue = 0f,
@@ -43,7 +45,7 @@ fun DotsAnimation(
                 },
                 repeatMode = RepeatMode.Reverse
             ),
-            label = "typing_indicator"
+            label = "loading_indicator"
         )
     }
 
@@ -55,7 +57,7 @@ fun DotsAnimation(
         Row(verticalAlignment = Alignment.CenterVertically) {
             dotAnimations.forEach { anim ->
                 val scaleValue = 1f + anim.value * 0.5f
-                Dot(scaleValue)
+                Dot(scaleValue, dotColor)
                 Spacer(modifier = Modifier.width(6.dp))
             }
         }
@@ -63,11 +65,11 @@ fun DotsAnimation(
 }
 
 @Composable
-private fun Dot(scaleValue: Float) {
+private fun Dot(scaleValue: Float, dotColor: Color) {
     Box(
         modifier = Modifier
             .size(8.dp)
             .scale(scaleValue)
-            .background(MaterialTheme.colorScheme.tertiary, CircleShape).testTag("Dot")
+            .background(dotColor, CircleShape).testTag("Dot")
     )
 }
