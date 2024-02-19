@@ -6,12 +6,16 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import app.books.tanga.coreui.components.Button
 import app.books.tanga.coreui.components.SearchButton
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaButtonRightIcon
+import app.books.tanga.coreui.components.TangaFloatingActionButton
 import app.books.tanga.coreui.components.TangaLinedButton
+import app.books.tanga.coreui.components.TangaPlayAudioFab
+import app.books.tanga.coreui.resources.TextResource
 import junit.framework.TestCase.assertFalse
 import org.junit.Rule
 import org.junit.Test
@@ -104,6 +108,31 @@ class ButtonsTest {
 
         composeTestRule.onNodeWithTag("search_icon", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithText("Search").performClick()
+        assert(clicked)
+    }
+
+    @Test
+    fun tangaPlayAudioFab_handlesClick() {
+        var clicked = false
+        composeTestRule.setContent {
+            TangaPlayAudioFab(onNavigateToAudioPlayer = { clicked = true })
+        }
+
+        composeTestRule.onNodeWithTag("fab_button").performClick()
+
+        assert(clicked)
+    }
+
+    @Test
+    fun tangaFloatingActionButton_handlesClick() {
+        var clicked = false
+        val button = Button(text = TextResource.fromText("Button"), onClick = { clicked = true })
+        composeTestRule.setContent {
+            TangaFloatingActionButton(button = button)
+        }
+
+        composeTestRule.onNodeWithTag("fab_button").performClick()
+
         assert(clicked)
     }
 }

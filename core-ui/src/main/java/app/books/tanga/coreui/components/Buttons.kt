@@ -351,7 +351,7 @@ fun TangaFloatingActionButton(
     modifier: Modifier = Modifier
 ) {
     ExtendedFloatingActionButton(
-        modifier = modifier,
+        modifier = modifier.testTag("fab_button"),
         onClick = { button.onClick() },
         containerColor = MaterialTheme.colorScheme.tertiary,
         shape = RoundedCornerShape(48.dp),
