@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -63,7 +64,7 @@ fun ReadFontScaleChooser(
             Icon(
                 modifier = Modifier
                     .size(26.dp)
-                    .testTag("font_size_min"),
+                    .testTag("font_size_max"),
                 painter = painterResource(id = R.drawable.font_size),
                 tint = Color.White,
                 contentDescription = "adjust font size"
@@ -83,7 +84,7 @@ fun ScaleFactorSliderPicker(
     Slider(
         modifier = modifier
             .fillMaxWidth()
-            .height(4.dp),
+            .height(4.dp).testTag("slider"),
         value = sliderPosition,
         onValueChange = {
             sliderPosition = it
@@ -97,6 +98,7 @@ fun ScaleFactorSliderPicker(
     )
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview
 @Composable
 private fun ReadFontScaleChooserPreview() {

@@ -14,9 +14,12 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
@@ -33,6 +36,7 @@ class ReadSummaryViewModelTest {
     private lateinit var viewModel: ReadSummaryViewModel
     private lateinit var summaryBehaviorDelegate: SummaryBehaviorDelegate
     private lateinit var fileDownloader: FileDownloader
+    private val testScope: CoroutineScope = TestScope(UnconfinedTestDispatcher())
 
     @BeforeEach
     fun setUp() {
@@ -43,6 +47,15 @@ class ReadSummaryViewModelTest {
         coEvery { summaryBehaviorDelegate.loadSummary(any()) } just Runs
     }
 
+    private suspend fun mockSummaryContentState() {
+        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
+            SummaryContentState(
+                summary = Fixtures.dummySummary1.toSummaryUi(),
+                error = null
+            )
+        ).stateIn(testScope)
+    }
+
     @Test
     fun `loadSummary updates state correctly on success`() = runTest {
         val summaryId = Fixtures.dummySummary1.id
@@ -51,12 +64,7 @@ class ReadSummaryViewModelTest {
 
         // Mocking the file downloader behavior
         coEvery { fileDownloader.downloadSummaryText(any()) } returns Result.success(mockTextBytes)
-        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
-            SummaryContentState(
-                summary = Fixtures.dummySummary1.toSummaryUi(),
-                error = null
-            )
-        ).stateIn(this)
+        mockSummaryContentState()
 
         viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
 
@@ -87,12 +95,7 @@ class ReadSummaryViewModelTest {
 
         // Mocking the file downloader behavior to return a failure
         coEvery { fileDownloader.downloadSummaryText(any()) } returns Result.failure(error)
-        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
-            SummaryContentState(
-                summary = Fixtures.dummySummary1.toSummaryUi(),
-                error = null
-            )
-        ).stateIn(this)
+        mockSummaryContentState()
 
         viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
 
@@ -116,12 +119,7 @@ class ReadSummaryViewModelTest {
         // Assuming a valid summaryId is set in the state
         val summaryId = Fixtures.dummySummary1.id
 
-        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
-            SummaryContentState(
-                summary = Fixtures.dummySummary1.toSummaryUi(),
-                error = null
-            )
-        ).stateIn(this)
+        mockSummaryContentState()
 
         viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
 
@@ -136,12 +134,7 @@ class ReadSummaryViewModelTest {
 
     @Test
     fun `onFontSizeClicked toggles fontSizeChooserVisible`() = runTest {
-        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
-            SummaryContentState(
-                summary = Fixtures.dummySummary1.toSummaryUi(),
-                error = null
-            )
-        ).stateIn(this)
+        mockSummaryContentState()
 
         viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
 
@@ -157,12 +150,7 @@ class ReadSummaryViewModelTest {
     fun `onScaleChanged updates textScaleFactor`() = runTest {
         val scale = 0.5f
 
-        coEvery { summaryBehaviorDelegate.summaryContentState } returns flowOf(
-            SummaryContentState(
-                summary = Fixtures.dummySummary1.toSummaryUi(),
-                error = null
-            )
-        ).stateIn(this)
+        mockSummaryContentState()
 
         viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
 

@@ -21,7 +21,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -358,16 +357,15 @@ fun TangaFloatingActionButton(
         shape = RoundedCornerShape(48.dp),
     ) {
         button.icon?.let {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp),
-                    painter = painterResource(id = it),
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
+            Icon(
+                modifier = Modifier
+                    .size(24.dp),
+                painter = painterResource(id = it),
+                contentDescription = null,
+                tint = Color.White
+            )
         }
+        Spacer(modifier = Modifier.width(12.dp))
         Text(
             text = button.text.asString(LocalContext.current.resources),
             style = MaterialTheme.typography.bodyLarge,

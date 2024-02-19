@@ -29,6 +29,7 @@ class SummaryDetailsScreenHandleEventsTest {
                 onNavigateToAuth = onNavigateToAuthMock,
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = {}
             )
         }
@@ -50,6 +51,7 @@ class SummaryDetailsScreenHandleEventsTest {
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = onNavigateToPreviousScreenMock,
                 onNavigateToAudioPlayer = {},
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = {}
             )
         }
@@ -72,6 +74,7 @@ class SummaryDetailsScreenHandleEventsTest {
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = onNavigateToAudioPlayerMock,
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = {}
             )
         }
@@ -94,6 +97,7 @@ class SummaryDetailsScreenHandleEventsTest {
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetailsMock
             )
         }
@@ -115,6 +119,7 @@ class SummaryDetailsScreenHandleEventsTest {
                 onNavigateToAuth = {},
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},
+                onNavigateToReadSummaryScreen = {},
                 onNavigateToRecommendedSummaryDetails = {}
             )
         }
