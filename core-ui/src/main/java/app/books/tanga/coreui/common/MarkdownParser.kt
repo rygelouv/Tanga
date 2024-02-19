@@ -55,6 +55,7 @@ class MarkdownRendererVisitor(
     // bodyLarge size, we're not in a composable so we can't use MaterialTheme.typography
     private val textStyle = scaledTextStyle(16.sp)
 
+    @Suppress("MagicNumber")
     override fun visit(heading: Heading?) {
         val text = renderer.render(heading)
         val level = heading?.level
