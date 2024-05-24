@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,17 +35,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.books.tanga.R
+import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
+import app.books.tanga.coreui.components.DialogContent
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.resources.asString
 import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
-fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
+fun PricingPlanScreen(
+    onCloseClick: () -> Unit,
+    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    state: PricingPlanUiState,
+    modifier: Modifier = Modifier
+) {
     SystemBarsVisibility()
+
+    if (state.progressState == ProgressState.Show) {
+        DialogContent()
+    }
 
     val gradientColors =
         listOf(
@@ -62,7 +76,7 @@ fun PricingPlanScreen(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
             )
     ) {
         PricingPlanTopBar(onCloseClick = onCloseClick)
-        PricingPlanContent()
+        PricingPlanContent(state, onPlanSelected = onPlanSelected)
     }
 }
 
@@ -88,7 +102,11 @@ fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
 }
 
 @Composable
-fun PricingPlanContent(modifier: Modifier = Modifier) {
+fun PricingPlanContent(
+    state: PricingPlanUiState,
+    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier =
         modifier
@@ -129,7 +147,23 @@ fun PricingPlanContent(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
-        PricingPlans()
+        state.monthlyPlanUi ?: return
+        state.yearlyPlanUi ?: return
+
+        PricingPlans(
+            monthlyPlan = state.monthlyPlanUi,
+            yearlyPlan = state.yearlyPlanUi,
+            onPlanSelected = { onPlanSelected(it) }
+        )
+        Text(
+            modifier = Modifier.fillMaxWidth().clickable { },
+            color = MaterialTheme.colorScheme.onPrimary,
+            text = stringResource(id = R.string.restore_purchase),
+            fontSize = 12.sp,
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
 
@@ -138,7 +172,6 @@ private fun Offers() {
     Column(
         verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium)
     ) {
-        PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_no_ads))
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_unlimited_access))
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_visual_graphic_summaries))
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_video_summaries))
@@ -168,7 +201,12 @@ private fun PricingPlanOfferItem(text: String) {
 }
 
 @Composable
-fun PricingPlans(modifier: Modifier = Modifier) {
+fun PricingPlans(
+    monthlyPlan: SubscriptionPlanUi,
+    yearlyPlan: SubscriptionPlanUi,
+    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier =
         modifier
@@ -181,25 +219,30 @@ fun PricingPlans(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+        val context = LocalContext.current
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             PricingPlanItem(
                 modifier = Modifier.offset(y = 28.dp),
-                title = stringResource(id = R.string.pricing_plan_yearly),
-                price = stringResource(id = R.string.pricing_plan_yearly_price),
-                cadence = stringResource(id = R.string.pricing_plan_yearly_cadence),
-                onClick = { }
+                title = yearlyPlan.title.asString(LocalContext.current.resources),
+                price = yearlyPlan.price.asString(LocalContext.current.resources),
+                cadence = yearlyPlan.cadence.asString(LocalContext.current.resources),
+                selected = yearlyPlan.selected,
+                highlight = true,
+                onClick = { onPlanSelected(PurchaseSubscriptionInput(context, yearlyPlan)) }
             )
             BestValueLabel()
         }
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraMediumLarge))
         PricingPlanItem(
-            title = stringResource(id = R.string.pricing_plan_monthly),
-            price = stringResource(id = R.string.pricing_plan_monthly_price),
-            cadence = stringResource(id = R.string.pricing_plan_monthly_cadence),
-            onClick = { }
+            title = monthlyPlan.title.asString(LocalContext.current.resources),
+            price = monthlyPlan.price.asString(LocalContext.current.resources),
+            cadence = monthlyPlan.cadence.asString(LocalContext.current.resources),
+            selected = monthlyPlan.selected,
+            highlight = false,
+            onClick = { onPlanSelected(PurchaseSubscriptionInput(context, monthlyPlan)) }
         )
     }
 }
@@ -233,7 +276,6 @@ private fun BestValueLabel() {
 @ExcludeFromJacocoGeneratedReport
 private fun PricingPlanScreenPreview() {
     TangaTheme {
-        PricingPlanScreen {
-        }
+        // PricingPlanScreen {}
     }
 }

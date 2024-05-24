@@ -1,5 +1,7 @@
 package app.books.tanga.session
 
+import app.books.tanga.entity.UserId
+
 sealed class SessionState {
     data class SignedIn(val sessionId: SessionId) : SessionState()
 
@@ -10,3 +12,5 @@ sealed class SessionState {
 value class SessionId(
     val value: String
 )
+
+fun UserId.toSessionId(): SessionId = SessionId(value = value)

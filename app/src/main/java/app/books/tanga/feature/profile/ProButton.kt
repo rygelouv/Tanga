@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -65,7 +64,7 @@ fun ProButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
         ) {
             Icon(
                 modifier = Modifier.size(36.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_premium),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_crown),
                 contentDescription = "action icon",
                 tint = Color.Unspecified
             )
@@ -73,7 +72,7 @@ fun ProButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
 
         Text(
             text = stringResource(id = R.string.profile_upgrade_to_pro),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.padding(horizontal = 20.dp),
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             color = Color.White

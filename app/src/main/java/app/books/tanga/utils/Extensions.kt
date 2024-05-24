@@ -1,5 +1,8 @@
 package app.books.tanga.utils
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -33,4 +36,10 @@ fun Long.toTwoDigitFormat(): String = if (this < 10) "0$this" else this.toString
 fun Date.toFormattedString(format: String = "yyyy-MM-dd HH:mm:ss"): String {
     val formatter = SimpleDateFormat(format, Locale.getDefault())
     return formatter.format(this)
+}
+
+fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

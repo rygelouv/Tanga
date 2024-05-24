@@ -99,8 +99,7 @@ class GoogleAuthServiceTest {
                 fullName = "Mansa Musa",
                 email = "some@mail.com",
                 photoUrl = "https://example.com/johndoe.jpg",
-                createdAt = Date(1697806449),
-                isPro = false
+                createdAt = Date(1697806449)
             ),
             false
         )

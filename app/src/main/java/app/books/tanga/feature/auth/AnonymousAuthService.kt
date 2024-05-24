@@ -69,7 +69,6 @@ class AnonymousAuthServiceImpl @Inject constructor(
             fullName = requireNotNull(displayName) { "User must have a display name" },
             email = requireNotNull(email) { "User must have an email" },
             photoUrl = photoUrl,
-            isPro = false,
             isAnonymous = false,
             createdAt = creationDate
         )

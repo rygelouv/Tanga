@@ -8,6 +8,7 @@ import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -54,12 +55,13 @@ class AuthViewModel @Inject constructor(
                     postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                     errorTracker.setUserDetails(
                         userId = user.id,
-                        userCreationDate = user.createdAt
+                        userCreationDate = user.createdAt ?: Date() // TODO remove nullability
                     )
                 }.onFailure { error ->
                     _state.update { it.copy(skipProgressState = ProgressState.Hide) }
                     Timber.e("Sign In Anonymously failure: ${error.message}", error)
                     postEvent(AuthUiEvent.Error(error.toUiError()))
+                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                 }
         }
     }
@@ -74,7 +76,7 @@ class AuthViewModel @Inject constructor(
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     errorTracker.setUserDetails(
                         userId = user.id,
-                        userCreationDate = user.createdAt
+                        userCreationDate = user.createdAt ?: Date() // TODO remove nullability
                     )
                 }.onFailure { error ->
                     Timber.e("Complete Google sign In failure", error)

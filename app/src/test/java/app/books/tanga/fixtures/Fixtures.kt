@@ -71,7 +71,6 @@ object Fixtures {
         fullName = "John Doe",
         email = "john.doe@example.com",
         photoUrl = "https://example.com/johndoe.jpg",
-        isPro = true,
         createdAt = Date()
     )
 
@@ -80,7 +79,6 @@ object Fixtures {
         fullName = "Mansa Musa",
         email = "some@mail.com",
         photoUrl = "https://someurl.com",
-        isPro = false,
         createdAt = Timestamp(1697806449, 0).toDate()
     )
 

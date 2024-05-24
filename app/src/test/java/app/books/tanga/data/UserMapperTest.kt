@@ -29,7 +29,7 @@ class UserMapperTest {
         Assertions.assertEquals("Anonymous", result.fullName)
         Assertions.assertEquals("", result.email)
         Assertions.assertNull(result.photoUrl)
-        Assertions.assertFalse(result.isPro)
+        Assertions.assertNull(result.subscribedAt)
         Assertions.assertTrue(result.isAnonymous)
         Assertions.assertEquals(Date(creationTimestamp), result.createdAt)
     }
@@ -56,7 +56,7 @@ class UserMapperTest {
         Assertions.assertEquals(displayName, result.fullName)
         Assertions.assertEquals(email, result.email)
         Assertions.assertEquals(photoUrl, result.photoUrl)
-        Assertions.assertFalse(result.isPro)
+        Assertions.assertNull(result.subscribedAt)
         Assertions.assertEquals(Date(creationTimestamp), result.createdAt)
     }
 

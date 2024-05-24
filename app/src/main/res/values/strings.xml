@@ -18,7 +18,7 @@
     <string name="anonymous">Anonymous</string>
     <string name="summary_duration">%1$s min</string>
     <string name="home_welcome_message">Hey, %1$s</string>
-    <string name="profile_upgrade_to_pro">Upgrade to Tanga Pro</string>
+    <string name="profile_upgrade_to_pro">Get Tanga Premium</string>
     <string name="auth_welcome_to_tanga">Welcome to Tanga</string>
     <string name="auth_sign_up_with_google_message">Sign in or Sign up with Google to start enjoying Tanga Now</string>
     <string name="auth_terms_and_conditions">Terms and Conditions</string>
@@ -36,19 +36,19 @@
     <string name="financial_education">Financial Education</string>
     <string name="summary_details_introduction">Introduction</string>
     <string name="summary_details_recommendations">Recommended summaries</string>
-    <string name="pricing_plan_message">Upgrade To Pro And Get The Most Out Of Tanga</string>
+    <string name="pricing_plan_message">Upgrade to Premium and get the best of Tanga</string>
     <string name="pricing_plan_offer_no_ads">No Ads</string>
     <string name="pricing_plan_offer_unlimited_access">Unlimited Access</string>
     <string name="pricing_plan_offer_visual_graphic_summaries">Visual Graphic Summaries</string>
     <string name="pricing_plan_offer_video_summaries">Video Summaries</string>
     <string name="pricing_plan_offer_offline_audio">Offline Audio</string>
     <string name="pricing_plan_best_value">Best Value</string>
-    <string name="pricing_plan_monthly">Monthly Plan</string>
-    <string name="pricing_plan_monthly_price">$1.5</string>
+    <string name="pricing_plan_monthly">Monthly</string>
+    <string name="pricing_plan_monthly_price">$2.99</string>
     <string name="pricing_plan_monthly_cadence"> / Month</string>
     <string name="pricing_plan_yearly_cadence"> / Year</string>
-    <string name="pricing_plan_yearly_price">$12</string>
-    <string name="pricing_plan_yearly">Yearly Plan</string>
+    <string name="pricing_plan_yearly_price">$30</string>
+    <string name="pricing_plan_yearly">Yearly</string>
     <string name="search_summary_empty_message">No book summary was found with title or author name matching \"%1$s\"</string>
     <string name="search_summary_empty_title">Oops! Nothing found</string>
     <string name="summary_details_read">Read</string>
@@ -82,4 +82,6 @@
     <string name="profile_create_account">Create an Account</string>
     <string name="auth_suggestion_title">Hold On, You Need to Sign In</string>
     <string name="auth_suggestion_description">It seems like you don\'t have your Tanga Account created yet? Start by creating an account or sign in now. It won\'t take long</string>
+    <string name="premium_user">Premium Account</string>
+    <string name="restore_purchase">Restore purchase</string>
 </resources>

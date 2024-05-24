@@ -7,7 +7,9 @@ import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.pricingPlan(onCloseClicked: () -> Unit = {}) {
     composable(route = NavigationScreen.PricingPlan.route) {
-        PricingPlanScreen(onCloseClick = onCloseClicked)
+        PricingPlanContainer(
+            onCloseClick = onCloseClicked,
+        )
     }
 }
 

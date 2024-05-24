@@ -14,6 +14,7 @@ object FirestoreDatabase {
             const val EMAIL = "email"
             const val PHOTO_URL = "photoUrl"
             const val CREATED_AT = "createdAt"
+            const val SUBSCRIBED_AT = "subscribedAt"
         }
     }
 

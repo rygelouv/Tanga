@@ -10,9 +10,9 @@ data class User(
     val fullName: String,
     val email: String,
     val photoUrl: String?,
-    val isPro: Boolean,
     val isAnonymous: Boolean = false,
-    val createdAt: Date
+    val createdAt: Date?,
+    val subscribedAt: Date? = null
 ) {
     val firsName: String
         get() = fullName.split(" ").firstOrNull() ?: fullName

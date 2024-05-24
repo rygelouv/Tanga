@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
+import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -203,14 +204,24 @@ fun ProfileHeader(
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Spacer(modifier = Modifier.height(30.dp))
-        if (userInfo == null) {
+        // ProButton { onProClick() }
+        MainCtaArea(userInfo = userInfo, onLoginClick = onLoginClick, onProClick = onProClick)
+    }
+}
+
+@Composable
+fun MainCtaArea(userInfo: UserInfoUi?, onLoginClick: () -> Unit, onProClick: () -> Unit) {
+    when {
+        userInfo == null -> {
             TangaButton(
                 text = stringResource(id = R.string.profile_create_account),
                 onClick = onLoginClick
             )
-        } else {
-            ProButton { onProClick() }
         }
+        userInfo.subscriberInfo?.hasActiveSubscription == true -> {
+            Tag(text = stringResource(id = R.string.premium_user), icon = R.drawable.ic_crown, isSelected = true)
+        }
+        else -> ProButton { onProClick() }
     }
 }
 
