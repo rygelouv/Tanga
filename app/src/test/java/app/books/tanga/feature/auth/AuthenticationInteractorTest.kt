@@ -3,6 +3,7 @@ package app.books.tanga.feature.auth
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.errors.DomainError
 import app.books.tanga.fixtures.Fixtures
+import app.books.tanga.revenuecat.RevenueCatAuthenticator
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
 import com.google.android.gms.auth.api.identity.BeginSignInResult
@@ -21,9 +22,16 @@ class AuthenticationInteractorTest {
     private val sessionManager: SessionManager = mockk(relaxed = true)
     private val googleAuthService: GoogleAuthService = mockk(relaxed = true)
     private val anonymousAuthService: AnonymousAuthService = mockk(relaxed = true)
+    private val revenueCatAuthenticator: RevenueCatAuthenticator = mockk(relaxed = true)
 
     private val interactor =
-        AuthenticationInteractor(userRepository, sessionManager, googleAuthService, anonymousAuthService)
+        AuthenticationInteractor(
+            userRepository,
+            sessionManager,
+            googleAuthService,
+            anonymousAuthService,
+            revenueCatAuthenticator
+        )
 
     @Test
     fun `signInAnonymously should return user on success`() = runTest {

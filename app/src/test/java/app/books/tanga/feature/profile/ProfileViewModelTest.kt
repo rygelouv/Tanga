@@ -15,6 +15,7 @@ import io.mockk.mockk
 import java.util.Date
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -55,7 +56,7 @@ class ProfileViewModelTest {
     fun `Profile state is updated when user data is fetched successfully`() = runTest {
         // Set up the userRepository to return the user object when getUser is called
         // Use the ofType matcher to specify the exact type expected for the return value
-        coEvery { userRepository.getUser() } returns Result.success(user)
+        coEvery { userRepository.getUserStream() } returns flowOf(user)
 
         viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
 
@@ -144,7 +145,7 @@ class ProfileViewModelTest {
 
     @Test
     fun `onLogout - when signOut fails`() = runTest {
-        coEvery { userRepository.getUser() } returns Result.success(user)
+        coEvery { userRepository.getUserStream() } returns flowOf(user)
         coEvery { authInteractor.signOut() } returns Result.failure(Exception())
 
         viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)

@@ -55,13 +55,13 @@ class AuthViewModel @Inject constructor(
                     postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                     errorTracker.setUserDetails(
                         userId = user.id,
-                        userCreationDate = user.createdAt ?: Date() // TODO remove nullability
+                        // TODO remove nullability
+                        userCreationDate = user.createdAt ?: Date()
                     )
                 }.onFailure { error ->
                     _state.update { it.copy(skipProgressState = ProgressState.Hide) }
                     Timber.e("Sign In Anonymously failure: ${error.message}", error)
                     postEvent(AuthUiEvent.Error(error.toUiError()))
-                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                 }
         }
     }
@@ -76,7 +76,8 @@ class AuthViewModel @Inject constructor(
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     errorTracker.setUserDetails(
                         userId = user.id,
-                        userCreationDate = user.createdAt ?: Date() // TODO remove nullability
+                        // TODO remove nullability
+                        userCreationDate = user.createdAt ?: Date()
                     )
                 }.onFailure { error ->
                     Timber.e("Complete Google sign In failure", error)
