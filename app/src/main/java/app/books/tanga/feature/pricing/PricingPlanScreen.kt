@@ -50,7 +50,7 @@ import app.books.tanga.coreui.theme.TangaTheme
 @Composable
 fun PricingPlanScreen(
     onCloseClick: () -> Unit,
-    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    onPlanSelect: (PurchaseSubscriptionInput) -> Unit,
     state: PricingPlanUiState,
     modifier: Modifier = Modifier
 ) {
@@ -76,7 +76,7 @@ fun PricingPlanScreen(
             )
     ) {
         PricingPlanTopBar(onCloseClick = onCloseClick)
-        PricingPlanContent(state, onPlanSelected = onPlanSelected)
+        PricingPlanContent(state, onPlanSelect = onPlanSelect)
     }
 }
 
@@ -104,7 +104,7 @@ fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
 @Composable
 fun PricingPlanContent(
     state: PricingPlanUiState,
-    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    onPlanSelect: (PurchaseSubscriptionInput) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -153,7 +153,7 @@ fun PricingPlanContent(
         PricingPlans(
             monthlyPlan = state.monthlyPlanUi,
             yearlyPlan = state.yearlyPlanUi,
-            onPlanSelected = { onPlanSelected(it) }
+            onPlanSelect = { onPlanSelect(it) }
         )
         Text(
             modifier = Modifier.fillMaxWidth().clickable { },
@@ -204,7 +204,7 @@ private fun PricingPlanOfferItem(text: String) {
 fun PricingPlans(
     monthlyPlan: SubscriptionPlanUi,
     yearlyPlan: SubscriptionPlanUi,
-    onPlanSelected: (PurchaseSubscriptionInput) -> Unit,
+    onPlanSelect: (PurchaseSubscriptionInput) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -231,7 +231,7 @@ fun PricingPlans(
                 cadence = yearlyPlan.cadence.asString(LocalContext.current.resources),
                 selected = yearlyPlan.selected,
                 highlight = true,
-                onClick = { onPlanSelected(PurchaseSubscriptionInput(context, yearlyPlan)) }
+                onClick = { onPlanSelect(PurchaseSubscriptionInput(context, yearlyPlan)) }
             )
             BestValueLabel()
         }
@@ -242,7 +242,7 @@ fun PricingPlans(
             cadence = monthlyPlan.cadence.asString(LocalContext.current.resources),
             selected = monthlyPlan.selected,
             highlight = false,
-            onClick = { onPlanSelected(PurchaseSubscriptionInput(context, monthlyPlan)) }
+            onClick = { onPlanSelect(PurchaseSubscriptionInput(context, monthlyPlan)) }
         )
     }
 }

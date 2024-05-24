@@ -14,16 +14,16 @@ fun PricingPlanContainer(
     val events by viewModel.events.collectAsStateWithLifecycle(initialValue = PricingPlanUiEvent.Empty)
     PricingPlanScreen(
         onCloseClick = onCloseClick,
-        onPlanSelected = viewModel::onPlanSelected,
+        onPlanSelect = viewModel::onPlanSelected,
         state = state
     )
     HandleEvents(events, onCloseClick)
 }
 
 @Composable
-fun HandleEvents(events: PricingPlanUiEvent, onSubscriptionPurchased: () -> Unit) {
+fun HandleEvents(events: PricingPlanUiEvent, onSubscriptionPurchase: () -> Unit) {
     when (events) {
-        is PricingPlanUiEvent.SubscriptionPurchased -> onSubscriptionPurchased()
+        is PricingPlanUiEvent.SubscriptionPurchased -> onSubscriptionPurchase()
         else -> Unit
     }
 }

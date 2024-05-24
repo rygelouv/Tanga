@@ -51,7 +51,8 @@ class PricingPlanViewModel @Inject constructor(
      * Called when the user selects a subscription plan.
      * - Indicates the selected plan in the UI.
      * - Creates the purchase parameters and initiates the purchase process.
-     * - When the purchase is successful, get the user subscription info and updates the user's subscription status (date) in the database.
+     * - When the purchase is successful, get the user subscription info and updates the user's subscription
+     * status (date) in the database.
      */
     fun onPlanSelected(input: PurchaseSubscriptionInput) {
         _state.update {

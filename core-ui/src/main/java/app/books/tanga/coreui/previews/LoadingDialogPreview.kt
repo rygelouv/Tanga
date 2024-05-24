@@ -10,11 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.DialogContent
 
+@ExcludeFromJacocoGeneratedReport()
 @Preview
 @Composable
-fun PreviewSomeDialogContent() {
+private fun PreviewSomeDialogContent() {
     Scaffold(
         content = {
             Box(

@@ -22,7 +22,8 @@ import javax.inject.Singleton
 import timber.log.Timber
 
 /**
- * Controller class that handles the RevenueCat SDK initialization, authentication, and purchase and subscription operations.
+ * Controller class that handles the RevenueCat SDK initialization, authentication, and purchase
+ * and subscription operations.
  */
 @Singleton
 class RevenueCatController @Inject constructor() : RevenueCatInitializer, RevenueCatAuthenticator, RevenueCatPurchases {

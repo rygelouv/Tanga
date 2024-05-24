@@ -63,7 +63,8 @@ interface RevenueCatPurchases {
 
     /**
      * Represents the parameters required to make a purchase.
-     * @param context The context of the activity or fragment that is making the purchase. This is required to show the purchase dialog.
+     * @param context The context of the activity or fragment that is making the purchase.
+     * This is required to show the purchase dialog.
      * @param subscriptionPlan The [SubscriptionPlan] plan that the user wants to purchase.
      */
     data class PurchaseParams(

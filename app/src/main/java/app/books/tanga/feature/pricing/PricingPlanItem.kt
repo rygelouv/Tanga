@@ -26,6 +26,58 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
+fun PricingPlanTitleRow(
+    title: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        modifier = modifier,
+        text = title,
+        color = if (selected) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onPrimary,
+        style = MaterialTheme.typography.bodySmall,
+        fontWeight = FontWeight.SemiBold
+    )
+}
+
+@Composable
+fun PricingPlanPriceRow(
+    price: String,
+    cadence: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = price,
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(LocalSpacing.current.extraSmall))
+        Text(
+            modifier = Modifier.offset(y = 2.dp),
+            text = cadence,
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Light
+        )
+        Spacer(modifier = Modifier.width(LocalSpacing.current.small))
+        if (selected) {
+            Icon(
+                modifier = Modifier.size(14.dp),
+                painter = painterResource(id = R.drawable.ic_checked),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+        }
+    }
+}
+
+@Composable
 fun PricingPlanItem(
     title: String,
     price: String,
@@ -62,44 +114,13 @@ fun PricingPlanItem(
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = title,
-            color = if (selected) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.SemiBold
-        )
+        PricingPlanTitleRow(title, selected)
         Spacer(
             modifier =
             Modifier
                 .width(LocalSpacing.current.medium)
                 .weight(1f)
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = price,
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.width(LocalSpacing.current.extraSmall))
-            Text(
-                modifier = Modifier.offset(y = 2.dp),
-                text = cadence,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Light
-            )
-            Spacer(modifier = Modifier.width(LocalSpacing.current.small))
-            if (selected) {
-                Icon(
-                    modifier = Modifier.size(14.dp),
-                    painter = painterResource(id = R.drawable.ic_checked),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.tertiary
-                )
-            }
-        }
+        PricingPlanPriceRow(price, cadence, selected)
     }
 }
