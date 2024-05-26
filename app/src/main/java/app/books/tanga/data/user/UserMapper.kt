@@ -15,7 +15,6 @@ fun FirebaseUser.toAnonymousUser(): User =
         fullName = "Anonymous",
         email = "",
         photoUrl = null,
-        isPro = false,
         isAnonymous = true,
         createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
     )
@@ -25,8 +24,7 @@ fun FirebaseUser.toUser(): User = User(
     fullName = requireNotNull(displayName) { "User must have a display name" },
     email = requireNotNull(email) { "User must have an email" },
     photoUrl = photoUrl?.toString(),
-    isPro = false,
-    createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date()
+    createdAt = metadata?.creationTimestamp?.let { Date(it) } ?: Date(),
 )
 
 fun User.toFireStoreUserData() =
@@ -36,7 +34,8 @@ fun User.toFireStoreUserData() =
         FirestoreDatabase.Users.Fields.EMAIL to email,
         FirestoreDatabase.Users.Fields.PHOTO_URL to photoUrl,
         // We use the server timestamp to avoid issues with the device time
-        FirestoreDatabase.Users.Fields.CREATED_AT to FieldValue.serverTimestamp()
+        FirestoreDatabase.Users.Fields.CREATED_AT to FieldValue.serverTimestamp(),
+        FirestoreDatabase.Users.Fields.SUBSCRIBED_AT to subscribedAt?.let { Timestamp(it) }
     )
 
 fun FirestoreData.toUser(uid: String) =
@@ -45,6 +44,6 @@ fun FirestoreData.toUser(uid: String) =
         fullName = this[FirestoreDatabase.Users.Fields.FULL_NAME].toString(),
         email = this[FirestoreDatabase.Users.Fields.EMAIL].toString(),
         photoUrl = this[FirestoreDatabase.Users.Fields.PHOTO_URL].toString(),
-        isPro = false,
-        createdAt = (this[FirestoreDatabase.Users.Fields.CREATED_AT] as Timestamp).toDate()
+        createdAt = (this[FirestoreDatabase.Users.Fields.CREATED_AT] as? Timestamp)?.toDate(),
+        subscribedAt = (this[FirestoreDatabase.Users.Fields.SUBSCRIBED_AT] as? Timestamp)?.toDate()
     )

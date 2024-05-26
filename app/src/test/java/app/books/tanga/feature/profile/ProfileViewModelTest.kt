@@ -1,9 +1,11 @@
 package app.books.tanga.feature.profile
 
 import app.books.tanga.data.user.UserRepository
+import app.books.tanga.entity.SubscriberInfo
 import app.books.tanga.entity.User
 import app.books.tanga.entity.UserId
 import app.books.tanga.feature.auth.AuthenticationInteractor
+import app.books.tanga.revenuecat.RevenueCatPurchases
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionState
 import app.cash.turbine.test
@@ -13,6 +15,7 @@ import io.mockk.mockk
 import java.util.Date
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -27,13 +30,13 @@ class ProfileViewModelTest {
     private lateinit var authInteractor: AuthenticationInteractor
     private lateinit var userRepository: UserRepository
     private lateinit var viewModel: ProfileViewModel
+    private lateinit var revenueCatPurchases: RevenueCatPurchases
 
     private val user = User(
         id = UserId("123456"),
         fullName = "John Doe",
         email = "john.doe@example.com",
         photoUrl = "https://example.com/johndoe.jpg",
-        isPro = true,
         createdAt = Date()
     )
 
@@ -41,15 +44,21 @@ class ProfileViewModelTest {
     fun setUp() {
         authInteractor = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
+        revenueCatPurchases = mockk<RevenueCatPurchases>(relaxed = true).apply {
+            coEvery { getSubscriberInfo() } returns SubscriberInfo(
+                hasActiveSubscription = false,
+                expirationDate = null
+            )
+        }
     }
 
     @Test
     fun `Profile state is updated when user data is fetched successfully`() = runTest {
         // Set up the userRepository to return the user object when getUser is called
         // Use the ofType matcher to specify the exact type expected for the return value
-        coEvery { userRepository.getUser() } returns Result.success(user)
+        coEvery { userRepository.getUserStream() } returns flowOf(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
 
         // Assert that the state flow emits the correct data
         viewModel.state.test {
@@ -68,7 +77,7 @@ class ProfileViewModelTest {
         // Set up the authInteractor to do nothing (already done by `relaxed = true`)
         coEvery { authInteractor.signOut() } returns Result.success(SessionState.SignedOut)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
         // Call the onLogout function
         viewModel.onLogout()
 
@@ -80,7 +89,7 @@ class ProfileViewModelTest {
     fun `onProUpgrade triggers emission of NavigateToPricingPlan event`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
         // Call the onProUpgrade function
         viewModel.onProUpgrade()
 
@@ -96,7 +105,7 @@ class ProfileViewModelTest {
     fun `onLogin triggers emission of NavigateToAuth event`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
         // Call the onLogin function
         viewModel.onLogin()
 
@@ -112,7 +121,7 @@ class ProfileViewModelTest {
     fun `Profile state is updated when user data is not fetched successfully`() = runTest {
         coEvery { userRepository.getUser() } returns Result.failure(Exception())
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -125,7 +134,7 @@ class ProfileViewModelTest {
     fun `when user is anonymous state userInfo is null`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(null)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -136,10 +145,10 @@ class ProfileViewModelTest {
 
     @Test
     fun `onLogout - when signOut fails`() = runTest {
-        coEvery { userRepository.getUser() } returns Result.success(user)
+        coEvery { userRepository.getUserStream() } returns flowOf(user)
         coEvery { authInteractor.signOut() } returns Result.failure(Exception())
 
-        viewModel = ProfileViewModel(authInteractor, userRepository)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
         viewModel.onLogout()
 
         viewModel.state.test {

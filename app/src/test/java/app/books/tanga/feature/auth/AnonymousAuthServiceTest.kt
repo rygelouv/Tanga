@@ -77,7 +77,7 @@ class AnonymousAuthServiceTest {
         mockkStatic("kotlinx.coroutines.tasks.TasksKt")
         val userInfo: UserInfo = mockk()
         val mockUser = Fixtures.dummyUser2
-        val creationTimeStamp = mockUser.createdAt.time
+        val creationTimeStamp = mockUser.createdAt?.time
 
         every { auth.currentUser } returns mockFirebaseUser
         every { mockAuthResult.user } returns mockFirebaseUser

@@ -4,7 +4,10 @@ import app.books.tanga.entity.Category
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Favorite
 import app.books.tanga.entity.FavoriteId
+import app.books.tanga.entity.Price
 import app.books.tanga.entity.Section
+import app.books.tanga.entity.SubscriptionPlan
+import app.books.tanga.entity.SubscriptionType
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
@@ -71,7 +74,6 @@ object Fixtures {
         fullName = "John Doe",
         email = "john.doe@example.com",
         photoUrl = "https://example.com/johndoe.jpg",
-        isPro = true,
         createdAt = Date()
     )
 
@@ -80,7 +82,6 @@ object Fixtures {
         fullName = "Mansa Musa",
         email = "some@mail.com",
         photoUrl = "https://someurl.com",
-        isPro = false,
         createdAt = Timestamp(1697806449, 0).toDate()
     )
 
@@ -125,5 +126,23 @@ object Fixtures {
     val summariesForCategory2 = listOf(
         dummySummary1.copy(categories = listOf(CategoryId("2"))),
         dummySummary2.copy(categories = listOf(CategoryId("2"))),
+    )
+    val subscriptionPlan1 = SubscriptionPlan(
+        identifier = "monthly",
+        type = SubscriptionType.MONTHLY,
+        productId = "monthlyProductId",
+        price = Price(
+            formattedValue = "$9.99",
+            currency = "USD"
+        )
+    )
+    val subscriptionPlan2 = SubscriptionPlan(
+        identifier = "yearly",
+        type = SubscriptionType.YEARLY,
+        productId = "yearlyProductId",
+        price = Price(
+            formattedValue = "$99.99",
+            currency = "USD"
+        )
     )
 }

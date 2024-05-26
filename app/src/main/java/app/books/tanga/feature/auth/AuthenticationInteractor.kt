@@ -3,9 +3,10 @@ package app.books.tanga.feature.auth
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.User
 import app.books.tanga.errors.DomainError
-import app.books.tanga.session.SessionId
+import app.books.tanga.revenuecat.RevenueCatAuthenticator
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
+import app.books.tanga.session.toSessionId
 import app.books.tanga.utils.resultOf
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInCredential
@@ -24,7 +25,8 @@ class AuthenticationInteractor @Inject constructor(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
     private val googleAuthService: GoogleAuthService,
-    private val anonymousAuthService: AnonymousAuthService
+    private val anonymousAuthService: AnonymousAuthService,
+    private val revenueCatAuthenticator: RevenueCatAuthenticator
 ) {
 
     fun isUserAnonymous(): Boolean = anonymousAuthService.isUserAnonymous()
@@ -61,10 +63,12 @@ class AuthenticationInteractor @Inject constructor(
 
         val user = authResult.user
         userRepository.createUser(user)
-        val sessionId = SessionId(user.id.value)
+        revenueCatAuthenticator.logIn(user.id)
+        val sessionId = user.id.toSessionId()
         sessionManager.openSession(sessionId)
         user
     }.onFailure {
+        Timber.e(it, "Google sign in failed")
         return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
     }
 
@@ -72,6 +76,7 @@ class AuthenticationInteractor @Inject constructor(
         resultOf {
             googleAuthService.signOut()
             sessionManager.closeSession()
+            revenueCatAuthenticator.logOut()
             SessionState.SignedOut
         }
 

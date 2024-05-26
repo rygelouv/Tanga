@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.feature.auth.AuthenticationInteractor
+import app.books.tanga.revenuecat.RevenueCatPurchases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val authInteractor: AuthenticationInteractor,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val revenueCatController: RevenueCatPurchases
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState())
@@ -29,14 +31,16 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userRepository.getUser().onSuccess {
-                val user = it ?: return@launch
+            userRepository.getUserStream().collect {
+                val user = it ?: return@collect
+                val subscriberInfo = revenueCatController.getSubscriberInfo()
                 _state.update { state ->
                     state.copy(
                         userInfo = UserInfoUi(
                             fullName = user.fullName,
                             photoUrl = user.photoUrl,
                             isAnonymous = user.isAnonymous,
+                            subscriberInfo = subscriberInfo
                         )
                     )
                 }

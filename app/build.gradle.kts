@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,6 +14,16 @@ plugins {
 
 apply(from = "${project.rootDir}/buildscripts/jacoco.gradle.kts")
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    load(keystorePropertiesFile.inputStream())
+}
+
+val secretPropertiesFile = rootProject.file("secrets.properties")
+val secretProperties = Properties().apply {
+    load(secretPropertiesFile.inputStream())
+}
+
 android {
     namespace = "app.books.tanga"
     compileSdk = 34
@@ -20,12 +32,21 @@ android {
         applicationId = "app.books.tanga"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 5
         versionName = "0.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file(keystoreProperties["storeFile"].toString())
+            storePassword = keystoreProperties["storePassword"].toString()
+            keyAlias = keystoreProperties["keyAlias"].toString()
+            keyPassword = keystoreProperties["keyPassword"].toString()
         }
     }
 
@@ -35,16 +56,19 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "REVENUECAT_API_KEY", "\"${secretProperties["revenueCatApiKey"]}\"")
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
         }
         release {
-            isMinifyEnabled = false
+            buildConfigField("String", "REVENUECAT_API_KEY", "\"${secretProperties["revenueCatApiKey"]}\"")
+            isMinifyEnabled = false // Will change later
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -119,8 +143,12 @@ dependencies {
     // Google Play Services
     implementation(libs.android.gms.play.services.auth)
 
-    // Media and Logging
+    implementation(libs.revenuecat.purchases)
+
+    // Media
     implementation(libs.media3.exoplayer)
+
+    // Logging
     implementation(libs.timber)
 
     // Kotlin Immutable Collections

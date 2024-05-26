@@ -2,6 +2,7 @@ package app.books.tanga.feature.profile
 
 import androidx.annotation.StringRes
 import app.books.tanga.R
+import app.books.tanga.entity.SubscriberInfo
 
 data class ProfileUiState(
     val userInfo: UserInfoUi? = null,
@@ -11,7 +12,8 @@ data class ProfileUiState(
 data class UserInfoUi(
     val fullName: String,
     val photoUrl: String?,
-    val isAnonymous: Boolean?
+    val isAnonymous: Boolean?,
+    val subscriberInfo: SubscriberInfo? = null
 )
 
 sealed interface ProfileUiEvent {

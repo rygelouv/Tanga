@@ -116,3 +116,9 @@ GoogleService-Info.plist
 
 # Sentry Auth Token
 sentry.properties
+# Keystore properties file
+keystore.properties
+# Keystore file
+tangakeystore.jks
+# Secret Keys
+secrets.properties
