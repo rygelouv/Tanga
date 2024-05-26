@@ -63,7 +63,7 @@ android {
         release {
             buildConfigField("String", "REVENUECAT_API_KEY", "\"${secretProperties["revenueCatApiKey"]}\"")
             isMinifyEnabled = false // Will change later
-            isDebuggable = false
+            isDebuggable = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
