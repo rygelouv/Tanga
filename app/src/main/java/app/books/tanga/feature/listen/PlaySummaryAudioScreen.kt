@@ -30,13 +30,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.books.tanga.coreui.components.TangaAsyncImage
+import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
@@ -73,10 +77,9 @@ fun PlaySummaryAudioScreen(
                 .padding(it)
         ) {
             PlaySummaryAudioContent(
-                summaryId = state.summaryId,
+                summaryId = summaryId,
                 title = state.title,
                 author = state.author,
-                coverUrl = state.coverUrl,
                 playbackState = state.playbackState,
                 actions = actions
             )
@@ -99,14 +102,14 @@ fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClick: () -> Uni
     })
 }
 
+@Suppress("LongMethod")
 @Composable
 fun PlaySummaryAudioContent(
     actions: PlayerActions,
     modifier: Modifier = Modifier,
-    summaryId: String? = null,
+    summaryId: SummaryId? = null,
     title: String? = null,
     author: String? = null,
-    coverUrl: String? = null,
     playbackState: PlaybackState? = null
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -129,21 +132,21 @@ fun PlaySummaryAudioContent(
             ) {
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
                 Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-
                 Box(
                     modifier =
                     Modifier
-                        .width(34.dp)
-                        .height(4.dp)
-                        .background(MaterialTheme.colorScheme.onTertiaryContainer)
+                        .width(38.dp)
+                        .height(5.dp)
+                        .background(MaterialTheme.colorScheme.background)
                 )
 
-                Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+                Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
                 title?.let {
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
                         text = it,
-                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.titleLarge
                     )
@@ -153,31 +156,29 @@ fun PlaySummaryAudioContent(
 
                 author?.let {
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.outline,
                         text = it,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
-
-                PlaybackControls(playbackState = playbackState, actions = actions)
-                Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
-
                 AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
+                Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+                PlaybackControls(playbackState = playbackState, actions = actions)
             }
         }
-        TangaAsyncImage(
-            summaryId = summaryId ?: "",
-            modifier =
-            Modifier
-                .width(154.dp)
+        UrlDownloadableImage(
+            modifier = Modifier
+                .width(164.dp)
                 .align(alignment = Alignment.TopCenter)
-                .offset(y = 4.dp),
-            url = coverUrl,
-            onSummaryClick = { }
+                .offset(y = 4.dp)
+                .testTag("summary_cover_image"),
+            summaryId = summaryId ?: SummaryId(""),
+            onSummaryClick = {}
         )
     }
 }
@@ -194,49 +195,31 @@ private fun PlaybackControls(
     ) {
         IconButton(onClick = { actions.onBackward() }) {
             Icon(
-                modifier = Modifier.size(18.dp),
+                modifier = Modifier.size(32.dp),
                 painter = painterResource(id = TangaIcons.Backward),
                 tint = MaterialTheme.colorScheme.primary,
                 contentDescription = "previous"
             )
         }
-        Text(
-            color = MaterialTheme.colorScheme.outline,
-            text = "-15s",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodySmall
-        )
-        IconButton(onClick = { actions.onPlayPause() }, modifier = Modifier.size(64.dp)) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    modifier =
-                    Modifier
-                        .size(18.dp)
-                        .padding(18.dp),
-                    painter =
-                    painterResource(
-                        id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
-                    ),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    contentDescription = "play/pause"
-                )
-            }
-        }
-        Text(
-            color = MaterialTheme.colorScheme.outline,
-            text = "+15s",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodySmall
-        )
-        IconButton(onClick = { actions.onForward() }) {
+        IconButton(
+            onClick = { actions.onPlayPause() },
+            modifier = Modifier
+                .size(76.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary),
+        ) {
             Icon(
                 modifier = Modifier.size(18.dp),
+                painter = painterResource(
+                    id = if (playbackState?.state == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
+                ),
+                tint = MaterialTheme.colorScheme.onPrimary,
+                contentDescription = "play/pause"
+            )
+        }
+        IconButton(onClick = { actions.onForward() }) {
+            Icon(
+                modifier = Modifier.size(32.dp),
                 painter = painterResource(id = TangaIcons.Forward),
                 tint = MaterialTheme.colorScheme.primary,
                 contentDescription = "next"
