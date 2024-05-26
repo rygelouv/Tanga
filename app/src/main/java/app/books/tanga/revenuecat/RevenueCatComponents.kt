@@ -27,7 +27,7 @@ interface RevenueCatAuthenticator {
     /**
      * Logs in the user with the provided user ID.
      */
-    fun logIn(userId: UserId)
+    suspend fun logIn(userId: UserId)
 
     /**
      * Logs out the current user. This will clear the user's session and reset the RevenueCat SDK.

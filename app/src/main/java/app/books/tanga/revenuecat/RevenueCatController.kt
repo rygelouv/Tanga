@@ -13,10 +13,11 @@ import com.revenuecat.purchases.PurchaseParams
 import com.revenuecat.purchases.Purchases
 import com.revenuecat.purchases.PurchasesConfiguration
 import com.revenuecat.purchases.awaitCustomerInfo
+import com.revenuecat.purchases.awaitLogIn
 import com.revenuecat.purchases.awaitOfferings
 import com.revenuecat.purchases.awaitPurchase
-import com.revenuecat.purchases.logInWith
 import com.revenuecat.purchases.restorePurchasesWith
+import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Singleton
 import timber.log.Timber
@@ -26,7 +27,9 @@ import timber.log.Timber
  * and subscription operations.
  */
 @Singleton
-class RevenueCatController @Inject constructor() : RevenueCatInitializer, RevenueCatAuthenticator, RevenueCatPurchases {
+class RevenueCatController @Inject constructor(
+    private val purchases: Lazy<Purchases>
+) : RevenueCatInitializer, RevenueCatAuthenticator, RevenueCatPurchases {
 
     override fun initialize(context: Context) {
         Purchases.logLevel = LogLevel.DEBUG
@@ -38,28 +41,23 @@ class RevenueCatController @Inject constructor() : RevenueCatInitializer, Revenu
         )
     }
 
-    override fun logIn(userId: UserId) {
-        Purchases.sharedInstance.logInWith(
-            appUserID = userId.value,
-            onSuccess = { _, _ -> Timber.d("Logged in with RevenueCat") },
-            onError = { error ->
-                Timber.e(
-                    "Failed to log in with RevenueCat. " +
-                        "Error code: ${error.code}, message: ${error.underlyingErrorMessage}"
-                )
-            }
-        )
+    override suspend fun logIn(userId: UserId) {
+        runCatching {
+            purchases.get().awaitLogIn(userId.value)
+        }.onFailure {
+            Timber.e(it, "Failed to log in with RevenueCat")
+        }
     }
 
     override fun logOut() {
-        Purchases.sharedInstance.logOut()
+        purchases.get().logOut()
     }
 
     /**
      * We only have two subscription plans: monthly and yearly.
      */
     override suspend fun purchase(params: RevenueCatPurchases.PurchaseParams): Result<Unit> {
-        val offerings = Purchases.sharedInstance.awaitOfferings()
+        val offerings = purchases.get().awaitOfferings()
         val revenueCatPackage: Package? = when (params.subscriptionPlan.type) {
             SubscriptionType.MONTHLY -> offerings.current?.monthly
             SubscriptionType.YEARLY -> offerings.current?.annual
@@ -67,7 +65,7 @@ class RevenueCatController @Inject constructor() : RevenueCatInitializer, Revenu
         revenueCatPackage ?: return Result.failure(Exception("Failed to get package from RevenueCat"))
         return params.context.findActivity()?.let { activity ->
             runCatching {
-                Purchases.sharedInstance.awaitPurchase(PurchaseParams.Builder(activity, revenueCatPackage).build())
+                purchases.get().awaitPurchase(PurchaseParams.Builder(activity, revenueCatPackage).build())
                 Unit
             }
         } ?: Result.failure(Exception("Failed to make a purchase with RevenueCat"))
@@ -77,7 +75,7 @@ class RevenueCatController @Inject constructor() : RevenueCatInitializer, Revenu
      * Get the customer info from RevenueCat and map it to our [SubscriberInfo] model.
      */
     override suspend fun getSubscriberInfo(): SubscriberInfo? = runCatching {
-        val customerInfo = Purchases.sharedInstance.awaitCustomerInfo()
+        val customerInfo = purchases.get().awaitCustomerInfo()
         SubscriberInfo(
             hasActiveSubscription = customerInfo.activeSubscriptions.isNotEmpty(),
             expirationDate = customerInfo.latestExpirationDate
@@ -85,7 +83,7 @@ class RevenueCatController @Inject constructor() : RevenueCatInitializer, Revenu
     }.getOrNull()
 
     override suspend fun getSubscriptions(): Result<List<SubscriptionPlan>> = runCatching {
-        val offerings = Purchases.sharedInstance.awaitOfferings()
+        val offerings = purchases.get().awaitOfferings()
         listOfNotNull(
             offerings.current?.monthly?.also { Timber.d("\n\nMonthly: $it") },
             offerings.current?.annual?.also { Timber.d("\n\nAnnual: $it") }
@@ -96,7 +94,7 @@ class RevenueCatController @Inject constructor() : RevenueCatInitializer, Revenu
 
     override fun restorePurchase(): Boolean {
         var success = false
-        Purchases.sharedInstance.restorePurchasesWith { customerInfo ->
+        purchases.get().restorePurchasesWith { customerInfo ->
             // check customerInfo to see if entitlement is now active
             if (customerInfo.entitlements.active.isNotEmpty()) {
                 success = true

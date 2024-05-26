@@ -4,8 +4,10 @@ import app.books.tanga.revenuecat.RevenueCatAuthenticator
 import app.books.tanga.revenuecat.RevenueCatController
 import app.books.tanga.revenuecat.RevenueCatInitializer
 import app.books.tanga.revenuecat.RevenueCatPurchases
+import com.revenuecat.purchases.Purchases
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -21,4 +23,9 @@ interface RevenueCatModule {
 
     @Binds
     fun RevenueCatController.provideRevenueCatPurchase(): RevenueCatPurchases
+
+    companion object {
+        @Provides
+        fun providePurchases(): Purchases = Purchases.sharedInstance
+    }
 }
