@@ -102,6 +102,7 @@ fun PlaySummaryAudioTopBar(modifier: Modifier = Modifier, onBackClick: () -> Uni
     })
 }
 
+@Suppress("LongMethod")
 @Composable
 fun PlaySummaryAudioContent(
     actions: PlayerActions,
