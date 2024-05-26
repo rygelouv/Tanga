@@ -32,7 +32,7 @@ android {
         applicationId = "app.books.tanga"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
+        versionCode = 5
         versionName = "0.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,7 +63,7 @@ android {
         release {
             buildConfigField("String", "REVENUECAT_API_KEY", "\"${secretProperties["revenueCatApiKey"]}\"")
             isMinifyEnabled = false // Will change later
-            isDebuggable = true
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

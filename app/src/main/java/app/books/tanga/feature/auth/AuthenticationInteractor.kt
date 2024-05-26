@@ -68,6 +68,7 @@ class AuthenticationInteractor @Inject constructor(
         sessionManager.openSession(sessionId)
         user
     }.onFailure {
+        Timber.e(it, "Google sign in failed")
         return Result.failure(DomainError.UnableToSignInWithGoogleError(it))
     }
 
