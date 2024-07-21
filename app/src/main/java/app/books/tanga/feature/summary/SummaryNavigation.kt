@@ -9,6 +9,7 @@ import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.summary.details.SummaryDetailsScreenContainer
 import app.books.tanga.navigation.NavigationScreen
 
+@Suppress("LongParameterList")
 fun NavGraphBuilder.summaryDetails(
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToAuth: () -> Unit,
