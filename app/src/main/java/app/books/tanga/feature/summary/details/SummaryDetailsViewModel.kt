@@ -9,7 +9,9 @@ import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
-import app.books.tanga.session.SessionManager
+import app.books.tanga.session.ProtectedAction
+import app.books.tanga.session.ProtectedActionCheckResult
+import app.books.tanga.session.ProtectedActionInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -26,7 +28,7 @@ import timber.log.Timber
 class SummaryDetailsViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor,
     private val favoriteInteractor: FavoriteInteractor,
-    private val sessionManager: SessionManager
+    private val protectedActionInteractor: ProtectedActionInteractor
 ) : ViewModel() {
     private val _state: MutableStateFlow<SummaryDetailsUiState> =
         MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
@@ -103,21 +105,26 @@ class SummaryDetailsViewModel @Inject constructor(
      * toggle the favorite status
      */
     fun toggleFavorite() {
-        shouldShowAuthSuggestionOrProceed {
-            // Do nothing if the summary is not initialized
-            if (this::summary.isInitialized.not()) return@shouldShowAuthSuggestionOrProceed
+        viewModelScope.launch {
+            val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
+                ProtectedAction.Save
+            )
+            processProtectedActionCheckResult(protectedActionCheckResult) {
+                // Do nothing if the summary is not initialized
+                if (this@SummaryDetailsViewModel::summary.isInitialized.not()) return@processProtectedActionCheckResult
 
-            // Show saving progress
-            _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
+                // Show saving progress
+                _state.update { it.copy(favoriteProgressState = ProgressState.Show) }
 
-            // Get the current favorite status
-            val isFavorite = _state.value.isFavorite
+                // Get the current favorite status
+                val isFavorite = _state.value.isFavorite
 
-            viewModelScope.launch {
-                if (isFavorite) {
-                    removeFavorite()
-                } else {
-                    saveFavorite()
+                viewModelScope.launch {
+                    if (isFavorite) {
+                        removeFavorite()
+                    } else {
+                        saveFavorite()
+                    }
                 }
             }
         }
@@ -158,23 +165,37 @@ class SummaryDetailsViewModel @Inject constructor(
     }
 
     fun onPlayClick() {
-        shouldShowAuthSuggestionOrProceed {
-            postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
+        viewModelScope.launch {
+            val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
+                ProtectedAction.Listen(summary.id)
+            )
+            processProtectedActionCheckResult(protectedActionCheckResult) {
+                postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
+            }
         }
     }
 
     fun onReadClick() {
-        shouldShowAuthSuggestionOrProceed {
-            postEvent(SummaryDetailsUiEvent.NavigateTo.ToReadSummary(summary.id))
+        viewModelScope.launch {
+            val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
+                ProtectedAction.Read(summary.id)
+            )
+            processProtectedActionCheckResult(protectedActionCheckResult) {
+                postEvent(SummaryDetailsUiEvent.NavigateTo.ToReadSummary(summary.id))
+            }
         }
     }
 
-    private fun shouldShowAuthSuggestionOrProceed(action: () -> Unit) {
-        viewModelScope.launch {
-            if (sessionManager.hasSession()) {
+    private fun processProtectedActionCheckResult(result: ProtectedActionCheckResult, action: () -> Unit) {
+        when (result) {
+            ProtectedActionCheckResult.Allowed -> {
                 action()
-            } else {
+            }
+            ProtectedActionCheckResult.AuthRequired -> {
                 postEvent(SummaryDetailsUiEvent.ShowAuthSuggestion())
+            }
+            ProtectedActionCheckResult.SubscriptionRequired -> {
+                postEvent(SummaryDetailsUiEvent.NavigateTo.ToSubscription)
             }
         }
     }

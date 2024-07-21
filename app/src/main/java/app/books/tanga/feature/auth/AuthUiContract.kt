@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult
 
 data class AuthUiState(
     val googleSignInButtonProgressState: ProgressState = ProgressState.Hide,
+    val disableGoogleSignInButton: Boolean = false,
     val skipProgressState: ProgressState = ProgressState.Hide,
 )
 

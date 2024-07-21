@@ -17,6 +17,7 @@ fun SummaryDetailsScreenContainer(
     summaryId: SummaryId,
     onNavigateToAuth: () -> Unit,
     onNavigateToPreviousScreen: () -> Unit,
+    onNavigateToSubscriptions: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
@@ -33,6 +34,7 @@ fun SummaryDetailsScreenContainer(
         event = event,
         onNavigateToAuth = onNavigateToAuth,
         onNavigateToPreviousScreen = onNavigateToPreviousScreen,
+        onNavigateToSubscriptions = onNavigateToSubscriptions,
         onNavigateToAudioPlayer = onNavigateToAudioPlayer,
         onNavigateToReadSummaryScreen = onNavigateToReadSummaryScreen,
         onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
@@ -42,7 +44,7 @@ fun SummaryDetailsScreenContainer(
         state = state,
         modifier = modifier,
         onBackClick = onNavigateToPreviousScreen,
-        onPlayClick = { viewModel.onPlayClick() },
+        onPlayAudioClick = { viewModel.onPlayClick() },
         onReadClick = { viewModel.onReadClick() },
         onLoadSummary = { viewModel.loadSummary(it) },
         onToggleFavorite = { viewModel.toggleFavorite() },
@@ -54,6 +56,7 @@ fun SummaryDetailsScreenContainer(
 fun HandleEvents(
     event: SummaryDetailsUiEvent,
     onNavigateToAuth: () -> Unit,
+    onNavigateToSubscriptions: () -> Unit,
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
@@ -65,7 +68,11 @@ fun HandleEvents(
 
     if (showAuthSuggestion) {
         AuthSuggestionBottomSheet(
-            onDismiss = { showAuthSuggestion = false }
+            onDismiss = { showAuthSuggestion = false },
+            onNavigateToAuth = {
+                showAuthSuggestion = false
+                onNavigateToAuth()
+            }
         )
     }
 
@@ -103,6 +110,12 @@ fun HandleEvents(
         is SummaryDetailsUiEvent.ShowAuthSuggestion -> {
             LaunchedEffect(event.id) {
                 showAuthSuggestion = true
+            }
+        }
+
+        is SummaryDetailsUiEvent.NavigateTo.ToSubscription -> {
+            LaunchedEffect(Unit) {
+                onNavigateToSubscriptions()
             }
         }
 

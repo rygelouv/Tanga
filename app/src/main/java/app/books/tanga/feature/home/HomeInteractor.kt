@@ -1,10 +1,10 @@
 package app.books.tanga.feature.home
 
 import app.books.tanga.data.category.CategoryRepository
+import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.data.summary.SummaryRepository
 import app.books.tanga.entity.Section
 import app.books.tanga.entity.Summary
-import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
 import app.books.tanga.feature.profile.ProfileInteractor
 import javax.inject.Inject
@@ -14,7 +14,8 @@ private const val SECTION_SUMMARIES_COUNT = 5
 class HomeInteractor @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val categoryRepository: CategoryRepository,
-    private val profileInteractor: ProfileInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val preferencesRepository: DefaultPrefDataStoreRepository
 ) {
     /**
      * Get the list of summaries grouped by category
@@ -43,8 +44,11 @@ class HomeInteractor @Inject constructor(
         return Result.success(sections)
     }
 
-    // TODO to be implemented
-    suspend fun getWeeklySummary(): Result<Summary> = summaryRepository.getSummary(SummaryId("atomic_habits"))
+    suspend fun getWeeklySummary(): Result<Summary> = summaryRepository.getWeeklySummary().also { result ->
+        if (result.isSuccess) {
+            preferencesRepository.saveWeeklySummary(result.getOrThrow().id)
+        }
+    }
 
     suspend fun getUserInfo(): Result<User?> = profileInteractor.getUserInfo()
 }

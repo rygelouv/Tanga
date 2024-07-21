@@ -33,13 +33,16 @@ import app.books.tanga.common.ui.ProgressState
 fun SignIn(
     onAuthSuccess: () -> Unit,
     event: AuthUiEvent,
-    onGoogleSignInComplete: (Intent) -> Unit
+    onGoogleSignInComplete: (Intent) -> Unit,
+    onGoogleSignInNotComplete: () -> Unit
 ) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             result.data?.let(onGoogleSignInComplete)
+        } else {
+            onGoogleSignInNotComplete()
         }
     }
 
@@ -84,7 +87,7 @@ fun GoogleSignInButton(
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-        enabled = progressState != ProgressState.Show
+        enabled = state.disableGoogleSignInButton.not() || progressState != ProgressState.Show
     ) {
         Box {
             when (progressState) {

@@ -66,4 +66,14 @@ object FirestoreDatabase {
             const val PLAYING_LENGTH = "playingLength"
         }
     }
+
+    object WeeklySummary {
+        // Collection Reference
+        const val COLLECTION_NAME = "weeklySummary"
+
+        // Fields
+        object Fields {
+            const val SLUG = "slug"
+        }
+    }
 }

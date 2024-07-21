@@ -82,6 +82,11 @@ class RevenueCatController @Inject constructor(
         )
     }.getOrNull()
 
+    /**
+     * Get the SubscriberInfo and check if the user has an active subscription.
+     */
+    override suspend fun hasActiveSubscription(): Boolean = getSubscriberInfo()?.hasActiveSubscription ?: false
+
     override suspend fun getSubscriptions(): Result<List<SubscriptionPlan>> = runCatching {
         val offerings = purchases.get().awaitOfferings()
         listOfNotNull(

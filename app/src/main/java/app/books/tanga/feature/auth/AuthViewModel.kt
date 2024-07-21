@@ -48,7 +48,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onSkipAuth() {
-        _state.update { it.copy(skipProgressState = ProgressState.Show) }
+        if (_state.value.googleSignInButtonProgressState == ProgressState.Show) return
+
+        _state.update { it.copy(skipProgressState = ProgressState.Show, disableGoogleSignInButton = true) }
         viewModelScope.launch {
             interactor.signInAnonymously()
                 .onSuccess { user ->
@@ -59,7 +61,7 @@ class AuthViewModel @Inject constructor(
                         userCreationDate = user.createdAt ?: Date()
                     )
                 }.onFailure { error ->
-                    _state.update { it.copy(skipProgressState = ProgressState.Hide) }
+                    _state.update { it.copy(skipProgressState = ProgressState.Hide, disableGoogleSignInButton = false) }
                     Timber.e("Sign In Anonymously failure: ${error.message}", error)
                     postEvent(AuthUiEvent.Error(error.toUiError()))
                 }
@@ -91,5 +93,9 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             _events.send(event)
         }
+    }
+
+    fun onGoogleSignInNotCompleted() {
+        _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
     }
 }

@@ -37,7 +37,6 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
-import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaPlayAudioFab
@@ -59,7 +58,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun SummaryDetailsScreen(
     state: SummaryDetailsUiState,
     onBackClick: () -> Unit,
-    onPlayClick: (SummaryId) -> Unit,
+    onPlayAudioClick: (SummaryId) -> Unit,
     onReadClick: (SummaryId) -> Unit,
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
@@ -83,7 +82,7 @@ fun SummaryDetailsScreen(
             state.summary?.id?.let { summaryId ->
                 PlayFloatingActionButton(
                     summaryId = summaryId,
-                    onClick = onPlayClick
+                    onClick = onPlayAudioClick
                 )
             }
         }
@@ -95,6 +94,7 @@ fun SummaryDetailsScreen(
                     state = state,
                     paddingValues = paddingValues,
                     onReadClick = onReadClick,
+                    onPlayAudioClick = onPlayAudioClick,
                     onRecommendationClick = onRecommendationClick,
                     onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } }
                 )
@@ -107,6 +107,7 @@ private fun SummaryDetailsContent(
     state: SummaryDetailsUiState,
     paddingValues: PaddingValues,
     onReadClick: (SummaryId) -> Unit,
+    onPlayAudioClick: (SummaryId) -> Unit,
     onRecommendationClick: (SummaryId) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
@@ -120,17 +121,12 @@ private fun SummaryDetailsContent(
             SummaryDetailsHeader(
                 modifier = Modifier.padding(paddingValues),
                 summary = summary,
-                onReadClick = onReadClick
+                onReadClick = onReadClick,
+                onPlayAudioClick = onPlayAudioClick
             )
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
             SummaryIntroduction(summary = summary)
-
-            SummaryAuthor(
-                modifier = Modifier.padding(horizontal = LocalSpacing.current.medium),
-                author = summary.author,
-                authorPictureUrl = summary.authorPictureUrl
-            )
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
             state.summary.purchaseBookUrl?.let { PurchaseButton(it) }
@@ -170,6 +166,7 @@ fun PlayFloatingActionButton(
 fun SummaryDetailsHeader(
     summary: SummaryUi,
     onReadClick: (SummaryId) -> Unit,
+    onPlayAudioClick: (SummaryId) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -203,7 +200,7 @@ fun SummaryDetailsHeader(
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
 
-            SummaryActionButtonsSection(summary, onReadClick)
+            SummaryActionButtonsSection(summary, onReadClick, onPlayAudioClick)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         }
@@ -211,7 +208,11 @@ fun SummaryDetailsHeader(
 }
 
 @Composable
-private fun SummaryActionButtonsSection(summary: SummaryUi, onReadClick: (SummaryId) -> Unit) {
+private fun SummaryActionButtonsSection(
+    summary: SummaryUi,
+    onReadClick: (SummaryId) -> Unit,
+    onPlayAudioClick: (SummaryId) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -229,18 +230,12 @@ private fun SummaryActionButtonsSection(summary: SummaryUi, onReadClick: (Summar
             text = stringResource(id = R.string.summary_details_listen),
             icon = TangaIcons.IndicatorListen,
             enabled = summary.audioUrl?.isNotEmpty() == true
-        ) {}
+        ) { onPlayAudioClick(summary.id) }
         SummaryActionButton(
             modifier = Modifier.testTag("watch_button"),
             text = stringResource(id = R.string.summary_details_watch),
             icon = TangaIcons.IndicatorWatch,
             enabled = summary.videoUrl?.isNotEmpty() == true
-        ) {}
-        SummaryActionButton(
-            modifier = Modifier.testTag("visualize_button"),
-            text = stringResource(id = R.string.summary_details_visualize),
-            icon = TangaIcons.IndicatorGraphic,
-            enabled = summary.graphicUrl?.isNotEmpty() == true
         ) {}
     }
 }
@@ -318,46 +313,6 @@ fun SummaryIntroduction(
 }
 
 @Composable
-fun SummaryAuthor(
-    author: String,
-    authorPictureUrl: String?,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            modifier = Modifier.padding(horizontal = LocalSpacing.current.small),
-            text = stringResource(id = R.string.summary_details_author),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ProfileImage(
-                modifier = Modifier.size(40.dp),
-                tag = "author_image",
-                photoUrl = authorPictureUrl,
-                onClick = { }
-            )
-            Spacer(modifier = Modifier.width(LocalSpacing.current.medium))
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.outline,
-                text = author,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
-}
-
-@Composable
 private fun PurchaseButton(url: String) {
     Column(
         modifier =
@@ -413,7 +368,7 @@ private fun SummaryDetailsScreenPreview() {
                 isFavorite = false
             ),
             onBackClick = {},
-            onPlayClick = {},
+            onPlayAudioClick = {},
             onReadClick = {},
             onLoadSummary = {},
             onToggleFavorite = {},

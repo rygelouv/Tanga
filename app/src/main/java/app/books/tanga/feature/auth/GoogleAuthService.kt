@@ -59,7 +59,11 @@ class GoogleAuthServiceImpl @Inject constructor(
 
         // Link anonymous account to Google account
         if (auth.currentUser?.isAnonymous == true) {
-            return anonymousAuthService.linkAnonymousAccountToGoogleAccount(googleCredentials)
+            runCatching {
+                return anonymousAuthService.linkAnonymousAccountToGoogleAccount(googleCredentials)
+            }.onFailure {
+                Timber.w(it, "Failed to link anonymous account to Google account, will proceed with normal sign in")
+            }
         }
 
         // Sign-in with firebase auth
