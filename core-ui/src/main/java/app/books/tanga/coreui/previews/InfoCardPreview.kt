@@ -23,7 +23,8 @@ private fun InfoCardPreview() {
             modifier = Modifier.padding(16.dp)
         ) {
             InfoCard(
-                image = R.drawable.graphic_career_simple
+                image = R.drawable.graphic_career_simple,
+                text = R.string.search
             )
         }
     }

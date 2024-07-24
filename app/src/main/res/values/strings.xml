@@ -61,6 +61,10 @@
     <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="error">Error!</string>
+    <string name="business_topics">•Business •Entrepreneurship •Leadership •Career •Professional development</string>
+    <string name="personal_growth_topics">Personal development •Productivity •Self-improvement •Self-development</string>
+    <string name="psychology_self_help_topics">•Psychology •Life Philosophy •Self-help •Lifestyle •Stoicism</string>
+    <string name="financial_education_topics">•Financial education •Investing •Finance •Money •Wealth</string>
     <string name="error_message_default">Sorry, something went wrong. Please try again</string>
     <string name="error_no_internet_message">Please check your internet connection and try again</string>
     <string name="error_no_internet_title">No internet connection</string>

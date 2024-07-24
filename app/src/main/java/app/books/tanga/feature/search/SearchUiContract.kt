@@ -1,6 +1,7 @@
 package app.books.tanga.feature.search
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.entity.Category
@@ -23,7 +24,8 @@ data class SearchUiState(
 data class CategoryUi(
     val id: String,
     val name: String,
-    @DrawableRes val icon: Int
+    @DrawableRes val icon: Int,
+    @StringRes val topics: Int = 0
 )
 
 fun Category.toSearchCategoryUi(): CategoryUi =

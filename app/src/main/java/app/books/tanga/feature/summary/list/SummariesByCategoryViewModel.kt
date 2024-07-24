@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.CategoryId
+import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.search.getCategoryIllustration
@@ -57,7 +58,8 @@ class SummariesByCategoryViewModel @Inject constructor(
         val category = CategoryUi(
             id = categoryId.value,
             name = categoryName,
-            icon = getCategoryIllustration(categoryId)
+            icon = getCategoryIllustration(categoryId),
+            topics = PredefinedCategory.fromId(categoryId.value).topics
         )
         _state.value = _state.value.copy(
             progressState = ProgressState.Show,
