@@ -37,6 +37,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Listen and user has active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
@@ -45,6 +46,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return SubscriptionRequired when user is authenticated and action is Listen and user does not have active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
@@ -53,6 +55,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.SubscriptionRequired, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Listen and action is upon weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
@@ -61,6 +64,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Read and user has active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
@@ -69,6 +73,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return SubscriptionRequired when user is authenticated and action is Read and user does not have active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
@@ -77,6 +82,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.SubscriptionRequired, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Read and action is upon weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
