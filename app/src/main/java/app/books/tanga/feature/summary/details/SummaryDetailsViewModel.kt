@@ -7,11 +7,11 @@ import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
+import app.books.tanga.feature.protectedaction.ProtectedAction
+import app.books.tanga.feature.protectedaction.ProtectedActionCheckResult
+import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
-import app.books.tanga.session.ProtectedAction
-import app.books.tanga.session.ProtectedActionCheckResult
-import app.books.tanga.session.ProtectedActionInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel

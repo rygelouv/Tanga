@@ -4,11 +4,13 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.library.FavoriteInteractor
+import app.books.tanga.feature.protectedaction.ProtectedAction
+import app.books.tanga.feature.protectedaction.ProtectedActionCheckResult
+import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
 import app.books.tanga.feature.summary.details.SummaryDetailsUiEvent
 import app.books.tanga.feature.summary.details.SummaryDetailsViewModel
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
-import app.books.tanga.session.SessionManager
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -32,14 +34,18 @@ class SummaryDetailsViewModelTest {
     lateinit var favoriteInteractor: FavoriteInteractor
 
     @MockK
-    lateinit var sessionManager: SessionManager
+    lateinit var protectedActionInteractor: ProtectedActionInteractor
 
     private lateinit var viewModel: SummaryDetailsViewModel
 
     @BeforeEach
     fun setup() {
         MockKAnnotations.init(this)
-        viewModel = SummaryDetailsViewModel(summaryInteractor, favoriteInteractor, sessionManager)
+        viewModel = SummaryDetailsViewModel(
+            summaryInteractor,
+            favoriteInteractor,
+            protectedActionInteractor,
+        )
     }
 
     @Test
@@ -86,7 +92,8 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.createFavorite(summary) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(false)
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-        coEvery { sessionManager.hasSession() } returns true
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+            ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId) // Load the summary
 
@@ -116,7 +123,8 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-        coEvery { sessionManager.hasSession() } returns true
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+            ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId) // Load the summary
 
@@ -136,16 +144,11 @@ class SummaryDetailsViewModelTest {
     }
 
     @Test
-    fun `onPlayClick - with session`() = runTest {
+    fun `onPlayClick allowed`() = runTest {
         val summaryId = SummaryId("1")
-        val summary = Fixtures.dummySummary1
-
-        coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
-        coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
-        coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
-        coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-
-        coEvery { sessionManager.hasSession() } returns true
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+            ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId)
 
@@ -160,7 +163,8 @@ class SummaryDetailsViewModelTest {
 
     @Test
     fun `toggleFavorite -  when sessionManager has no session`() = runTest {
-        coEvery { sessionManager.hasSession() } returns false
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+            ProtectedActionCheckResult.AuthRequired
 
         viewModel.toggleFavorite()
 
@@ -173,8 +177,12 @@ class SummaryDetailsViewModelTest {
 
     @Test
     fun `onPlayClick - when sessionManager has no session`() = runTest {
-        coEvery { sessionManager.hasSession() } returns false
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+            ProtectedActionCheckResult.AuthRequired
 
+        viewModel.loadSummary(summaryId)
         viewModel.onPlayClick()
 
         viewModel.events.test {
@@ -185,16 +193,11 @@ class SummaryDetailsViewModelTest {
     }
 
     @Test
-    fun onReadClick_withSession() = runTest {
+    fun `onReadClick allowed`() = runTest {
         val summaryId = SummaryId("1")
-        val summary = Fixtures.dummySummary1
-
-        coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
-        coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
-        coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
-        coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-
-        coEvery { sessionManager.hasSession() } returns true
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+            ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId)
 
@@ -209,8 +212,12 @@ class SummaryDetailsViewModelTest {
 
     @Test
     fun onReadClick_whenSessionManagerHasNoSession() = runTest {
-        coEvery { sessionManager.hasSession() } returns false
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+            ProtectedActionCheckResult.AuthRequired
 
+        viewModel.loadSummary(summaryId)
         viewModel.onReadClick()
 
         viewModel.events.test {
@@ -218,5 +225,46 @@ class SummaryDetailsViewModelTest {
             Assertions.assertTrue(event is SummaryDetailsUiEvent.ShowAuthSuggestion)
             cancelAndConsumeRemainingEvents()
         }
+    }
+
+    @Test
+    fun `on readClick with no active subscription`() = runTest {
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+            ProtectedActionCheckResult.SubscriptionRequired
+
+        viewModel.loadSummary(summaryId)
+        viewModel.onReadClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToSubscription)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onPlayClick with no active subscription`() = runTest {
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+            ProtectedActionCheckResult.SubscriptionRequired
+
+        viewModel.loadSummary(summaryId)
+        viewModel.onPlayClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToSubscription)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    private fun prepareEnvironment(summaryId: SummaryId) {
+        val summary = Fixtures.dummySummary1
+        coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
+        coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(false)
+        coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
     }
 }

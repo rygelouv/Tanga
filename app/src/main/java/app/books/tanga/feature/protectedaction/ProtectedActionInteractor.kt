@@ -1,7 +1,8 @@
-package app.books.tanga.session
+package app.books.tanga.feature.protectedaction
 
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.revenuecat.RevenueCatPurchases
+import app.books.tanga.session.SessionManager
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 
@@ -11,6 +12,14 @@ class ProtectedActionInteractor @Inject constructor(
     private val preferencesRepository: DefaultPrefDataStoreRepository
 ) {
 
+    /**
+     * Check if the user is allowed to perform the given action
+     * - If the user is not authenticated, [ProtectedActionCheckResult.AuthRequired] is returned regardless of the action
+     * - If the user is authenticated and the action is a read or listen action, the user needs to have an active subscription
+     *  to perform the action, otherwise [ProtectedActionCheckResult.SubscriptionRequired] is returned
+     *  - If the user is authenticated and the action is a save action, [ProtectedActionCheckResult.Allowed] is returned
+     * @param action the [ProtectedAction] to check
+     */
     suspend fun checkProtectedAction(action: ProtectedAction): ProtectedActionCheckResult {
         if (sessionManager.hasSession().not()) {
             return ProtectedActionCheckResult.AuthRequired
