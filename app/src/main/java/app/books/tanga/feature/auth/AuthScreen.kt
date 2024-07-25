@@ -52,7 +52,8 @@ fun AuthScreenContainer(
         onAuthSkip = { viewModel.onSkipAuth() },
         onAuthSuccess = onAuthSuccess,
         onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
-        onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) }
+        onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) },
+        onGoogleSignInNotComplete = { viewModel.onGoogleSignInNotCompleted() }
     )
 }
 
@@ -64,7 +65,8 @@ fun AuthScreen(
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
     onGoogleSignInButtonClick: () -> Unit = {},
-    onGoogleSignInComplete: (Intent) -> Unit = {}
+    onGoogleSignInComplete: (Intent) -> Unit = {},
+    onGoogleSignInNotComplete: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -118,7 +120,8 @@ fun AuthScreen(
             state = state,
             events = events,
             onGoogleSignInButtonClick = onGoogleSignInButtonClick,
-            onGoogleSignInComplete = onGoogleSignInComplete
+            onGoogleSignInComplete = onGoogleSignInComplete,
+            onGoogleSignInNotComplete = onGoogleSignInNotComplete
         )
     }
 }
@@ -130,12 +133,14 @@ fun AuthContent(
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
-    onGoogleSignInComplete: (Intent) -> Unit
+    onGoogleSignInComplete: (Intent) -> Unit,
+    onGoogleSignInNotComplete: () -> Unit
 ) {
     SignIn(
         onAuthSuccess = onAuthSuccess,
         event = events,
-        onGoogleSignInComplete = onGoogleSignInComplete
+        onGoogleSignInComplete = onGoogleSignInComplete,
+        onGoogleSignInNotComplete = onGoogleSignInNotComplete,
     )
 
     Column(
@@ -214,6 +219,6 @@ private fun AuthScreenPreview() {
     )
     val events = AuthUiEvent.Empty
     TangaTheme {
-        AuthScreen(onAuthSkip = {}, onAuthSuccess = {}, state = state, events = events)
+        AuthScreen(onAuthSkip = {}, onAuthSuccess = {}, state = state, events = events, onGoogleSignInNotComplete = {})
     }
 }

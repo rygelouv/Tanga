@@ -32,10 +32,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
-import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.R.drawable.ic_right_arrow
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.Tag
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.Shapes
@@ -81,8 +81,9 @@ fun HomeTopCard(
         ) {
             ContentColumn()
 
-            UrlDownloadableImage(
-                summaryId = summaryUi.id,
+            TangaAsyncImage(
+                summaryId = summaryUi.id.value,
+                url = summaryUi.coverUrl,
                 modifier = Modifier.offset(y = 8.dp).width(90.dp),
                 onSummaryClick = onSummaryClick
             )

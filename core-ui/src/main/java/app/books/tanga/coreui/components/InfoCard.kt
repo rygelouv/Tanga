@@ -1,6 +1,7 @@
 package app.books.tanga.coreui.components
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.extraExtraLarge
@@ -22,6 +24,7 @@ import app.books.tanga.coreui.theme.extraExtraLarge
 @Composable
 fun InfoCard(
     @DrawableRes image: Int,
+    @StringRes text: Int,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -50,12 +53,7 @@ fun InfoCard(
             Spacer(modifier = Modifier.size(8.dp))
             Text(
                 modifier = Modifier.testTag("info_card_text"),
-                text = "•Personal Development" +
-                    " •Self-help" +
-                    " •Psychology" +
-                    " •Philosophy" +
-                    " •Productivity" +
-                    " •Lifestyle",
+                text = stringResource(id = text),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.outline,
             )

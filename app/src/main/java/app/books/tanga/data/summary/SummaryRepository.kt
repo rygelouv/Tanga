@@ -22,6 +22,8 @@ interface SummaryRepository {
     suspend fun searchSummaryInMemoryCache(query: String): Result<List<Summary>>
 
     suspend fun saveSummariesInMemoryCache(summaries: List<Summary>)
+
+    suspend fun getWeeklySummary(): Result<Summary>
 }
 
 class SummaryRepositoryImpl @Inject constructor(
@@ -29,6 +31,7 @@ class SummaryRepositoryImpl @Inject constructor(
     private val summaryInMemoryCache: SummaryInMemoryCache,
     private val operationHandler: FirestoreOperationHandler
 ) : SummaryRepository {
+
     override suspend fun getSummary(summaryId: SummaryId): Result<Summary> =
         operationHandler.executeOperation {
             val summary =
@@ -64,6 +67,16 @@ class SummaryRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun getWeeklySummary(): Result<Summary> {
+        val weeklySummaryCollection = firestore.weeklySummaryCollection.get().await()
+        val weeklySummaryData = weeklySummaryCollection.documents.first()
+        val weeklySummarySlug = weeklySummaryData?.id ?: error("Weekly summary not found")
+        val weeklySummaryId = SummaryId(weeklySummarySlug)
+        val weeklySummary = getSummary(weeklySummaryId)
+
+        return weeklySummary
+    }
+
     /**
      * Search for summaries by title or author
      * This is a quick search using the in memory cache
@@ -84,4 +97,7 @@ class SummaryRepositoryImpl @Inject constructor(
 
     private val FirebaseFirestore.summaryCollection: CollectionReference
         get() = collection(FirestoreDatabase.Summaries.COLLECTION_NAME)
+
+    private val FirebaseFirestore.weeklySummaryCollection: CollectionReference
+        get() = collection(FirestoreDatabase.WeeklySummary.COLLECTION_NAME)
 }

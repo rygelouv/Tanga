@@ -40,7 +40,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.books.tanga.common.ui.UrlDownloadableImage
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
@@ -80,6 +80,7 @@ fun PlaySummaryAudioScreen(
                 summaryId = summaryId,
                 title = state.title,
                 author = state.author,
+                coverUrl = state.coverUrl,
                 playbackState = state.playbackState,
                 actions = actions
             )
@@ -108,6 +109,7 @@ fun PlaySummaryAudioContent(
     actions: PlayerActions,
     modifier: Modifier = Modifier,
     summaryId: SummaryId? = null,
+    coverUrl: String? = null,
     title: String? = null,
     author: String? = null,
     playbackState: PlaybackState? = null
@@ -171,13 +173,14 @@ fun PlaySummaryAudioContent(
                 PlaybackControls(playbackState = playbackState, actions = actions)
             }
         }
-        UrlDownloadableImage(
+        TangaAsyncImage(
             modifier = Modifier
                 .width(164.dp)
                 .align(alignment = Alignment.TopCenter)
                 .offset(y = 4.dp)
                 .testTag("summary_cover_image"),
-            summaryId = summaryId ?: SummaryId(""),
+            summaryId = summaryId?.value.orEmpty(),
+            url = coverUrl,
             onSummaryClick = {}
         )
     }

@@ -61,6 +61,10 @@
     <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="error">Error!</string>
+    <string name="business_topics">•Business •Entrepreneurship •Leadership •Career •Professional development</string>
+    <string name="personal_growth_topics">Personal development •Productivity •Self-improvement •Self-development</string>
+    <string name="psychology_self_help_topics">•Psychology •Life Philosophy •Self-help •Lifestyle •Stoicism</string>
+    <string name="financial_education_topics">•Financial education •Investing •Finance •Money •Wealth</string>
     <string name="error_message_default">Sorry, something went wrong. Please try again</string>
     <string name="error_no_internet_message">Please check your internet connection and try again</string>
     <string name="error_no_internet_title">No internet connection</string>
@@ -80,8 +84,10 @@
     <string name="error_authentication_title">Authentication Error</string>
     <string name="error_authentication_message">Sorry, there was an error during your authentication. Please try again</string>
     <string name="profile_create_account">Create an Account</string>
-    <string name="auth_suggestion_title">Hold On, You Need to Sign In</string>
-    <string name="auth_suggestion_description">It seems like you don\'t have your Tanga Account created yet? Start by creating an account or sign in now. It won\'t take long</string>
+    <string name="auth_suggestion_title">Hold On! You Need to Sign In</string>
+    <string name="auth_suggestion_description">It looks like you are not signed into your Tanga account? Start by creating an account or sign in now. It won\'t take long</string>
     <string name="premium_user">Premium Account</string>
     <string name="restore_purchase">Restore purchase</string>
+    <string name="auth_sign_in_button_text">Sign In Now</string>
+    <string name="auth_suggestion_dismiss_button_text">Not Now</string>
 </resources>

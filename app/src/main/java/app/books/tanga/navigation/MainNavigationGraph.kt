@@ -36,6 +36,7 @@ fun MainNavigationGraph(
 
         summaryDetails(
             onNavigateToAuth = onRedirectToAuth,
+            onNavigateToSubscriptions = { navController.toPricingPlan() },
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },

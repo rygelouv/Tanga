@@ -1,6 +1,7 @@
 package app.books.tanga.feature.home
 
 import app.books.tanga.data.category.CategoryRepository
+import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.data.summary.SummaryRepository
 import app.books.tanga.entity.Section
 import app.books.tanga.feature.profile.ProfileInteractor
@@ -18,6 +19,7 @@ class HomeInteractorTest {
     private lateinit var summaryRepository: SummaryRepository
     private lateinit var categoryRepository: CategoryRepository
     private lateinit var profileInteractor: ProfileInteractor
+    private lateinit var preferencesRepository: DefaultPrefDataStoreRepository
     private lateinit var homeInteractor: HomeInteractor
 
     @BeforeEach
@@ -25,7 +27,8 @@ class HomeInteractorTest {
         summaryRepository = mockk()
         categoryRepository = mockk()
         profileInteractor = mockk()
-        homeInteractor = HomeInteractor(summaryRepository, categoryRepository, profileInteractor)
+        preferencesRepository = mockk()
+        homeInteractor = HomeInteractor(summaryRepository, categoryRepository, profileInteractor, preferencesRepository)
     }
 
     @Test
@@ -55,9 +58,10 @@ class HomeInteractorTest {
     }
 
     @Test
-    fun `HomeInteractor retrieves daily summary successfully`() = runTest {
+    fun `HomeInteractor retrieves weekly summary successfully`() = runTest {
         val expectedSummary = Result.success(Fixtures.dummySummary1)
-        coEvery { homeInteractor.getWeeklySummary() } returns expectedSummary
+        coEvery { summaryRepository.getWeeklySummary() } returns expectedSummary
+        coEvery { preferencesRepository.saveWeeklySummary(any()) } returns Unit
 
         val actualSummary = homeInteractor.getWeeklySummary()
 

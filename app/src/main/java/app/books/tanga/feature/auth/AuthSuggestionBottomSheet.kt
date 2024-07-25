@@ -14,7 +14,8 @@ import app.books.tanga.coreui.resources.TextResource
 @Composable
 fun AuthSuggestionBottomSheet(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onNavigateToAuth: () -> Unit
 ) {
     val data = BottomSheetData(
         actionData = ActionData(
@@ -22,11 +23,11 @@ fun AuthSuggestionBottomSheet(
             description = TextResource.fromText(stringResource(id = R.string.auth_suggestion_description)),
             icon = app.books.tanga.coreui.R.drawable.graphic_login_bro,
             mainButton = Button(
-                text = TextResource.fromText("Sign in"),
-                onClick = { }
+                text = TextResource.fromStringId(R.string.auth_sign_in_button_text),
+                onClick = onNavigateToAuth
             ),
             secondaryButton = Button(
-                text = TextResource.fromText("Not Now"),
+                text = TextResource.fromStringId(R.string.auth_suggestion_dismiss_button_text),
                 onClick = onDismiss
             )
         ),

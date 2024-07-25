@@ -131,6 +131,7 @@ fun SummariesByCategoryContent(
                             header = {
                                 InfoCard(
                                     image = state.categoryUi.icon,
+                                    text = state.categoryUi.topics
                                 )
                             },
                             footer = {

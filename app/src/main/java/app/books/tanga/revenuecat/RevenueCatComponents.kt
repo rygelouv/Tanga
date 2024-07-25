@@ -52,6 +52,11 @@ interface RevenueCatPurchases {
     suspend fun getSubscriberInfo(): SubscriberInfo?
 
     /**
+     * Checks if the user has an active subscription.
+     */
+    suspend fun hasActiveSubscription(): Boolean
+
+    /**
      * Gets the list of available subscription plans.
      */
     suspend fun getSubscriptions(): Result<List<SubscriptionPlan>>
