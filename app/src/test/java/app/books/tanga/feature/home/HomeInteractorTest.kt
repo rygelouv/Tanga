@@ -60,7 +60,8 @@ class HomeInteractorTest {
     @Test
     fun `HomeInteractor retrieves weekly summary successfully`() = runTest {
         val expectedSummary = Result.success(Fixtures.dummySummary1)
-        coEvery { homeInteractor.getWeeklySummary() } returns expectedSummary
+        coEvery { summaryRepository.getWeeklySummary() } returns expectedSummary
+        coEvery { preferencesRepository.saveWeeklySummary(any()) } returns Unit
 
         val actualSummary = homeInteractor.getWeeklySummary()
 

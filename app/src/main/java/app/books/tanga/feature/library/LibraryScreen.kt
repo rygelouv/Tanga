@@ -90,6 +90,7 @@ fun FavoriteGrid(
         items(favorites) { favorite ->
             SummaryItem(
                 summaryId = SummaryId(favorite.summaryId),
+                summaryCoverUrl = favorite.coverUrl,
                 title = favorite.title,
                 author = favorite.author,
                 duration = favorite.playingLength,

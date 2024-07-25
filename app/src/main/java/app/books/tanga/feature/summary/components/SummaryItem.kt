@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
-import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.data.FakeData
@@ -40,6 +40,7 @@ fun SummaryItemBig(
 ) {
     SummaryItem(
         summaryId = summary.id,
+        summaryCoverUrl = summary.coverUrl.orEmpty(),
         title = summary.title,
         author = summary.author,
         duration = summary.duration,
@@ -58,6 +59,7 @@ fun SummaryItemSmall(
 ) {
     SummaryItem(
         summaryId = summary.id,
+        summaryCoverUrl = summary.coverUrl.orEmpty(),
         title = summary.title,
         author = summary.author,
         duration = summary.duration,
@@ -73,6 +75,7 @@ fun SummaryItemSmall(
 @Composable
 fun SummaryItem(
     summaryId: SummaryId,
+    summaryCoverUrl: String,
     title: String,
     author: String,
     duration: String,
@@ -88,8 +91,9 @@ fun SummaryItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        UrlDownloadableImage(
-            summaryId = summaryId,
+        TangaAsyncImage(
+            summaryId = summaryId.value,
+            url = summaryCoverUrl,
             onSummaryClick = onSummaryClick,
         )
         Spacer(modifier = Modifier.height(10.dp))

@@ -34,10 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
-import app.books.tanga.common.ui.UrlDownloadableImage
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
 import app.books.tanga.coreui.components.SummaryActionButton
+import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
@@ -184,11 +184,12 @@ fun SummaryDetailsHeader(
                 modifier = modifier.padding(LocalSpacing.current.medium),
                 horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.large)
             ) {
-                UrlDownloadableImage(
+                TangaAsyncImage(
                     modifier = Modifier
                         .width(128.dp)
                         .testTag("summary_cover_image"),
-                    summaryId = summary.id,
+                    summaryId = summary.id.value,
+                    url = summary.coverUrl,
                     onSummaryClick = {}
                 )
                 SummaryBasicInfo(
