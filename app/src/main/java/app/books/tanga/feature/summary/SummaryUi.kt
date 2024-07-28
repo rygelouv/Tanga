@@ -1,6 +1,5 @@
 package app.books.tanga.feature.summary
 
-import androidx.annotation.DrawableRes
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
@@ -8,9 +7,7 @@ import app.books.tanga.errors.UiError
 
 data class SummaryUi(
     val id: SummaryId,
-    // TODO: 2023-09-14 Remove this
-    @DrawableRes val cover: Int = 0,
-    val coverUrl: String? = null,
+    val coverUrl: String,
     val title: String,
     val author: String,
     val duration: String,

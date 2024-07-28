@@ -71,6 +71,24 @@ enum class ProfileAction(
         text = R.string.logout,
         shouldTint = true
     ),
+    TERMS_AND_CONDITIONS(
+        icon = app.books.tanga.coreui.R.drawable.ic_terms_conditions,
+        color = ProfileYellow,
+        iconBackgroundColor = ProfileYellowBackground,
+        text = R.string.terms_and_conditions
+    ),
+    PRIVACY_POLICY(
+        icon = app.books.tanga.coreui.R.drawable.ic_privacy_policy,
+        color = ProfileGreen,
+        iconBackgroundColor = ProfileGreenBackground,
+        text = R.string.ic_privacy_policy
+    ),
+    SETTING(
+        icon = app.books.tanga.coreui.R.drawable.ic_settings,
+        color = ProfilePurple,
+        iconBackgroundColor = ProfilePurpleBackground,
+        text = R.string.settings
+    )
 }
 
 @Composable

@@ -27,7 +27,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -206,24 +208,22 @@ private fun SearchTopBar(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 private fun SearchBox(onSearch: (String) -> Unit) {
     var text by remember {
         mutableStateOf("")
     }
-    var active by remember {
-        mutableStateOf(false)
-    }
+    val keyboardController = LocalSoftwareKeyboardController.current
     SearchBar(
         modifier = Modifier.fillMaxWidth(),
         query = text,
         onQueryChange = { text = it },
         onSearch = {
-            active = false
+            keyboardController?.hide()
             onSearch(text)
         },
-        active = active,
-        onActiveChange = { active = it },
+        active = false,
+        onActiveChange = { },
         placeholder = {
             Text(
                 text = stringResource(id = R.string.explore_search),
@@ -248,7 +248,6 @@ private fun SearchBox(onSearch: (String) -> Unit) {
                         .size(16.dp)
                         .clickable {
                             text = ""
-                            active = false
                             onSearch(text)
                         },
                     painter = painterResource(id = TangaIcons.Close),

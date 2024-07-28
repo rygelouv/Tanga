@@ -154,6 +154,8 @@ dependencies {
     // Kotlin Immutable Collections
     implementation(libs.kotlin.immutable.collections)
 
+    implementation(libs.browser)
+
     // Testing
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)

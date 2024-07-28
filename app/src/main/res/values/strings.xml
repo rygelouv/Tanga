@@ -21,7 +21,10 @@
     <string name="profile_upgrade_to_pro">Get Tanga Premium</string>
     <string name="auth_welcome_to_tanga">Welcome to Tanga</string>
     <string name="auth_sign_up_with_google_message">Sign in or Sign up with Google to start enjoying Tanga Now</string>
+    <string name="auth_terms_and_privacy_prefix_text">By using the app, you agree to our </string>
     <string name="auth_terms_and_conditions">Terms and Conditions</string>
+    <string name="auth_terms_and_privacy_middle_text"> and our </string>
+    <string name="auth_privacy_policy">Privacy Policy</string>
     <string name="auth_sign_in_with_google">Sign in with Google</string>
     <string name="home_top_card_title">Your Free Weekly \nSummary</string>
     <string name="home_top_card_action_text">Check It Out Now!</string>
@@ -56,7 +59,13 @@
     <string name="summary_details_watch">Watch</string>
     <string name="summary_details_visualize">Visualize</string>
     <string name="summary_details_author">Author</string>
-    <string name="summary_details_share_message">Read, list or watch a summary of the book \"%1$s\" by %2$s on Tanga App.\n %3$s</string>
+    <string name="summary_details_share_message">Hey,
+
+I think you’d enjoy the summary of \"%1$s\" by %2$s that I found on Tanga. 📚 You’ll love the key insights and lessons packed into this short read. It’s available in both read and audio format! 🎧
+
+Here’s the link: %3$s</string>
+
+Enjoy! 😊
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="retry">Retry</string>
@@ -90,4 +99,20 @@
     <string name="restore_purchase">Restore purchase</string>
     <string name="auth_sign_in_button_text">Sign In Now</string>
     <string name="auth_suggestion_dismiss_button_text">Not Now</string>
+    <string name="tanga_landing_moto_variant_01">15 Minutes summaries of life-changing books</string>
+    <string name="tanga_landing_get_started">Let\'s go!</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="ic_privacy_policy">Privacy Policies</string>
+    <string name="settings">Account Settings</string>
+    <string name="delete_account">Delete account</string>
+    <string name="tanga_version">Tanga Version v%1$s(%2$s)</string>
+    <string name="delete_account_title">Delete Your Tanga Account</string>
+    <string name="delete_account_description">Are you sure you want to say goodbye to your Tanga account? This action is permanent and cannot be undone. Here’s what you’ll miss out on:\n\n
+    \u2022 All your saved book summaries\n\n
+    \u2022 Any premium content or features you’ve purchased\n\nIf you’re sure you want to go, click "Delete Account" below. If you have any questions or need a hand, our support team is here to help!
+</string>
+    <string name="delete_account_cancel_button_text">Keep My Account</string>
+    <string name="delete_account_dialog_confirm_title">Confirmation</string>
+    <string name="delete_account_dialog_confirm_message">Confirm the deletion of your account</string>
+
 </resources>

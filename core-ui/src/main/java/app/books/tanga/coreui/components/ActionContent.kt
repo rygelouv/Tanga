@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +34,9 @@ import app.books.tanga.coreui.theme.LocalSpacing
 fun ActionContent(
     data: ActionData,
     modifier: Modifier = Modifier,
+    titleTextColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    bigSpacingBeforeButtons: Boolean = false,
+    shouldCenterDescriptionText: Boolean = true,
     shouldShowWhiteBackground: Boolean = true
 ) {
     val contentModifier = if (shouldShowWhiteBackground) {
@@ -45,6 +50,8 @@ fun ActionContent(
             .padding(
                 horizontal = LocalSpacing.current.medium,
                 vertical = LocalSpacing.current.small
+            ).verticalScroll(
+                rememberScrollState()
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -57,12 +64,12 @@ fun ActionContent(
             painter = painterResource(id = data.icon),
             contentDescription = "action content image"
         )
+        Spacer(modifier = Modifier.height(LocalSpacing.current.large))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text =
-            data.title.asString(context.resources),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = data.title.asString(context.resources),
+            style = MaterialTheme.typography.titleLarge,
+            color = titleTextColor,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
@@ -71,9 +78,16 @@ fun ActionContent(
             text = data.description.asString(context.resources),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
-            textAlign = TextAlign.Center
+            textAlign = if (shouldCenterDescriptionText) TextAlign.Center else TextAlign.Start
         )
-        Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+        if (bigSpacingBeforeButtons) {
+            Spacer(modifier = Modifier.weight(1f))
+        } else {
+            Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+        }
+
+        // Minimum spacing to guarantee that the buttons are not too close to description text
+        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         TangaButton(
             text = data.mainButton.text.asString(context.resources),
             onClick = data.mainButton.onClick

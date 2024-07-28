@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.DialogContent
+import app.books.tanga.coreui.components.LoadingDialog
 
 @ExcludeFromJacocoGeneratedReport()
 @Preview
@@ -26,7 +26,7 @@ private fun PreviewSomeDialogContent() {
                     .padding(it),
                 contentAlignment = Alignment.Center,
             ) {
-                DialogContent()
+                LoadingDialog()
             }
         }
     )

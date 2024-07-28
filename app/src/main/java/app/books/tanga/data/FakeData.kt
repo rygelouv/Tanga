@@ -1,11 +1,13 @@
 package app.books.tanga.data
 
-import app.books.tanga.R
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
+/**
+ * User for Compose Previews
+ */
 object FakeData {
     fun allCategories() =
         buildList {
@@ -44,7 +46,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = app.books.tanga.coreui.R.drawable.atomic_habits_cover,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
@@ -55,7 +57,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_atomic_habit,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Atomic Habits",
                     author = "James Clear",
                     duration = "15",
@@ -66,7 +68,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_deep_work,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Deep Work",
                     author = "Cal Newport",
                     duration = "9",
@@ -77,7 +79,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_ego_is_enemy,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Ego is the Enemy",
                     author = "Ryan Holiday",
                     duration = "13",
@@ -88,7 +90,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_so_good_they_cant_ignore_you,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
                     duration = "11",
@@ -98,7 +100,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_good_to_great,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Good To Great",
                     author = "Jim Collins",
                     duration = "8",
@@ -108,7 +110,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_never_split_difference,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Never Split The Difference",
                     author = "Chris Voss",
                     duration = "10",
@@ -118,7 +120,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_obstacle_is_the_way,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "The Obstacle Is the Way",
                     author = "Ryan Holiday",
                     duration = "10",
@@ -130,7 +132,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_psychology_of_money,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Psychology Of Money",
                     author = "Morgan Housel",
                     duration = "10",
@@ -141,7 +143,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_rework,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "Rework",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "11",
@@ -153,7 +155,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    cover = R.drawable.cover_subtle_art_not_giving_fuck,
+                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
                     title = "The Subtle Art Of Not Giving A Fuck",
                     author = "Mark Manson",
                     duration = "9",

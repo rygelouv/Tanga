@@ -1,5 +1,6 @@
 [versions]
 android-plugin-gradle-version = "8.2.0"
+browser-version = "1.8.0"
 kotlin-android-plugin-version = "1.9.0"
 firebase-crashlytics-version = "2.9.9"
 google-services-version = "4.4.0"
@@ -93,6 +94,7 @@ commonmark-version = "0.21.0"
 
 [libraries]
 # Core Libraries
+browser = { module = "androidx.browser:browser", version.ref = "browser-version" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-version-ktx" }
 revenuecat-purchases = { module = "com.revenuecat.purchases:purchases", version.ref = "revenuecat-purchases-version" }
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen-version" }

@@ -61,7 +61,7 @@ fun ReadSummaryScreen(
     modifier: Modifier = Modifier,
     onNavigateToAudioPlayer: (SummaryId) -> Unit
 ) {
-    SystemBarsVisibility(statusBarColor = MaterialTheme.colorScheme.onPrimaryContainer)
+    SystemBarsVisibility(statusBarColor = MaterialTheme.colorScheme.onPrimaryContainer, statusBarVisible = true)
 
     val isVisible = rememberSaveable { mutableStateOf(true) }
     val scrollConnection = nestedScrollConnection { isVisible.value = it }

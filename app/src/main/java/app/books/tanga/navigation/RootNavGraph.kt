@@ -3,12 +3,15 @@ package app.books.tanga.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import app.books.tanga.feature.auth.authentication
 import app.books.tanga.feature.auth.toAuthentication
 import app.books.tanga.feature.main.mainScreen
 import app.books.tanga.feature.main.toMain
-import app.books.tanga.feature.onboarding.OnboardingScreen
+import app.books.tanga.feature.onboarding.landing
+import app.books.tanga.feature.onboarding.onboarding
+import app.books.tanga.feature.onboarding.toOnboarding
+import app.books.tanga.feature.profile.privacyAndTerms
+import app.books.tanga.feature.profile.toPrivacyAndTerms
 
 @Composable
 fun NavigationGraph(
@@ -16,14 +19,25 @@ fun NavigationGraph(
     startDestination: NavigationScreen
 ) {
     NavHost(navController = navController, startDestination = startDestination.route) {
-        composable(route = NavigationScreen.Onboarding.route) {
-            OnboardingScreen(navController)
-        }
+        landing(
+            onNavigateToOnboarding = {
+                navController.toOnboarding(NavigationScreen.Landing)
+            }
+        )
+        onboarding(
+            onNavigateBack = { navController.popBackStack() },
+            onNavigateToAuth = { navController.toAuthentication(NavigationScreen.Onboarding) }
+        )
         authentication(
-            onAuthSuccess = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) }
+            onAuthSuccess = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
+            onTermsAndPrivacyClick = { navController.toPrivacyAndTerms() }
         )
         mainScreen {
             navController.toAuthentication(NavigationScreen.Main)
         }
+
+        privacyAndTerms(
+            onNavigateBack = { navController.popBackStack() }
+        )
     }
 }

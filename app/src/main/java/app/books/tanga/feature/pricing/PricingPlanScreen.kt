@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.DialogContent
+import app.books.tanga.coreui.components.LoadingDialog
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.resources.asString
@@ -54,10 +54,10 @@ fun PricingPlanScreen(
     state: PricingPlanUiState,
     modifier: Modifier = Modifier
 ) {
-    SystemBarsVisibility()
+    SystemBarsVisibility(statusBarVisible = true)
 
     if (state.progressState == ProgressState.Show) {
-        DialogContent()
+        LoadingDialog()
     }
 
     val gradientColors =

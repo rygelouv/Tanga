@@ -18,11 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,10 +34,15 @@ import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.theme.TangaTheme
+import app.books.tanga.utils.openLinkInCustomTab
+
+private const val CONTACT_URL = "https://form.jotform.com/242065602713550"
 
 @Composable
 fun ProfileScreenContainer(
     onNavigateToAuth: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToPrivacyAndTerms: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel(),
     onNavigateToPricing: () -> Unit = {}
@@ -53,7 +57,8 @@ fun ProfileScreenContainer(
         modifier = modifier,
         onProClick = { viewModel.onProUpgrade() },
         onLoginClick = { viewModel.onLogin() },
-        onLogoutClick = { viewModel.onLogout() }
+        onSettingsClick = onNavigateToSettings,
+        onPrivacyAndTermsClick = onNavigateToPrivacyAndTerms
     )
 }
 
@@ -84,14 +89,15 @@ fun HandleEvents(
 fun ProfileScreen(
     state: ProfileUiState,
     onLoginClick: () -> Unit,
-    onLogoutClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    onPrivacyAndTermsClick: () -> Unit,
     modifier: Modifier = Modifier,
     onProClick: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier
             .fillMaxSize()
-            .padding(bottom = 10.dp),
+            .padding(bottom = 2.dp),
         floatingActionButtonPosition = FabPosition.Center
     ) {
         Surface(
@@ -119,18 +125,23 @@ fun ProfileScreen(
                 ProfileScreenBody(
                     userInfo = state.userInfo,
                     modifier = Modifier,
-                    onLogout = onLogoutClick
+                    onSettingsClick = onSettingsClick,
+                    onPrivacyAndTermsClick = onPrivacyAndTermsClick
                 )
             }
         }
     }
 }
 
+/**
+ * Note: Improve state handling with viewmodel
+ */
 @Composable
 fun ProfileScreenBody(
     userInfo: UserInfoUi?,
+    onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onLogout: () -> Unit
+    onPrivacyAndTermsClick: () -> Unit
 ) {
     Surface(
         color = Color.White,
@@ -145,32 +156,19 @@ fun ProfileScreenBody(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            val openDialogState = remember { mutableStateOf(false) }
-            val logout = remember { mutableStateOf(false) }
-
-            ProfileContentAction(action = ProfileAction.CONTACT)
-            ProfileContentAction(action = ProfileAction.PRIVACY_AND_TERMS)
-            ProfileContentAction(action = ProfileAction.NOTIFICATIONS)
+            val context = LocalContext.current
+            ProfileContentAction(action = ProfileAction.CONTACT, onClick = {
+                openLinkInCustomTab(context, CONTACT_URL)
+            })
+            ProfileContentAction(action = ProfileAction.PRIVACY_AND_TERMS) {
+                onPrivacyAndTermsClick()
+            }
             if (userInfo != null) {
-                ProfileContentAction(action = ProfileAction.LOGOUT) {
-                    openDialogState.value = true
+                ProfileContentAction(action = ProfileAction.SETTING) {
+                    onSettingsClick()
                 }
             }
-            Spacer(modifier = Modifier.height(60.dp))
-
-            if (openDialogState.value) {
-                LogoutDialog(
-                    onDismiss = { openDialogState.value = false },
-                    onConfirm = {
-                        openDialogState.value = false
-                        logout.value = true
-                    }
-                )
-            }
-
-            LaunchedEffect(logout.value) {
-                if (logout.value) onLogout()
-            }
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
@@ -204,7 +202,6 @@ fun ProfileHeader(
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Spacer(modifier = Modifier.height(30.dp))
-        // ProButton { onProClick() }
         MainCtaArea(userInfo = userInfo, onLoginClick = onLoginClick, onProClick = onProClick)
     }
 }
@@ -239,7 +236,8 @@ private fun ProfileScreenPreview() {
                 )
             ),
             onLoginClick = {},
-            onLogoutClick = {}
+            onSettingsClick = {},
+            onPrivacyAndTermsClick = {}
         )
     }
 }
