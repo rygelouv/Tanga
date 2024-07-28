@@ -22,6 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+private const val SHADOW_TEXT_ALPHA_VALUE = 0.75f
+
 /**
  * This is a composable function that displays a title text with shadow.
  * https://handstandsam.com/2021/08/09/jetpack-compose-text-shadows/
@@ -43,7 +45,7 @@ fun TextWithShadow(
                     x = 2.dp,
                     y = 2.dp
                 )
-                .alpha(0.75f)
+                .alpha(SHADOW_TEXT_ALPHA_VALUE)
         )
         TangaDescriptionText(
             text = text,

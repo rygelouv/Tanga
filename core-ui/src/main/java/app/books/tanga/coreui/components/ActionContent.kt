@@ -30,6 +30,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
  * Action content is a component that is used to display a UI screen content with an image, title,
  * description and two buttons. The main button is always displayed. The secondary button is optional.
  */
+@Suppress("LongMethod")
 @Composable
 fun ActionContent(
     data: ActionData,

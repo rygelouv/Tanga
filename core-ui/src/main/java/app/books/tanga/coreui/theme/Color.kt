@@ -13,6 +13,8 @@ val YaleBlue = Color(0xFF0F4C90)
 val Cerulean = Color(0xFF1F91DD)
 val Navy = Color(0xFF001849)
 val BabyBlueEyes = Color(0xFFA8C8FF)
+
+@Suppress("MagicNumber") // Detekt checks new added colors. We need to add a rule to ignore this.
 val OxfordBlueTransp = Color(0x00001849)
 
 // White Tones
@@ -24,6 +26,8 @@ val Cultured = Color(0xFFF6F3F6)
 val Gray = Color(0xFF43474E)
 val AuroMetalSaurus = Color(0xFF74777F)
 val SilverFoil = Color(0xFFAFAFAF)
+
+@Suppress("MagicNumber") // Detekt checks new added colors. We need to add a rule to ignore this.
 val Crayola = Color(0xFF9DB3B8)
 
 // Orange Tones
