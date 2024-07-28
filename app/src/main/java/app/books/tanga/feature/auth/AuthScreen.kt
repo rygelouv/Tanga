@@ -2,6 +2,7 @@ package app.books.tanga.feature.auth
 
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,8 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,9 +46,10 @@ import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
 fun AuthScreenContainer(
+    onTermsAndPrivacyClick: () -> Unit,
+    onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AuthViewModel = hiltViewModel(),
-    onAuthSuccess: () -> Unit
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
@@ -53,7 +61,8 @@ fun AuthScreenContainer(
         onAuthSuccess = onAuthSuccess,
         onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
         onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) },
-        onGoogleSignInNotComplete = { viewModel.onGoogleSignInNotCompleted() }
+        onGoogleSignInNotComplete = { viewModel.onGoogleSignInNotCompleted() },
+        onTermsAndPrivacyClick = onTermsAndPrivacyClick
     )
 }
 
@@ -62,6 +71,7 @@ fun AuthScreen(
     state: AuthUiState,
     events: AuthUiEvent,
     onAuthSkip: () -> Unit,
+    onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
     onGoogleSignInButtonClick: () -> Unit = {},
@@ -104,6 +114,7 @@ fun AuthScreen(
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
+
                         ProgressState.Show -> {
                             DotsAnimation(
                                 modifier = Modifier.testTag("ProgressIndicator")
@@ -121,7 +132,8 @@ fun AuthScreen(
             events = events,
             onGoogleSignInButtonClick = onGoogleSignInButtonClick,
             onGoogleSignInComplete = onGoogleSignInComplete,
-            onGoogleSignInNotComplete = onGoogleSignInNotComplete
+            onGoogleSignInNotComplete = onGoogleSignInNotComplete,
+            onTermsAndPrivacyClick = onTermsAndPrivacyClick
         )
     }
 }
@@ -132,8 +144,9 @@ fun AuthContent(
     events: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
-    modifier: Modifier = Modifier,
+    onTermsAndPrivacyClick: () -> Unit,
     onGoogleSignInComplete: (Intent) -> Unit,
+    modifier: Modifier = Modifier,
     onGoogleSignInNotComplete: () -> Unit
 ) {
     SignIn(
@@ -147,7 +160,7 @@ fun AuthContent(
         modifier =
         modifier
             .fillMaxSize()
-            .padding(20.dp),
+            .padding(20.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -167,16 +180,65 @@ fun AuthContent(
 
         // Google Sign In button
         GoogleSignInButton(state = state, onClick = onGoogleSignInButtonClick)
+        TermsAndPrivacyText(onTermsAndPrivacyClick = onTermsAndPrivacyClick)
+    }
+}
 
+@Composable
+fun TermsAndPrivacyText(
+    onTermsAndPrivacyClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val annotatedString = buildAnnotatedString {
+        append(stringResource(id = R.string.auth_terms_and_privacy_prefix_text))
+        append(" ")
+
+        pushStringAnnotation(
+            tag = "TermsOfService",
+            annotation = "terms"
+        )
+        withStyle(
+            style = SpanStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            append(stringResource(id = R.string.auth_terms_and_conditions))
+        }
+        append(" ")
+        pop()
+
+        append(stringResource(id = R.string.auth_terms_and_privacy_middle_text))
+        append(" ")
+
+        // Privacy Policy
+        pushStringAnnotation(
+            tag = "PrivacyPolicy",
+            annotation = "privacy"
+        )
+        withStyle(
+            style = SpanStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            append(stringResource(id = R.string.auth_privacy_policy))
+        }
+        pop()
+    }
+
+    Column(
+        modifier = modifier
+            .padding(16.dp)
+    ) {
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 41.dp)
-                .padding(top = 14.dp),
-            color = MaterialTheme.colorScheme.outline,
-            text = stringResource(id = R.string.auth_terms_and_conditions),
+            text = annotatedString,
             fontSize = 12.sp,
+            modifier = Modifier.clickable {
+                onTermsAndPrivacyClick()
+            },
             style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.outline,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold
         )
@@ -219,6 +281,13 @@ private fun AuthScreenPreview() {
     )
     val events = AuthUiEvent.Empty
     TangaTheme {
-        AuthScreen(onAuthSkip = {}, onAuthSuccess = {}, state = state, events = events, onGoogleSignInNotComplete = {})
+        AuthScreen(
+            onAuthSkip = {},
+            onTermsAndPrivacyClick = {},
+            onAuthSuccess = {},
+            state = state,
+            events = events,
+            onGoogleSignInNotComplete = {}
+        )
     }
 }

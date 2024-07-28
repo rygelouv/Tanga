@@ -13,21 +13,36 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun SystemBarsVisibility(
     statusBarColor: Color = Cerulean,
+    navigationBarColor: Color? = null,
+    statusBarVisible: Boolean = false,
+    navigationBarVisible: Boolean = false
 ) {
     val systemUiController = rememberSystemUiController()
 
     DisposableEffect(key1 = true) {
         // Navigation bar id hidden
-        systemUiController.isNavigationBarVisible = false
+        systemUiController.isNavigationBarVisible = navigationBarVisible
+        // Status bar is hidden
+        systemUiController.isStatusBarVisible = statusBarVisible
         // Status bar color is changed to get the same color as the screen background
         systemUiController.setStatusBarColor(
             color = statusBarColor
         )
+        navigationBarColor?.let {
+            systemUiController.setNavigationBarColor(
+                color = it
+            )
+        }
+
         onDispose {
             systemUiController.isNavigationBarVisible = true // Navigation bar is visible
+            systemUiController.isStatusBarVisible = true // Status bar is visible
             // put back original status bar color
             systemUiController.setStatusBarColor(
                 color = Cultured
+            )
+            systemUiController.setNavigationBarColor(
+                color = Color.Unspecified
             )
         }
     }

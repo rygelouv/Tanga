@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -24,15 +26,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.TangaButtonRightIcon
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.feature.auth.toAuthentication
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -42,12 +40,15 @@ import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 3
 
+private const val PAGER_WEIGHT = 5f
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingScreen(
-    navController: NavController,
+    onOnboardingComplete: () -> Unit,
+    onNavigateBack: () -> Unit,
+    onNavigateToAuth: () -> Unit,
     modifier: Modifier = Modifier,
-    onboardingViewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val pages =
         listOf(
@@ -64,9 +65,10 @@ fun OnboardingScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(bottom = 20.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         HorizontalPager(
-            modifier = Modifier.weight(10f),
+            modifier = Modifier.weight(PAGER_WEIGHT),
             count = 4,
             state = pagerState,
             verticalAlignment = Alignment.Top
@@ -82,7 +84,7 @@ fun OnboardingScreen(
                 .weight(1f),
             activeColor = MaterialTheme.colorScheme.secondary,
             inactiveColor = MaterialTheme.colorScheme.onTertiaryContainer,
-            indicatorWidth = 10.dp
+            indicatorWidth = 8.dp
         )
         FinishOnboardingButton(
             modifier = Modifier.weight(1f),
@@ -93,9 +95,9 @@ fun OnboardingScreen(
                 }
             },
             onFinishClick = {
-                onboardingViewModel.onOnboardingCompleted()
-                navController.popBackStack()
-                navController.toAuthentication()
+                onOnboardingComplete()
+                onNavigateBack()
+                onNavigateToAuth()
             }
         )
     }
@@ -161,8 +163,7 @@ fun FinishOnboardingButton(
 @Composable
 @ExcludeFromJacocoGeneratedReport
 private fun OnboardingScreenPreview() {
-    val navController = rememberNavController()
     TangaTheme {
-        OnboardingScreen(navController)
+        OnboardingScreen({}, {}, {})
     }
 }

@@ -13,8 +13,8 @@ import app.books.tanga.coreui.resources.TextResource
 
 @Composable
 fun AuthSuggestionBottomSheet(
-    modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
     onNavigateToAuth: () -> Unit
 ) {
     val data = BottomSheetData(

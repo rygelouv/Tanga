@@ -5,18 +5,24 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import app.books.tanga.feature.deleteaccount.deleteAccount
+import app.books.tanga.feature.deleteaccount.toDeleteAccount
 import app.books.tanga.feature.home.HomeScreen
 import app.books.tanga.feature.library.LibraryScreen
 import app.books.tanga.feature.listen.playSummaryAudio
 import app.books.tanga.feature.listen.toPlaySummaryAudio
 import app.books.tanga.feature.pricing.pricingPlan
 import app.books.tanga.feature.pricing.toPricingPlan
+import app.books.tanga.feature.profile.privacyAndTerms
 import app.books.tanga.feature.profile.profile
+import app.books.tanga.feature.profile.toPrivacyAndTerms
 import app.books.tanga.feature.profile.toProfile
 import app.books.tanga.feature.read.readSummaryScreen
 import app.books.tanga.feature.read.toReadSummaryScreen
 import app.books.tanga.feature.search.search
 import app.books.tanga.feature.search.toSearch
+import app.books.tanga.feature.settings.settings
+import app.books.tanga.feature.settings.toSettings
 import app.books.tanga.feature.summary.list.summariesByCategory
 import app.books.tanga.feature.summary.list.toSummariesByCategory
 import app.books.tanga.feature.summary.summaryDetails
@@ -63,6 +69,21 @@ fun MainNavigationGraph(
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
             onNavigateToPricingPlans = { navController.toPricingPlan() }
         )
+
+        settings(
+            onNavigateBack = { navController.popBackStack() },
+            onNavigateToAuth = onRedirectToAuth,
+            onNavigateToDeleteAccount = { navController.toDeleteAccount() }
+        )
+
+        deleteAccount(
+            onNavigateBack = { navController.popBackStack() },
+            onNavigateToAuth = onRedirectToAuth
+        )
+
+        privacyAndTerms(
+            onNavigateBack = { navController.popBackStack() }
+        )
     }
 }
 
@@ -88,6 +109,8 @@ fun NavGraphBuilder.bottomBarNavGraph(
     }
     profile(
         onProClicked = { navController.toPricingPlan() },
-        onRedirectToAuth = onRedirectToAuth
+        onRedirectToAuth = onRedirectToAuth,
+        onNavigateToSettings = { navController.toSettings() },
+        onNavigateToPrivacyAndTerms = { navController.toPrivacyAndTerms() }
     )
 }

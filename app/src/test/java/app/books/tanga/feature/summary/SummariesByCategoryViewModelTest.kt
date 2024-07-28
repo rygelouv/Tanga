@@ -2,6 +2,7 @@ package app.books.tanga.feature.summary
 
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.CategoryId
+import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.search.getCategoryIllustration
@@ -36,15 +37,16 @@ class SummariesByCategoryViewModelTest {
     @Test
     @DisplayName("SummaryByCategoryViewModel loads summaries successfully")
     fun summaryByCategoryViewModelLoadsSummariesSuccessfully() = runTest {
-        val categoryId = CategoryId("1")
-        val categoryName = "Category 1"
+        val categoryId = CategoryId("business")
+        val categoryName = "Category business"
         val expectedState = SummariesByCategoryUiState(
             progressState = ProgressState.Hide,
             summaries = listOf(Fixtures.dummySummary1).map { it.toSummaryUi() },
             categoryUi = CategoryUi(
                 id = categoryId.value,
                 name = categoryName,
-                icon = getCategoryIllustration(categoryId)
+                icon = getCategoryIllustration(categoryId),
+                topics = PredefinedCategory.fromId(categoryId.value).topics
             )
         )
         coEvery {
@@ -62,15 +64,16 @@ class SummariesByCategoryViewModelTest {
     @DisplayName("SummaryByCategoryViewModel handles error when loading summaries")
     fun summaryByCategoryViewModelHandlesErrorWhenLoadingSummaries() = runTest {
         val error = Exception("Some exception")
-        val categoryId = CategoryId("1")
-        val categoryName = "Category 1"
+        val categoryId = CategoryId("business")
+        val categoryName = "Category business"
         val expectedState = SummariesByCategoryUiState(
             progressState = ProgressState.Hide,
             error = error.toUiError(),
             categoryUi = CategoryUi(
                 id = categoryId.value,
                 name = categoryName,
-                icon = getCategoryIllustration(categoryId)
+                icon = getCategoryIllustration(categoryId),
+                topics = PredefinedCategory.fromId(categoryId.value).topics
             )
         )
         coEvery { summaryInteractor.getSummariesByCategory(any()) } returns Result.failure(error)

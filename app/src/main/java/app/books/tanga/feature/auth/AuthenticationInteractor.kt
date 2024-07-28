@@ -75,10 +75,15 @@ class AuthenticationInteractor @Inject constructor(
     suspend fun signOut(): Result<SessionState> =
         resultOf {
             googleAuthService.signOut()
-            sessionManager.closeSession()
             revenueCatAuthenticator.logOut()
+            sessionManager.closeSession()
             SessionState.SignedOut
         }
+
+    suspend fun deleteAccount(): Result<SessionState> {
+        val user = userRepository.getUser().getOrNull()
+        return user?.let { deleteUser(it) } ?: Result.failure(DomainError.UserNotAuthenticatedError())
+    }
 
     suspend fun deleteUser(user: User): Result<SessionState> =
         resultOf {

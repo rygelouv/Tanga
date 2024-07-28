@@ -4,6 +4,8 @@ import androidx.annotation.DrawableRes
 import app.books.tanga.R
 
 sealed class NavigationScreen(val route: String) {
+    data object Landing : NavigationScreen("landing_screen")
+
     data object Onboarding : NavigationScreen("onboarding_screen")
 
     data object Authentication : NavigationScreen("authentication_screen")
@@ -65,7 +67,9 @@ sealed class NavigationScreen(val route: String) {
         const val SUMMARY_ID_KEY = "summaryId"
     }
 
-    data object GraphicSummary : NavigationScreen("graphic_summary_screen/summary_id={summaryId}") {
-        const val SUMMARY_ID_KEY = "summaryId"
-    }
+    data object DeleteAccount : NavigationScreen("delete_account_screen")
+
+    data object Settings : NavigationScreen("settings_screen")
+
+    data object PrivacyAndTerms : NavigationScreen("privacy_and_terms_screen")
 }

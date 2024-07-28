@@ -1,5 +1,6 @@
 package app.books.tanga.feature
 
+import app.books.tanga.data.download.DownloadUrlGenerator
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlaybackState
@@ -32,18 +33,21 @@ class PlaySummaryAudioViewModelTest {
     private lateinit var playerController: PlayerController
     private lateinit var summaryInteractor: SummaryInteractor
     private lateinit var viewModel: PlaySummaryAudioViewModel
+    private lateinit var downloadUrlGenerator: DownloadUrlGenerator
     private val playbackStateFlow = MutableStateFlow(PlaybackState())
 
     @BeforeEach
     fun setUp() {
         playerController = mockk(relaxed = true)
         summaryInteractor = mockk(relaxed = true)
+        downloadUrlGenerator = mockk(relaxed = true)
         coEvery { playerController.playbackState } returns playbackStateFlow
+        coEvery { downloadUrlGenerator.generateAudioDownloadUrl(any()) } returns "http://example.com/audio.mp3"
     }
 
     @Test
     fun `PlayerController playback state changes updates viewModel state`() = runTest {
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor)
+        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -61,12 +65,13 @@ class PlaySummaryAudioViewModelTest {
     fun `Load summary successfully updates viewModel state and initializes player`() = runTest {
         val summaryId = SummaryId("1")
         val summary = Fixtures.dummySummary1
-        val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
+        val audioTrack = AudioTrack(id = summary.id.value, url = "http://example.com/audio.mp3")
 
         coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
         coEvery { playerController.initPlayer(audioTrack, any()) } just Runs
+        coEvery { downloadUrlGenerator.generateAudioDownloadUrl(summaryId) } returns "http://example.com/audio.mp3"
 
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor)
+        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)
@@ -89,7 +94,7 @@ class PlaySummaryAudioViewModelTest {
 
         coEvery { summaryInteractor.getSummary(summaryId) } returns Result.failure(exception)
 
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor)
+        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)

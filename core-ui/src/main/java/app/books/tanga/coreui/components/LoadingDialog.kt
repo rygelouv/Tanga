@@ -11,7 +11,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun DialogContent(
+fun LoadingDialog(
     modifier: Modifier = Modifier
 ) {
     Dialog(

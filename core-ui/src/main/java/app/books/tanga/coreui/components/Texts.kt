@@ -1,8 +1,10 @@
 package app.books.tanga.coreui.components
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,10 +15,45 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+
+private const val SHADOW_TEXT_ALPHA_VALUE = 0.75f
+
+/**
+ * This is a composable function that displays a title text with shadow.
+ * https://handstandsam.com/2021/08/09/jetpack-compose-text-shadows/
+ */
+@Composable
+fun TextWithShadow(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.White,
+    style: TextStyle = MaterialTheme.typography.headlineSmall
+) {
+    Box(modifier = modifier) {
+        TangaDescriptionText(
+            text = text,
+            color = Color.DarkGray,
+            style = style,
+            modifier = Modifier
+                .offset(
+                    x = 2.dp,
+                    y = 2.dp
+                )
+                .alpha(SHADOW_TEXT_ALPHA_VALUE)
+        )
+        TangaDescriptionText(
+            text = text,
+            color = color,
+            style = style,
+        )
+    }
+}
 
 /**
  * This is a composable function that displays a description text with centered alignment and padding.
@@ -28,6 +65,7 @@ import androidx.compose.ui.unit.dp
 fun TangaDescriptionText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onTertiaryContainer,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = 50,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
@@ -35,7 +73,7 @@ fun TangaDescriptionText(
 ) {
     Text(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.onTertiaryContainer,
+        color = color,
         text = text,
         style = style,
         overflow = overflow,

@@ -57,7 +57,8 @@ fun SummaryTopAppBar(
                     shareSummary(
                         context = context,
                         summaryTitle = it.title,
-                        summaryAuthor = it.author
+                        summaryAuthor = it.author,
+                        url = it.coverUrl
                     )
                 }
             }) {

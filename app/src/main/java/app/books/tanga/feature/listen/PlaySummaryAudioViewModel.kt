@@ -2,6 +2,7 @@ package app.books.tanga.feature.listen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.books.tanga.data.download.DownloadUrlGenerator
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.audioplayer.AudioTrack
@@ -19,9 +20,10 @@ import timber.log.Timber
 @HiltViewModel
 class PlaySummaryAudioViewModel @Inject constructor(
     private val playerController: PlayerController,
-    private val summaryInteractor: SummaryInteractor
-) : ViewModel(),
-    PlayerActions by playerController {
+    private val summaryInteractor: SummaryInteractor,
+    private val downloadUrlGenerator: DownloadUrlGenerator
+) : ViewModel(), PlayerActions by playerController {
+
     private val _state: MutableStateFlow<PlaySummaryAudioUiState> =
         MutableStateFlow(PlaySummaryAudioUiState())
     val state: StateFlow<PlaySummaryAudioUiState> = _state
@@ -42,6 +44,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
             summaryInteractor
                 .getSummary(summaryId)
                 .onSuccess { summary ->
+                    val audioUrl = downloadUrlGenerator.generateAudioDownloadUrl(summary.id)
                     _state.update {
                         it.copy(
                             summaryId = summary.id.value,
@@ -51,8 +54,10 @@ class PlaySummaryAudioViewModel @Inject constructor(
                             coverUrl = summary.coverImageUrl
                         )
                     }
-                    val audioTrack = AudioTrack(id = summary.id.value, url = summary.audioUrl)
-                    playerController.initPlayer(audioTrack, viewModelScope)
+                    audioUrl?.let {
+                        val audioTrack = AudioTrack(id = summary.id.value, url = it)
+                        playerController.initPlayer(audioTrack, viewModelScope)
+                    }
                 }.onFailure {
                     Timber.e("Error loading summary with id: $summaryId", it)
                     _state.update { state ->

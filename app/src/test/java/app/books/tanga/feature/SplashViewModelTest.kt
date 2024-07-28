@@ -38,7 +38,7 @@ class SplashViewModelTest {
         viewModel = SplashViewModel(repository, sessionManager)
 
         val state = viewModel.state
-        assertEquals(NavigationScreen.Onboarding, state.value.startDestination)
+        assertEquals(NavigationScreen.Landing, state.value.startDestination)
     }
 
     @Test

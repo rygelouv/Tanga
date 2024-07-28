@@ -59,9 +59,8 @@ fun PagerScreen(
     ) {
         Image(
             modifier =
-            Modifier
-                .weight(3f)
-                .padding(horizontal = 28.dp),
+            Modifier.weight(2f)
+                .padding(horizontal = 48.dp),
             painter = painterResource(id = onBoardingPage.image),
             contentDescription = "Pager image"
         )
@@ -76,7 +75,7 @@ fun PagerScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = onBoardingPage.title,
-                style = MaterialTheme.typography.displayMedium,
+                style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

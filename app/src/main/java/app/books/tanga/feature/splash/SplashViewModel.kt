@@ -36,7 +36,7 @@ class SplashViewModel @Inject constructor(
                     }
                 }
             } else {
-                _state.value = SplashState(false, NavigationScreen.Onboarding)
+                _state.value = SplashState(false, NavigationScreen.Landing)
             }
         }
     }

@@ -62,6 +62,7 @@ fun TangaButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     height: Dp = 64.dp,
+    showInLightColor: Boolean = false,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     shape: RoundedCornerShape = RoundedCornerShape(16.dp)
 ) {
@@ -73,7 +74,11 @@ fun TangaButton(
         colors =
         ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = if (showInLightColor) {
+                MaterialTheme.colorScheme.secondary
+            } else {
+                MaterialTheme.colorScheme.primary
+            }
         ),
         shape = shape,
         elevation = elevation
@@ -95,6 +100,8 @@ fun TangaLinedButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    textColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = Color.White,
     height: Dp = 64.dp,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
     shape: RoundedCornerShape = RoundedCornerShape(16.dp)
@@ -106,8 +113,8 @@ fun TangaLinedButton(
         onClick = onClick,
         colors =
         ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colorScheme.primary,
-            containerColor = Color.White
+            contentColor = textColor,
+            containerColor = containerColor
         ),
         shape = shape,
         elevation = elevation
