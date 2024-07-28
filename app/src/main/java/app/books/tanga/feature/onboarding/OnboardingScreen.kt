@@ -43,7 +43,7 @@ const val MAX_PAGER_INDEX = 3
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingScreen(
-    onOnboardingCompleted: () -> Unit,
+    onOnboardingComplete: () -> Unit,
     onNavigateBack: () -> Unit,
     onNavigateToAuth: () -> Unit,
     modifier: Modifier = Modifier,
@@ -93,7 +93,7 @@ fun OnboardingScreen(
                 }
             },
             onFinishClick = {
-                onOnboardingCompleted()
+                onOnboardingComplete()
                 onNavigateBack()
                 onNavigateToAuth()
             }

@@ -10,7 +10,7 @@ fun OnboardingContainer(
     onboardingViewModel: OnboardingViewModel = hiltViewModel()
 ) {
     OnboardingScreen(
-        onOnboardingCompleted = onboardingViewModel::onOnboardingCompleted,
+        onOnboardingComplete = onboardingViewModel::onOnboardingCompleted,
         onNavigateBack = onNavigateBack,
         onNavigateToAuth = onNavigateToAuth
     )

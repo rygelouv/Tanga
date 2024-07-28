@@ -14,16 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.components.TextWithShadow
+import app.books.tanga.coreui.theme.Crayola
+import app.books.tanga.coreui.theme.OxfordBlueTransp
 import app.books.tanga.coreui.theme.TangaTheme
 
 /**
@@ -35,7 +37,7 @@ fun LandingScreen(
     modifier: Modifier = Modifier
 ) {
     SystemBarsVisibility(
-        statusBarColor = Color(0xFF9DB3B8),
+        statusBarColor = Crayola,
         navigationBarColor = MaterialTheme.colorScheme.onPrimaryContainer,
         statusBarVisible = true
     )
@@ -55,8 +57,8 @@ fun LandingScreen(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color(0x00001849),
-                            Color(0xFF001849)
+                            OxfordBlueTransp,
+                            MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     )
                 )
@@ -86,7 +88,8 @@ fun LandingScreen(
 
 @Preview
 @Composable
-fun LandingScreenPreview() {
+@ExcludeFromJacocoGeneratedReport
+private fun LandingScreenPreview() {
     TangaTheme {
         LandingScreen(onNavigateToOnboarding = {})
     }

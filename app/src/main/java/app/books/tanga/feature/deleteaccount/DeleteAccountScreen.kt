@@ -67,40 +67,58 @@ fun DeleteAccountScreen(
             )
         },
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
-                .padding(it),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val actionData = ActionData(
-                title = TextResource.fromText(stringResource(id = R.string.delete_account_title)),
+        Content(
+            onNavigateBack,
+            onDeleteAccount,
+            state,
+            onDismissConfirmationDialog,
+            Modifier.padding(it),
+            onConfirmDeleteAccount
+        )
+    }
+}
 
-                description = TextResource.fromText(stringResource(id = R.string.delete_account_description)),
-                icon = app.books.tanga.coreui.R.drawable.graphic_man_thinking,
-                mainButton = Button(
-                    text = TextResource.fromStringId(R.string.delete_account_cancel_button_text),
-                    onClick = onNavigateBack
-                ),
-                secondaryButton = Button(
-                    text = TextResource.fromStringId(R.string.delete_account),
-                    onClick = onDeleteAccount
-                )
-            )
-            ActionContent(
-                data = actionData,
-                titleTextColor = MaterialTheme.colorScheme.error,
-                bigSpacingBeforeButtons = true,
-                shouldCenterDescriptionText = false
-            )
+@Composable
+private fun Content(
+    onNavigateBack: () -> Unit,
+    onDeleteAccount: () -> Unit,
+    state: DeleteAccountUiState,
+    onDismissConfirmationDialog: () -> Unit,
+    modifier: Modifier = Modifier,
+    onConfirmDeleteAccount: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimary),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        val actionData = ActionData(
+            title = TextResource.fromText(stringResource(id = R.string.delete_account_title)),
 
-            if (state.showConfirmationDialog) {
-                DeleteAccountDialog(
-                    onDismiss = { onDismissConfirmationDialog() },
-                    onConfirm = { onConfirmDeleteAccount() }
-                )
-            }
+            description = TextResource.fromText(stringResource(id = R.string.delete_account_description)),
+            icon = app.books.tanga.coreui.R.drawable.graphic_man_thinking,
+            mainButton = Button(
+                text = TextResource.fromStringId(R.string.delete_account_cancel_button_text),
+                onClick = onNavigateBack
+            ),
+            secondaryButton = Button(
+                text = TextResource.fromStringId(R.string.delete_account),
+                onClick = onDeleteAccount
+            )
+        )
+        ActionContent(
+            data = actionData,
+            titleTextColor = MaterialTheme.colorScheme.error,
+            bigSpacingBeforeButtons = true,
+            shouldCenterDescriptionText = false
+        )
+
+        if (state.showConfirmationDialog) {
+            DeleteAccountDialog(
+                onDismiss = { onDismissConfirmationDialog() },
+                onConfirm = { onConfirmDeleteAccount() }
+            )
         }
     }
 }

@@ -13,6 +13,9 @@ val YaleBlue = Color(0xFF0F4C90)
 val Cerulean = Color(0xFF1F91DD)
 val Navy = Color(0xFF001849)
 val BabyBlueEyes = Color(0xFFA8C8FF)
+val OxfordBlueTransp = Color(0x00001849)
+
+// White Tones
 val AzureishWhite = Color(0xFFD6E3FF)
 val Water = Color(0xFFCEE5FF)
 
@@ -21,6 +24,7 @@ val Cultured = Color(0xFFF6F3F6)
 val Gray = Color(0xFF43474E)
 val AuroMetalSaurus = Color(0xFF74777F)
 val SilverFoil = Color(0xFFAFAFAF)
+val Crayola = Color(0xFF9DB3B8)
 
 // Orange Tones
 val Orange = Color(0xFFFA974A)
