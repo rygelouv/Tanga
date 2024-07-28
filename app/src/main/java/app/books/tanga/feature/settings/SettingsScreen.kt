@@ -9,34 +9,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.books.tanga.BuildConfig
 import app.books.tanga.R
+import app.books.tanga.coreui.components.SimpleTopBar
 import app.books.tanga.coreui.components.TangaLinedButton
-import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.feature.profile.LogoutDialog
 import app.books.tanga.feature.profile.ProfileAction
 import app.books.tanga.feature.profile.ProfileContentAction
 
-/**
- * Note introduce a ViewModel to handle the state of the screen and logout logic
- */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     state: SettingsUiState,
@@ -48,23 +37,9 @@ fun SettingsScreen(
     onNavigateBack: () -> Unit
 ) {
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                modifier = modifier
-                    .shadow(elevation = 1.dp),
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = { onNavigateBack() }) {
-                        Icon(
-                            modifier = Modifier.size(26.dp),
-                            painter = painterResource(id = TangaIcons.LeftArrow),
-                            tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                            contentDescription = "back navigation"
-                        )
-                    }
-                }
-            )
+            SimpleTopBar(onNavigateBack)
         },
     ) {
         Column(

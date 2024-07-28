@@ -33,16 +33,5 @@ fun NavGraphBuilder.landing(
         LandingScreen(
             onNavigateToOnboarding = onNavigateToOnboarding
         )
-
-//        SettingsContainer(
-//            onNavigateBack = {},
-//            onNavigateToAuth = {},
-//            onNavigateToDeleteAccount = {}
-//        )
-
-//        DeleteAccountContainer(
-//            onNavigateBack = {},
-//            onNavigateToAuth = {}
-//        )
     }
 }

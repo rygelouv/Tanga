@@ -29,7 +29,8 @@ import app.books.tanga.coreui.theme.OxfordBlueTransp
 import app.books.tanga.coreui.theme.TangaTheme
 
 /**
- * Unused for now till we figure out proper edge to edge implementation and full display X-Y of background image
+ * Screen the user lands on when they open the app for the first time.
+ * This screen triggers the onboarding flow.
  */
 @Composable
 fun LandingScreen(

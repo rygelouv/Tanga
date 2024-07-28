@@ -5,8 +5,10 @@ import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
+private const val FAKE_COVER_URL = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg"
+
 /**
- * User for Compose Previews
+ * Used for Compose Previews
  */
 object FakeData {
     fun allCategories() =
@@ -46,7 +48,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
@@ -57,7 +59,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Atomic Habits",
                     author = "James Clear",
                     duration = "15",
@@ -68,7 +70,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Deep Work",
                     author = "Cal Newport",
                     duration = "9",
@@ -79,7 +81,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Ego is the Enemy",
                     author = "Ryan Holiday",
                     duration = "13",
@@ -90,7 +92,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
                     duration = "11",
@@ -100,7 +102,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Good To Great",
                     author = "Jim Collins",
                     duration = "8",
@@ -110,7 +112,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Never Split The Difference",
                     author = "Chris Voss",
                     duration = "10",
@@ -120,7 +122,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "The Obstacle Is the Way",
                     author = "Ryan Holiday",
                     duration = "10",
@@ -132,7 +134,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Psychology Of Money",
                     author = "Morgan Housel",
                     duration = "10",
@@ -143,7 +145,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "Rework",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "11",
@@ -155,7 +157,7 @@ object FakeData {
             add(
                 SummaryUi(
                     id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg",
+                    coverUrl = FAKE_COVER_URL,
                     title = "The Subtle Art Of Not Giving A Fuck",
                     author = "Mark Manson",
                     duration = "9",
