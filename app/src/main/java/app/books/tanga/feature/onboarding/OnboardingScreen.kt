@@ -40,6 +40,8 @@ import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 3
 
+private const val PAGER_WEIGHT = 5f
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingScreen(
@@ -66,7 +68,7 @@ fun OnboardingScreen(
             .verticalScroll(rememberScrollState())
     ) {
         HorizontalPager(
-            modifier = Modifier.weight(5f),
+            modifier = Modifier.weight(PAGER_WEIGHT),
             count = 4,
             state = pagerState,
             verticalAlignment = Alignment.Top
