@@ -86,7 +86,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.compose.version.get()
     }
 
     packagingOptions {
@@ -143,6 +143,7 @@ dependencies {
     // Google Play Services
     implementation(libs.android.gms.play.services.auth)
 
+    // Monetization
     implementation(libs.revenuecat.purchases)
 
     // Media

@@ -3,11 +3,11 @@ package app.books.tanga.feature.subscriptions
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.SubscriberInfo
-import app.books.tanga.feature.pricing.PricingPlanUiEvent
-import app.books.tanga.feature.pricing.PricingPlanUiState
-import app.books.tanga.feature.pricing.PricingPlanViewModel
-import app.books.tanga.feature.pricing.PurchaseSubscriptionInput
-import app.books.tanga.feature.pricing.toUi
+import app.books.tanga.feature.subscription.PricingPlanUiEvent
+import app.books.tanga.feature.subscription.PricingPlanUiState
+import app.books.tanga.feature.subscription.PurchaseSubscriptionInput
+import app.books.tanga.feature.subscription.SubscriptionViewModel
+import app.books.tanga.feature.subscription.toUi
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.revenuecat.RevenueCatPurchases
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
@@ -27,16 +27,16 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExperimentalCoroutinesApi
 @ExtendWith(MainCoroutineDispatcherExtension::class)
 @Disabled("Disabled for now, we will fix later")
-class PricingPlanViewModelTest {
+class SubscriptionViewModelTest {
 
-    private lateinit var viewModel: PricingPlanViewModel
+    private lateinit var viewModel: SubscriptionViewModel
 
     private val revenueCatController: RevenueCatPurchases = mockk()
     private val userRepository: UserRepository = mockk()
 
     @BeforeEach
     fun setUp() {
-        viewModel = PricingPlanViewModel(revenueCatController, userRepository)
+        viewModel = SubscriptionViewModel(revenueCatController, userRepository)
     }
 
     @Test

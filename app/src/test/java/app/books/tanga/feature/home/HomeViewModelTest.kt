@@ -2,6 +2,7 @@ package app.books.tanga.feature.home
 
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.toUiError
+import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import app.books.tanga.fixtures.Fixtures
@@ -36,7 +37,11 @@ class HomeViewModelTest {
     fun homeViewModelLoadsHomeDataSuccessfully() = runTest {
         val expectedState = HomeUiState(
             progressState = ProgressState.Hide,
-            weeklySummary = Fixtures.dummySummary1.toSummaryUi(),
+            weeklySummary = WeeklySummaryUi(
+                summaryUi = Fixtures.dummySummary1.toSummaryUi(),
+                categoryUi = PredefinedCategory.BUSINESS_CAREER
+
+            ),
             sections = listOf(Fixtures.dummySection1).map { it.toHomeSectionUi() },
             userFirstName = Fixtures.dummyUser.firsName,
             userPhotoUrl = Fixtures.dummyUser.photoUrl
@@ -82,7 +87,10 @@ class HomeViewModelTest {
     fun homeViewModelRetriesLoadingHomeDataSuccessfully() = runTest {
         val expectedState = HomeUiState(
             progressState = ProgressState.Hide,
-            weeklySummary = Fixtures.dummySummary1.toSummaryUi(),
+            weeklySummary = WeeklySummaryUi(
+                summaryUi = Fixtures.dummySummary1.toSummaryUi(),
+                categoryUi = PredefinedCategory.BUSINESS_CAREER
+            ),
             sections = listOf(Fixtures.dummySection1).map { it.toHomeSectionUi() },
             userFirstName = Fixtures.dummyUser.firsName,
             userPhotoUrl = Fixtures.dummyUser.photoUrl

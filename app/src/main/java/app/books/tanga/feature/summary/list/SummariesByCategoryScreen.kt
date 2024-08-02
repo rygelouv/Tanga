@@ -31,10 +31,10 @@ import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.library.LibraryShimmerLoader
-import app.books.tanga.feature.search.CategoryUi
 import app.books.tanga.feature.summary.components.SummaryGrid
 import kotlinx.collections.immutable.toImmutableList
 
@@ -166,7 +166,7 @@ private fun SummariesByCategoryScreenPreview() {
                     name = "Business",
                     icon = app.books.tanga.coreui.R.drawable.graphic_business_simple
                 ),
-                summaries = FakeData.allSummaries(),
+                summaries = PreviewData.allSummaries(),
                 error = null
             ),
             onNavigateToPreviousScreen = {},

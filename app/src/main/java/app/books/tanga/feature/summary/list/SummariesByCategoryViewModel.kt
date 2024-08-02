@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.CategoryId
-import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.toUiError
-import app.books.tanga.feature.search.CategoryUi
-import app.books.tanga.feature.search.getCategoryIllustration
+import app.books.tanga.feature.categories.CategoryUi
+import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,7 +57,7 @@ class SummariesByCategoryViewModel @Inject constructor(
         val category = CategoryUi(
             id = categoryId.value,
             name = categoryName,
-            icon = getCategoryIllustration(categoryId),
+            icon = PredefinedCategory.fromId(categoryId.value).illustration,
             topics = PredefinedCategory.fromId(categoryId.value).topics
         )
         _state.value = _state.value.copy(

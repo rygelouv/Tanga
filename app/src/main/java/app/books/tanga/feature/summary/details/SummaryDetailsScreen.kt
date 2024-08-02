@@ -44,7 +44,7 @@ import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
@@ -222,7 +222,6 @@ private fun SummaryActionButtonsSection(
             modifier = Modifier.testTag("read_button"),
             text = stringResource(id = R.string.summary_details_read),
             icon = TangaIcons.IndicatorRead,
-            enabled = summary.textUrl?.isNotEmpty() == true
         ) {
             onReadClick(summary.id)
         }
@@ -230,13 +229,12 @@ private fun SummaryActionButtonsSection(
             modifier = Modifier.testTag("listen_button"),
             text = stringResource(id = R.string.summary_details_listen),
             icon = TangaIcons.IndicatorListen,
-            enabled = summary.audioUrl?.isNotEmpty() == true
         ) { onPlayAudioClick(summary.id) }
         SummaryActionButton(
             modifier = Modifier.testTag("watch_button"),
             text = stringResource(id = R.string.summary_details_watch),
             icon = TangaIcons.IndicatorWatch,
-            enabled = summary.videoUrl?.isNotEmpty() == true
+            enabled = false
         ) {}
     }
 }
@@ -362,8 +360,8 @@ private fun SummaryDetailsScreenPreview() {
     TangaTheme {
         SummaryDetailsScreen(
             state = SummaryDetailsUiState(
-                summary = FakeData.allSummaries().first().copy(purchaseBookUrl = "https://www.google.com"),
-                recommendations = FakeData.allSummaries().toImmutableList(),
+                summary = PreviewData.allSummaries().first().copy(purchaseBookUrl = "https://www.google.com"),
+                recommendations = PreviewData.allSummaries().toImmutableList(),
                 progressState = ProgressState.Hide,
                 favoriteProgressState = ProgressState.Hide,
                 isFavorite = false

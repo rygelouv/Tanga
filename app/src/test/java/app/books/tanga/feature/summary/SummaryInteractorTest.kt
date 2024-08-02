@@ -170,13 +170,8 @@ class SummaryInteractorTest {
             author = "Author3",
             synopsis = "Synopsis1",
             coverImageUrl = "http://example.com/image.png",
-            textUrl = "TextUrl1",
             categories = listOf(CategoryId("1"), CategoryId("2")),
             playingLength = "12:20",
-            audioUrl = "AudioUrl1",
-            graphicUrl = "GraphicUrl1",
-            videoUrl = "VideoUrl1",
-            authorPictureUrl = "AuthorPictureUrl1",
             purchaseBookUrl = "PurchaseBookUrl1",
         )
 
@@ -186,13 +181,8 @@ class SummaryInteractorTest {
             author = "Author4",
             synopsis = "Synopsis2",
             coverImageUrl = "http://example.com/image.png",
-            textUrl = "TextUrl2",
             categories = listOf(CategoryId("3"), CategoryId("4")),
             playingLength = "10:36",
-            audioUrl = "AudioUrl2",
-            graphicUrl = "GraphicUrl2",
-            videoUrl = "VideoUrl2",
-            authorPictureUrl = "AuthorPictureUrl2",
             purchaseBookUrl = "PurchaseBookUrl2",
         )
 
@@ -202,13 +192,8 @@ class SummaryInteractorTest {
             author = "Author5",
             synopsis = "Synopsis5",
             coverImageUrl = "http://example.com/image.png",
-            textUrl = "TextUrl1",
             categories = listOf(CategoryId("1"), CategoryId("2")),
             playingLength = "12:20",
-            audioUrl = "AudioUrl1",
-            graphicUrl = "GraphicUrl1",
-            videoUrl = "VideoUrl1",
-            authorPictureUrl = "AuthorPictureUrl1",
             purchaseBookUrl = "PurchaseBookUrl1",
         )
 
@@ -218,13 +203,8 @@ class SummaryInteractorTest {
             author = "Author6",
             synopsis = "Synopsis6",
             coverImageUrl = "http://example.com/image.png",
-            textUrl = "TextUrl2",
             categories = listOf(CategoryId("3"), CategoryId("4")),
             playingLength = "10:36",
-            audioUrl = "AudioUrl2",
-            graphicUrl = "GraphicUrl2",
-            videoUrl = "VideoUrl2",
-            authorPictureUrl = "AuthorPictureUrl2",
             purchaseBookUrl = "PurchaseBookUrl2",
         )
     }

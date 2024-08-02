@@ -11,8 +11,6 @@ import app.books.tanga.feature.home.HomeScreen
 import app.books.tanga.feature.library.LibraryScreen
 import app.books.tanga.feature.listen.playSummaryAudio
 import app.books.tanga.feature.listen.toPlaySummaryAudio
-import app.books.tanga.feature.pricing.pricingPlan
-import app.books.tanga.feature.pricing.toPricingPlan
 import app.books.tanga.feature.profile.privacyAndTerms
 import app.books.tanga.feature.profile.profile
 import app.books.tanga.feature.profile.toPrivacyAndTerms
@@ -23,6 +21,8 @@ import app.books.tanga.feature.search.search
 import app.books.tanga.feature.search.toSearch
 import app.books.tanga.feature.settings.settings
 import app.books.tanga.feature.settings.toSettings
+import app.books.tanga.feature.subscription.pricingPlan
+import app.books.tanga.feature.subscription.toPricingPlan
 import app.books.tanga.feature.summary.list.summariesByCategory
 import app.books.tanga.feature.summary.list.toSummariesByCategory
 import app.books.tanga.feature.summary.summaryDetails

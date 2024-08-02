@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,7 +48,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 
 @Composable
-fun PricingPlanScreen(
+fun SubscriptionScreen(
     onCloseClick: () -> Unit,
     onPlanSelect: (PurchaseSubscriptionInput) -> Unit,
     state: PricingPlanUiState,
@@ -224,7 +224,7 @@ fun PricingPlans(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            PricingPlanItem(
+            SubscriptionItemView(
                 modifier = Modifier.offset(y = 28.dp),
                 title = yearlyPlan.title.asString(LocalContext.current.resources),
                 price = yearlyPlan.price.asString(LocalContext.current.resources),
@@ -236,7 +236,7 @@ fun PricingPlans(
             BestValueLabel()
         }
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraMediumLarge))
-        PricingPlanItem(
+        SubscriptionItemView(
             title = monthlyPlan.title.asString(LocalContext.current.resources),
             price = monthlyPlan.price.asString(LocalContext.current.resources),
             cadence = monthlyPlan.cadence.asString(LocalContext.current.resources),

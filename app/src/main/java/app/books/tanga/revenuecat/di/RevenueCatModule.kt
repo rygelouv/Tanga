@@ -16,13 +16,13 @@ import dagger.hilt.components.SingletonComponent
 interface RevenueCatModule {
 
     @Binds
-    fun RevenueCatController.provideRevenueCatInitializer(): RevenueCatInitializer
+    fun provideRevenueCatInitializer(impl: RevenueCatController): RevenueCatInitializer
 
     @Binds
-    fun RevenueCatController.provideRevenueCatAuthenticator(): RevenueCatAuthenticator
+    fun provideRevenueCatAuthenticator(impl: RevenueCatController): RevenueCatAuthenticator
 
     @Binds
-    fun RevenueCatController.provideRevenueCatPurchase(): RevenueCatPurchases
+    fun provideRevenueCatPurchase(impl: RevenueCatController): RevenueCatPurchases
 
     companion object {
         @Provides

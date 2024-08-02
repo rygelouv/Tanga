@@ -17,14 +17,14 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface RepositoriesModule {
     @Binds
-    fun UserRepositoryImpl.provideUserRepository(): UserRepository
+    fun provideUserRepository(impl: UserRepositoryImpl): UserRepository
 
     @Binds
-    fun SummaryRepositoryImpl.provideSummaryRepository(): SummaryRepository
+    fun provideSummaryRepository(impl: SummaryRepositoryImpl): SummaryRepository
 
     @Binds
-    fun CategoryRepositoryImpl.provideCategoryRepository(): CategoryRepository
+    fun provideCategoryRepository(impl: CategoryRepositoryImpl): CategoryRepository
 
     @Binds
-    fun FavoriteRepositoryImpl.provideFavoriteRepository(): FavoriteRepository
+    fun provideFavoriteRepository(impl: FavoriteRepositoryImpl): FavoriteRepository
 }

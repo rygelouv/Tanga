@@ -36,19 +36,19 @@ import app.books.tanga.coreui.R.drawable.ic_right_arrow
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.components.TangaAsyncImage
-import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.extraExtraLarge
-import app.books.tanga.data.FakeData
-import app.books.tanga.feature.summary.SummaryUi
+import app.books.tanga.data.PreviewData
+import app.books.tanga.feature.categories.PredefinedCategory
 
 @Composable
 fun HomeTopCard(
-    summaryUi: SummaryUi,
+    weeklySummaryUi: WeeklySummaryUi,
     modifier: Modifier = Modifier,
     onSummaryClick: (String) -> Unit
 ) {
+    val summaryUi = weeklySummaryUi.summaryUi
     val gradientColors =
         listOf(
             LocalGradientColors.current.start,
@@ -76,15 +76,18 @@ fun HomeTopCard(
                 .fillMaxWidth()
                 .background(
                     brush = Brush.linearGradient(colors = gradientColors)
-                ).padding(20.dp),
+                )
+                .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ContentColumn()
+            ContentColumn(weeklySummaryUi.categoryUi)
 
             TangaAsyncImage(
                 summaryId = summaryUi.id.value,
                 url = summaryUi.coverUrl,
-                modifier = Modifier.offset(y = 8.dp).width(90.dp),
+                modifier = Modifier
+                    .offset(y = 8.dp)
+                    .width(90.dp),
                 onSummaryClick = onSummaryClick
             )
         }
@@ -92,11 +95,11 @@ fun HomeTopCard(
 }
 
 @Composable
-private fun ContentColumn(modifier: Modifier = Modifier) {
+private fun ContentColumn(categoryUi: PredefinedCategory, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxHeight()
     ) {
-        Tag(text = "Business", icon = TangaIcons.IndicatorGraphic)
+        Tag(text = stringResource(categoryUi.categoryName), icon = categoryUi.icon)
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             modifier = Modifier.weight(1f),
@@ -138,5 +141,11 @@ private fun ActionRow(modifier: Modifier = Modifier) {
 @Composable
 @ExcludeFromJacocoGeneratedReport
 private fun HomeTopCardPreview() {
-    HomeTopCard(summaryUi = FakeData.allSummaries().first(), onSummaryClick = {})
+    HomeTopCard(
+        weeklySummaryUi = WeeklySummaryUi(
+            summaryUi = PreviewData.allSummaries().first(),
+            categoryUi = PredefinedCategory.BUSINESS_CAREER,
+        ),
+        onSummaryClick = {}
+    )
 }

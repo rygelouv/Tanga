@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.toUiError
+import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,7 +44,14 @@ class HomeViewModel @Inject constructor(
             homeInteractor
                 .getWeeklySummary()
                 .onSuccess { summary ->
-                    _state.update { it.copy(weeklySummary = summary.toSummaryUi()) }
+                    // Note: this logic can be moved to the interactor
+                    val categoryId = summary.categories.first()
+                    val category = PredefinedCategory.fromId(categoryId.value)
+                    val weeklySummaryUi = WeeklySummaryUi(
+                        summaryUi = summary.toSummaryUi(),
+                        categoryUi = category
+                    )
+                    _state.update { it.copy(weeklySummary = weeklySummaryUi) }
                 }.onFailure {
                     Timber.e(it, "HomeViewModel", "Error loading weekly summary")
                     _state.update { state ->

@@ -33,9 +33,9 @@
     <string name="explore">Explore</string>
     <string name="explore_search">Book title, author name</string>
     <string name="explore_categories">Categories</string>
-    <string name="business">Business</string>
-    <string name="productivity">Productivity</string>
-    <string name="self_development">Self Development</string>
+    <string name="business_career">Business &amp; Career</string>
+    <string name="productivity_self_growth">Productivity &amp; Self-Growth</string>
+    <string name="self_help">Self-Help</string>
     <string name="financial_education">Financial Education</string>
     <string name="summary_details_introduction">Introduction</string>
     <string name="summary_details_recommendations">Recommended summaries</string>

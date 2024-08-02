@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import android.content.Context
 import app.books.tanga.R

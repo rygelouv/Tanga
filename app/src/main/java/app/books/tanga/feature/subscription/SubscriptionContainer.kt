@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,13 +6,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun PricingPlanContainer(
+fun SubscriptionContainer(
     onCloseClick: () -> Unit,
-    viewModel: PricingPlanViewModel = hiltViewModel()
+    viewModel: SubscriptionViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val events by viewModel.events.collectAsStateWithLifecycle(initialValue = PricingPlanUiEvent.Empty)
-    PricingPlanScreen(
+    SubscriptionScreen(
         onCloseClick = onCloseClick,
         onPlanSelect = viewModel::onPlanSelected,
         state = state

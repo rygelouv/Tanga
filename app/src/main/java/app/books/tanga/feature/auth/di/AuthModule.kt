@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface AuthModule {
 
     @Binds
-    fun AnonymousAuthServiceImpl.provideAnonymousAuthService(): AnonymousAuthService
+    fun provideAnonymousAuthService(impl: AnonymousAuthServiceImpl): AnonymousAuthService
 }

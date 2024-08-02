@@ -2,7 +2,7 @@ package app.books.tanga.feature.summary.list
 
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.UiError
-import app.books.tanga.feature.search.CategoryUi
+import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 
 data class SummariesByCategoryUiState(

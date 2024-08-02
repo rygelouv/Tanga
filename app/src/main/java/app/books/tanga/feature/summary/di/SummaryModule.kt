@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class SummaryModule {
 
     @Binds
-    abstract fun SummaryBehaviorDelegateImpl.provideSummaryBehaviorEngine(): SummaryBehaviorDelegate
+    abstract fun provideSummaryBehaviorEngine(impl: SummaryBehaviorDelegateImpl): SummaryBehaviorDelegate
 }
