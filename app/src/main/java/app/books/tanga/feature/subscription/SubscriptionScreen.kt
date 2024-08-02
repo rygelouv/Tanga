@@ -75,20 +75,22 @@ fun SubscriptionScreen(
                 rememberScrollState()
             )
     ) {
-        PricingPlanTopBar(onCloseClick = onCloseClick)
-        PricingPlanContent(state, onPlanSelect = onPlanSelect)
+        SubscriptionTopBar(onCloseClick = onCloseClick)
+        SubscriptionContent(state, onPlanSelect = onPlanSelect)
     }
 }
 
+private const val TOP_BAR_SPACER_WEIGHT = 5f
+
 @Composable
-fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
+fun SubscriptionTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(LocalSpacing.current.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Spacer(modifier = Modifier.weight(5f))
+        Spacer(modifier = Modifier.weight(TOP_BAR_SPACER_WEIGHT))
         Icon(
             painter = painterResource(id = TangaIcons.Close),
             contentDescription = "close icon",
@@ -102,7 +104,7 @@ fun PricingPlanTopBar(modifier: Modifier = Modifier, onCloseClick: () -> Unit) {
 }
 
 @Composable
-fun PricingPlanContent(
+fun SubscriptionContent(
     state: PricingPlanUiState,
     onPlanSelect: (PurchaseSubscriptionInput) -> Unit,
     modifier: Modifier = Modifier

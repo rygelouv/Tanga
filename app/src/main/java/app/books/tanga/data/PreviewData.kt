@@ -44,6 +44,7 @@ object PreviewData {
             )
         }
 
+    @Suppress("LongMethod")
     fun allSummaries() =
         buildList<SummaryUi> {
             add(
