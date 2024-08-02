@@ -49,6 +49,9 @@ const val MAX_PAGER_INDEX = 3
 
 private const val PAGER_WEIGHT = 5f
 
+private const val SYSTEM_BAR_VISIBILITY_DELAY = 1000L
+
+@Suppress("LongMethod")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingScreen(
@@ -68,7 +71,7 @@ fun OnboardingScreen(
     }
 
     LaunchedEffect(changeSystemVisibility) {
-        delay(1000)
+        delay(SYSTEM_BAR_VISIBILITY_DELAY)
         changeSystemVisibility = true
     }
 
