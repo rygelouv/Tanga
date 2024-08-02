@@ -77,7 +77,7 @@ fun PagerScreen(
                 text = onBoardingPage.title,
                 style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSecondary
             )
             TangaDescriptionText(
                 modifier =
@@ -86,7 +86,8 @@ fun PagerScreen(
                     .padding(horizontal = 41.dp)
                     .padding(top = 20.dp)
                     .weight(1f),
-                text = onBoardingPage.description
+                text = onBoardingPage.description,
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }
