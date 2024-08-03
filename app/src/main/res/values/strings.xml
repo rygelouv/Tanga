@@ -114,5 +114,11 @@ Enjoy! 😊
     <string name="delete_account_cancel_button_text">Keep My Account</string>
     <string name="delete_account_dialog_confirm_title">Confirmation</string>
     <string name="delete_account_dialog_confirm_message">Confirm the deletion of your account</string>
+    <string name="onboarding_page_one_title">Life-changing books</string>
+    <string name="onboarding_page_two_title">Choose your format</string>
+    <string name="onboarding_page_three_title">Improve your life</string>
+    <string name="onboarding_page_one_description">Dive into the transformative wisdom of best-selling books that have changed lives around the world</string>
+    <string name="onboarding_page_two_description">Whether you prefer reading or listening, enjoy summaries in the format that suits your lifestyle.</string>
+    <string name="onboarding_page_three_description">Unlock your full potential with concise and impactful summaries designed to help you grow, learn, and succeed.</string>
 
 </resources>

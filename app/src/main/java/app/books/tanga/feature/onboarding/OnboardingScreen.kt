@@ -45,7 +45,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val MAX_PAGER_INDEX = 3
+const val MAX_PAGER_INDEX = 2
 
 private const val PAGER_WEIGHT = 5f
 
@@ -79,8 +79,7 @@ fun OnboardingScreen(
         listOf(
             OnboardingPage.Read,
             OnboardingPage.Listen,
-            OnboardingPage.Watch,
-            OnboardingPage.Visualize
+            OnboardingPage.Watch
         )
 
     val pagerState = rememberPagerState()
@@ -95,7 +94,7 @@ fun OnboardingScreen(
     ) {
         HorizontalPager(
             modifier = Modifier.weight(PAGER_WEIGHT),
-            count = 4,
+            count = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) {

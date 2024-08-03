@@ -470,7 +470,7 @@
       android:fillColor="#fafafa"/>
   <path
       android:pathData="M30.13,331.08h314.76v26.95h-314.76z"
-      android:fillColor="#0f4c90"/>
+      android:fillColor="#1F91DD"/>
   <path
       android:pathData="M321.27,331.08h5.36v26.95h-5.36z"
       android:fillColor="#fff"/>
