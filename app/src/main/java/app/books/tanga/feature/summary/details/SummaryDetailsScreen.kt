@@ -232,8 +232,8 @@ private fun SummaryActionButtonsSection(
         ) { onPlayAudioClick(summary.id) }
         SummaryActionButton(
             modifier = Modifier.testTag("watch_button"),
-            text = stringResource(id = R.string.summary_details_watch),
-            icon = TangaIcons.IndicatorWatch,
+            text = stringResource(id = R.string.summary_details_visualize),
+            icon = TangaIcons.IndicatorGraphic,
             enabled = false
         ) {}
     }
@@ -261,7 +261,7 @@ private fun SummaryBasicInfo(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.outline,
             text = author,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
         )
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -25,7 +26,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 
 /**
  * This is a composable that displays an image of a book summary cover.
@@ -118,6 +118,7 @@ fun ProfileImage(
         GlideImage(
             modifier = Modifier.fillMaxSize(),
             model = photoUrl ?: R.drawable.profile_placeholder,
+            contentScale = ContentScale.Crop,
             contentDescription = "profile picture"
         )
     }

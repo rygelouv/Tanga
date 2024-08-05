@@ -162,7 +162,7 @@ fun PlaySummaryAudioContent(
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.outline,
                         text = it,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

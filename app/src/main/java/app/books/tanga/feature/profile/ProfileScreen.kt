@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -121,7 +120,7 @@ fun ProfileScreen(
                     onProClick = onProClick,
                     onLoginClick = onLoginClick
                 )
-                Spacer(modifier = Modifier.height(70.dp))
+                Spacer(modifier = Modifier.weight(1f))
                 ProfileScreenBody(
                     userInfo = state.userInfo,
                     modifier = Modifier,
@@ -144,7 +143,7 @@ fun ProfileScreenBody(
     onPrivacyAndTermsClick: () -> Unit
 ) {
     Surface(
-        color = Color.White,
+        color = MaterialTheme.colorScheme.onPrimary,
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp)
     ) {
@@ -168,7 +167,6 @@ fun ProfileScreenBody(
                     onSettingsClick()
                 }
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
