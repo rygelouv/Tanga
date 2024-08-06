@@ -41,7 +41,7 @@ import app.books.tanga.coreui.components.ProfileImage
 import app.books.tanga.coreui.components.SearchButton
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
@@ -167,7 +167,7 @@ fun HomeContent(
         ) {
             state.weeklySummary?.let {
                 item {
-                    HomeTopCard(summaryUi = it, onSummaryClick = onSummaryClick)
+                    HomeTopCard(weeklySummaryUi = it, onSummaryClick = onSummaryClick)
                 }
             }
             state.sections?.let {
@@ -259,7 +259,7 @@ private fun HomeSectionPreview() {
         sectionId = CategoryId("1"),
         sectionTitle = "Personal Growth",
         isFirst = true,
-        summaries = FakeData.allSummaries().toImmutableList(),
+        summaries = PreviewData.allSummaries().toImmutableList(),
         onSeeAllClick = { _, _ -> },
         onSummaryClick = {}
     )

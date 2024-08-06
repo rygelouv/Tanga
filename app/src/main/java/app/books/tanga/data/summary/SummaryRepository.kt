@@ -46,7 +46,11 @@ class SummaryRepositoryImpl @Inject constructor(
 
     override suspend fun getAllSummaries(): Result<List<Summary>> =
         operationHandler.executeOperation {
-            val summaries = firestore.summaryCollection.get().await()
+            val summaries =
+                firestore.summaryCollection
+                    .whereEqualTo(FirestoreDatabase.Summaries.Fields.IS_VISIBLE, true)
+                    .get()
+                    .await()
 
             summaries.map {
                 it.data.toSummary()
@@ -58,6 +62,7 @@ class SummaryRepositoryImpl @Inject constructor(
             val summaries =
                 firestore
                     .summaryCollection
+                    .whereEqualTo(FirestoreDatabase.Summaries.Fields.IS_VISIBLE, true)
                     .whereArrayContains(FirestoreDatabase.Summaries.Fields.CATEGORIES, categoryId)
                     .get()
                     .await()

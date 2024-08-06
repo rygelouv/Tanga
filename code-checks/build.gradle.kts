@@ -10,6 +10,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+kotlin {
+    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
+    jvmToolchain(17)
+}
+
 dependencies {
     compileOnly(libs.detekt.api)
     compileOnly(libs.lint.api)

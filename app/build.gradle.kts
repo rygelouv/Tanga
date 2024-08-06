@@ -32,8 +32,8 @@ android {
         applicationId = "app.books.tanga"
         minSdk = 24
         targetSdk = 34
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,8 +62,9 @@ android {
         }
         release {
             buildConfigField("String", "REVENUECAT_API_KEY", "\"${secretProperties["revenueCatApiKey"]}\"")
-            isMinifyEnabled = false // Will change later
-            isDebuggable = true
+            isMinifyEnabled = true
+            isDebuggable = false
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -86,7 +87,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.compose.version.get()
     }
 
     packagingOptions {
@@ -143,6 +144,7 @@ dependencies {
     // Google Play Services
     implementation(libs.android.gms.play.services.auth)
 
+    // Monetization
     implementation(libs.revenuecat.purchases)
 
     // Media

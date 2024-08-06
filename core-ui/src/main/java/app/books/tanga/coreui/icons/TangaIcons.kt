@@ -2,6 +2,10 @@ package app.books.tanga.coreui.icons
 
 import app.books.tanga.coreui.R
 
+@Deprecated(
+    "This was inspired from NowInAndroid project but it is actually difficult to maintain and is " +
+        "needlessly overkill. Use the actual drawable resource directly instead."
+)
 object TangaIcons {
     val Search = R.drawable.ic_search
     val RightArrow = R.drawable.ic_right_arrow

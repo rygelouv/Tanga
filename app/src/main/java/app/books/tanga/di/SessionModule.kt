@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface SessionModule {
     @Binds
-    fun PrefSessionManager.provideSessionManager(): SessionManager
+    fun provideSessionManager(impl: PrefSessionManager): SessionManager
 }

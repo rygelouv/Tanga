@@ -79,7 +79,7 @@ fun LandingScreen(
             Spacer(modifier = Modifier.height(64.dp))
 
             TangaButton(
-                text = stringResource(id = R.string.tanga_landing_get_started),
+                text = stringResource(id = R.string.onboarding_get_started),
                 showInLightColor = true,
                 onClick = onNavigateToOnboarding
             )

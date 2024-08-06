@@ -2,10 +2,9 @@ package app.books.tanga.feature.summary
 
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.CategoryId
-import app.books.tanga.entity.PredefinedCategory
 import app.books.tanga.errors.toUiError
-import app.books.tanga.feature.search.CategoryUi
-import app.books.tanga.feature.search.getCategoryIllustration
+import app.books.tanga.feature.categories.CategoryUi
+import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.summary.list.SummariesByCategoryUiState
 import app.books.tanga.feature.summary.list.SummariesByCategoryViewModel
 import app.books.tanga.fixtures.Fixtures
@@ -45,7 +44,7 @@ class SummariesByCategoryViewModelTest {
             categoryUi = CategoryUi(
                 id = categoryId.value,
                 name = categoryName,
-                icon = getCategoryIllustration(categoryId),
+                icon = PredefinedCategory.fromId(categoryId.value).illustration,
                 topics = PredefinedCategory.fromId(categoryId.value).topics
             )
         )
@@ -72,7 +71,7 @@ class SummariesByCategoryViewModelTest {
             categoryUi = CategoryUi(
                 id = categoryId.value,
                 name = categoryName,
-                icon = getCategoryIllustration(categoryId),
+                icon = PredefinedCategory.fromId(categoryId.value).illustration,
                 topics = PredefinedCategory.fromId(categoryId.value).topics
             )
         )

@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.feature.search.CategoriesSection
 import app.books.tanga.feature.summary.SummaryUi
 import kotlinx.collections.immutable.ImmutableList
@@ -87,9 +87,9 @@ fun ImmutableList<SummaryUi>.toSummaryGridItems(): ImmutableList<SummaryGridItem
 private fun SummaryGridPreview() {
     TangaTheme {
         SummaryGrid(
-            summaries = FakeData.allSummaries().toImmutableList(),
+            summaries = PreviewData.allSummaries().toImmutableList(),
             header = {
-                CategoriesSection(categories = FakeData.allCategories().toImmutableList())
+                CategoriesSection(categories = PreviewData.allCategories().toImmutableList())
             },
             onSummaryClick = {}
         )

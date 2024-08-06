@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @HiltViewModel
-class PricingPlanViewModel @Inject constructor(
+class SubscriptionViewModel @Inject constructor(
     private val revenueCatController: RevenueCatPurchases,
     private val userRepository: UserRepository
 ) : ViewModel() {

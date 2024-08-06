@@ -45,7 +45,7 @@ import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.read.components.ReadFontScaleChooser
 import app.books.tanga.feature.summary.SummaryContentState
@@ -288,7 +288,7 @@ private fun ReadSummaryScreenPreview() {
                     isFavorite = false,
                     favoriteProgressState = ProgressState.Hide
                 ),
-                summaryTextContent = FakeData.SUMMARY_TEXT,
+                summaryTextContent = PreviewData.SUMMARY_TEXT,
                 progressState = ProgressState.Hide
             ),
             onNavigateToPreviousScreen = {},

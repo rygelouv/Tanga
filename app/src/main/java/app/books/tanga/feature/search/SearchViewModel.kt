@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
+import app.books.tanga.feature.categories.CategoryUi
+import app.books.tanga.feature.categories.toCategoryUi
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,7 +54,7 @@ class SearchViewModel @Inject constructor(
                     it.copy(
                         categories =
                         categories.map { category ->
-                            category.toSearchCategoryUi()
+                            category.toCategoryUi()
                         }
                     )
                 }

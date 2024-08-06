@@ -95,5 +95,5 @@ class StorageDownloadUrlGenerator @Inject constructor(
 @InstallIn(SingletonComponent::class)
 fun interface StorageDownloadUrlGeneratorModule {
     @Binds
-    fun StorageDownloadUrlGenerator.provideStorageDownloadUrlGenerator(): DownloadUrlGenerator
+    fun provideStorageDownloadUrlGenerator(impl: StorageDownloadUrlGenerator): DownloadUrlGenerator
 }

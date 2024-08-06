@@ -3,6 +3,7 @@ package app.books.tanga.feature.onboarding
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,10 +18,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -28,7 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.TangaButtonRightIcon
+import app.books.tanga.coreui.components.SystemBarsVisibility
+import app.books.tanga.coreui.components.TangaLinedButton
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.TangaTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -36,12 +42,16 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val MAX_PAGER_INDEX = 3
+const val MAX_PAGER_INDEX = 2
 
 private const val PAGER_WEIGHT = 5f
 
+private const val SYSTEM_BAR_VISIBILITY_DELAY = 1000L
+
+@Suppress("LongMethod")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingScreen(
@@ -50,12 +60,26 @@ fun OnboardingScreen(
     onNavigateToAuth: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var changeSystemVisibility by remember { mutableStateOf(false) }
+    if (changeSystemVisibility) {
+        SystemBarsVisibility(
+            statusBarColor = MaterialTheme.colorScheme.primary,
+            navigationBarColor = MaterialTheme.colorScheme.primary,
+            statusBarVisible = true,
+            navigationBarVisible = true
+        )
+    }
+
+    LaunchedEffect(changeSystemVisibility) {
+        delay(SYSTEM_BAR_VISIBILITY_DELAY)
+        changeSystemVisibility = true
+    }
+
     val pages =
         listOf(
             OnboardingPage.Read,
             OnboardingPage.Listen,
-            OnboardingPage.Watch,
-            OnboardingPage.Visualize
+            OnboardingPage.Watch
         )
 
     val pagerState = rememberPagerState()
@@ -64,12 +88,13 @@ fun OnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary)
             .padding(bottom = 20.dp)
             .verticalScroll(rememberScrollState())
     ) {
         HorizontalPager(
             modifier = Modifier.weight(PAGER_WEIGHT),
-            count = 4,
+            count = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) {
@@ -82,8 +107,8 @@ fun OnboardingScreen(
             Modifier
                 .align(Alignment.CenterHorizontally)
                 .weight(1f),
-            activeColor = MaterialTheme.colorScheme.secondary,
-            inactiveColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            activeColor = MaterialTheme.colorScheme.onSecondary,
+            inactiveColor = MaterialTheme.colorScheme.tertiaryContainer,
             indicatorWidth = 8.dp
         )
         FinishOnboardingButton(
@@ -130,8 +155,8 @@ fun FinishOnboardingButton(
                 onClick = onNextClick,
                 colors =
                 ButtonDefaults.buttonColors(
-                    contentColor = Color.White,
-                    containerColor = MaterialTheme.colorScheme.primary
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.onSecondary
                 ),
                 shape = CircleShape,
                 elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
@@ -150,10 +175,9 @@ fun FinishOnboardingButton(
             enter = scaleIn(),
             exit = scaleOut()
         ) {
-            TangaButtonRightIcon(
+            TangaLinedButton(
                 onClick = onFinishClick,
-                leftIcon = TangaIcons.RightArrow,
-                text = stringResource(id = R.string.onboarding_get_started)
+                text = stringResource(id = R.string.tanga_landing_get_started)
             )
         }
     }

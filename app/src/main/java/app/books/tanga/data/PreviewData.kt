@@ -1,7 +1,8 @@
 package app.books.tanga.data
 
+import app.books.tanga.coreui.R
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.search.CategoryUi
+import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
 import java.util.UUID
 
@@ -10,14 +11,14 @@ private const val FAKE_COVER_URL = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-m
 /**
  * Used for Compose Previews
  */
-object FakeData {
+object PreviewData {
     fun allCategories() =
         buildList {
             add(
                 CategoryUi(
                     id = "1",
                     name = "Business",
-                    icon = app.books.tanga.coreui.R.drawable.ic_business
+                    icon = R.drawable.ic_business
                 )
             )
             add(
@@ -43,6 +44,7 @@ object FakeData {
             )
         }
 
+    @Suppress("LongMethod")
     fun allSummaries() =
         buildList<SummaryUi> {
             add(
@@ -52,8 +54,7 @@ object FakeData {
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
-                    hasGraphic = true,
-                    authorPictureUrl = null
+                    hasGraphic = true
                 )
             )
             add(
@@ -63,8 +64,7 @@ object FakeData {
                     title = "Atomic Habits",
                     author = "James Clear",
                     duration = "15",
-                    hasVideo = true,
-                    authorPictureUrl = null
+                    hasVideo = true
                 )
             )
             add(
@@ -74,8 +74,7 @@ object FakeData {
                     title = "Deep Work",
                     author = "Cal Newport",
                     duration = "9",
-                    hasGraphic = true,
-                    authorPictureUrl = null
+                    hasGraphic = true
                 )
             )
             add(
@@ -85,8 +84,7 @@ object FakeData {
                     title = "Ego is the Enemy",
                     author = "Ryan Holiday",
                     duration = "13",
-                    hasVideo = true,
-                    authorPictureUrl = null
+                    hasVideo = true
                 )
             )
             add(
@@ -95,8 +93,7 @@ object FakeData {
                     coverUrl = FAKE_COVER_URL,
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
-                    duration = "11",
-                    authorPictureUrl = null
+                    duration = "11"
                 )
             )
             add(
@@ -105,8 +102,7 @@ object FakeData {
                     coverUrl = FAKE_COVER_URL,
                     title = "Good To Great",
                     author = "Jim Collins",
-                    duration = "8",
-                    authorPictureUrl = null
+                    duration = "8"
                 )
             )
             add(
@@ -115,8 +111,7 @@ object FakeData {
                     coverUrl = FAKE_COVER_URL,
                     title = "Never Split The Difference",
                     author = "Chris Voss",
-                    duration = "10",
-                    authorPictureUrl = null
+                    duration = "10"
                 )
             )
             add(
@@ -127,8 +122,7 @@ object FakeData {
                     author = "Ryan Holiday",
                     duration = "10",
                     hasGraphic = true,
-                    hasVideo = true,
-                    authorPictureUrl = null
+                    hasVideo = true
                 )
             )
             add(
@@ -138,8 +132,7 @@ object FakeData {
                     title = "Psychology Of Money",
                     author = "Morgan Housel",
                     duration = "10",
-                    hasGraphic = true,
-                    authorPictureUrl = null
+                    hasGraphic = true
                 )
             )
             add(
@@ -150,8 +143,7 @@ object FakeData {
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "11",
                     hasGraphic = true,
-                    hasVideo = true,
-                    authorPictureUrl = null
+                    hasVideo = true
                 )
             )
             add(
@@ -162,8 +154,7 @@ object FakeData {
                     author = "Mark Manson",
                     duration = "9",
                     hasGraphic = true,
-                    hasVideo = true,
-                    authorPictureUrl = null
+                    hasVideo = true
                 )
             )
         }

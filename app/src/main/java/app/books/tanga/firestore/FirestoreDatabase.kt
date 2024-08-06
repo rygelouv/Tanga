@@ -29,6 +29,7 @@ object FirestoreDatabase {
             const val AUTHOR = "author"
             const val SYNOPSIS = "synopsis"
             const val CATEGORIES = "categories"
+            const val IS_VISIBLE = "isVisible"
             const val COVER_IMAGE_URL = "coverImageUrl"
             const val AUDIO_URL = "audioUrl"
             const val GRAPHIC_URL = "graphicUrl"

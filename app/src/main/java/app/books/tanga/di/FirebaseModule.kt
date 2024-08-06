@@ -29,5 +29,5 @@ class FirebaseModule {
 @InstallIn(SingletonComponent::class)
 fun interface FirestoreOperationHandlerModule {
     @Binds
-    fun FirestoreOperationHandlerImpl.provideFirestoreOperationHandler(): FirestoreOperationHandler
+    fun provideFirestoreOperationHandler(impl: FirestoreOperationHandlerImpl): FirestoreOperationHandler
 }

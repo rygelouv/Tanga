@@ -27,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -42,9 +41,10 @@ import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
+import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.components.SummaryGrid
 import kotlinx.collections.immutable.ImmutableList
@@ -208,7 +208,7 @@ private fun SearchTopBar(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 private fun SearchBox(onSearch: (String) -> Unit) {
     var text by remember {
         mutableStateOf("")
@@ -267,8 +267,8 @@ private fun SearchBox(onSearch: (String) -> Unit) {
 private fun SearchScreenPreview() {
     val state = SearchUiState(
         query = "query",
-        categories = FakeData.allCategories(),
-        summaries = FakeData.allSummaries(),
+        categories = PreviewData.allCategories(),
+        summaries = PreviewData.allSummaries(),
         progressState = ProgressState.Hide
     )
     val snackBarHostState = SnackbarHostState()

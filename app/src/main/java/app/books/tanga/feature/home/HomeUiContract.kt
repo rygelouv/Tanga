@@ -4,6 +4,7 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.Section
 import app.books.tanga.errors.UiError
+import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.toSummaryUi
 
@@ -11,9 +12,14 @@ data class HomeUiState(
     val progressState: ProgressState = ProgressState.Hide,
     val userFirstName: String? = null,
     val userPhotoUrl: String? = null,
-    val weeklySummary: SummaryUi? = null,
+    val weeklySummary: WeeklySummaryUi? = null,
     val sections: List<HomeSectionUi>? = null,
     val error: UiError? = null
+)
+
+data class WeeklySummaryUi(
+    val summaryUi: SummaryUi,
+    val categoryUi: PredefinedCategory
 )
 
 /**

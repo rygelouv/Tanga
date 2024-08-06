@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,7 +7,7 @@ import app.books.tanga.navigation.NavigationScreen
 
 fun NavGraphBuilder.pricingPlan(onCloseClicked: () -> Unit = {}) {
     composable(route = NavigationScreen.PricingPlan.route) {
-        PricingPlanContainer(
+        SubscriptionContainer(
             onCloseClick = onCloseClicked,
         )
     }

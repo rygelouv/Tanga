@@ -29,7 +29,7 @@ import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalTintColor
-import app.books.tanga.data.FakeData
+import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.summary.SummaryUi
 
@@ -176,6 +176,6 @@ fun SummaryIndicators(
 @Composable
 @ExcludeFromJacocoGeneratedReport
 private fun SummaryItemPreview() {
-    val summary = FakeData.allSummaries().first()
+    val summary = PreviewData.allSummaries().first()
     SummaryItemBig(summary, {})
 }

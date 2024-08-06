@@ -73,5 +73,5 @@ class GoogleSignInModule {
 @InstallIn(SingletonComponent::class)
 abstract class GoogleAuthServiceModule {
     @Binds
-    abstract fun GoogleAuthServiceImpl.provideGoogleAuthService(): GoogleAuthService
+    abstract fun provideGoogleAuthService(impl: GoogleAuthServiceImpl): GoogleAuthService
 }

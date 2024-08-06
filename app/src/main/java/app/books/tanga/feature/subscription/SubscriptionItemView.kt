@@ -1,4 +1,4 @@
-package app.books.tanga.feature.pricing
+package app.books.tanga.feature.subscription
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,7 +26,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun PricingPlanTitleRow(
+fun SubscriptionTitle(
     title: String,
     selected: Boolean,
     modifier: Modifier = Modifier
@@ -41,7 +41,7 @@ fun PricingPlanTitleRow(
 }
 
 @Composable
-fun PricingPlanPriceRow(
+fun SubscriptionPriceRow(
     price: String,
     cadence: String,
     selected: Boolean,
@@ -78,7 +78,7 @@ fun PricingPlanPriceRow(
 }
 
 @Composable
-fun PricingPlanItem(
+fun SubscriptionItemView(
     title: String,
     price: String,
     cadence: String,
@@ -114,13 +114,13 @@ fun PricingPlanItem(
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PricingPlanTitleRow(title, selected)
+        SubscriptionTitle(title, selected)
         Spacer(
             modifier =
             Modifier
                 .width(LocalSpacing.current.medium)
                 .weight(1f)
         )
-        PricingPlanPriceRow(price, cadence, selected)
+        SubscriptionPriceRow(price, cadence, selected)
     }
 }
