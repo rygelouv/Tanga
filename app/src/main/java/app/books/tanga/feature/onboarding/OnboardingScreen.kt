@@ -18,12 +18,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaLinedButton
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.TangaTheme
@@ -42,14 +36,11 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 const val MAX_PAGER_INDEX = 2
 
 private const val PAGER_WEIGHT = 5f
-
-private const val SYSTEM_BAR_VISIBILITY_DELAY = 1000L
 
 @Suppress("LongMethod")
 @OptIn(ExperimentalPagerApi::class)
@@ -60,26 +51,13 @@ fun OnboardingScreen(
     onNavigateToAuth: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var changeSystemVisibility by remember { mutableStateOf(false) }
-    if (changeSystemVisibility) {
-        SystemBarsVisibility(
-            statusBarColor = MaterialTheme.colorScheme.primary,
-            navigationBarColor = MaterialTheme.colorScheme.primary,
-            statusBarVisible = true,
-            navigationBarVisible = true
-        )
-    }
-
-    LaunchedEffect(changeSystemVisibility) {
-        delay(SYSTEM_BAR_VISIBILITY_DELAY)
-        changeSystemVisibility = true
-    }
+    OnboardingSystemBarsVisibility(OnboardingTransitionElement.Onboarding)
 
     val pages =
         listOf(
-            OnboardingPage.Read,
-            OnboardingPage.Listen,
-            OnboardingPage.Watch
+            OnboardingPage.Page1,
+            OnboardingPage.Page2,
+            OnboardingPage.Page3
         )
 
     val pagerState = rememberPagerState()

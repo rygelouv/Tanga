@@ -28,20 +28,20 @@ sealed class OnboardingPage(
     @StringRes val title: Int,
     @StringRes val description: Int
 ) {
-    data object Read : OnboardingPage(
+    data object Page1 : OnboardingPage(
         image = drawable.graphic_reading_glasses,
         title = R.string.onboarding_page_one_title,
         description = R.string.onboarding_page_one_description
     )
 
-    data object Listen : OnboardingPage(
+    data object Page2 : OnboardingPage(
         image = R.drawable.graphic_listening,
         title = R.string.onboarding_page_two_title,
         description = R.string.onboarding_page_two_description
     )
 
-    data object Watch : OnboardingPage(
-        image = drawable.graphic_success_work_life,
+    data object Page3 : OnboardingPage(
+        image = drawable.graphic_self_confidence_pana,
         title = R.string.onboarding_page_three_title,
         description = R.string.onboarding_page_three_description
     )
