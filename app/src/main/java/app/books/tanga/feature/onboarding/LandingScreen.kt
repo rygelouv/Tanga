@@ -21,10 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
-import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaButton
 import app.books.tanga.coreui.components.TextWithShadow
-import app.books.tanga.coreui.theme.Crayola
 import app.books.tanga.coreui.theme.OxfordBlueTransp
 import app.books.tanga.coreui.theme.TangaTheme
 
@@ -37,11 +35,13 @@ fun LandingScreen(
     onNavigateToOnboarding: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    SystemBarsVisibility(
-        statusBarColor = Crayola,
-        navigationBarColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        statusBarVisible = true
-    )
+//    SystemBarsVisibility(
+//        statusBarColor = Crayola,
+//        navigationBarColor = MaterialTheme.colorScheme.onPrimaryContainer,
+//        statusBarVisible = true,
+//        navigationBarVisible = true
+//    )
+    OnboardingSystemBarsVisibility(OnboardingTransitionElement.Landing)
     Box(
         modifier = modifier.fillMaxSize()
     ) {

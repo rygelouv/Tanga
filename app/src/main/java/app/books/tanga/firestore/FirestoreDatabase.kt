@@ -31,12 +31,7 @@ object FirestoreDatabase {
             const val CATEGORIES = "categories"
             const val IS_VISIBLE = "isVisible"
             const val COVER_IMAGE_URL = "coverImageUrl"
-            const val AUDIO_URL = "audioUrl"
-            const val GRAPHIC_URL = "graphicUrl"
-            const val SUMMARY_URL = "summaryUrl"
-            const val VIDEO_URL = "videoUrl"
             const val PLAYING_LENGTH = "playingLength"
-            const val AUTHOR_PICTURE_URL = "authorPictureUrl"
             const val PURCHASE_BOOK_URL = "purchaseBookUrl"
         }
     }
