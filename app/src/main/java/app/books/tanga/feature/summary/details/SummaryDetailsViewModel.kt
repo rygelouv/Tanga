@@ -28,8 +28,10 @@ import timber.log.Timber
 class SummaryDetailsViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor,
     private val favoriteInteractor: FavoriteInteractor,
-    private val protectedActionInteractor: ProtectedActionInteractor
-) : ViewModel() {
+    private val protectedActionInteractor: ProtectedActionInteractor,
+    private val summaryDetailsAnalytics: SummaryDetailsAnalytics,
+) : ViewModel(), SummaryDetailsAnalytics by summaryDetailsAnalytics {
+
     private val _state: MutableStateFlow<SummaryDetailsUiState> =
         MutableStateFlow(SummaryDetailsUiState(progressState = ProgressState.Show))
     val state: StateFlow<SummaryDetailsUiState> = _state.asStateFlow()
@@ -47,6 +49,7 @@ class SummaryDetailsViewModel @Inject constructor(
      * and the favorite status
      */
     fun loadSummary(summaryId: SummaryId) {
+        summaryDetailsAnalytics.trackPage()
         viewModelScope.launch {
             summaryInteractor
                 .getSummary(summaryId)
@@ -104,7 +107,8 @@ class SummaryDetailsViewModel @Inject constructor(
      * When user clicks on the favorite button, show the progress indicator and
      * toggle the favorite status
      */
-    fun toggleFavorite() {
+    fun onToggleFavorite() {
+        onToggleFavoriteClick(summary.id)
         viewModelScope.launch {
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
                 ProtectedAction.Save
@@ -140,6 +144,7 @@ class SummaryDetailsViewModel @Inject constructor(
                         favoriteProgressState = ProgressState.Hide
                     )
                 }
+                onFavoriteSaved(summary.id)
                 // TODO: Show a snackbar to notify the user that the summary is added to favorites
             }.onFailure { error ->
                 _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }
@@ -157,6 +162,7 @@ class SummaryDetailsViewModel @Inject constructor(
                         favoriteProgressState = ProgressState.Hide
                     )
                 }
+                onFavoriteRemoved(summary.id)
                 // TODO: Show a snackbar to notify the user that the summary is removed from favorites
             }.onFailure { error ->
                 _state.update { it.copy(favoriteProgressState = ProgressState.Hide) }

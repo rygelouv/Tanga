@@ -9,6 +9,10 @@ import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.categories.toCategoryUi
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Events
+import app.books.tanga.tracking.Pages
+import app.books.tanga.tracking.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -24,7 +28,8 @@ import timber.log.Timber
 @Suppress("TooManyFunctions")
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val summaryInteractor: SummaryInteractor
+    private val summaryInteractor: SummaryInteractor,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
     private val _state: MutableStateFlow<SearchUiState> =
         MutableStateFlow(SearchUiState(progressState = ProgressState.Show))
@@ -34,6 +39,7 @@ class SearchViewModel @Inject constructor(
     val events: Flow<SearchUiEvent> = _events.receiveAsFlow()
 
     init {
+        analyticsTracker.trackPage(Pages.SEARCH)
         loadSearchData()
     }
 
@@ -94,6 +100,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onSearch(query: String) {
+        analyticsTracker.track(Events.ACTION_SEARCH, mapOf(Properties.SEARCH_QUERY to query))
         // Only show categories if the query is empty
         _state.update {
             it.copy(
@@ -127,6 +134,7 @@ class SearchViewModel @Inject constructor(
      * and load the summaries for the selected categories
      */
     fun onCategorySelected(category: CategoryUi) {
+        analyticsTracker.track(Events.TAP_CATEGORY_ITEM_IN_SEARCH, mapOf(Properties.CATEGORY_ID to category.id))
         updateSelectedCategoriesAndLoadSummaries { it.add(category) }
     }
 

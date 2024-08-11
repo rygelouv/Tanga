@@ -3,6 +3,7 @@ package app.books.tanga.feature
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
 import app.books.tanga.feature.onboarding.OnboardingViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.books.tanga.tracking.AnalyticsTracker
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,6 +18,7 @@ class OnboardingViewModelTest {
 
     private lateinit var repository: DefaultPrefDataStoreRepository
     private lateinit var viewModel: OnboardingViewModel
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun setup() {
@@ -24,7 +26,7 @@ class OnboardingViewModelTest {
         repository = mockk(relaxed = true)
 
         // Initialize the OnboardingViewModel with the mock repository
-        viewModel = OnboardingViewModel(repository)
+        viewModel = OnboardingViewModel(repository, analyticsTracker)
     }
 
     @Test

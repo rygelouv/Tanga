@@ -10,8 +10,8 @@ sealed interface Property {
 enum class Properties(override val propertyName: String) : Property {
     SUMMARY_ID("summary_id"),
     CATEGORY_ID("category_id"),
-    CATEGORY_NAME("category_name"),
     SEARCH_QUERY("search_query"),
     SUBSCRIPTION_TYPE("subscription_type"),
     SUBSCRIPTION_PRICE("subscription_price"),
+    SUBSCRIPTION_CURRENCY("subscription_currency"),
 }

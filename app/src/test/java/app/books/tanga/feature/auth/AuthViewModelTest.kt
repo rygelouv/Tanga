@@ -6,6 +6,7 @@ import app.books.tanga.entity.User
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.books.tanga.tracking.AnalyticsTracker
 import app.cash.turbine.test
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -27,6 +28,7 @@ class AuthViewModelTest {
     private val interactor: AuthenticationInteractor = mockk()
     private val signInClient: SignInClient = mockk()
     private val errorTracker: TangaErrorTracker = mockk()
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
 
     @Test
     fun `onGoogleSignInStarted - success scenario`() = runTest {
@@ -36,7 +38,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onGoogleSignInStarted()
@@ -62,7 +65,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onGoogleSignInStarted()
@@ -88,7 +92,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onSkipAuth()
@@ -111,7 +116,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onSkipAuth()
@@ -139,7 +145,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onGoogleSignInCompleted(intent)
@@ -166,7 +173,8 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             interactor = interactor,
             signInClient = signInClient,
-            errorTracker = errorTracker
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
         )
 
         viewModel.onGoogleSignInCompleted(intent)

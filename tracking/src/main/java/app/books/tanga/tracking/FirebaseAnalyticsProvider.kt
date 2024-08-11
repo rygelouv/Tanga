@@ -44,14 +44,25 @@ class FirebaseAnalyticsProvider @Inject constructor(
 }
 
 fun ParametersBuilder.buildBundle(properties: Map<Property, Any>?): Bundle {
-    properties?.forEach { (property, value) ->
+    properties?.transformToFirebaseProperty()?.forEach { (propertyName, value) ->
         when (value) {
-            is String -> param(property.propertyName, value)
-            is Int -> param(property.propertyName, value.toLong())
-            is Long -> param(property.propertyName, value)
-            is Double -> param(property.propertyName, value)
-            else -> param(property.propertyName, value.toString())
+            is String -> param(propertyName, value)
+            is Int -> param(propertyName, value.toLong())
+            is Long -> param(propertyName, value)
+            is Double -> param(propertyName, value)
+            else -> param(propertyName, value.toString())
         }
     }
     return bundle
+}
+
+private fun Map<Property, Any>.transformToFirebaseProperty(): Map<String, Any> = mapKeys { (property) ->
+    when (property) {
+        Properties.SUMMARY_ID -> FirebaseAnalytics.Param.ITEM_ID
+        Properties.CATEGORY_ID -> FirebaseAnalytics.Param.ITEM_CATEGORY
+        Properties.SEARCH_QUERY -> FirebaseAnalytics.Param.SEARCH_TERM
+        Properties.SUBSCRIPTION_PRICE -> FirebaseAnalytics.Param.VALUE
+        Properties.SUBSCRIPTION_CURRENCY -> FirebaseAnalytics.Param.CURRENCY
+        else -> property.propertyName
+    }
 }

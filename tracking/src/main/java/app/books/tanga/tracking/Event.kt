@@ -20,16 +20,18 @@ enum class Events(override val eventName: String) : Event {
     TAP_PROFILE_PICTURE("android_tap_profile_picture"),
     TAP_WEEKLY_SUMMARY("android_tap_weekly_summary"), // Needs properties
     TAP_SEE_ALL_BOOKS_IN_CATEGORY("android_tap_see_all_books_in_category"), // Needs properties
-    TAP_EXPLORE_MORE_SUMMARIES_BY_CATEGORY("android_tap_explore_more_by_category"),
+
+    // TAP_EXPLORE_MORE_SUMMARIES_BY_CATEGORY("android_tap_explore_more_by_category"), Not tracking for now
     TAP_EXPLORE_SUMMARIES_FROM_EMPTY_LIBRARY("android_tap_explore_from_empty_library"),
     TAP_CATEGORY_ITEM_IN_SEARCH("android_tap_category_item_in_search"), // Needs properties
-    TAP_PLAY_SUMMARY_AUDIO("android_tap_play_summary_audio"), // Needs properties
-    TAP_READ_SUMMARY("android_tap_read_summary"), // Needs properties
-    TAP_VISUALIZE_SUMMARY_GRAPHIC("android_tap_visualize_summary_graphic"), // Needs properties
+
+    // TAP_PLAY_SUMMARY_AUDIO("android_tap_play_summary_audio"), Not tracking for now
+    // TAP_READ_SUMMARY("android_tap_read_summary"), Not tracking for now
+    // TAP_VISUALIZE_SUMMARY_GRAPHIC("android_tap_visualize_summary_graphic"), Not tracking for now
     TAP_SAVE_SUMMARY("android_tap_save_summary"), // Needs properties
     TAP_SHARE_SUMMARY("android_tap_share_summary"), // Needs properties
+    TAP_PURCHASE_BOOK("android_tap_purchase_book"), // Needs properties
     TAP_REMOVE_SAVED_SUMMARY("android_tap_remove_saved_summary"), // Needs properties
-    TAP_READING_FONT_SIZE("android_tap_reading_font_size"),
     TAP_PLAY_START_AUDIO("android_tap_play_start_audio"),
     TAP_TANGA_PREMIUM_UPGRADE("android_tap_tanga_premium_upgrade"),
     TAP_PROFILE_CONTACT_US("android_tap_profile_contact_us"),

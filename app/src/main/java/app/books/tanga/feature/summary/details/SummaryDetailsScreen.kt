@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,7 +48,6 @@ import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
-import app.books.tanga.utils.openLink
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -62,6 +60,8 @@ fun SummaryDetailsScreen(
     onReadClick: (SummaryId) -> Unit,
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
+    onShare: (summary: SummaryUi) -> Unit,
+    onPurchase: (summary: SummaryUi) -> Unit,
     modifier: Modifier = Modifier,
     onRecommendationClick: (SummaryId) -> Unit
 ) {
@@ -75,7 +75,8 @@ fun SummaryDetailsScreen(
                 isFavorite = state.isFavorite,
                 favoriteProgressState = state.favoriteProgressState,
                 onBackClick = onBackClick,
-                onSaveClick = { onToggleFavorite() }
+                onSaveClick = { onToggleFavorite() },
+                onShare = onShare
             )
         },
         floatingActionButton = {
@@ -96,7 +97,8 @@ fun SummaryDetailsScreen(
                     onReadClick = onReadClick,
                     onPlayAudioClick = onPlayAudioClick,
                     onRecommendationClick = onRecommendationClick,
-                    onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } }
+                    onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } },
+                    onPurchase = onPurchase
                 )
         }
     }
@@ -109,6 +111,7 @@ private fun SummaryDetailsContent(
     onReadClick: (SummaryId) -> Unit,
     onPlayAudioClick: (SummaryId) -> Unit,
     onRecommendationClick: (SummaryId) -> Unit,
+    onPurchase: (summary: SummaryUi) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
     state.summary?.let { summary ->
@@ -129,7 +132,8 @@ private fun SummaryDetailsContent(
             SummaryIntroduction(summary = summary)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-            state.summary.purchaseBookUrl?.let { PurchaseButton(it) }
+
+            PurchaseButton(summary, onPurchase)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
             Recommendations(
@@ -312,20 +316,19 @@ fun SummaryIntroduction(
 }
 
 @Composable
-private fun PurchaseButton(url: String) {
+private fun PurchaseButton(summaryUi: SummaryUi, onPurchase: (summary: SummaryUi) -> Unit) {
     Column(
         modifier =
         Modifier
             .fillMaxWidth()
             .padding(horizontal = LocalSpacing.current.medium)
     ) {
-        val context = LocalContext.current
         TangaButtonLeftIcon(
             modifier = Modifier.testTag("purchase_button"),
             text = "Purchase Book",
             rightIcon =
             app.books.tanga.coreui.R.drawable.ic_trolley,
-            onClick = { openLink(context = context, url = url) }
+            onClick = { onPurchase(summaryUi) }
         )
     }
 }
@@ -371,7 +374,9 @@ private fun SummaryDetailsScreenPreview() {
             onReadClick = {},
             onLoadSummary = {},
             onToggleFavorite = {},
-            onRecommendationClick = {}
+            onRecommendationClick = {},
+            onShare = {},
+            onPurchase = {}
         )
     }
 }

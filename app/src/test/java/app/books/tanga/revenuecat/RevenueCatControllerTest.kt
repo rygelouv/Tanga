@@ -30,7 +30,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainCoroutineDispatcherExtension::class)
-@Disabled("The tests in this class are not working. There seem to be a mocking and/or coroutine issue.")
+@Disabled(
+    "The tests in this class are not working. There seem to be a mocking and/or coroutine issue." +
+        "check https://github.com/RevenueCat/purchases-android/issues/173"
+)
 class RevenueCatControllerTest {
 
     private val purchases: Lazy<Purchases> = mockk()

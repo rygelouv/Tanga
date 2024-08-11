@@ -18,7 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -41,6 +40,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.CategoryId
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
@@ -55,7 +55,7 @@ fun HomeScreen(
     onRetry: () -> Unit,
     state: HomeUiState,
     modifier: Modifier = Modifier,
-    onSummaryClick: (String) -> Unit
+    onSummaryClick: (SummaryId) -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -83,7 +83,7 @@ fun HomeScreen(
 @Composable
 fun LoadHomeContent(
     state: HomeUiState,
-    onSummaryClick: (String) -> Unit,
+    onSummaryClick: (SummaryId) -> Unit,
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
@@ -134,7 +134,7 @@ fun HomeTopBar(
 @Composable
 fun HomeContent(
     state: HomeUiState,
-    onSummaryClick: (String) -> Unit,
+    onSummaryClick: (SummaryId) -> Unit,
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
@@ -217,7 +217,7 @@ fun HomeSection(
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     isFirst: Boolean = false,
-    onSummaryClick: (String) -> Unit
+    onSummaryClick: (SummaryId) -> Unit
 ) {
     Column {
         Spacer(modifier = modifier.height(if (isFirst) 22.dp else 28.dp))
@@ -245,7 +245,7 @@ fun HomeSection(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClick = onSummaryClick)
+        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClick = { onSummaryClick(SummaryId(it)) })
     }
 }
 

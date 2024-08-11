@@ -43,3 +43,13 @@ fun Context.findActivity(): Activity? = when (this) {
     is ContextWrapper -> baseContext.findActivity()
     else -> null
 }
+
+/**
+ * Removes the currency symbol from a string.
+ */
+fun String.removeCurrencySymbol(): String = replace(Regex("[^\\d.]"), "").trim()
+
+/**
+ * Get the currency symbol from a string.
+ */
+fun String.extractCurrency(): String? = Regex("[^\\d.]").find(this)?.value?.trim()

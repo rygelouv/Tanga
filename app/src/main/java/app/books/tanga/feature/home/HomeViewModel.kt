@@ -3,14 +3,11 @@ package app.books.tanga.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.summary.toSummaryUi
-import app.books.tanga.tracking.AnalyticsTracker
-import app.books.tanga.tracking.Events
-import app.books.tanga.tracking.Pages
-import app.books.tanga.tracking.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,13 +22,13 @@ class HomeViewModel @Inject constructor(
     private val homeInteractor: HomeInteractor,
     // This will be removed once the favorites are loaded on app start up
     private val favoriteInteractor: FavoriteInteractor,
-    private val analyticsTracker: AnalyticsTracker
-) : ViewModel() {
+    private val homeAnalytics: HomeAnalytics,
+) : ViewModel(), HomeAnalytics by homeAnalytics {
     private val _state = MutableStateFlow(HomeUiState(progressState = ProgressState.Show))
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
 
     init {
-        analyticsTracker.trackPage(Pages.HOME)
+        trackHomePage()
         loadHomeData()
         // This will be removed once the favorites are loaded on app start up
         loadFavoritesInBackground()
@@ -124,25 +121,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    // region Analytics
-    fun onProfilePictureClick() {
-        analyticsTracker.track(Events.TAP_PROFILE_PICTURE)
+    fun onSummaryItemClick(summaryId: SummaryId) {
+        viewModelScope.launch {
+            onSummaryClick(summaryId)
+        }
     }
-
-    fun onSearchClick() {
-        analyticsTracker.track(Events.TAP_SEARCH)
-    }
-
-    fun onSummaryClick(summaryId: String) {
-        analyticsTracker.track(Events.TAP_SUMMARY, mapOf(Properties.SUMMARY_ID to summaryId))
-    }
-
-    fun onSeeAllClick(categoryId: String) {
-        analyticsTracker.track(Events.TAP_SEE_ALL_BOOKS_IN_CATEGORY, mapOf(Properties.CATEGORY_ID to categoryId))
-    }
-
-    fun onWeeklySummaryClick() {
-        analyticsTracker.track(Events.TAP_WEEKLY_SUMMARY)
-    }
-    // endregion
 }

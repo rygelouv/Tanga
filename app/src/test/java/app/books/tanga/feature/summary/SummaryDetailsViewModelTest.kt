@@ -7,6 +7,7 @@ import app.books.tanga.feature.library.FavoriteInteractor
 import app.books.tanga.feature.protectedaction.ProtectedAction
 import app.books.tanga.feature.protectedaction.ProtectedActionCheckResult
 import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
+import app.books.tanga.feature.summary.details.SummaryDetailsAnalytics
 import app.books.tanga.feature.summary.details.SummaryDetailsUiEvent
 import app.books.tanga.feature.summary.details.SummaryDetailsViewModel
 import app.books.tanga.fixtures.Fixtures
@@ -16,6 +17,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
@@ -36,6 +38,8 @@ class SummaryDetailsViewModelTest {
     @MockK
     lateinit var protectedActionInteractor: ProtectedActionInteractor
 
+    private val summaryDetailsAnalytics: SummaryDetailsAnalytics = mockk(relaxed = true)
+
     private lateinit var viewModel: SummaryDetailsViewModel
 
     @BeforeEach
@@ -45,6 +49,7 @@ class SummaryDetailsViewModelTest {
             summaryInteractor,
             favoriteInteractor,
             protectedActionInteractor,
+            summaryDetailsAnalytics
         )
     }
 
@@ -98,7 +103,7 @@ class SummaryDetailsViewModelTest {
         viewModel.loadSummary(summaryId) // Load the summary
 
         // Act - Toggle favorite (add)
-        viewModel.toggleFavorite()
+        viewModel.onToggleFavorite()
 
         // Assert - Verify state updates and interactions
         viewModel.state.test {
@@ -129,7 +134,7 @@ class SummaryDetailsViewModelTest {
         viewModel.loadSummary(summaryId) // Load the summary
 
         // Act - Toggle favorite (remove)
-        viewModel.toggleFavorite()
+        viewModel.onToggleFavorite()
 
         viewModel.state.test {
             val updatedState = awaitItem()
@@ -163,10 +168,14 @@ class SummaryDetailsViewModelTest {
 
     @Test
     fun `toggleFavorite -  when sessionManager has no session`() = runTest {
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
         coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
             ProtectedActionCheckResult.AuthRequired
 
-        viewModel.toggleFavorite()
+        viewModel.loadSummary(summaryId)
+
+        viewModel.onToggleFavorite()
 
         viewModel.events.test {
             val event = expectMostRecentItem()

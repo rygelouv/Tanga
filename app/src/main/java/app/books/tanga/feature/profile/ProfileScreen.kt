@@ -1,16 +1,22 @@
 package app.books.tanga.feature.profile
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -21,45 +27,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ProfileImage
-import app.books.tanga.coreui.components.Tag
 import app.books.tanga.coreui.components.TangaButton
+import app.books.tanga.coreui.theme.LocalSpacing
+import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.TangaTheme
+import app.books.tanga.coreui.theme.extraExtraExtraLarge
 import app.books.tanga.utils.openLinkInCustomTab
 
 private const val CONTACT_URL = "https://form.jotform.com/242065602713550"
-
-@Composable
-fun ProfileScreenContainer(
-    onNavigateToAuth: () -> Unit,
-    onNavigateToSettings: () -> Unit,
-    onNavigateToPrivacyAndTerms: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: ProfileViewModel = hiltViewModel(),
-    onNavigateToPricing: () -> Unit = {}
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = ProfileUiEvent.Empty)
-
-    HandleEvents(event = event, onNavigateToAuth = onNavigateToAuth, onNavigateToPricing = onNavigateToPricing)
-
-    ProfileScreen(
-        state = state,
-        modifier = modifier,
-        onProClick = { viewModel.onProUpgrade() },
-        onLoginClick = { viewModel.onLogin() },
-        onSettingsClick = onNavigateToSettings,
-        onPrivacyAndTermsClick = onNavigateToPrivacyAndTerms
-    )
-}
 
 @Composable
 fun HandleEvents(
@@ -91,7 +76,7 @@ fun ProfileScreen(
     onSettingsClick: () -> Unit,
     onPrivacyAndTermsClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onProClick: () -> Unit = {}
+    onProClick: () -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -176,7 +161,7 @@ fun ProfileHeader(
     userInfo: UserInfoUi?,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onProClick: () -> Unit = {}
+    onProClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -214,9 +199,40 @@ fun MainCtaArea(userInfo: UserInfoUi?, onLoginClick: () -> Unit, onProClick: () 
             )
         }
         userInfo.subscriberInfo?.hasActiveSubscription == true -> {
-            Tag(text = stringResource(id = R.string.premium_user), icon = R.drawable.ic_crown, isSelected = true)
+            PremiumAccountTag()
         }
         else -> ProButton { onProClick() }
+    }
+}
+
+@Composable
+fun PremiumAccountTag(
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.2f),
+                shape = Shapes.extraExtraExtraLarge
+            )
+            .clickable {}
+            .padding(horizontal = LocalSpacing.current.medium, vertical = LocalSpacing.current.small),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            modifier = Modifier.size(24.dp).testTag("search_icon"),
+            painter = painterResource(id = R.drawable.ic_crown),
+            contentDescription = "search icon",
+            tint = MaterialTheme.colorScheme.tertiary
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = stringResource(id = R.string.premium_user),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.tertiary,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -235,7 +251,8 @@ private fun ProfileScreenPreview() {
             ),
             onLoginClick = {},
             onSettingsClick = {},
-            onPrivacyAndTermsClick = {}
+            onPrivacyAndTermsClick = {},
+            onProClick = {}
         )
     }
 }

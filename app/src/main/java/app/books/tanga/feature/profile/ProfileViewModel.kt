@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.feature.auth.AuthenticationInteractor
 import app.books.tanga.revenuecat.RevenueCatPurchases
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Events
+import app.books.tanga.tracking.Pages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -20,7 +23,8 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
     private val authInteractor: AuthenticationInteractor,
     private val userRepository: UserRepository,
-    private val revenueCatController: RevenueCatPurchases
+    private val revenueCatController: RevenueCatPurchases,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState())
@@ -30,6 +34,7 @@ class ProfileViewModel @Inject constructor(
     val events: Flow<ProfileUiEvent> = _events.receiveAsFlow()
 
     init {
+        analyticsTracker.trackPage(Pages.PROFILE)
         viewModelScope.launch {
             userRepository.getUserStream().collect {
                 val user = it ?: return@collect
@@ -48,7 +53,8 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun onProUpgrade() {
+    fun onPremiumUpgrade() {
+        analyticsTracker.track(Events.TAP_TANGA_PREMIUM_UPGRADE)
         postEvent(ProfileUiEvent.NavigateTo.ToPricingPlan)
     }
 
@@ -56,9 +62,12 @@ class ProfileViewModel @Inject constructor(
         postEvent(ProfileUiEvent.NavigateTo.ToAuth)
     }
 
+    @Deprecated("Logout has been moved to the settings screen. Need to remove this method.")
     fun onLogout() {
         viewModelScope.launch {
-            authInteractor.signOut().onSuccess {}
+            authInteractor.signOut().onSuccess {
+                analyticsTracker.track(Events.ACTION_USER_SIGNED_OUT)
+            }
         }
     }
 

@@ -76,8 +76,6 @@ class SummaryDetailsScreenTest {
             author = "James Clear",
             coverUrl = "https://cover.url",
             duration = "00:10",
-            audioUrl = "https://audio.url",
-            textUrl = "https://text.url",
         )
         val state = state1.copy(summary = summaryWithTwoUrls)
 
@@ -191,7 +189,7 @@ class SummaryDetailsScreenTest {
         every { viewModel.state } returns MutableStateFlow(state1).asStateFlow()
         every { viewModel.events } returns flowOf()
         every { viewModel.loadSummary(summaryId) } returns Unit
-        every { viewModel.toggleFavorite() } returns Unit
+        every { viewModel.onToggleFavorite() } returns Unit
         every { viewModel.onPlayClick() } returns Unit
 
         composeTestRule.setContent {
@@ -202,7 +200,8 @@ class SummaryDetailsScreenTest {
                 onNavigateToPreviousScreen = {},
                 onNavigateToAudioPlayer = {},
                 onNavigateToReadSummaryScreen = {},
-                onNavigateToRecommendedSummaryDetails = {}
+                onNavigateToRecommendedSummaryDetails = {},
+                onNavigateToSubscriptions = {}
             )
         }
 
@@ -219,7 +218,7 @@ class SummaryDetailsScreenTest {
         composeTestRule.onNodeWithTag("save_favorite").assertExists().assertHasClickAction()
         composeTestRule.onNodeWithTag("save_favorite").performClick()
 
-        verify(exactly = 1) { viewModel.toggleFavorite() }
+        verify(exactly = 1) { viewModel.onToggleFavorite() }
     }
 
     private fun launchSummaryDetailsScreen(state: SummaryDetailsUiState = state1) {
@@ -227,11 +226,13 @@ class SummaryDetailsScreenTest {
             SummaryDetailsScreen(
                 state = state,
                 onBackClick = {},
-                onPlayClick = { viewModel.onPlayClick() },
                 onLoadSummary = {},
                 onToggleFavorite = {},
                 onReadClick = {},
-                onRecommendationClick = {}
+                onRecommendationClick = {},
+                onPlayAudioClick = {},
+                onShare = {},
+                onPurchase = {}
             )
         }
     }

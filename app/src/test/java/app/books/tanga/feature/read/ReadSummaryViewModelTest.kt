@@ -7,6 +7,7 @@ import app.books.tanga.feature.summary.SummaryContentState
 import app.books.tanga.feature.summary.toSummaryUi
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.books.tanga.tracking.AnalyticsTracker
 import app.cash.turbine.test
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -36,6 +37,7 @@ class ReadSummaryViewModelTest {
     private lateinit var viewModel: ReadSummaryViewModel
     private lateinit var summaryBehaviorDelegate: SummaryBehaviorDelegate
     private lateinit var fileDownloader: FileDownloader
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
     private val testScope: CoroutineScope = TestScope(UnconfinedTestDispatcher())
 
     @BeforeEach
@@ -66,7 +68,7 @@ class ReadSummaryViewModelTest {
         coEvery { fileDownloader.downloadSummaryText(any()) } returns Result.success(mockTextBytes)
         mockSummaryContentState()
 
-        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
+        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader, analyticsTracker)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)
@@ -97,7 +99,7 @@ class ReadSummaryViewModelTest {
         coEvery { fileDownloader.downloadSummaryText(any()) } returns Result.failure(error)
         mockSummaryContentState()
 
-        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
+        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader, analyticsTracker)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)
@@ -121,7 +123,7 @@ class ReadSummaryViewModelTest {
 
         mockSummaryContentState()
 
-        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
+        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader, analyticsTracker)
 
         viewModel.onPlayAudioClicked()
 
@@ -136,7 +138,7 @@ class ReadSummaryViewModelTest {
     fun `onFontSizeClicked toggles fontSizeChooserVisible`() = runTest {
         mockSummaryContentState()
 
-        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
+        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader, analyticsTracker)
 
         val initialFontSizeChooserVisible = viewModel.state.value.fontSizeChooserVisible
 
@@ -152,7 +154,7 @@ class ReadSummaryViewModelTest {
 
         mockSummaryContentState()
 
-        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader)
+        viewModel = ReadSummaryViewModel(summaryBehaviorDelegate, fileDownloader, analyticsTracker)
 
         viewModel.onScaleChanged(scale)
 

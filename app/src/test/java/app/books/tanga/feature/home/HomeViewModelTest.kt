@@ -25,6 +25,7 @@ class HomeViewModelTest {
     private lateinit var homeInteractor: HomeInteractor
     private lateinit var favoriteInteractor: FavoriteInteractor
     private lateinit var homeViewModel: HomeViewModel
+    private val homeAnalytics: HomeAnalytics = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun setup() {
@@ -51,7 +52,7 @@ class HomeViewModelTest {
         coEvery { homeInteractor.getUserInfo() } returns Result.success(Fixtures.dummyUser)
         coEvery { favoriteInteractor.getFavorites() } returns Result.success(emptyList())
 
-        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor)
+        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor, homeAnalytics)
 
         homeViewModel.state.test {
             assertEquals(expectedState, expectMostRecentItem())
@@ -71,7 +72,7 @@ class HomeViewModelTest {
         coEvery { homeInteractor.getUserInfo() } returns Result.failure(someException)
         coEvery { favoriteInteractor.getFavorites() } returns Result.success(emptyList())
 
-        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor)
+        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor, homeAnalytics)
 
         homeViewModel.state.test {
             val state = expectMostRecentItem()
@@ -100,7 +101,7 @@ class HomeViewModelTest {
         coEvery { homeInteractor.getUserInfo() } returns Result.success(Fixtures.dummyUser)
         coEvery { favoriteInteractor.getFavorites() } returns Result.success(emptyList())
 
-        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor)
+        homeViewModel = HomeViewModel(homeInteractor, favoriteInteractor, homeAnalytics)
 
         homeViewModel.onRetry()
 

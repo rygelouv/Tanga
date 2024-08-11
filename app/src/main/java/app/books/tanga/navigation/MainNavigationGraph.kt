@@ -37,12 +37,12 @@ fun MainNavigationGraph(
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
-            onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId.value) }
+            onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
 
         search(
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) }
+            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
 
         playSummaryAudio { navController.popBackStack() }
@@ -51,7 +51,7 @@ fun MainNavigationGraph(
 
         summariesByCategory(
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId.value) },
+            onNavigateToSummary = { summaryId -> navController.toSummaryDetails(summaryId) },
             onNavigateToSearch = { navController.toSearch() }
         )
 

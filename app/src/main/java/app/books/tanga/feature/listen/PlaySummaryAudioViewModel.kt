@@ -9,6 +9,8 @@ import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlayerActions
 import app.books.tanga.feature.audioplayer.PlayerController
 import app.books.tanga.feature.summary.SummaryInteractor
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Pages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +23,8 @@ import timber.log.Timber
 class PlaySummaryAudioViewModel @Inject constructor(
     private val playerController: PlayerController,
     private val summaryInteractor: SummaryInteractor,
-    private val downloadUrlGenerator: DownloadUrlGenerator
+    private val downloadUrlGenerator: DownloadUrlGenerator,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel(), PlayerActions by playerController {
 
     private val _state: MutableStateFlow<PlaySummaryAudioUiState> =
@@ -29,6 +32,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
     val state: StateFlow<PlaySummaryAudioUiState> = _state
 
     init {
+        analyticsTracker.trackPage(Pages.PLAY_SUMMARY_AUDIO)
         // Observe the playback state and update the UI accordingly.
         viewModelScope.launch {
             playerController.playbackState.collect { playbackState ->

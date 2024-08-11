@@ -11,19 +11,19 @@ fun SubscriptionContainer(
     viewModel: SubscriptionViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val events by viewModel.events.collectAsStateWithLifecycle(initialValue = PricingPlanUiEvent.Empty)
+    val events by viewModel.events.collectAsStateWithLifecycle(initialValue = SubscriptionUiEvent.Empty)
     SubscriptionScreen(
         onCloseClick = onCloseClick,
-        onPlanSelect = viewModel::onPlanSelected,
+        onPlanSelect = viewModel::onSubscriptionPlanSelected,
         state = state
     )
     HandleEvents(events, onCloseClick)
 }
 
 @Composable
-fun HandleEvents(events: PricingPlanUiEvent, onSubscriptionPurchase: () -> Unit) {
+fun HandleEvents(events: SubscriptionUiEvent, onSubscriptionPurchase: () -> Unit) {
     when (events) {
-        is PricingPlanUiEvent.SubscriptionPurchased -> onSubscriptionPurchase()
+        is SubscriptionUiEvent.SubscriptionPurchased -> onSubscriptionPurchase()
         else -> Unit
     }
 }

@@ -44,7 +44,7 @@ fun NavGraphBuilder.summaryDetails(
 }
 
 fun NavController.toSummaryDetails(
-    summaryId: String,
+    summaryId: SummaryId,
     screenToPopUpTo: NavigationScreen? = null,
     isInclusive: Boolean = true
 ) {
@@ -54,7 +54,7 @@ fun NavController.toSummaryDetails(
             .route
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
-                newValue = summaryId
+                newValue = summaryId.value
             )
     ) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }

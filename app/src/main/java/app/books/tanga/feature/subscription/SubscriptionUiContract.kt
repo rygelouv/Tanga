@@ -4,9 +4,12 @@ import android.content.Context
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.resources.TextResource
+import app.books.tanga.coreui.resources.asString
 import app.books.tanga.entity.SubscriptionPlan
 import app.books.tanga.entity.SubscriptionType
 import app.books.tanga.errors.UiError
+import app.books.tanga.utils.extractCurrency
+import app.books.tanga.utils.removeCurrencySymbol
 
 data class PricingPlanUiState(
     val progressState: ProgressState = ProgressState.Hide,
@@ -27,7 +30,13 @@ data class SubscriptionPlanUi(
 data class PurchaseSubscriptionInput(
     val context: Context,
     val plan: SubscriptionPlanUi
-)
+) {
+    val rawPrice: String
+        get() = plan.price.asString(context.resources).removeCurrencySymbol()
+
+    val currency: String?
+        get() = plan.price.asString(context.resources).extractCurrency()
+}
 
 fun SubscriptionPlan.toUi(selected: Boolean = false): SubscriptionPlanUi {
     val (title, price, cadence) = if (type == SubscriptionType.MONTHLY) {
@@ -53,12 +62,12 @@ fun SubscriptionPlan.toUi(selected: Boolean = false): SubscriptionPlanUi {
     )
 }
 
-sealed interface PricingPlanUiEvent {
-    data object Empty : PricingPlanUiEvent
+sealed interface SubscriptionUiEvent {
+    data object Empty : SubscriptionUiEvent
 
     data class Error(
         val error: UiError
-    ) : PricingPlanUiEvent
+    ) : SubscriptionUiEvent
 
-    data object SubscriptionPurchased : PricingPlanUiEvent
+    data object SubscriptionPurchased : SubscriptionUiEvent
 }
