@@ -212,7 +212,7 @@ fun PremiumAccountTag(
     Row(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.2f),
+                color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.1f),
                 shape = Shapes.extraExtraExtraLarge
             )
             .clickable {}
