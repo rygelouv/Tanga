@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Events
+import app.books.tanga.tracking.Pages
 import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
@@ -24,7 +27,8 @@ import timber.log.Timber
 class AuthViewModel @Inject constructor(
     private val interactor: AuthenticationInteractor,
     private val signInClient: SignInClient,
-    private val errorTracker: TangaErrorTracker
+    private val errorTracker: TangaErrorTracker,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
     private val _state: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState())
     val state: StateFlow<AuthUiState> = _state.asStateFlow()
@@ -32,7 +36,12 @@ class AuthViewModel @Inject constructor(
     private val _events: Channel<AuthUiEvent> = Channel()
     val events: Flow<AuthUiEvent> = _events.receiveAsFlow()
 
+    fun onPageStarted() {
+        analyticsTracker.trackPage(Pages.AUTHENTICATION)
+    }
+
     fun onGoogleSignInStarted() {
+        analyticsTracker.track(Events.TAP_GOOGLE_SIGN_IN)
         _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Show) }
         viewModelScope.launch {
             interactor
@@ -49,6 +58,7 @@ class AuthViewModel @Inject constructor(
 
     fun onSkipAuth() {
         if (_state.value.googleSignInButtonProgressState == ProgressState.Show) return
+        analyticsTracker.track(Events.TAP_SKIP_SIGN_IN)
 
         _state.update { it.copy(skipProgressState = ProgressState.Show, disableGoogleSignInButton = true) }
         viewModelScope.launch {
@@ -60,6 +70,7 @@ class AuthViewModel @Inject constructor(
                         // TODO remove nullability
                         userCreationDate = user.createdAt ?: Date()
                     )
+                    analyticsTracker.setUserDetails(user.id.value)
                 }.onFailure { error ->
                     _state.update { it.copy(skipProgressState = ProgressState.Hide, disableGoogleSignInButton = false) }
                     Timber.e("Sign In Anonymously failure: ${error.message}", error)
@@ -81,6 +92,7 @@ class AuthViewModel @Inject constructor(
                         // TODO remove nullability
                         userCreationDate = user.createdAt ?: Date()
                     )
+                    analyticsTracker.setUserDetails(user.id.value)
                 }.onFailure { error ->
                     Timber.e("Complete Google sign In failure", error)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
@@ -97,5 +109,9 @@ class AuthViewModel @Inject constructor(
 
     fun onGoogleSignInNotCompleted() {
         _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
+    }
+
+    fun onTermsAndPrivacyClick() {
+        analyticsTracker.track(Events.TAP_AUTH_PRIVACY_AND_TERMS)
     }
 }

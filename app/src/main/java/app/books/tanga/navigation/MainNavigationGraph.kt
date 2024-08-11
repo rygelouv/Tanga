@@ -1,30 +1,21 @@
 package app.books.tanga.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import app.books.tanga.feature.deleteaccount.deleteAccount
 import app.books.tanga.feature.deleteaccount.toDeleteAccount
-import app.books.tanga.feature.home.HomeScreen
-import app.books.tanga.feature.library.LibraryScreen
 import app.books.tanga.feature.listen.playSummaryAudio
 import app.books.tanga.feature.listen.toPlaySummaryAudio
 import app.books.tanga.feature.profile.privacyAndTerms
-import app.books.tanga.feature.profile.profile
-import app.books.tanga.feature.profile.toPrivacyAndTerms
-import app.books.tanga.feature.profile.toProfile
 import app.books.tanga.feature.read.readSummaryScreen
 import app.books.tanga.feature.read.toReadSummaryScreen
 import app.books.tanga.feature.search.search
 import app.books.tanga.feature.search.toSearch
 import app.books.tanga.feature.settings.settings
-import app.books.tanga.feature.settings.toSettings
-import app.books.tanga.feature.subscription.pricingPlan
-import app.books.tanga.feature.subscription.toPricingPlan
+import app.books.tanga.feature.subscription.subscription
+import app.books.tanga.feature.subscription.toSubscription
 import app.books.tanga.feature.summary.list.summariesByCategory
-import app.books.tanga.feature.summary.list.toSummariesByCategory
 import app.books.tanga.feature.summary.summaryDetails
 import app.books.tanga.feature.summary.toSummaryDetails
 
@@ -42,7 +33,7 @@ fun MainNavigationGraph(
 
         summaryDetails(
             onNavigateToAuth = onRedirectToAuth,
-            onNavigateToSubscriptions = { navController.toPricingPlan() },
+            onNavigateToSubscriptions = { navController.toSubscription() },
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
@@ -56,7 +47,7 @@ fun MainNavigationGraph(
 
         playSummaryAudio { navController.popBackStack() }
 
-        pricingPlan { navController.popBackStack() }
+        subscription { navController.popBackStack() }
 
         summariesByCategory(
             onNavigateToPreviousScreen = { navController.popBackStack() },
@@ -67,7 +58,7 @@ fun MainNavigationGraph(
         readSummaryScreen(
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
-            onNavigateToPricingPlans = { navController.toPricingPlan() }
+            onNavigateToPricingPlans = { navController.toSubscription() }
         )
 
         settings(
@@ -85,32 +76,4 @@ fun MainNavigationGraph(
             onNavigateBack = { navController.popBackStack() }
         )
     }
-}
-
-fun NavGraphBuilder.bottomBarNavGraph(
-    navController: NavHostController,
-    onRedirectToAuth: () -> Unit
-) {
-    composable(route = NavigationScreen.BottomBarScreen.Home.route) {
-        HomeScreen(
-            onSearch = { navController.toSearch() },
-            onProfilePictureClick = { navController.toProfile() },
-            onSummaryClick = { summaryId -> navController.toSummaryDetails(summaryId) },
-            onNavigateToSummariesByCategory = { categoryId, categoryName ->
-                navController.toSummariesByCategory(categoryId, categoryName)
-            }
-        )
-    }
-    composable(route = NavigationScreen.BottomBarScreen.Library.route) {
-        LibraryScreen(
-            onExploreButtonClick = { navController.toSearch() },
-            onFavoriteClick = { summaryId -> navController.toSummaryDetails(summaryId) }
-        )
-    }
-    profile(
-        onProClicked = { navController.toPricingPlan() },
-        onRedirectToAuth = onRedirectToAuth,
-        onNavigateToSettings = { navController.toSettings() },
-        onNavigateToPrivacyAndTerms = { navController.toPrivacyAndTerms() }
-    )
 }

@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -35,36 +34,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.DotsAnimation
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
-
-@Composable
-fun AuthScreenContainer(
-    onTermsAndPrivacyClick: () -> Unit,
-    onAuthSuccess: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: AuthViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val events by viewModel.events.collectAsStateWithLifecycle(AuthUiEvent.Empty)
-    AuthScreen(
-        state = state,
-        events = events,
-        modifier = modifier,
-        onAuthSkip = { viewModel.onSkipAuth() },
-        onAuthSuccess = onAuthSuccess,
-        onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
-        onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) },
-        onGoogleSignInNotComplete = { viewModel.onGoogleSignInNotCompleted() },
-        onTermsAndPrivacyClick = onTermsAndPrivacyClick
-    )
-}
 
 @Composable
 fun AuthScreen(

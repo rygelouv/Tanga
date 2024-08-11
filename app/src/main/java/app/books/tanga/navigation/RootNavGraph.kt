@@ -35,7 +35,6 @@ fun NavigationGraph(
         mainScreen {
             navController.toAuthentication(NavigationScreen.Main)
         }
-
         privacyAndTerms(
             onNavigateBack = { navController.popBackStack() }
         )

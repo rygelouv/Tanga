@@ -1,9 +1,11 @@
 package app.books.tanga.feature.onboarding
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
+import app.books.tanga.tracking.Pages
 
 fun NavGraphBuilder.onboarding(
     onNavigateBack: () -> Unit,
@@ -30,8 +32,13 @@ fun NavGraphBuilder.landing(
     onNavigateToOnboarding: () -> Unit
 ) {
     composable(route = NavigationScreen.Landing.route) {
+        val viewModel: OnboardingViewModel = hiltViewModel()
+        viewModel.onPageStarted(Pages.LANDING)
         LandingScreen(
-            onNavigateToOnboarding = onNavigateToOnboarding
+            onNavigateToOnboarding = {
+                viewModel.onOnboardingStarted()
+                onNavigateToOnboarding()
+            }
         )
     }
 }

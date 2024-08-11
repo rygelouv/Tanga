@@ -100,6 +100,7 @@ android {
 dependencies {
     // Project Dependencies
     implementation(project(":core-ui"))
+    implementation(project(":tracking"))
 
     // Core Libraries
     implementation(libs.splashscreen)

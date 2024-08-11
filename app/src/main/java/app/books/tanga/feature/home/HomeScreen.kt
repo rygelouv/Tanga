@@ -32,8 +32,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
@@ -54,11 +52,11 @@ fun HomeScreen(
     onSearch: () -> Unit,
     onProfilePictureClick: () -> Unit,
     onNavigateToSummariesByCategory: (CategoryId, String) -> Unit,
+    onRetry: () -> Unit,
+    state: HomeUiState,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
     onSummaryClick: (String) -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -76,7 +74,7 @@ fun HomeScreen(
             modifier = Modifier.padding(it),
             state = state,
             onSummaryClick = onSummaryClick,
-            onErrorButtonClick = { viewModel.onRetry() },
+            onErrorButtonClick = onRetry,
             onSeeAllClick = onNavigateToSummariesByCategory
         )
     }
@@ -274,7 +272,9 @@ private fun HomeScreenPreview() {
             onSearch = {},
             onProfilePictureClick = {},
             onNavigateToSummariesByCategory = { _, _ -> },
-            onSummaryClick = {}
+            onSummaryClick = {},
+            state = HomeUiState(),
+            onRetry = {}
         )
     }
 }

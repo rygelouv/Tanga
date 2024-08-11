@@ -14,8 +14,20 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import app.books.tanga.coreui.theme.LocalTintColor
+import app.books.tanga.feature.home.home
+import app.books.tanga.feature.library.library
+import app.books.tanga.feature.profile.profile
+import app.books.tanga.feature.profile.toPrivacyAndTerms
+import app.books.tanga.feature.profile.toProfile
+import app.books.tanga.feature.search.toSearch
+import app.books.tanga.feature.settings.toSettings
+import app.books.tanga.feature.subscription.toSubscription
+import app.books.tanga.feature.summary.list.toSummariesByCategory
+import app.books.tanga.feature.summary.toSummaryDetails
 
 @Composable
 fun BottomBarNavigation(navController: NavController) {
@@ -86,5 +98,29 @@ fun RowScope.AddItem(
         colors = NavigationBarItemDefaults.colors(
             indicatorColor = Color.White
         )
+    )
+}
+
+fun NavGraphBuilder.bottomBarNavGraph(
+    navController: NavHostController,
+    onRedirectToAuth: () -> Unit
+) {
+    home(
+        onNavigateToSearch = { navController.toSearch() },
+        onNavigateToProfile = { navController.toProfile() },
+        onNavigateToSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) },
+        onNavigateToSummariesByCategory = { categoryId, categoryName ->
+            navController.toSummariesByCategory(categoryId, categoryName)
+        }
+    )
+    library(
+        onNavigateToSearch = { navController.toSearch() },
+        onNavigateToSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) }
+    )
+    profile(
+        onProClicked = { navController.toSubscription() },
+        onRedirectToAuth = onRedirectToAuth,
+        onNavigateToSettings = { navController.toSettings() },
+        onNavigateToPrivacyAndTerms = { navController.toPrivacyAndTerms() }
     )
 }
