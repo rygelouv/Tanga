@@ -35,12 +35,6 @@ fun LandingScreen(
     onNavigateToOnboarding: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-//    SystemBarsVisibility(
-//        statusBarColor = Crayola,
-//        navigationBarColor = MaterialTheme.colorScheme.onPrimaryContainer,
-//        statusBarVisible = true,
-//        navigationBarVisible = true
-//    )
     OnboardingSystemBarsVisibility(OnboardingTransitionElement.Landing)
     Box(
         modifier = modifier.fillMaxSize()

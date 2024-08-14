@@ -325,7 +325,7 @@ fun SearchButton(
         )
         Spacer(modifier = Modifier.width(12.dp))
         Text(
-            text = stringResource(id = R.string.search),
+            text = stringResource(id = R.string.explore),
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.primary,

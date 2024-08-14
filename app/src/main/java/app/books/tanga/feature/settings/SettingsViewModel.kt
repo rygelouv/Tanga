@@ -3,6 +3,8 @@ package app.books.tanga.feature.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.feature.auth.AuthenticationInteractor
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Events
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val authInteractor: AuthenticationInteractor
+    private val authInteractor: AuthenticationInteractor,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
     private val _state: MutableStateFlow<SettingsUiState> = MutableStateFlow(SettingsUiState())
     val state: StateFlow<SettingsUiState> = _state.asStateFlow()
@@ -33,6 +36,7 @@ class SettingsViewModel @Inject constructor(
             authInteractor.signOut().onSuccess {
                 _state.value = _state.value.copy(isLoggingOut = false)
                 postEvent(SettingsUiEvent.NavigateTo.Auth)
+                analyticsTracker.track(Events.ACTION_USER_SIGNED_OUT)
             }
         }
     }

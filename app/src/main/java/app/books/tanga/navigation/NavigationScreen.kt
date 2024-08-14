@@ -61,7 +61,7 @@ sealed class NavigationScreen(val route: String) {
 
     data object PlaySummaryAudio : NavigationScreen("play_summary_audio_screen/summary_id={summaryId}")
 
-    data object PricingPlan : NavigationScreen("pricing_plan_screen")
+    data object Subscription : NavigationScreen("subscription_screen")
 
     data object ReadSummary : NavigationScreen("read_summary_screen/summary_id={summaryId}") {
         const val SUMMARY_ID_KEY = "summaryId"

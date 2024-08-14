@@ -5,19 +5,19 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
 
-fun NavGraphBuilder.pricingPlan(onCloseClicked: () -> Unit = {}) {
-    composable(route = NavigationScreen.PricingPlan.route) {
+fun NavGraphBuilder.subscription(onCloseClicked: () -> Unit = {}) {
+    composable(route = NavigationScreen.Subscription.route) {
         SubscriptionContainer(
             onCloseClick = onCloseClicked,
         )
     }
 }
 
-fun NavController.toPricingPlan(
+fun NavController.toSubscription(
     screenToPopUpTo: NavigationScreen? = null,
     isInclusive: Boolean = true
 ) {
-    navigate(route = NavigationScreen.PricingPlan.route) {
+    navigate(route = NavigationScreen.Subscription.route) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }
     }
 }

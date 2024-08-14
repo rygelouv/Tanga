@@ -18,7 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,8 +31,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
@@ -43,6 +40,7 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.CategoryId
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
@@ -54,11 +52,11 @@ fun HomeScreen(
     onSearch: () -> Unit,
     onProfilePictureClick: () -> Unit,
     onNavigateToSummariesByCategory: (CategoryId, String) -> Unit,
+    onRetry: () -> Unit,
+    state: HomeUiState,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
-    onSummaryClick: (String) -> Unit
+    onSummaryClick: (SummaryId) -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -76,7 +74,7 @@ fun HomeScreen(
             modifier = Modifier.padding(it),
             state = state,
             onSummaryClick = onSummaryClick,
-            onErrorButtonClick = { viewModel.onRetry() },
+            onErrorButtonClick = onRetry,
             onSeeAllClick = onNavigateToSummariesByCategory
         )
     }
@@ -85,7 +83,7 @@ fun HomeScreen(
 @Composable
 fun LoadHomeContent(
     state: HomeUiState,
-    onSummaryClick: (String) -> Unit,
+    onSummaryClick: (SummaryId) -> Unit,
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
@@ -136,7 +134,7 @@ fun HomeTopBar(
 @Composable
 fun HomeContent(
     state: HomeUiState,
-    onSummaryClick: (String) -> Unit,
+    onSummaryClick: (SummaryId) -> Unit,
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     onErrorButtonClick: () -> Unit = {}
@@ -219,7 +217,7 @@ fun HomeSection(
     onSeeAllClick: (CategoryId, String) -> Unit,
     modifier: Modifier = Modifier,
     isFirst: Boolean = false,
-    onSummaryClick: (String) -> Unit
+    onSummaryClick: (SummaryId) -> Unit
 ) {
     Column {
         Spacer(modifier = modifier.height(if (isFirst) 22.dp else 28.dp))
@@ -247,7 +245,7 @@ fun HomeSection(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClick = onSummaryClick)
+        SummaryRow(summaries = summaries.toImmutableList(), onSummaryClick = { onSummaryClick(SummaryId(it)) })
     }
 }
 
@@ -274,7 +272,9 @@ private fun HomeScreenPreview() {
             onSearch = {},
             onProfilePictureClick = {},
             onNavigateToSummariesByCategory = { _, _ -> },
-            onSummaryClick = {}
+            onSummaryClick = {},
+            state = HomeUiState(),
+            onRetry = {}
         )
     }
 }

@@ -3,6 +3,7 @@ package app.books.tanga.session
 import app.books.tanga.data.favorite.FavoriteInMemoryCache
 import app.books.tanga.di.IoDispatcher
 import app.books.tanga.errors.TangaErrorTracker
+import app.books.tanga.tracking.AnalyticsTracker
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.NonCancellable
@@ -15,12 +16,14 @@ import kotlinx.coroutines.withContext
 class SessionDataCleaner @Inject constructor(
     private val favoriteInMemoryCache: FavoriteInMemoryCache,
     private val errorTracker: TangaErrorTracker,
+    private val analyticsTracker: AnalyticsTracker,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : suspend () -> Unit {
     override suspend fun invoke() {
         withContext(ioDispatcher + NonCancellable) {
             favoriteInMemoryCache.clear()
             errorTracker.clearUserDetails()
+            analyticsTracker.clearUserDetails()
         }
     }
 }

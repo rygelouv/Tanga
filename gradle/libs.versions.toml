@@ -91,8 +91,12 @@ turbine-version = "1.0.0"
 # Markdown
 commonmark-version = "0.21.0"
 
-#RevenueCat
+# RevenueCat Monetization
 revenuecat-purchases-version = "7.0.0"
+
+junit = "4.13.2"
+appcompat-version = "1.6.1"
+material-version = "1.10.0"
 
 [libraries]
 # Core Libraries
@@ -129,6 +133,7 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom-version" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
@@ -191,6 +196,9 @@ detekt-rules-compose = { module = "ru.kode:detekt-rules-compose", version.ref = 
 # Debug tools
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-version" }
 compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-version" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat-version" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material-version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin-gradle-version" }

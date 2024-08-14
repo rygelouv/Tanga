@@ -10,6 +10,7 @@ import app.books.tanga.feature.listen.PlaySummaryAudioViewModel
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.books.tanga.tracking.AnalyticsTracker
 import app.cash.turbine.test
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -34,6 +35,7 @@ class PlaySummaryAudioViewModelTest {
     private lateinit var summaryInteractor: SummaryInteractor
     private lateinit var viewModel: PlaySummaryAudioViewModel
     private lateinit var downloadUrlGenerator: DownloadUrlGenerator
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
     private val playbackStateFlow = MutableStateFlow(PlaybackState())
 
     @BeforeEach
@@ -47,7 +49,8 @@ class PlaySummaryAudioViewModelTest {
 
     @Test
     fun `PlayerController playback state changes updates viewModel state`() = runTest {
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
+        viewModel =
+            PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator, analyticsTracker)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -71,7 +74,8 @@ class PlaySummaryAudioViewModelTest {
         coEvery { playerController.initPlayer(audioTrack, any()) } just Runs
         coEvery { downloadUrlGenerator.generateAudioDownloadUrl(summaryId) } returns "http://example.com/audio.mp3"
 
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
+        viewModel =
+            PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator, analyticsTracker)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)
@@ -94,7 +98,8 @@ class PlaySummaryAudioViewModelTest {
 
         coEvery { summaryInteractor.getSummary(summaryId) } returns Result.failure(exception)
 
-        viewModel = PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator)
+        viewModel =
+            PlaySummaryAudioViewModel(playerController, summaryInteractor, downloadUrlGenerator, analyticsTracker)
 
         viewModel.state.test {
             viewModel.loadSummary(summaryId)

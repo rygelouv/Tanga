@@ -8,6 +8,7 @@ import app.books.tanga.feature.auth.AuthenticationInteractor
 import app.books.tanga.revenuecat.RevenueCatPurchases
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionState
+import app.books.tanga.tracking.AnalyticsTracker
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -29,6 +30,7 @@ class ProfileViewModelTest {
 
     private lateinit var authInteractor: AuthenticationInteractor
     private lateinit var userRepository: UserRepository
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
     private lateinit var viewModel: ProfileViewModel
     private lateinit var revenueCatPurchases: RevenueCatPurchases
 
@@ -58,7 +60,7 @@ class ProfileViewModelTest {
         // Use the ofType matcher to specify the exact type expected for the return value
         coEvery { userRepository.getUserStream() } returns flowOf(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
 
         // Assert that the state flow emits the correct data
         viewModel.state.test {
@@ -77,7 +79,7 @@ class ProfileViewModelTest {
         // Set up the authInteractor to do nothing (already done by `relaxed = true`)
         coEvery { authInteractor.signOut() } returns Result.success(SessionState.SignedOut)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
         // Call the onLogout function
         viewModel.onLogout()
 
@@ -89,9 +91,9 @@ class ProfileViewModelTest {
     fun `onProUpgrade triggers emission of NavigateToPricingPlan event`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
         // Call the onProUpgrade function
-        viewModel.onProUpgrade()
+        viewModel.onPremiumUpgrade()
 
         // Assert that the event flow emits the correct event
         viewModel.events.test {
@@ -105,7 +107,7 @@ class ProfileViewModelTest {
     fun `onLogin triggers emission of NavigateToAuth event`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(user)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
         // Call the onLogin function
         viewModel.onLogin()
 
@@ -121,7 +123,7 @@ class ProfileViewModelTest {
     fun `Profile state is updated when user data is not fetched successfully`() = runTest {
         coEvery { userRepository.getUser() } returns Result.failure(Exception())
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -134,7 +136,7 @@ class ProfileViewModelTest {
     fun `when user is anonymous state userInfo is null`() = runTest {
         coEvery { userRepository.getUser() } returns Result.success(null)
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
 
         viewModel.state.test {
             val item = awaitItem()
@@ -148,7 +150,7 @@ class ProfileViewModelTest {
         coEvery { userRepository.getUserStream() } returns flowOf(user)
         coEvery { authInteractor.signOut() } returns Result.failure(Exception())
 
-        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases)
+        viewModel = ProfileViewModel(authInteractor, userRepository, revenueCatPurchases, analyticsTracker)
         viewModel.onLogout()
 
         viewModel.state.test {

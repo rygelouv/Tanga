@@ -36,7 +36,7 @@ import kotlinx.collections.immutable.toImmutableList
  */
 @Composable
 fun LibraryScreen(
-    onFavoriteClick: (String) -> Unit,
+    onFavoriteClick: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LibraryViewModel = hiltViewModel(),
     onExploreButtonClick: () -> Unit
@@ -79,7 +79,7 @@ fun LibraryScreen(
 fun FavoriteGrid(
     favorites: ImmutableList<FavoriteUi>,
     modifier: Modifier = Modifier,
-    onFavoriteClick: (String) -> Unit
+    onFavoriteClick: (SummaryId) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -100,7 +100,7 @@ fun FavoriteGrid(
                 hasGraphic = false,
                 width = 134.dp,
                 titleSize = 18.sp,
-                onSummaryClick = onFavoriteClick
+                onSummaryClick = { onFavoriteClick(SummaryId(favorite.summaryId)) }
             )
         }
     }

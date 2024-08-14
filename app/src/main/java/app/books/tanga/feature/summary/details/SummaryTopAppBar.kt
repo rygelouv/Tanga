@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -16,7 +15,6 @@ import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.feature.summary.SummaryUi
-import app.books.tanga.utils.shareSummary
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +23,7 @@ fun SummaryTopAppBar(
     isFavorite: Boolean,
     favoriteProgressState: ProgressState,
     onSaveClick: () -> Unit,
+    onShare: (summary: SummaryUi) -> Unit,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
@@ -51,16 +50,8 @@ fun SummaryTopAppBar(
                 progressState = favoriteProgressState,
                 onClick = { onSaveClick() }
             )
-            val context = LocalContext.current
             IconButton(onClick = {
-                summary?.let {
-                    shareSummary(
-                        context = context,
-                        summaryTitle = it.title,
-                        summaryAuthor = it.author,
-                        url = it.coverUrl
-                    )
-                }
+                summary?.let(onShare)
             }) {
                 Icon(
                     modifier = Modifier

@@ -7,6 +7,8 @@ import app.books.tanga.data.download.FileDownloader
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.summary.SummaryBehaviorDelegate
+import app.books.tanga.tracking.AnalyticsTracker
+import app.books.tanga.tracking.Pages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +24,8 @@ import timber.log.Timber
 @HiltViewModel
 class ReadSummaryViewModel @Inject constructor(
     private val summaryBehaviorDelegate: SummaryBehaviorDelegate,
-    private val fileDownloader: FileDownloader
+    private val fileDownloader: FileDownloader,
+    private val analyticsTracker: AnalyticsTracker
 ) : ViewModel(), SummaryBehaviorDelegate by summaryBehaviorDelegate {
 
     private val _state: MutableStateFlow<ReadSummaryUiState> =
@@ -33,6 +36,7 @@ class ReadSummaryViewModel @Inject constructor(
     val events: Flow<ReadSummaryUiEvent> = _events.receiveAsFlow()
 
     init {
+        analyticsTracker.trackPage(Pages.READ_SUMMARY)
         summaryBehaviorDelegate.setUp(viewModelScope)
         observerSummaryBehaviorState()
     }

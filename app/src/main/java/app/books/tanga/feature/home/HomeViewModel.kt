@@ -3,6 +3,7 @@ package app.books.tanga.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.categories.PredefinedCategory
 import app.books.tanga.feature.library.FavoriteInteractor
@@ -20,12 +21,14 @@ import timber.log.Timber
 class HomeViewModel @Inject constructor(
     private val homeInteractor: HomeInteractor,
     // This will be removed once the favorites are loaded on app start up
-    private val favoriteInteractor: FavoriteInteractor
-) : ViewModel() {
+    private val favoriteInteractor: FavoriteInteractor,
+    private val homeAnalytics: HomeAnalytics,
+) : ViewModel(), HomeAnalytics by homeAnalytics {
     private val _state = MutableStateFlow(HomeUiState(progressState = ProgressState.Show))
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
 
     init {
+        trackHomePage()
         loadHomeData()
         // This will be removed once the favorites are loaded on app start up
         loadFavoritesInBackground()
@@ -115,6 +118,12 @@ class HomeViewModel @Inject constructor(
                 }.onFailure {
                     Timber.e(it, "HomeViewModel", "Error loading favorites")
                 }
+        }
+    }
+
+    fun onSummaryItemClick(summaryId: SummaryId) {
+        viewModelScope.launch {
+            onSummaryClick(summaryId)
         }
     }
 }

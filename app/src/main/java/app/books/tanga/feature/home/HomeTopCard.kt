@@ -40,13 +40,14 @@ import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.extraExtraLarge
 import app.books.tanga.data.PreviewData
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.categories.PredefinedCategory
 
 @Composable
 fun HomeTopCard(
     weeklySummaryUi: WeeklySummaryUi,
     modifier: Modifier = Modifier,
-    onSummaryClick: (String) -> Unit
+    onSummaryClick: (SummaryId) -> Unit
 ) {
     val summaryUi = weeklySummaryUi.summaryUi
     val gradientColors =
@@ -66,7 +67,7 @@ fun HomeTopCard(
                 shape = Shapes.extraExtraLarge
             )
             .clickable {
-                onSummaryClick(summaryUi.id.value)
+                onSummaryClick(summaryUi.id)
             },
         shape = Shapes.extraExtraLarge,
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)
@@ -88,7 +89,7 @@ fun HomeTopCard(
                 modifier = Modifier
                     .offset(y = 8.dp)
                     .width(90.dp),
-                onSummaryClick = onSummaryClick
+                onSummaryClick = { onSummaryClick(summaryUi.id) }
             )
         }
     }

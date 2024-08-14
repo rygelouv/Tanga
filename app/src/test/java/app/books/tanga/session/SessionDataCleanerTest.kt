@@ -2,6 +2,7 @@ package app.books.tanga.session
 
 import app.books.tanga.data.favorite.FavoriteInMemoryCache
 import app.books.tanga.errors.TangaErrorTracker
+import app.books.tanga.tracking.AnalyticsTracker
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,7 @@ class SessionDataCleanerTest {
 
     private val favoriteInMemoryCache: FavoriteInMemoryCache = mockk(relaxed = true)
     private val errorTracker: TangaErrorTracker = mockk(relaxed = true)
+    private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val ioDispatcher = UnconfinedTestDispatcher()
@@ -25,7 +27,7 @@ class SessionDataCleanerTest {
     @BeforeEach
     fun setup() {
         Dispatchers.setMain(ioDispatcher)
-        sessionDataCleaner = SessionDataCleaner(favoriteInMemoryCache, errorTracker, ioDispatcher)
+        sessionDataCleaner = SessionDataCleaner(favoriteInMemoryCache, errorTracker, analyticsTracker, ioDispatcher)
     }
 
     @Test
