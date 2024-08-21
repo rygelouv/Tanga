@@ -124,7 +124,6 @@ class SubscriptionViewModel @Inject constructor(
         props[Properties.SUBSCRIPTION_PRICE] = input.rawPrice
         subscriptionType?.let { props.put(Properties.SUBSCRIPTION_TYPE, it) }
         input.currency?.let { props.put(Properties.SUBSCRIPTION_CURRENCY, it) }
-        Timber.e("Subscription purchased: $props")
         analyticsTracker.track(Events.ACTION_SUBSCRIPTION_PURCHASED, props)
     }
 }
