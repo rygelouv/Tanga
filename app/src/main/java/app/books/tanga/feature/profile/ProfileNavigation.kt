@@ -21,12 +21,15 @@ fun NavGraphBuilder.profile(
     }
 }
 
-fun NavController.toProfile(
-    screenToPopUpTo: NavigationScreen? = null,
-    isInclusive: Boolean = true
-) {
+fun NavController.toProfile() {
     navigate(route = NavigationScreen.BottomBarScreen.Profile.route) {
-        screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }
+        graph.startDestinationRoute?.let { screenRoute ->
+            popUpTo(screenRoute) {
+                saveState = true
+            }
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }
 

@@ -36,7 +36,7 @@ interface PlayerController : PlayerActions {
 
     companion object {
         /** Interval (in milliseconds) used for seeking forward or backward. */
-        const val SEEK_INTERVAL_MS = 15000
+        const val SEEK_INTERVAL_MS = 10000
     }
 }
 
