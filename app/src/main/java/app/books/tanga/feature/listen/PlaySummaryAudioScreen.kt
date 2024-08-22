@@ -81,6 +81,7 @@ fun PlaySummaryAudioScreen(
                 title = state.title,
                 author = state.author,
                 coverUrl = state.coverUrl,
+                duration = state.duration,
                 playbackState = state.playbackState,
                 actions = actions
             )
@@ -112,6 +113,7 @@ fun PlaySummaryAudioContent(
     coverUrl: String? = null,
     title: String? = null,
     author: String? = null,
+    duration: String? = null,
     playbackState: PlaybackState? = null
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -168,7 +170,7 @@ fun PlaySummaryAudioContent(
                 }
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
-                AudioBar(playbackState = playbackState) { actions.onSeekBarPositionChanged(it) }
+                AudioBar(playbackState = playbackState, duration = duration) { actions.onSeekBarPositionChanged(it) }
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
                 PlaybackControls(playbackState = playbackState, actions = actions)
             }
@@ -234,6 +236,7 @@ private fun PlaybackControls(
 @Composable
 private fun AudioBar(
     playbackState: PlaybackState?,
+    duration: String?,
     onSliderPositionChange: (Long) -> Unit
 ) {
     Column(
@@ -259,7 +262,7 @@ private fun AudioBar(
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 color = MaterialTheme.colorScheme.outline,
-                text = playbackState?.duration?.toTimeFormat() ?: "00:00",
+                text = duration ?: "00:00",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall

@@ -61,7 +61,7 @@ class FavoriteRepositoryImpl @Inject constructor(
      */
     override suspend fun createFavorite(favorite: Favorite): Result<Unit> =
         operationHandler.executeOperation {
-            val documentReference = firestore.favoriteCollection.add(favorite).await()
+            val documentReference = firestore.favoriteCollection.add(favorite.toFirestoreData()).await()
             firestore
                 .favoriteCollection
                 .document(documentReference.id)

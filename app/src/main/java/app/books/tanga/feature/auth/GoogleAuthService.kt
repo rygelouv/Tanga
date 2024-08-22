@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.userProfileChangeRequest
 import javax.inject.Inject
 import javax.inject.Named
 import kotlinx.coroutines.tasks.await
@@ -70,6 +72,15 @@ class GoogleAuthServiceImpl @Inject constructor(
         val firebaseAuthResult = auth.signInWithCredential(googleCredentials).await()
         val isNewUser = firebaseAuthResult.additionalUserInfo?.isNewUser == true
 
+        // Update display name if it's null
+        // Fixing issue https://tanga-yw.sentry.io/issues/5724330260/events/d3265e0545f641e8b4d44d164a37b7d6/
+        if (auth.currentUser?.displayName == null) {
+            Timber.e("User has no display name, updating it")
+            val profileUpdates: UserProfileChangeRequest = userProfileChangeRequest {
+                displayName = firebaseAuthResult.additionalUserInfo?.username ?: "Anonymous"
+            }
+            auth.currentUser?.updateProfile(profileUpdates)?.await()
+        }
         val user = auth.currentUser?.toUser() ?: throw UnableToSignInWithGoogleError()
 
         return AuthResult(

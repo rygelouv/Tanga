@@ -74,7 +74,7 @@ class SummaryRepositoryImpl @Inject constructor(
 
     override suspend fun getWeeklySummary(): Result<Summary> {
         val weeklySummaryCollection = firestore.weeklySummaryCollection.get().await()
-        val weeklySummaryData = weeklySummaryCollection.documents.first()
+        val weeklySummaryData = weeklySummaryCollection.documents.firstOrNull()
         val weeklySummarySlug = weeklySummaryData?.id ?: error("Weekly summary not found")
         val weeklySummaryId = SummaryId(weeklySummarySlug)
         val weeklySummary = getSummary(weeklySummaryId)

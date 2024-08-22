@@ -14,3 +14,13 @@ fun FirestoreData.toFavorite(): Favorite = Favorite(
     summaryId = this[FirestoreDatabase.Favorites.Fields.SUMMARY_ID].toString(),
     playingLength = this[FirestoreDatabase.Favorites.Fields.PLAYING_LENGTH].toString()
 )
+
+fun Favorite.toFirestoreData() = mapOf(
+    // FirestoreDatabase.Favorites.Fields.UID to id, No needed, Firestore will generate it.
+    FirestoreDatabase.Favorites.Fields.TITLE to title,
+    FirestoreDatabase.Favorites.Fields.AUTHOR to author,
+    FirestoreDatabase.Favorites.Fields.COVER_URL to coverUrl,
+    FirestoreDatabase.Favorites.Fields.USER_ID to userId,
+    FirestoreDatabase.Favorites.Fields.SUMMARY_ID to summaryId,
+    FirestoreDatabase.Favorites.Fields.PLAYING_LENGTH to playingLength,
+)
