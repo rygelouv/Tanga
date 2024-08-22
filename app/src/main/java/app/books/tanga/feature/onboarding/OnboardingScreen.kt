@@ -89,7 +89,7 @@ fun OnboardingScreen(
             inactiveColor = MaterialTheme.colorScheme.tertiaryContainer,
             indicatorWidth = 8.dp
         )
-        FinishOnboardingButton(
+        OnboardingNavigationButton(
             modifier = Modifier.weight(1f),
             pagerState = pagerState,
             onNextClick = {
@@ -108,7 +108,7 @@ fun OnboardingScreen(
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun FinishOnboardingButton(
+fun OnboardingNavigationButton(
     pagerState: PagerState,
     onNextClick: () -> Unit,
     modifier: Modifier = Modifier,

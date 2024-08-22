@@ -33,7 +33,8 @@ fun MediaSlider(
         } else {
             playbackState?.position?.toFloat() ?: 0f
         }
-
+    // Stopping the bleeding caused by this crash https://github.com/rygelouv/Tanga/issues/107
+    val rangeMax = playbackState?.duration?.toFloat()?.takeIf { it > 0 } ?: 0f
     Slider(
         modifier = modifier.fillMaxWidth(),
         value = sliderValue,
@@ -47,6 +48,6 @@ fun MediaSlider(
             isDragging = false
             onSliderPositionChange(dragValue.toLong())
         },
-        valueRange = 0f..(playbackState?.duration?.toFloat() ?: 0f)
+        valueRange = 0f..rangeMax
     )
 }

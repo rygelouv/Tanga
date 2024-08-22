@@ -29,7 +29,7 @@ fun FirebaseUser.toUser(): User = User(
 
 fun User.toFireStoreUserData() =
     mapOf(
-        FirestoreDatabase.Users.Fields.UID to id,
+        FirestoreDatabase.Users.Fields.UID to id.value,
         FirestoreDatabase.Users.Fields.FULL_NAME to fullName,
         FirestoreDatabase.Users.Fields.EMAIL to email,
         FirestoreDatabase.Users.Fields.PHOTO_URL to photoUrl,
