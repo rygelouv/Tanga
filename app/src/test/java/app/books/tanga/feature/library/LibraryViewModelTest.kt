@@ -1,10 +1,7 @@
-package app.books.tanga.feature
+package app.books.tanga.feature.library
 
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.Favorite
-import app.books.tanga.feature.library.FavoriteInteractor
-import app.books.tanga.feature.library.LibraryViewModel
-import app.books.tanga.feature.library.toFavoriteUi
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.cash.turbine.test

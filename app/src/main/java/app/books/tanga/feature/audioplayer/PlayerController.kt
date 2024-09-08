@@ -2,7 +2,8 @@ package app.books.tanga.feature.audioplayer
 
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaController
+import com.google.common.util.concurrent.MoreExecutors
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -41,10 +42,10 @@ interface PlayerController : PlayerActions {
 }
 
 /**
- * Concrete implementation of PlayerController using ExoPlayer as the media playback engine.
+ * Concrete implementation of PlayerController using [MediaController] as the media playback engine.
  */
-class ExoPlayerController @Inject constructor(
-    private val player: ExoPlayer
+class PlayerControllerImpl @Inject constructor(
+    controllerBuilder: MediaController.Builder
 ) : PlayerController, Player.Listener {
     /** A state flow that emits the current playback state of the player. */
     private val _playbackState = MutableStateFlow(PlaybackState())
@@ -56,8 +57,14 @@ class ExoPlayerController @Inject constructor(
     /** Coroutine scope provided during initialization. */
     private var scope: CoroutineScope? = null
 
+    private lateinit var player: Player
+
     init {
-        player.addListener(this)
+        val controllerFuture = controllerBuilder.buildAsync()
+        controllerFuture.addListener({
+            player = controllerFuture.get()
+            player.addListener(this)
+        }, MoreExecutors.directExecutor())
     }
 
     /**
@@ -83,17 +90,65 @@ class ExoPlayerController @Inject constructor(
         playbackStateUpdateJob?.cancel()
     }
 
+    /**
+     * Initializes the player with the provided track and starts playback based on the current state of the player.
+     */
     override fun initPlayer(
         track: AudioTrack,
         scope: CoroutineScope
     ) {
         this.scope = scope
+
+        val mediaItemId = player.currentMediaItem?.mediaId
+        when {
+            // If the player is already playing the same track, setup observation of the playback state.
+            player.isPlaying && mediaItemId == track.id -> {
+                startPeriodicPlaybackUpdates()
+                updatePlaybackStateBasedOnPlayer(player.playbackState)
+            }
+            // If the player was playing a track and the user wants to play a new one,
+            // do nothing until the user plays the new track.
+            player.isPlaying && mediaItemId != track.id -> return
+            // If player is not playing, prepare the new track.
+            else -> prepareNewTrack(track)
+        }
+    }
+
+    private fun prepareNewTrack(track: AudioTrack) {
         player.setMediaItem(track.toMediaItem())
         player.prepare()
     }
 
-    override fun onPlayPause() {
-        if (player.playbackState == Player.STATE_IDLE) player.prepare()
+    /**
+     * Handles the play/pause action based on the current state of the player.
+     * If a different track is selected, it stops the current track and starts the new one.
+     * If the player is idle, it prepares the track and starts playback.
+     * If the player is playing, it pauses the playback.
+     * If the player is paused, it resumes playback.
+     */
+    override fun onPlayPause(track: AudioTrack) {
+        when {
+            player.currentMediaItem?.mediaId != track.id -> handleNewTrack(track)
+            player.playbackState == Player.STATE_IDLE -> handleIdleState()
+            else -> togglePlayback()
+        }
+    }
+
+    private fun handleNewTrack(track: AudioTrack) {
+        stopPeriodicPlaybackUpdates()
+        player.stop()
+        prepareNewTrack(track)
+        player.playWhenReady = true
+        startPeriodicPlaybackUpdates()
+    }
+
+    private fun handleIdleState() {
+        player.prepare()
+        player.playWhenReady = true
+        startPeriodicPlaybackUpdates()
+    }
+
+    private fun togglePlayback() {
         player.playWhenReady = player.playWhenReady.not()
         if (player.playWhenReady) {
             startPeriodicPlaybackUpdates()
