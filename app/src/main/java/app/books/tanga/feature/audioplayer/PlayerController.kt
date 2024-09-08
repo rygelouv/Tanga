@@ -74,6 +74,7 @@ class PlayerControllerImpl @Inject constructor(
      * Starts a coroutine that updates the playback state at regular intervals.
      */
     private fun startPeriodicPlaybackUpdates() {
+        playbackStateUpdateJob?.cancel()
         playbackStateUpdateJob =
             scope?.launch {
                 do {
@@ -91,6 +92,7 @@ class PlayerControllerImpl @Inject constructor(
 
     private fun stopPeriodicPlaybackUpdates() {
         playbackStateUpdateJob?.cancel()
+        playbackStateUpdateJob = null
     }
 
     /**

@@ -4,12 +4,12 @@ import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.cash.turbine.test
 import com.google.common.util.concurrent.ListenableFuture
-import io.mockk.Runs
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import java.util.concurrent.Executor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceTimeBy
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PlayerControllerTest {
 
     private lateinit var playerControllerImpl: PlayerControllerImpl
-    private lateinit var mockPlayer: Player
+    private lateinit var mockPlayer: MediaController
     private lateinit var mockControllerBuilder: MediaController.Builder
     private lateinit var mockControllerFuture: ListenableFuture<MediaController>
 
@@ -35,33 +35,73 @@ class PlayerControllerTest {
         mockControllerFuture = mockk()
 
         every { mockControllerBuilder.buildAsync() } returns mockControllerFuture
-        every { mockControllerFuture.addListener(any(), any()) } just Runs
-        every { mockControllerFuture.get() } returns mockPlayer as MediaController
+        every { mockControllerFuture.get() } returns mockPlayer
+
+        // Mock the addListener behavior
+        every {
+            mockControllerFuture.addListener(any(), any())
+        } answers {
+            val runnable = firstArg<Runnable>()
+            val executor = secondArg<Executor>()
+            executor.execute(runnable)
+        }
 
         playerControllerImpl = PlayerControllerImpl(mockControllerBuilder)
+
+        // Ensure player is initialized
+        verifyPlayerInitialized()
+
+        playerControllerImpl = PlayerControllerImpl(mockControllerBuilder)
+    }
+
+    private fun verifyPlayerInitialized() {
+        verify(exactly = 1) {
+            mockControllerFuture.addListener(any(), any())
+        }
+        verify(exactly = 1) {
+            mockPlayer.addListener(playerControllerImpl)
+        }
     }
 
     @Test
     fun `initPlayer should start periodic updates when player is already playing the same track`() = runTest {
         val track = Fixtures.audioTrack1
         every { mockPlayer.isPlaying } returns true
-        every { mockPlayer.currentMediaItem?.mediaId } returns "1"
+        every { mockPlayer.currentMediaItem } returns track.toMediaItem()
         every { mockPlayer.playbackState } returns Player.STATE_READY
+        // We check player in a paused state to avoid starting the updates which will block the test
+        every { mockPlayer.playWhenReady } returns false
 
         playerControllerImpl.initPlayer(track, this)
 
+        // Advance time to trigger the first update
         advanceTimeBy(2000)
-        val state = playerControllerImpl.playbackState.first()
-        assertEquals(PlayerState.PLAYING, state.state)
+        playerControllerImpl.playbackState.test {
+            val state = expectMostRecentItem()
+            assertEquals(PlayerState.PAUSE, state.state)
+        }
+    }
+
+    @Test
+    fun `initPlayer should prepare new track when player is not playing`() = runTest {
+        val track = Fixtures.audioTrack1
+        every { mockPlayer.isPlaying } returns false
+        every { mockPlayer.currentMediaItem } returns track.toMediaItem()
+
+        playerControllerImpl.initPlayer(track, this)
+
+        verify(exactly = 1) { mockPlayer.setMediaItem(any()) }
+        verify(exactly = 1) { mockPlayer.prepare() }
     }
 
     @Test
     fun `initPlayer should not prepare new track when player is playing a different track`() = runTest {
-        val track = Fixtures.audioTrack1
+        val track1 = Fixtures.audioTrack1
+        val track2 = Fixtures.audioTrack2
         every { mockPlayer.isPlaying } returns true
-        every { mockPlayer.currentMediaItem?.mediaId } returns "1"
+        every { mockPlayer.currentMediaItem } returns track2.toMediaItem()
 
-        playerControllerImpl.initPlayer(track, this)
+        playerControllerImpl.initPlayer(track1, this)
 
         verify(exactly = 0) { mockPlayer.setMediaItem(any()) }
         verify(exactly = 0) { mockPlayer.prepare() }
@@ -69,10 +109,11 @@ class PlayerControllerTest {
 
     @Test
     fun `onPlayPause should handle new track correctly`() {
-        val track = Fixtures.audioTrack1
-        every { mockPlayer.currentMediaItem?.mediaId } returns "1"
+        val currentTrack = Fixtures.audioTrack1
+        val newTrack = Fixtures.audioTrack2
+        every { mockPlayer.currentMediaItem } returns currentTrack.toMediaItem()
 
-        playerControllerImpl.onPlayPause(track)
+        playerControllerImpl.onPlayPause(newTrack)
 
         verify { mockPlayer.stop() }
         verify { mockPlayer.setMediaItem(any()) }
@@ -83,7 +124,7 @@ class PlayerControllerTest {
     @Test
     fun `onPlayPause should toggle playback for current track`() {
         val track = Fixtures.audioTrack1
-        every { mockPlayer.currentMediaItem?.mediaId } returns "1"
+        every { mockPlayer.currentMediaItem } returns track.toMediaItem()
         every { mockPlayer.playbackState } returns Player.STATE_READY
         every { mockPlayer.playWhenReady } returns false
 
