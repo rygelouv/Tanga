@@ -41,9 +41,12 @@ interface PlayerController : PlayerActions {
     }
 }
 
+private const val SECOND_IN_MILLIS = 1000
+
 /**
  * Concrete implementation of PlayerController using [MediaController] as the media playback engine.
  */
+@Suppress("TooManyFunctions")
 class PlayerControllerImpl @Inject constructor(
     controllerBuilder: MediaController.Builder
 ) : PlayerController, Player.Listener {
@@ -78,7 +81,7 @@ class PlayerControllerImpl @Inject constructor(
                         it.copy(position = player.currentPosition, duration = player.duration)
                     }
                     // Calculate delay to the next second boundary
-                    val delayMillis = 1000 - (player.currentPosition % 1000)
+                    val delayMillis = SECOND_IN_MILLIS - (player.currentPosition % SECOND_IN_MILLIS)
                     delay(delayMillis)
                 } while (playbackStateUpdateJob?.isActive == true &&
                     playbackState.value.state == PlayerState.PLAYING

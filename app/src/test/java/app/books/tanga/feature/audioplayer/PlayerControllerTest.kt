@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainCoroutineDispatcherExtension::class)
 @ExperimentalCoroutinesApi
-class PlayerControllerImplTest {
+class PlayerControllerTest {
 
     private lateinit var playerControllerImpl: PlayerControllerImpl
     private lateinit var mockPlayer: Player
