@@ -81,7 +81,7 @@ detekt-rules-compose = "1.3.0"
 kotlin-immutable-collections-version = "0.3.6"
 
 # Media https://developer.android.com/guide/topics/media/exoplayer
-exoplayer-media3-version = "1.4.0"
+media3-version = "1.4.0"
 
 # Logging
 # https://github.com/JakeWharton/timber/releases
@@ -157,7 +157,9 @@ kotlin-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coro
 android-gms-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth-version" }
 
 # Media
-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exoplayer-media3-version" }
+media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3-version" }
+media3-session = { module = "androidx.media3:media3-session", version.ref = "media3-version" }
+media3-common = { module = "androidx.media3:media3-common", version.ref = "media3-version" }
 
 # Logging
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber-version" }

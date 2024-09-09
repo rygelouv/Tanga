@@ -1,11 +1,7 @@
-package app.books.tanga.feature
+package app.books.tanga.feature.audioplayer
 
 import app.books.tanga.data.download.DownloadUrlGenerator
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.AudioTrack
-import app.books.tanga.feature.audioplayer.PlaybackState
-import app.books.tanga.feature.audioplayer.PlayerController
-import app.books.tanga.feature.audioplayer.PlayerState
 import app.books.tanga.feature.listen.PlaySummaryAudioViewModel
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.fixtures.Fixtures
@@ -68,7 +64,7 @@ class PlaySummaryAudioViewModelTest {
     fun `Load summary successfully updates viewModel state and initializes player`() = runTest {
         val summaryId = SummaryId("1")
         val summary = Fixtures.dummySummary1
-        val audioTrack = AudioTrack(id = summary.id.value, url = "http://example.com/audio.mp3")
+        val audioTrack = Fixtures.audioTrack1
 
         coEvery { summaryInteractor.getSummary(summaryId) } returns Result.success(summary)
         coEvery { playerController.initPlayer(audioTrack, any()) } just Runs

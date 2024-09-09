@@ -1,7 +1,6 @@
-package app.books.tanga.feature
+package app.books.tanga.feature.onboarding
 
 import app.books.tanga.data.preferences.DefaultPrefDataStoreRepository
-import app.books.tanga.feature.onboarding.OnboardingViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.tracking.AnalyticsTracker
 import io.mockk.coVerify

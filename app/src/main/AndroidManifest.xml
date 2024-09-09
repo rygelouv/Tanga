@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,22 +31,31 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <service
+            android:name=".feature.audioplayer.PlaybackService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService"/>
+            </intent-filter>
+        </service>
     
-    <!-- Required: set your sentry.io project identifier (DSN) -->
-    <meta-data android:name="io.sentry.dsn" android:value="https://d3da1b415af3e6a3482e2c7fee0740a0@o4506014737104896.ingest.sentry.io/4506014893342720" />
+        <!-- Required: set your sentry.io project identifier (DSN) -->
+        <meta-data android:name="io.sentry.dsn" android:value="https://d3da1b415af3e6a3482e2c7fee0740a0@o4506014737104896.ingest.sentry.io/4506014893342720" />
 
-    <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
-    <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
-    <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="true" />
-    <!-- enable screenshot for crashes (could contain sensitive/PII data) -->
-    <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
-    <!-- enable view hierarchy for crashes -->
-    <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
+        <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
+        <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
+        <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="true" />
+        <!-- enable screenshot for crashes (could contain sensitive/PII data) -->
+        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
+        <!-- enable view hierarchy for crashes -->
+        <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
 
-    <!-- enable the performance API by setting a sample-rate, adjust in production env -->
-    <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
-    <!-- enable profiling when starting transactions, adjust in production env -->
-    <meta-data android:name="io.sentry.traces.profiling.sample-rate" android:value="1.0" />
-</application>
+        <!-- enable the performance API by setting a sample-rate, adjust in production env -->
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
+        <!-- enable profiling when starting transactions, adjust in production env -->
+        <meta-data android:name="io.sentry.traces.profiling.sample-rate" android:value="1.0" />
+    </application>
 
 </manifest>

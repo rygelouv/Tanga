@@ -17,12 +17,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -44,6 +44,7 @@ import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.feature.audioplayer.PlaybackState
 import app.books.tanga.feature.audioplayer.PlayerActions
 import app.books.tanga.feature.audioplayer.PlayerState
@@ -83,6 +84,7 @@ fun PlaySummaryAudioScreen(
                 coverUrl = state.coverUrl,
                 duration = state.duration,
                 playbackState = state.playbackState,
+                audioTrack = state.audioTrack,
                 actions = actions
             )
         }
@@ -114,6 +116,7 @@ fun PlaySummaryAudioContent(
     title: String? = null,
     author: String? = null,
     duration: String? = null,
+    audioTrack: AudioTrack? = null,
     playbackState: PlaybackState? = null
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -172,7 +175,7 @@ fun PlaySummaryAudioContent(
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
                 AudioBar(playbackState = playbackState, duration = duration) { actions.onSeekBarPositionChanged(it) }
                 Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
-                PlaybackControls(playbackState = playbackState, actions = actions)
+                PlaybackControls(playbackState = playbackState, audioTrack = audioTrack, actions = actions)
             }
         }
         TangaAsyncImage(
@@ -191,6 +194,7 @@ fun PlaySummaryAudioContent(
 @Composable
 private fun PlaybackControls(
     actions: PlayerActions,
+    audioTrack: AudioTrack? = null,
     playbackState: PlaybackState? = null
 ) {
     Row(
@@ -207,7 +211,9 @@ private fun PlaybackControls(
             )
         }
         IconButton(
-            onClick = { actions.onPlayPause() },
+            onClick = {
+                audioTrack?.let { actions.onPlayPause(it) }
+            },
             modifier = Modifier
                 .size(76.dp)
                 .clip(CircleShape)

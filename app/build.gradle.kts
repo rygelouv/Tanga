@@ -150,6 +150,8 @@ dependencies {
 
     // Media
     implementation(libs.media3.exoplayer)
+    implementation(libs.media3.session)
+    implementation(libs.media3.common)
 
     // Logging
     implementation(libs.timber)

@@ -7,7 +7,7 @@ interface PlayerActions {
     /**
      * Called when the play/pause button is clicked.
      */
-    fun onPlayPause()
+    fun onPlayPause(track: AudioTrack)
 
     /**
      * Called when the forward button is clicked.

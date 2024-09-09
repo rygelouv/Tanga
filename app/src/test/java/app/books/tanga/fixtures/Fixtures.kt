@@ -12,6 +12,7 @@ import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
 import app.books.tanga.entity.UserId
+import app.books.tanga.feature.audioplayer.AudioTrack
 import app.books.tanga.firestore.FirestoreDatabase
 import com.google.firebase.Timestamp
 import java.util.Date
@@ -134,5 +135,21 @@ object Fixtures {
             formattedValue = "$99.99",
             currency = "USD"
         )
+    )
+
+    val audioTrack1 = AudioTrack(
+        id = "1",
+        url = "http://example.com/audio.mp3",
+        title = "Content1",
+        author = "Author1",
+        coverUrl = "http://example.com/image.png"
+    )
+
+    val audioTrack2 = AudioTrack(
+        id = "2",
+        url = "http://example.com/audio.mp3",
+        title = "Content2",
+        author = "Author2",
+        coverUrl = "http://example.com/image.png"
     )
 }

@@ -3,6 +3,7 @@ package app.books.tanga.feature.listen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.data.download.DownloadUrlGenerator
+import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.audioplayer.AudioTrack
@@ -59,8 +60,11 @@ class PlaySummaryAudioViewModel @Inject constructor(
                         )
                     }
                     audioUrl?.let {
-                        val audioTrack = AudioTrack(id = summary.id.value, url = it)
+                        val audioTrack = summary.toAudioTrack(it)
                         playerController.initPlayer(audioTrack, viewModelScope)
+                        _state.update { state ->
+                            state.copy(audioTrack = audioTrack)
+                        }
                     }
                 }.onFailure {
                     Timber.e("Error loading summary with id: $summaryId", it)
@@ -76,3 +80,11 @@ class PlaySummaryAudioViewModel @Inject constructor(
         playerController.releasePlayer()
     }
 }
+
+fun Summary.toAudioTrack(url: String): AudioTrack = AudioTrack(
+    id = id.value,
+    url = url,
+    title = title,
+    author = author,
+    coverUrl = coverImageUrl
+)
