@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.books.tanga.coreui.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.TangaTheme
@@ -45,12 +46,12 @@ fun MiniPlayer(
     modifier: Modifier = Modifier
 ) {
     if (state.audioTrack == null) return
-    val audioTrack = state.audioTrack
 
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(82.dp).padding(8.dp),
+            .height(82.dp)
+            .padding(8.dp),
     ) {
         Row(
             modifier = Modifier
@@ -62,75 +63,134 @@ fun MiniPlayer(
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.weight(1f).clickable { state.summaryId?.let { onExpandPlayer(it) } },
-                horizontalArrangement = Arrangement.Start
-            ) {
-                AsyncImage(
-                    model = state.audioTrack.coverUrl,
-                    contentDescription = "CoverImage",
-                    placeholder = painterResource(id = R.drawable.tanga_default_cover),
-                    error = painterResource(id = R.drawable.tanga_default_cover),
-                    modifier = Modifier
-                        .width(50.dp)
-                        .height(60.dp)
-                        .padding(vertical = 8.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // Clickable area to expand to full player
-                Column(
-                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = audioTrack.title,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        maxLines = 1
-                    )
-                    Text(
-                        text = audioTrack.author,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        maxLines = 1
-                    )
-                }
-            }
-
-            // Play/Pause button
-            IconButton(onClick = { actions.onPlayPause(audioTrack) }, Modifier.size(34.dp)) {
-                Icon(
-                    modifier = Modifier.size(18.dp),
-                    painter = painterResource(
-                        id = if (state.playerState == PlayerState.PLAYING) TangaIcons.Pause else TangaIcons.Play
-                    ),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    contentDescription = "play/pause"
-                )
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            // Close button
-            IconButton(onClick = onDismiss, Modifier.size(28.dp)) {
-                Icon(
-                    modifier = Modifier.size(14.dp),
-                    painter = painterResource(id = TangaIcons.Close),
-                    contentDescription = "Close mini player",
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                )
-            }
+            AudioInfo(
+                state = state,
+                onExpandPlayer = onExpandPlayer,
+                modifier = Modifier.weight(1f)
+            )
+            PlayerControls(
+                state = state,
+                actions = actions,
+                onDismiss = onDismiss
+            )
         }
     }
 }
 
+@Composable
+private fun AudioInfo(
+    state: MiniPlayerUiState,
+    onExpandPlayer: (SummaryId) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.clickable { state.summaryId?.let { onExpandPlayer(it) } },
+        horizontalArrangement = Arrangement.Start
+    ) {
+        CoverImage(coverUrl = state.audioTrack?.coverUrl)
+        Spacer(modifier = Modifier.width(16.dp))
+        AudioDetails(
+            title = state.audioTrack?.title ?: "",
+            author = state.audioTrack?.author ?: "",
+            modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically)
+        )
+    }
+}
+
+@Composable
+private fun CoverImage(coverUrl: String?) {
+    AsyncImage(
+        model = coverUrl,
+        contentDescription = "CoverImage",
+        placeholder = painterResource(id = R.drawable.tanga_default_cover),
+        error = painterResource(id = R.drawable.tanga_default_cover),
+        modifier = Modifier
+            .width(50.dp)
+            .height(60.dp)
+            .padding(vertical = 8.dp)
+            .clip(RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop
+    )
+}
+
+@Composable
+private fun AudioDetails(
+    title: String,
+    author: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
+            maxLines = 1
+        )
+        Text(
+            text = author,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimary,
+            maxLines = 1
+        )
+    }
+}
+
+@Composable
+private fun PlayerControls(
+    state: MiniPlayerUiState,
+    actions: PlayerActions,
+    onDismiss: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        PlayPauseButton(
+            isPlaying = state.playerState == PlayerState.PLAYING,
+            onPlayPause = { state.audioTrack?.let { actions.onPlayPause(it) } }
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        CloseButton(onDismiss = onDismiss)
+    }
+}
+
+@Composable
+private fun PlayPauseButton(
+    isPlaying: Boolean,
+    onPlayPause: () -> Unit
+) {
+    IconButton(onClick = onPlayPause, Modifier.size(34.dp)) {
+        Icon(
+            modifier = Modifier.size(18.dp),
+            painter = painterResource(
+                id = if (isPlaying) TangaIcons.Pause else TangaIcons.Play
+            ),
+            tint = MaterialTheme.colorScheme.onPrimary,
+            contentDescription = "play/pause"
+        )
+    }
+}
+
+@Composable
+private fun CloseButton(onDismiss: () -> Unit) {
+    IconButton(onClick = onDismiss, Modifier.size(28.dp)) {
+        Icon(
+            modifier = Modifier.size(14.dp),
+            painter = painterResource(id = TangaIcons.Close),
+            contentDescription = "Close mini player",
+            tint = MaterialTheme.colorScheme.onPrimary,
+        )
+    }
+}
+
+@ExcludeFromJacocoGeneratedReport
 @Preview
 @Composable
-fun MiniPlayerPreview() {
+private fun MiniPlayerPreview() {
     class PlayerActionsPreview : PlayerActions {
         override fun onPlayPause(track: AudioTrack) {}
         override fun onForward() {

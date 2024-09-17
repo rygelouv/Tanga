@@ -84,12 +84,13 @@ class PlayerControllerTest {
         }
 
     @Test
-    fun `given player controller was initialized, then playAvailability should be available`() = runTest {
-        playerControllerImpl.playAvailability.test {
-            val state = expectMostRecentItem()
-            assertEquals(PlayerAvailability.Available, state)
+    fun `given player controller was initialized, then playAvailability should be available`() =
+        runTest {
+            playerControllerImpl.playAvailability.test {
+                val state = expectMostRecentItem()
+                assertEquals(PlayerAvailability.Available, state)
+            }
         }
-    }
 
     @Test
     fun `given player controller was initialized, when getCurrentlyPlayingAudioTrack is called, then return the currently playing track`() =

@@ -64,7 +64,7 @@ class MiniPlayerViewModel @Inject constructor(
     }
 
     fun onDismissMiniPlayer() {
-        // TODO: Pause the player when the mini player is dismissed.
+        // Note we should Pause the player when the mini player is dismissed.
         _state.update { it.copy(showMiniPlayer = false) }
     }
 
