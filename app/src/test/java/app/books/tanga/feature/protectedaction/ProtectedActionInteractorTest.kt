@@ -23,6 +23,7 @@ class ProtectedActionInteractorTest {
         coEvery { preferencesRepository.getWeeklySummary() } returns flowOf(SummaryId("weeklySummaryId"))
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return Allowed when user is not authenticated and tries to access weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns false
@@ -46,6 +47,7 @@ class ProtectedActionInteractorTest {
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `checkProtectedAction should return AuthRequired when user is not authenticated and action is Subscribe`() = runTest {
         coEvery { sessionManager.hasSession() } returns false
