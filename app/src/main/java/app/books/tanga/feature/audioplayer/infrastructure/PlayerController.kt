@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
@@ -21,6 +21,9 @@ interface PlayerController : PlayerActions {
     /** Observable state of the playback (e.g., current position, duration). */
     val playbackState: StateFlow<PlaybackState>
 
+    /** Observable state of the player availability. */
+    val playAvailability: StateFlow<PlayerAvailability>
+
     /**
      * Initializes the media player with the provided track.
      *
@@ -34,6 +37,9 @@ interface PlayerController : PlayerActions {
 
     /** Releases any resources associated with the player. */
     fun releasePlayer()
+
+    /** Returns the currently playing audio track, if any. */
+    fun getCurrentlyPlayingAudioTrack(): AudioTrack?
 
     companion object {
         /** Interval (in milliseconds) used for seeking forward or backward. */
@@ -54,6 +60,9 @@ class PlayerControllerImpl @Inject constructor(
     private val _playbackState = MutableStateFlow(PlaybackState())
     override val playbackState: StateFlow<PlaybackState> = _playbackState.asStateFlow()
 
+    private val _playAvailability = MutableStateFlow<PlayerAvailability>(PlayerAvailability.Unavailable)
+    override val playAvailability: StateFlow<PlayerAvailability> = _playAvailability.asStateFlow()
+
     /** Job for updating the playback state at regular intervals. */
     private var playbackStateUpdateJob: Job? = null
 
@@ -67,6 +76,7 @@ class PlayerControllerImpl @Inject constructor(
         controllerFuture.addListener({
             player = controllerFuture.get()
             player.addListener(this)
+            _playAvailability.update { PlayerAvailability.Available }
         }, MoreExecutors.directExecutor())
     }
 
@@ -122,6 +132,20 @@ class PlayerControllerImpl @Inject constructor(
     private fun prepareNewTrack(track: AudioTrack) {
         player.setMediaItem(track.toMediaItem())
         player.prepare()
+    }
+
+    override fun getCurrentlyPlayingAudioTrack(): AudioTrack? {
+        if (this::player.isInitialized.not()) return null
+        return player.currentMediaItem?.mediaId?.let {
+            val mediaMetadata = player.currentMediaItem?.mediaMetadata
+            AudioTrack(
+                id = it,
+                url = player.currentMediaItem?.localConfiguration?.uri.toString(),
+                title = mediaMetadata?.title.toString(),
+                author = mediaMetadata?.artist.toString(),
+                coverUrl = mediaMetadata?.artworkUri.toString()
+            )
+        }
     }
 
     /**
@@ -189,6 +213,8 @@ class PlayerControllerImpl @Inject constructor(
 
     /**
      * Updates the playback state based on the current state of the player.
+     * Each state of [androidx.media3.common.Player] is mapped to our own [PlayerState]
+     * When player is STATE_READY, we need to check if playback is actually playing or paused.
      */
     private fun updatePlaybackStateBasedOnPlayer(playbackState: Int) {
         when (playbackState) {
@@ -221,4 +247,9 @@ class PlayerControllerImpl @Inject constructor(
         player.removeListener(this)
         player.release()
     }
+}
+
+sealed class PlayerAvailability {
+    data object Available : PlayerAvailability()
+    data object Unavailable : PlayerAvailability()
 }

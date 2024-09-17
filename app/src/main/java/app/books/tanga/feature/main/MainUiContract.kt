@@ -7,3 +7,7 @@ sealed interface MainUiEvent {
         data object ToAuth : NavigateTo
     }
 }
+
+data class MainUiState(
+    val showMiniPlayer: Boolean = false
+)

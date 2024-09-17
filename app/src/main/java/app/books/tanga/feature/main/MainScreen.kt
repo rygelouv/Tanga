@@ -1,5 +1,7 @@
 package app.books.tanga.feature.main
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -7,10 +9,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerContainer
 import app.books.tanga.navigation.BottomBarNavigation
 import app.books.tanga.navigation.MainNavigationGraph
 import app.books.tanga.navigation.NavigationScreen
@@ -30,19 +38,44 @@ fun MainScreen(
                 onRedirectToAuth()
             }
         }
+
         else -> Unit
     }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        bottomBar = { BottomBarNavigation(navController) }
+        bottomBar = {
+            Column {
+                BottomBarNavigation(navController)
+            }
+        }
     ) {
-        Surface(modifier = Modifier.padding(it)) {
-            MainNavigationGraph(
-                navController = navController,
-                startDestination = NavigationScreen.BottomBarScreen.Home,
-                onRedirectToAuth = onRedirectToAuth
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Surface(modifier = Modifier.padding(it)) {
+                MainNavigationGraph(
+                    navController = navController,
+                    startDestination = NavigationScreen.BottomBarScreen.Home,
+                    onRedirectToAuth = onRedirectToAuth
+                )
+            }
+
+            val currentBackStackEntry by navController.currentBackStackEntryAsState()
+            var routeState by remember { mutableStateOf("") }
+
+            LaunchedEffect(currentBackStackEntry) {
+                currentBackStackEntry?.destination?.route?.let { route ->
+                    routeState = route
+                }
+            }
+
+            if (routeState.isAudioPlayerDestination().not()) {
+                MiniPlayerContainer(
+                    currentDestinationRoute = routeState,
+                    onExpendPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) }
+                )
+            }
         }
     }
 }
+
+private fun String.isAudioPlayerDestination(): Boolean = NavigationScreen.PlaySummaryAudio.route.contains(this)

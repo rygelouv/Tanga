@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 import android.content.Intent
 import androidx.media3.common.Player
@@ -7,6 +7,12 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import javax.inject.Inject
 
+/**
+ * A service that manages media playback. This service is responsible for creating the media session
+ * and player instances, and for managing the player's lifecycle.
+ * The [PlayerController] has its [MediaController] instance connected to this service.
+ * Docs: https://developer.android.com/media/media3/session/background-playback
+ */
 class PlaybackService : MediaSessionService() {
     private var mediaSession: MediaSession? = null
 

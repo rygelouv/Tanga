@@ -12,7 +12,7 @@ import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.entity.User
 import app.books.tanga.entity.UserId
-import app.books.tanga.feature.audioplayer.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
 import app.books.tanga.firestore.FirestoreDatabase
 import com.google.firebase.Timestamp
 import java.util.Date

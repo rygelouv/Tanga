@@ -3,10 +3,10 @@ package app.books.tanga.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import app.books.tanga.feature.audioplayer.fullplayer.playSummaryAudio
+import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
 import app.books.tanga.feature.deleteaccount.deleteAccount
 import app.books.tanga.feature.deleteaccount.toDeleteAccount
-import app.books.tanga.feature.listen.playSummaryAudio
-import app.books.tanga.feature.listen.toPlaySummaryAudio
 import app.books.tanga.feature.profile.privacyAndTerms
 import app.books.tanga.feature.read.readSummaryScreen
 import app.books.tanga.feature.read.toReadSummaryScreen
@@ -35,7 +35,7 @@ fun MainNavigationGraph(
             onNavigateToAuth = onRedirectToAuth,
             onNavigateToSubscriptions = { navController.toSubscription() },
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
             onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
@@ -57,7 +57,7 @@ fun MainNavigationGraph(
 
         readSummaryScreen(
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onNavigateToPricingPlans = { navController.toSubscription() }
         )
 
