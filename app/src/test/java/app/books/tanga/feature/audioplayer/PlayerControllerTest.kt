@@ -92,6 +92,7 @@ class PlayerControllerTest {
             }
         }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `given player controller was initialized, when getCurrentlyPlayingAudioTrack is called, then return the currently playing track`() =
         runTest {

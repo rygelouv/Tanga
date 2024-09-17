@@ -192,7 +192,9 @@ private fun CloseButton(onDismiss: () -> Unit) {
 @Composable
 private fun MiniPlayerPreview() {
     class PlayerActionsPreview : PlayerActions {
-        override fun onPlayPause(track: AudioTrack) {}
+        override fun onPlayPause(track: AudioTrack) {
+            TODO("Not yet implemented")
+        }
         override fun onForward() {
             TODO("Not yet implemented")
         }

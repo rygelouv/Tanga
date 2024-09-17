@@ -31,7 +31,6 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val event by viewModel.event.collectAsStateWithLifecycle(initialValue = MainUiEvent.Empty)
-    val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
