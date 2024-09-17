@@ -47,7 +47,10 @@ fun MainNavigationGraph(
 
         playSummaryAudio { navController.popBackStack() }
 
-        subscription { navController.popBackStack() }
+        subscription(
+            onCloseClicked = { navController.popBackStack() },
+            onNavigateToAuth = onRedirectToAuth,
+        )
 
         summariesByCategory(
             onNavigateToPreviousScreen = { navController.popBackStack() },

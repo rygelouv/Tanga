@@ -111,7 +111,7 @@ class SummaryDetailsViewModel @Inject constructor(
         onToggleFavoriteClick(summary.id)
         viewModelScope.launch {
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
-                ProtectedAction.Save
+                ProtectedAction.AuthRequiredAction.Save
             )
             processProtectedActionCheckResult(protectedActionCheckResult) {
                 // Do nothing if the summary is not initialized
@@ -173,7 +173,7 @@ class SummaryDetailsViewModel @Inject constructor(
     fun onPlayClick() {
         viewModelScope.launch {
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
-                ProtectedAction.Listen(summary.id)
+                ProtectedAction.SubscriptionRequiredAction.Listen(summary.id)
             )
             processProtectedActionCheckResult(protectedActionCheckResult) {
                 postEvent(SummaryDetailsUiEvent.NavigateTo.ToAudioPlayer(summary.id))
@@ -184,7 +184,7 @@ class SummaryDetailsViewModel @Inject constructor(
     fun onReadClick() {
         viewModelScope.launch {
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
-                ProtectedAction.Read(summary.id)
+                ProtectedAction.SubscriptionRequiredAction.Read(summary.id)
             )
             processProtectedActionCheckResult(protectedActionCheckResult) {
                 postEvent(SummaryDetailsUiEvent.NavigateTo.ToReadSummary(summary.id))

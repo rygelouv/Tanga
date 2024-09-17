@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.books.tanga.feature.auth.AuthSuggestionBottomSheet
 
 @Composable
 fun SubscriptionContainer(
     onCloseClick: () -> Unit,
+    onNavigateToAuth: () -> Unit,
     viewModel: SubscriptionViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -18,6 +20,15 @@ fun SubscriptionContainer(
         state = state
     )
     HandleEvents(events, onCloseClick)
+    if (state.showAuthSuggestion) {
+        AuthSuggestionBottomSheet(
+            onDismiss = { viewModel.dismissAuthSuggestions() },
+            onNavigateToAuth = {
+                viewModel.dismissAuthSuggestions()
+                onNavigateToAuth()
+            }
+        )
+    }
 }
 
 @Composable

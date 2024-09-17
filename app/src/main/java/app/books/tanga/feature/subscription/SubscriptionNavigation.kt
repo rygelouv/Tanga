@@ -5,10 +5,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.books.tanga.navigation.NavigationScreen
 
-fun NavGraphBuilder.subscription(onCloseClicked: () -> Unit = {}) {
+fun NavGraphBuilder.subscription(onCloseClicked: () -> Unit, onNavigateToAuth: () -> Unit) {
     composable(route = NavigationScreen.Subscription.route) {
         SubscriptionContainer(
             onCloseClick = onCloseClicked,
+            onNavigateToAuth = onNavigateToAuth
         )
     }
 }

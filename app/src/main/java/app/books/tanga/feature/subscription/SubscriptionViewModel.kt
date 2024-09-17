@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.SubscriptionType
+import app.books.tanga.feature.protectedaction.ProtectedAction
+import app.books.tanga.feature.protectedaction.ProtectedActionCheckResult
+import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
 import app.books.tanga.revenuecat.RevenueCatPurchases
 import app.books.tanga.tracking.AnalyticsTracker
 import app.books.tanga.tracking.Events
@@ -28,6 +31,7 @@ import timber.log.Timber
 class SubscriptionViewModel @Inject constructor(
     private val revenueCatController: RevenueCatPurchases,
     private val userRepository: UserRepository,
+    private val protectedActionInteractor: ProtectedActionInteractor,
     private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
 
@@ -62,22 +66,49 @@ class SubscriptionViewModel @Inject constructor(
      * status (date) in the database.
      */
     fun onSubscriptionPlanSelected(input: PurchaseSubscriptionInput) {
-        _state.update {
-            it.copy(
-                monthlyPlanUi = it.monthlyPlanUi?.copy(selected = input.plan == it.monthlyPlanUi),
-                yearlyPlanUi = it.yearlyPlanUi?.copy(selected = input.plan == it.yearlyPlanUi)
-            )
-        }
-        trackTapSubscriptionEvent(input)
-
         viewModelScope.launch {
-            val subscriptionPlan = _state.value.subscriptionPlans
-                ?.find { it.productId == input.plan.productId } ?: return@launch
-            val params = RevenueCatPurchases.PurchaseParams(
-                context = input.context,
-                subscriptionPlan = subscriptionPlan
+            val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
+                ProtectedAction.AuthRequiredAction.Subscribe
             )
-            _state.update { it.copy(progressState = ProgressState.Show) }
+            processProtectedActionCheckResult(protectedActionCheckResult) {
+                _state.update {
+                    it.copy(
+                        monthlyPlanUi = it.monthlyPlanUi?.copy(selected = input.plan == it.monthlyPlanUi),
+                        yearlyPlanUi = it.yearlyPlanUi?.copy(selected = input.plan == it.yearlyPlanUi)
+                    )
+                }
+                trackTapSubscriptionEvent(input)
+
+                val subscriptionPlan = _state.value.subscriptionPlans
+                    ?.find { it.productId == input.plan.productId } ?: return@processProtectedActionCheckResult
+                val params = RevenueCatPurchases.PurchaseParams(
+                    context = input.context,
+                    subscriptionPlan = subscriptionPlan
+                )
+                _state.update { it.copy(progressState = ProgressState.Show) }
+                makeSubscriptionPurchase(params, input)
+            }
+        }
+    }
+
+    private fun processProtectedActionCheckResult(
+        result: ProtectedActionCheckResult,
+        action: () -> Unit
+    ) {
+        when (result) {
+            ProtectedActionCheckResult.AuthRequired -> {
+                _state.update { it.copy(showAuthSuggestion = true) }
+            }
+            ProtectedActionCheckResult.Allowed -> action()
+            ProtectedActionCheckResult.SubscriptionRequired -> Unit // No-op
+        }
+    }
+
+    private fun makeSubscriptionPurchase(
+        params: RevenueCatPurchases.PurchaseParams,
+        input: PurchaseSubscriptionInput
+    ) {
+        viewModelScope.launch {
             revenueCatController.purchase(params).onSuccess {
                 trackSubscriptionPurchase(input)
                 userRepository.getUser().onSuccess { user ->
@@ -125,5 +156,9 @@ class SubscriptionViewModel @Inject constructor(
         subscriptionType?.let { props.put(Properties.SUBSCRIPTION_TYPE, it) }
         input.currency?.let { props.put(Properties.SUBSCRIPTION_CURRENCY, it) }
         analyticsTracker.track(Events.ACTION_SUBSCRIPTION_PURCHASED, props)
+    }
+
+    fun dismissAuthSuggestions() {
+        _state.update { it.copy(showAuthSuggestion = false) }
     }
 }

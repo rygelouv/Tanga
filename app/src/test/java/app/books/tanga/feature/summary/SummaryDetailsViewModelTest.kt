@@ -97,7 +97,7 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.createFavorite(summary) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(false)
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Save) } returns
             ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId) // Load the summary
@@ -128,7 +128,7 @@ class SummaryDetailsViewModelTest {
         coEvery { favoriteInteractor.deleteFavoriteBySummaryId(summaryId) } returns Result.success(Unit)
         coEvery { favoriteInteractor.isFavorite(summaryId) } returns Result.success(true) // Set as favorite
         coEvery { summaryInteractor.getRecommendationsForSummary(any()) } returns Result.success(emptyList())
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Save) } returns
             ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId) // Load the summary
@@ -152,7 +152,9 @@ class SummaryDetailsViewModelTest {
     fun `onPlayClick allowed`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(summaryId))
+        } returns
             ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId)
@@ -170,7 +172,7 @@ class SummaryDetailsViewModelTest {
     fun `toggleFavorite -  when sessionManager has no session`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Save) } returns
+        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Save) } returns
             ProtectedActionCheckResult.AuthRequired
 
         viewModel.loadSummary(summaryId)
@@ -188,7 +190,9 @@ class SummaryDetailsViewModelTest {
     fun `onPlayClick - when sessionManager has no session`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(summaryId))
+        } returns
             ProtectedActionCheckResult.AuthRequired
 
         viewModel.loadSummary(summaryId)
@@ -205,7 +209,9 @@ class SummaryDetailsViewModelTest {
     fun `onReadClick allowed`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Read(summaryId))
+        } returns
             ProtectedActionCheckResult.Allowed
 
         viewModel.loadSummary(summaryId)
@@ -223,7 +229,9 @@ class SummaryDetailsViewModelTest {
     fun onReadClick_whenSessionManagerHasNoSession() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Read(summaryId))
+        } returns
             ProtectedActionCheckResult.AuthRequired
 
         viewModel.loadSummary(summaryId)
@@ -240,7 +248,9 @@ class SummaryDetailsViewModelTest {
     fun `on readClick with no active subscription`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Read(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Read(summaryId))
+        } returns
             ProtectedActionCheckResult.SubscriptionRequired
 
         viewModel.loadSummary(summaryId)
@@ -257,7 +267,9 @@ class SummaryDetailsViewModelTest {
     fun `onPlayClick with no active subscription`() = runTest {
         val summaryId = SummaryId("1")
         prepareEnvironment(summaryId)
-        coEvery { protectedActionInteractor.checkProtectedAction(ProtectedAction.Listen(summaryId)) } returns
+        coEvery {
+            protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(summaryId))
+        } returns
             ProtectedActionCheckResult.SubscriptionRequired
 
         viewModel.loadSummary(summaryId)
