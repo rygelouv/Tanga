@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.fullplayer
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Slider
@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import app.books.tanga.feature.audioplayer.PlaybackState
+import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
 
 /**
  * A slider that allows the user to change the current position of the currently playing media.

@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.miniplayer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.PlayerActions
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerActions
 import app.books.tanga.navigation.NavigationScreen
 
 @Composable

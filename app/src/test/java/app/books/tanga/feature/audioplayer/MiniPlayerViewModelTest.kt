@@ -1,7 +1,12 @@
 package app.books.tanga.feature.audioplayer
 
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.listen.MiniPlayerViewModel
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerAvailability
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerController
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import io.mockk.every
 import io.mockk.mockk

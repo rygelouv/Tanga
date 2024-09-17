@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.fullplayer
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

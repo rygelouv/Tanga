@@ -17,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import app.books.tanga.feature.listen.MiniPlayerContainer
-import app.books.tanga.feature.listen.toPlaySummaryAudio
+import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerContainer
 import app.books.tanga.navigation.BottomBarNavigation
 import app.books.tanga.navigation.MainNavigationGraph
 import app.books.tanga.navigation.NavigationScreen

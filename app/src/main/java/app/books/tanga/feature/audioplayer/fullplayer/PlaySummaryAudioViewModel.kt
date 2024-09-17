@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.fullplayer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import app.books.tanga.data.download.DownloadUrlGenerator
 import app.books.tanga.entity.Summary
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
-import app.books.tanga.feature.audioplayer.AudioTrack
-import app.books.tanga.feature.audioplayer.PlayerActions
-import app.books.tanga.feature.audioplayer.PlayerController
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerActions
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerController
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.tracking.AnalyticsTracker
 import app.books.tanga.tracking.Pages

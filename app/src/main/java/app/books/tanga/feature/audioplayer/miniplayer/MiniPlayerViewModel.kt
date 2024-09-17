@@ -1,11 +1,12 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.miniplayer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.PlayerActions
-import app.books.tanga.feature.audioplayer.PlayerAvailability
-import app.books.tanga.feature.audioplayer.PlayerController
+import app.books.tanga.feature.audioplayer.fullplayer.MiniPlayerUiState
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerActions
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerAvailability
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

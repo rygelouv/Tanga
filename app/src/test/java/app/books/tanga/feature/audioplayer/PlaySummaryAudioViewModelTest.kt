@@ -2,7 +2,10 @@ package app.books.tanga.feature.audioplayer
 
 import app.books.tanga.data.download.DownloadUrlGenerator
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.listen.PlaySummaryAudioViewModel
+import app.books.tanga.feature.audioplayer.fullplayer.PlaySummaryAudioViewModel
+import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerController
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.fixtures.Fixtures
 import app.books.tanga.rule.MainCoroutineDispatcherExtension

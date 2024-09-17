@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 import android.content.ComponentName
 import android.content.Context

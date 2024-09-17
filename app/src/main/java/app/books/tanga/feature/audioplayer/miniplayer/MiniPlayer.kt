@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.miniplayer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,9 +32,10 @@ import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.AudioTrack
-import app.books.tanga.feature.audioplayer.PlayerActions
-import app.books.tanga.feature.audioplayer.PlayerState
+import app.books.tanga.feature.audioplayer.fullplayer.MiniPlayerUiState
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerActions
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
 import coil.compose.AsyncImage
 
 @Composable

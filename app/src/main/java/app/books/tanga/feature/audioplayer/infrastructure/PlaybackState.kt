@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 /**
  * Represents the current playback state of the player.

@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem

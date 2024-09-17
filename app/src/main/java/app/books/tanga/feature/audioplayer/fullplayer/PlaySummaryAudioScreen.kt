@@ -1,4 +1,4 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.fullplayer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,10 +44,10 @@ import app.books.tanga.coreui.components.TangaAsyncImage
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.AudioTrack
-import app.books.tanga.feature.audioplayer.PlaybackState
-import app.books.tanga.feature.audioplayer.PlayerActions
-import app.books.tanga.feature.audioplayer.PlayerState
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerActions
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
 import app.books.tanga.utils.toTimeFormat
 
 @Composable

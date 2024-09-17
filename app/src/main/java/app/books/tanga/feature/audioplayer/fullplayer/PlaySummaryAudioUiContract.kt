@@ -1,10 +1,10 @@
-package app.books.tanga.feature.listen
+package app.books.tanga.feature.audioplayer.fullplayer
 
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
-import app.books.tanga.feature.audioplayer.AudioTrack
-import app.books.tanga.feature.audioplayer.PlaybackState
-import app.books.tanga.feature.audioplayer.PlayerState
+import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
+import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
+import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
 
 data class PlaySummaryAudioUiState(
     val summaryId: String? = null,

@@ -1,4 +1,4 @@
-package app.books.tanga.feature.audioplayer
+package app.books.tanga.feature.audioplayer.infrastructure
 
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
