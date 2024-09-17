@@ -24,17 +24,33 @@ class ProtectedActionInteractorTest {
     }
 
     @Test
-    fun `checkProtectedAction should return AuthRequired when user is not authenticated`() = runTest {
+    fun `checkProtectedAction should return Allowed when user is not authenticated and tries to access weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns false
-        val result = interactor.checkProtectedAction(ProtectedAction.Listen(SummaryId("1")))
-        assertEquals(ProtectedActionCheckResult.AuthRequired, result)
+        val result = interactor.checkProtectedAction(
+            ProtectedAction.SubscriptionRequiredAction.Listen(SummaryId("weeklySummaryId"))
+        )
+        assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
     @Test
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Save`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
-        val result = interactor.checkProtectedAction(ProtectedAction.Save)
+        val result = interactor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Save)
         assertEquals(ProtectedActionCheckResult.Allowed, result)
+    }
+
+    @Test
+    fun `checkProtectedAction should return Allowed when user is authenticated and action is Subscribe`() = runTest {
+        coEvery { sessionManager.hasSession() } returns true
+        val result = interactor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Subscribe)
+        assertEquals(ProtectedActionCheckResult.Allowed, result)
+    }
+
+    @Test
+    fun `checkProtectedAction should return AuthRequired when user is not authenticated and action is Subscribe`() = runTest {
+        coEvery { sessionManager.hasSession() } returns false
+        val result = interactor.checkProtectedAction(ProtectedAction.AuthRequiredAction.Subscribe)
+        assertEquals(ProtectedActionCheckResult.AuthRequired, result)
     }
 
     @Suppress("MaxLineLength")
@@ -42,7 +58,7 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Listen and user has active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns true
-        val result = interactor.checkProtectedAction(ProtectedAction.Listen(SummaryId("1")))
+        val result = interactor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(SummaryId("1")))
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
@@ -51,7 +67,7 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return SubscriptionRequired when user is authenticated and action is Listen and user does not have active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns false
-        val result = interactor.checkProtectedAction(ProtectedAction.Listen(SummaryId("1")))
+        val result = interactor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(SummaryId("1")))
         assertEquals(ProtectedActionCheckResult.SubscriptionRequired, result)
     }
 
@@ -60,7 +76,9 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Listen and action is upon weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns true
-        val result = interactor.checkProtectedAction(ProtectedAction.Listen(SummaryId("weeklySummaryId")))
+        val result = interactor.checkProtectedAction(
+            ProtectedAction.SubscriptionRequiredAction.Listen(SummaryId("weeklySummaryId"))
+        )
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
@@ -69,7 +87,7 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Read and user has active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns true
-        val result = interactor.checkProtectedAction(ProtectedAction.Read(SummaryId("1")))
+        val result = interactor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Read(SummaryId("1")))
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 
@@ -78,7 +96,7 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return SubscriptionRequired when user is authenticated and action is Read and user does not have active subscription`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns false
-        val result = interactor.checkProtectedAction(ProtectedAction.Read(SummaryId("1")))
+        val result = interactor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Read(SummaryId("1")))
         assertEquals(ProtectedActionCheckResult.SubscriptionRequired, result)
     }
 
@@ -87,7 +105,9 @@ class ProtectedActionInteractorTest {
     fun `checkProtectedAction should return Allowed when user is authenticated and action is Read and action is upon weekly summary`() = runTest {
         coEvery { sessionManager.hasSession() } returns true
         coEvery { revenuecatController.hasActiveSubscription() } returns true
-        val result = interactor.checkProtectedAction(ProtectedAction.Read(SummaryId("weeklySummaryId")))
+        val result = interactor.checkProtectedAction(
+            ProtectedAction.SubscriptionRequiredAction.Read(SummaryId("weeklySummaryId"))
+        )
         assertEquals(ProtectedActionCheckResult.Allowed, result)
     }
 }

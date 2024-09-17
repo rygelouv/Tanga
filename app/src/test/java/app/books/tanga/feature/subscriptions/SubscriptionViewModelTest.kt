@@ -3,6 +3,7 @@ package app.books.tanga.feature.subscriptions
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.data.user.UserRepository
 import app.books.tanga.entity.SubscriberInfo
+import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
 import app.books.tanga.feature.subscription.PricingPlanUiState
 import app.books.tanga.feature.subscription.PurchaseSubscriptionInput
 import app.books.tanga.feature.subscription.SubscriptionUiEvent
@@ -33,6 +34,7 @@ class SubscriptionViewModelTest {
 
     private val revenueCatController: RevenueCatPurchases = mockk()
     private val userRepository: UserRepository = mockk()
+    private val protectedActionInteractor: ProtectedActionInteractor = mockk()
     private val analyticsTracker = mockk<AnalyticsTracker>(relaxUnitFun = true)
 
     @Test
@@ -43,7 +45,8 @@ class SubscriptionViewModelTest {
         )
         coEvery { revenueCatController.getSubscriptions() } returns Result.success(subscriptionPlans)
 
-        viewModel = SubscriptionViewModel(revenueCatController, userRepository, analyticsTracker)
+        viewModel =
+            SubscriptionViewModel(revenueCatController, userRepository, protectedActionInteractor, analyticsTracker)
 
         val initialState = viewModel.state.value
         assert(initialState == PricingPlanUiState())
@@ -80,7 +83,8 @@ class SubscriptionViewModelTest {
         coEvery { revenueCatController.getSubscriberInfo() } returns subscriberInfo
         coEvery { userRepository.updateUser(any()) } returns Result.success(Unit)
 
-        viewModel = SubscriptionViewModel(revenueCatController, userRepository, analyticsTracker)
+        viewModel =
+            SubscriptionViewModel(revenueCatController, userRepository, protectedActionInteractor, analyticsTracker)
 
         viewModel.onSubscriptionPlanSelected(PurchaseSubscriptionInput(mockk(), subscriptionPlan.toUi()))
 
@@ -105,7 +109,8 @@ class SubscriptionViewModelTest {
         coEvery { revenueCatController.getSubscriptions() } returns Result.success(subscriptionPlans)
         coEvery { revenueCatController.purchase(any()) } returns Result.failure(Exception("Purchase failed"))
 
-        viewModel = SubscriptionViewModel(revenueCatController, userRepository, analyticsTracker)
+        viewModel =
+            SubscriptionViewModel(revenueCatController, userRepository, protectedActionInteractor, analyticsTracker)
 
         viewModel.onSubscriptionPlanSelected(PurchaseSubscriptionInput(mockk(), subscriptionPlan.toUi()))
 

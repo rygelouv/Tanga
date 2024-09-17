@@ -16,6 +16,7 @@ data class PricingPlanUiState(
     val subscriptionPlans: List<SubscriptionPlan>? = null,
     val monthlyPlanUi: SubscriptionPlanUi? = null,
     val yearlyPlanUi: SubscriptionPlanUi? = null,
+    val showAuthSuggestion: Boolean = false,
     val error: UiError? = null
 )
 

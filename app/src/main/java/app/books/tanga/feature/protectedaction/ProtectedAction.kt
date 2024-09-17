@@ -7,22 +7,32 @@ import app.books.tanga.entity.SummaryId
  * or both to be performed.
  */
 sealed class ProtectedAction {
-    /**
-     * Represents the action of reading a summary.
-     * @param summaryId the id of the summary to read
-     */
-    data class Read(val summaryId: SummaryId) : ProtectedAction()
 
-    /**
-     * Represents the action of listening to a summary in audio format.
-     * @param summaryId the id of the summary to listen to
-     */
-    data class Listen(val summaryId: SummaryId) : ProtectedAction()
+    sealed class SubscriptionRequiredAction(open val summaryId: SummaryId) : ProtectedAction() {
+        /**
+         * Represents the action of reading a summary.
+         * @param summaryId the id of the summary to read
+         */
+        data class Read(override val summaryId: SummaryId) : SubscriptionRequiredAction(summaryId)
 
-    /**
-     * Represents the action of saving a summary to the user's library.
-     */
-    data object Save : ProtectedAction()
+        /**
+         * Represents the action of listening to a summary in audio format.
+         * @param summaryId the id of the summary to listen to
+         */
+        data class Listen(override val summaryId: SummaryId) : SubscriptionRequiredAction(summaryId)
+    }
+
+    sealed class AuthRequiredAction : ProtectedAction() {
+        /**
+         * Represents the action of saving a summary to the user's library.
+         */
+        data object Save : AuthRequiredAction()
+
+        /**
+         * Represents the action of getting a paid monthly or yearly subscription.
+         */
+        data object Subscribe : AuthRequiredAction()
+    }
 }
 
 /**
