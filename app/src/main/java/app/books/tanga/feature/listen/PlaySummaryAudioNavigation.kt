@@ -30,7 +30,7 @@ fun NavGraphBuilder.playSummaryAudio(onBackClicked: () -> Unit) {
 }
 
 fun NavController.toPlaySummaryAudio(
-    summaryId: String,
+    summaryId: SummaryId,
     screenToPopUpTo: NavigationScreen? = null,
     isInclusive: Boolean = true
 ) {
@@ -40,7 +40,7 @@ fun NavController.toPlaySummaryAudio(
             .route
             .replace(
                 oldValue = "{${NavigationScreen.SummaryDetails.SUMMARY_ID_KEY}}",
-                newValue = summaryId
+                newValue = summaryId.value
             )
     ) {
         screenToPopUpTo?.let { popUpTo(it.route) { inclusive = isInclusive } }

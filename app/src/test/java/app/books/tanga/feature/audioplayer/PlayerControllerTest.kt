@@ -64,23 +64,48 @@ class PlayerControllerTest {
     }
 
     @Test
-    fun `initPlayer should start periodic updates when player is already playing the same track`() = runTest {
-        val track = Fixtures.audioTrack1
-        every { mockPlayer.isPlaying } returns true
-        every { mockPlayer.currentMediaItem } returns track.toMediaItem()
-        every { mockPlayer.playbackState } returns Player.STATE_READY
-        // We check player in a paused state to avoid starting the updates which will block the test
-        every { mockPlayer.playWhenReady } returns false
+    fun `initPlayer should start periodic updates when player is already playing the same track`() =
+        runTest {
+            val track = Fixtures.audioTrack1
+            every { mockPlayer.isPlaying } returns true
+            every { mockPlayer.currentMediaItem } returns track.toMediaItem()
+            every { mockPlayer.playbackState } returns Player.STATE_READY
+            // We check player in a paused state to avoid starting the updates which will block the test
+            every { mockPlayer.playWhenReady } returns false
 
-        playerControllerImpl.initPlayer(track, this)
+            playerControllerImpl.initPlayer(track, this)
 
-        // Advance time to trigger the first update
-        advanceTimeBy(2000)
-        playerControllerImpl.playbackState.test {
+            // Advance time to trigger the first update
+            advanceTimeBy(2000)
+            playerControllerImpl.playbackState.test {
+                val state = expectMostRecentItem()
+                assertEquals(PlayerState.PAUSE, state.state)
+            }
+        }
+
+    @Test
+    fun `given player controller was initialized, then playAvailability should be available`() = runTest {
+        playerControllerImpl.playAvailability.test {
             val state = expectMostRecentItem()
-            assertEquals(PlayerState.PAUSE, state.state)
+            assertEquals(PlayerAvailability.Available, state)
         }
     }
+
+    @Test
+    fun `given player controller was initialized, when getCurrentlyPlayingAudioTrack is called, then return the currently playing track`() =
+        runTest {
+            val track = Fixtures.audioTrack1
+
+            every { mockPlayer.currentMediaItem } returns track.toMediaItem()
+
+            playerControllerImpl.initPlayer(track, this)
+
+            val result = playerControllerImpl.getCurrentlyPlayingAudioTrack()
+
+            assertEquals(track.id, result?.id)
+            assertEquals(track.title, result?.title)
+            assertEquals(track.author, result?.author)
+        }
 
     @Test
     fun `initPlayer should prepare new track when player is not playing`() = runTest {
@@ -95,17 +120,18 @@ class PlayerControllerTest {
     }
 
     @Test
-    fun `initPlayer should not prepare new track when player is playing a different track`() = runTest {
-        val track1 = Fixtures.audioTrack1
-        val track2 = Fixtures.audioTrack2
-        every { mockPlayer.isPlaying } returns true
-        every { mockPlayer.currentMediaItem } returns track2.toMediaItem()
+    fun `initPlayer should not prepare new track when player is playing a different track`() =
+        runTest {
+            val track1 = Fixtures.audioTrack1
+            val track2 = Fixtures.audioTrack2
+            every { mockPlayer.isPlaying } returns true
+            every { mockPlayer.currentMediaItem } returns track2.toMediaItem()
 
-        playerControllerImpl.initPlayer(track1, this)
+            playerControllerImpl.initPlayer(track1, this)
 
-        verify(exactly = 0) { mockPlayer.setMediaItem(any()) }
-        verify(exactly = 0) { mockPlayer.prepare() }
-    }
+            verify(exactly = 0) { mockPlayer.setMediaItem(any()) }
+            verify(exactly = 0) { mockPlayer.prepare() }
+        }
 
     @Test
     fun `onPlayPause should handle new track correctly`() {

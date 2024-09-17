@@ -8,7 +8,9 @@ import app.books.tanga.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
@@ -18,6 +20,10 @@ class MainViewModel @Inject constructor(
     private val sessionManager: SessionManager,
     private val authInteractor: AuthenticationInteractor
 ) : ViewModel() {
+
+    private val _state = MutableStateFlow(MainUiState())
+    val state: StateFlow<MainUiState> = _state
+
     private val _event: MutableSharedFlow<MainUiEvent> = MutableSharedFlow()
     val event: SharedFlow<MainUiEvent> = _event.asSharedFlow()
 

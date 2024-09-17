@@ -35,7 +35,7 @@ fun MainNavigationGraph(
             onNavigateToAuth = onRedirectToAuth,
             onNavigateToSubscriptions = { navController.toSubscription() },
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
             onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) }
         )
@@ -57,7 +57,7 @@ fun MainNavigationGraph(
 
         readSummaryScreen(
             onNavigateToPreviousScreen = { navController.popBackStack() },
-            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId.value) },
+            onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onNavigateToPricingPlans = { navController.toSubscription() }
         )
 

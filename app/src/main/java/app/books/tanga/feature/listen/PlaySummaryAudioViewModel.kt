@@ -37,9 +37,7 @@ class PlaySummaryAudioViewModel @Inject constructor(
         // Observe the playback state and update the UI accordingly.
         viewModelScope.launch {
             playerController.playbackState.collect { playbackState ->
-                _state.update {
-                    it.copy(playbackState = playbackState)
-                }
+                _state.update { it.copy(playbackState = playbackState) }
             }
         }
     }
