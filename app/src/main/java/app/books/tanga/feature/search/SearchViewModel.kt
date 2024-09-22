@@ -30,6 +30,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+const val SEARCH_DEBOUNCE_TIME = 500L
+
 @OptIn(FlowPreview::class)
 @Suppress("TooManyFunctions")
 @HiltViewModel
@@ -51,7 +53,7 @@ class SearchViewModel @Inject constructor(
         loadSearchData()
         viewModelScope.launch {
             queryText
-                .debounce(500)
+                .debounce(SEARCH_DEBOUNCE_TIME)
                 .filter { it.isNotIdle() }
                 .distinctUntilChanged()
                 .collectLatest { queryState ->
