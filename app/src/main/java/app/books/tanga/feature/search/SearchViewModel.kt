@@ -186,7 +186,6 @@ class SearchViewModel @Inject constructor(
         }
         val categoryIds = selectedCategories.map { it.id }
         loadSummariesForCategories(categoryIds)
-        println("categoryIds: $categoryIds")
     }
 
     /**

@@ -46,7 +46,7 @@ sealed class QueryInputState {
     ) : QueryInputState()
 
     /**
-     * When the query input has been interacted with and the query is empty
+     * When the query input has been interacted with and the query has been cleared
      */
     data object Empty : QueryInputState()
 }

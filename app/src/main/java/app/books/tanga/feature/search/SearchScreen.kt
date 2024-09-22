@@ -227,7 +227,6 @@ private fun SearchBox(onSearch: (String) -> Unit) {
         },
         onSearch = {
             keyboardController?.hide()
-            onSearch(text)
         },
         active = false,
         onActiveChange = { },
