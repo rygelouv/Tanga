@@ -15,16 +15,24 @@ import app.books.tanga.tracking.Pages
 import app.books.tanga.tracking.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+const val SEARCH_DEBOUNCE_TIME = 500L
+
+@OptIn(FlowPreview::class)
 @Suppress("TooManyFunctions")
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -38,9 +46,24 @@ class SearchViewModel @Inject constructor(
     private val _events: Channel<SearchUiEvent> = Channel()
     val events: Flow<SearchUiEvent> = _events.receiveAsFlow()
 
+    private val queryText: MutableStateFlow<QueryInputState> = MutableStateFlow(QueryInputState.Idle)
+
     init {
         analyticsTracker.trackPage(Pages.SEARCH)
         loadSearchData()
+        viewModelScope.launch {
+            queryText
+                .debounce(SEARCH_DEBOUNCE_TIME)
+                .filter { it.isNotIdle() }
+                .distinctUntilChanged()
+                .collectLatest { queryState ->
+                    when (queryState) {
+                        is QueryInputState.Active -> performSearch(queryState.query)
+                        QueryInputState.Empty -> viewModelScope.launch { loadSummaries() }
+                        QueryInputState.Idle -> Unit
+                    }
+                }
+        }
     }
 
     private fun loadSearchData() {
@@ -110,6 +133,12 @@ class SearchViewModel @Inject constructor(
             )
         }
 
+        queryText.update {
+            if (query.isEmpty()) QueryInputState.Empty else QueryInputState.Active(query)
+        }
+    }
+
+    private fun performSearch(query: String) {
         viewModelScope.launch {
             summaryInteractor
                 .search(query)

@@ -27,3 +27,28 @@ sealed class SearchUiEvent {
         ) : NavigateTo()
     }
 }
+
+/**
+ * Represents the state of the query input field
+ */
+sealed class QueryInputState {
+
+    /**
+     * When the query input has not been interacted with yet
+     */
+    data object Idle : QueryInputState()
+
+    /**
+     * When the query input has been interacted with and the query is not empty
+     */
+    data class Active(
+        val query: String
+    ) : QueryInputState()
+
+    /**
+     * When the query input has been interacted with and the query has been cleared
+     */
+    data object Empty : QueryInputState()
+}
+
+fun QueryInputState.isNotIdle(): Boolean = this !is QueryInputState.Idle
