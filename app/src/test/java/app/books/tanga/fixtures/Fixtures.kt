@@ -60,6 +60,17 @@ object Fixtures {
         purchaseBookUrl = "PurchaseBookUrl2",
     )
 
+    val dummySummary3 = Summary(
+        id = SummaryId("3"),
+        title = "Content3",
+        author = "Author3",
+        synopsis = "Synopsis3",
+        coverImageUrl = "http://example.com/image.png",
+        categories = listOf(CategoryId("5"), CategoryId("6")),
+        playingLength = "10:36",
+        purchaseBookUrl = "PurchaseBookUrl3",
+    )
+
     val dummyUser = User(
         id = UserId("123456"),
         fullName = "John Doe",

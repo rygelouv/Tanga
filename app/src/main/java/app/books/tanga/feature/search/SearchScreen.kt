@@ -96,7 +96,11 @@ fun SearchScreen(
                             onCategoryUnselect = onCategoryUnselect
                         )
                     }
-                    LibraryShimmerLoader(modifier = Modifier.fillMaxWidth().testTag("shimmer_loader"))
+                    LibraryShimmerLoader(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("shimmer_loader")
+                    )
                 }
 
                 ProgressState.Hide -> {
@@ -217,7 +221,10 @@ private fun SearchBox(onSearch: (String) -> Unit) {
     SearchBar(
         modifier = Modifier.fillMaxWidth(),
         query = text,
-        onQueryChange = { text = it },
+        onQueryChange = {
+            text = it
+            onSearch(text)
+        },
         onSearch = {
             keyboardController?.hide()
             onSearch(text)
