@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://sonarcloud.io/images/project_badges/sonarcloud-white.svg"/></a>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="Playstore button" width="100" src="art/google_playstore.png"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="Playstore button" width="220" src="art/google_playstore.png"/></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="Website button" width="240" src="art/check_website_button.png"/></a>
 </p>
 
