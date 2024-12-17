@@ -9,13 +9,13 @@
  </a>
 </p>
 
-![tanga_banner_v2_updated](https://github.com/rygelouv/Tanga/blob/dev/art/store_banner.png)
+![store_banner.png](art/store_banner.png)
 
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://sonarcloud.io/images/project_badges/sonarcloud-white.svg"/></a>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://github.com/rygelouv/Tanga/blob/dev/art/get_on_playstore_button.png"/></a>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://sonarcloud.io/images/project_badges/check_website_button.png"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="art/get_on_playstore_button.png"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="art/check_website_button.png"/></a>
 </p>
 
 ## 🚧 **This project is still under construction** 🚧
