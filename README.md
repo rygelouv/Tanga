@@ -82,14 +82,14 @@ Well you know what a viewModel is. Let’s not waste time here.
 
 ### Architecture?
 
-This project follows a typical/classic MVVM approach or whatever you may wanna call it if you think it’s not MVVM. It doesn’t really matter, what is important here is that we use a ViewModel class that holds an observable state object.
+This project follows a typical/classic MVVM approach or whatever you may wanna call it if you think it’s not MVVM, tt doesn’t really matter. What is important here is that we use a ViewModel class that holds an observable state object.
 State must be modeled in the form of a single object that represents all its variations. We use data class to model and represent state. It could have been sealed classes but that also doesn’t really matter, each approach has their pros and cons.
 
 ### Why isn’t the Repository also in the feature package
 
-There is a misconception among Android engineers who think tend to link a repository to a feature. They will build a UI screen, then it’s viewModel and then its repository and sometime even adding a useless UseCase in the middle.
-A repository should be coupled to a feature. A repository should be setup by Model and not by feature. For example: UserRepository manages data related to the User model, OrderRepository managers data related to Orders (CRUD and all other type of operations).
-So a repository has nothing to do in a feature package. Plus, a repository should be reusable across multiple features. Even if you had UseCases, repositories and UseCase are not the same type of components in your architecture. You can have a UseCase for each feature but you should not have Repo for each feature, that doesn’t make any sense.
+There is a misconception among Android engineers who tend to attach and couple a repository to a feature. They will build a UI screen, then it’s viewModel and then its repository and sometime even adding a useless UseCase in the middle.
+A repository should NOT be coupled to a feature. A repository should be setup by Model and not by feature. For example: UserRepository manages data related to the User model, OrderRepository managers data related to Orders (CRUD and all other type of operations). HomeRepository or SearchRepository or ReadSummaryRepository are not valid repositories.
+So a repository has nothing to do in a feature package. Plus, a repository should be reusable across multiple features. Even if you had UseCases, repositories and UseCase are not the same type of components in your architecture. You can have a UseCase for each feature but you should not have Repo for each feature.
 And seriously, think twice before using UseCases though.
 
 ### Interactors?
@@ -104,7 +104,7 @@ We don’t use UseCases here. But we do think that sometimes a mobile app needs 
 
 ## Module Organization
 
-Tanga project doesn’t have module per feature breakdown as you’ll tend to see in many android sample projects that fantasize on modules. There is no plan of having a Module per feature breakdown because:
+Tanga project doesn’t have a module per feature breakdown as you’ll tend to see in many android sample projects that fantasize on modules. There is no plan of having a Module per feature breakdown because:
 
 - Some features are very small why have a full feature module with everything that it implies (gradle, navigation trouble, communication with other modules etc…) for just a single screen?
 - More feature modules means more challenges in terms of navigation, communication between those, DI etc. Is it really worth it?
