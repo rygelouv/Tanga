@@ -153,7 +153,7 @@ Tanga relies almost entirely on Firebase for its infrastructure. We use Firebase
 
 We also use Sentry for extra error tracking and monitoring. We use RevenueCat for in-app purchases and subscriptions.
 
-![tanga_infra.png](art/tanga_infra.png)
+![tanga_infra_02.png](art/tanga_infra_02.png)
 
 ### Remaining Infrastructure automation work
 - [x] Add a CI (Bitrise and Github Actions)
