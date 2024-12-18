@@ -45,7 +45,7 @@ Feature code is located in the `feature` package. Each feature package follows a
 - View Model
 - UI Contract
 
-![big_diagram.png](art/big_diagram.png)
+![big_diagram_02.png](art/big_diagram_02.png)
 
 ### Containers
 
@@ -62,7 +62,7 @@ A Container does:
 - Handle UI Events for navigation actions
 - Call actual viewModel functions that are wrapped as lambda before being passed down to the Screen
 
-![small_diagram.png](art/small_diagram.png)
+![small_diagram_02.png](art/small_diagram_02.png)
 
 ### Screens
 
@@ -138,7 +138,24 @@ We may not need an abstraction for Analytics Providers though? Not sure 🤔
 ## Next steps on UI:
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
 
-## Infrastructure work
+---
+
+## Infrastructure 
+Tanga relies almost entirely on Firebase for its infrastructure. We use Firebase for:
+- Authentication
+- Firestore Database
+- Analytics
+- Crashlytics Error Tracking
+- Remote Config for feature flags
+- Performance Monitoring
+- Messaging for push notifications
+- Storage for images and other files such as audio and graphics
+
+We also use Sentry for extra error tracking and monitoring. We use RevenueCat for in-app purchases and subscriptions.
+
+![tanga_infra.png](art/tanga_infra.png)
+
+### Remaining Infrastructure automation work
 - [x] Add a CI (Bitrise and Github Actions)
 - [x] Add Ktlint
 - [x] Add Detekt
@@ -148,7 +165,7 @@ We may not need an abstraction for Analytics Providers though? Not sure 🤔
 - [ ] Add Detekt Step to CI
 - [ ] Add full Android build on Github Action workflow
 
-## Testing
+### Testing
 We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
 - [x] Add JUnit 5
 - [X] Add Mockk
