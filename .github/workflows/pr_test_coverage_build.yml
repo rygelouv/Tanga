@@ -31,6 +31,17 @@ jobs:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA | base64 -D > app/google-services.json
 
+        # Loads the keystore.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create keystore.properties
+        run: |
+          echo "${{ secrets.KEYSTORE_PROPERTIES }}" > $GITHUB_WORKSPACE/keystore.properties
+
+        # Loads the secrets.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create secrets.properties
+        run: |
+          echo "${{ secrets.SECRETS_PROPERTIES }}" > $GITHUB_WORKSPACE/secrets.properties
+
+
         # Executes Android tests in an emulator.
         # It uses an emulator with API level 29 and runs the 'jacocoTestReport' Gradle task for generating code coverage reports.
         # Skipping this step for now as our android tests are not working
