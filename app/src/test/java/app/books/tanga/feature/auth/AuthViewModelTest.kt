@@ -87,6 +87,7 @@ class AuthViewModelTest {
     fun `onSkipAuth - success scenario`() = runTest {
         val user = mockk<User>(relaxed = true)
         coEvery { interactor.signInAnonymously() } returns Result.success(user)
+        coEvery { interactor.isUserAnonymous() } returns false
         coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
 
         viewModel = AuthViewModel(
@@ -109,9 +110,34 @@ class AuthViewModelTest {
     }
 
     @Test
+    fun `onSkipAuth - close scenario`() = runTest {
+        coEvery { interactor.isUserAnonymous() } returns true
+        coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
+
+        viewModel = AuthViewModel(
+            interactor = interactor,
+            signInClient = signInClient,
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker
+        )
+
+        viewModel.onSkipAuth()
+
+        viewModel.state.test {
+            Assertions.assertEquals(ProgressState.Hide, awaitItem().skipProgressState)
+        }
+
+        viewModel.events.test {
+            Assertions.assertEquals(AuthUiEvent.Close, expectMostRecentItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `onSkipAuth - failure scenario`() = runTest {
         val error = RuntimeException("Error")
         coEvery { interactor.signInAnonymously() } returns Result.failure(error)
+        coEvery { interactor.isUserAnonymous() } returns false
 
         viewModel = AuthViewModel(
             interactor = interactor,

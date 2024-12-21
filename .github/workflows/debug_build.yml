@@ -41,6 +41,15 @@ jobs:
         run: |
           echo "${{ secrets.SECRETS_PROPERTIES }}" > $GITHUB_WORKSPACE/secrets.properties
 
+        # Grant execute permission to the gradlew file.
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+        # This step builds the app in debug mode using Gradle.
+      - run: echo "Building Debug APK."
+      - name: Build the project with Gradle
+        run: ./gradlew build
+      - run: echo "Build status report=${{ job.status }}."
 
         # Executes Android tests in an emulator.
         # It uses an emulator with API level 29 and runs the 'jacocoTestReport' Gradle task for generating code coverage reports.
