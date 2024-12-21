@@ -40,6 +40,7 @@ class GoogleAuthServiceImpl @Inject constructor(
     /**
      * If initialization of Sign in request fails, then try sign up request
      */
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun initSignIn(): BeginSignInResult =
         try {
             signInClient.beginSignIn(signInRequest).await()
