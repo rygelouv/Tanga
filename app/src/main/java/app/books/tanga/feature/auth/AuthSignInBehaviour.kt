@@ -32,6 +32,7 @@ import app.books.tanga.common.ui.ProgressState
 @Composable
 fun SignIn(
     onAuthSuccess: () -> Unit,
+    onClose: () -> Unit,
     event: AuthUiEvent,
     onGoogleSignInComplete: (Intent) -> Unit,
     onGoogleSignInNotComplete: () -> Unit
@@ -58,6 +59,12 @@ fun SignIn(
         is AuthUiEvent.NavigateTo.ToHomeScreen -> {
             LaunchedEffect(Unit) {
                 onAuthSuccess()
+            }
+        }
+
+        is AuthUiEvent.Close -> {
+            LaunchedEffect(Unit) {
+                onClose()
             }
         }
 

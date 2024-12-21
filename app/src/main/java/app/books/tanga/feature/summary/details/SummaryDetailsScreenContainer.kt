@@ -15,6 +15,8 @@ import app.books.tanga.feature.auth.AuthSuggestionBottomSheet
 import app.books.tanga.utils.openLink
 import app.books.tanga.utils.shareSummary
 
+const val BASE_WEB_URL = "https://tanga-web-app--tanga-d571c.us-central1.hosted.app/summary-details/"
+
 @Composable
 fun SummaryDetailsScreenContainer(
     summaryId: SummaryId,
@@ -61,7 +63,7 @@ fun SummaryDetailsScreenContainer(
                 context = context,
                 summaryTitle = it.title,
                 summaryAuthor = it.author,
-                url = it.coverUrl
+                url = BASE_WEB_URL + it.id.value
             )
         },
         onPurchase = {

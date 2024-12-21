@@ -30,10 +30,13 @@ fun NavigationGraph(
         )
         authentication(
             onAuthSuccess = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
+            onClose = {
+                navController.popBackStack()
+            },
             onTermsAndPrivacyClick = { navController.toPrivacyAndTerms() }
         )
         mainScreen {
-            navController.toAuthentication(NavigationScreen.Main)
+            navController.toAuthentication(NavigationScreen.Main, false)
         }
         privacyAndTerms(
             onNavigateBack = { navController.popBackStack() }

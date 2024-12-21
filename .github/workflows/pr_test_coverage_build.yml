@@ -47,7 +47,7 @@ jobs:
         # Uploads the generated Android instrumented test coverage reports as artifacts for later access.
         # This step ensures that test results are stored and retrievable.
       - name: Generate report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: report
           path: app/build/reports/coverage/androidTest/debug/connected/

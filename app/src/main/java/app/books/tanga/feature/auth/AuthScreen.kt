@@ -46,6 +46,7 @@ fun AuthScreen(
     state: AuthUiState,
     events: AuthUiEvent,
     onAuthSkip: () -> Unit,
+    onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
@@ -84,7 +85,7 @@ fun AuthScreen(
                     when (state.skipProgressState) {
                         ProgressState.Hide -> {
                             Text(
-                                text = stringResource(id = R.string.auth_skip),
+                                text = stringResource(id = state.skipText),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
@@ -108,7 +109,8 @@ fun AuthScreen(
             onGoogleSignInButtonClick = onGoogleSignInButtonClick,
             onGoogleSignInComplete = onGoogleSignInComplete,
             onGoogleSignInNotComplete = onGoogleSignInNotComplete,
-            onTermsAndPrivacyClick = onTermsAndPrivacyClick
+            onTermsAndPrivacyClick = onTermsAndPrivacyClick,
+            onClose = onClose
         )
     }
 }
@@ -119,6 +121,7 @@ fun AuthContent(
     events: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
+    onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onGoogleSignInComplete: (Intent) -> Unit,
     modifier: Modifier = Modifier,
@@ -129,6 +132,7 @@ fun AuthContent(
         event = events,
         onGoogleSignInComplete = onGoogleSignInComplete,
         onGoogleSignInNotComplete = onGoogleSignInNotComplete,
+        onClose = onClose,
     )
 
     Column(
@@ -258,6 +262,7 @@ private fun AuthScreenPreview() {
     TangaTheme {
         AuthScreen(
             onAuthSkip = {},
+            onClose = {},
             onTermsAndPrivacyClick = {},
             onAuthSuccess = {},
             state = state,

@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun AuthScreenContainer(
     onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
@@ -21,6 +22,7 @@ fun AuthScreenContainer(
         events = events,
         modifier = modifier,
         onAuthSkip = { viewModel.onSkipAuth() },
+        onClose = onClose,
         onAuthSuccess = onAuthSuccess,
         onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
         onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) },
