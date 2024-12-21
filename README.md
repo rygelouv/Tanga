@@ -170,7 +170,7 @@ We also use Sentry for extra error tracking and monitoring. We use RevenueCat fo
 - [ ] Add full Android build on Github Action workflow
 
 ### Testing
-We still don't have test yet in the app. This Test project will start after the infrastructure work is done or at least the most part of it.
+Some effort is put in testing. We've added some good amount of unit tests and UI tests. UI tests must be broken at the moment. We plan on getting rid of them enterily.
 - [x] Add JUnit 5
 - [X] Add Mockk
 - [x] Add Codecov for tracking project coverage
