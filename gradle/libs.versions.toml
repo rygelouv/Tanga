@@ -1,5 +1,5 @@
 [versions]
-android-plugin-gradle-version = "8.5.1"
+android-plugin-gradle-version = "8.7.3"
 browser-version = "1.8.0"
 kotlin-android-plugin-version = "1.9.22"
 firebase-crashlytics-version = "3.0.2"
