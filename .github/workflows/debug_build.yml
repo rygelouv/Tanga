@@ -41,7 +41,18 @@ jobs:
         run: |
           echo "${{ secrets.SECRETS_PROPERTIES }}" > $GITHUB_WORKSPACE/secrets.properties
 
-        # Grant execute permission to the gradlew file.
+        # Loads the sentry.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create sentry.properties
+        run: |
+          echo "${{ secrets.SENTRY_PROPERTIES }}" > $GITHUB_WORKSPACE/sentry.properties
+
+        # Loads the keystore file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > $GITHUB_WORKSPACE/tangakeystore.jks
+    
+
+     # Grant execute permission to the gradlew file.
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
