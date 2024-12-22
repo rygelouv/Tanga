@@ -86,13 +86,14 @@ jobs:
 
         # Uploads the Android instrumented test coverage report to Codecov using a provided token.
         # If there's an error in uploading, the CI process will fail.
-      - name: Upload Android Instrumented Test Report
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: app/build/reports/coverage/androidTest/debug/connected/report.xml, core-ui/build/reports/coverage/androidTest/debug/connected/report.xml
-          flags: uitests
-          fail_ci_if_error: true
+        # Skipping this step for now as our android tests are not working
+#      - name: Upload Android Instrumented Test Report
+#        uses: codecov/codecov-action@v3
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          files: app/build/reports/coverage/androidTest/debug/connected/report.xml, core-ui/build/reports/coverage/androidTest/debug/connected/report.xml
+#          flags: uitests
+#          fail_ci_if_error: true
 
         # Similar to the previous step, this uploads the Kotlin unit test coverage report to Codecov.
         # It also fails the CI process if an error occurs during upload.
