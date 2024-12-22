@@ -49,7 +49,7 @@ jobs:
         # Loads the keystore file from a Github secret, decodes it, and saves it to the root directory.
       - name: Create keystore file
         run: |
-          echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > $GITHUB_WORKSPACE/tangakeystore.jks
+          echo "${{ secrets.KEYSTORE_JKS_FILE }}" | base64 -d > $GITHUB_WORKSPACE/tangakeystore.jks
     
 
      # Grant execute permission to the gradlew file.
