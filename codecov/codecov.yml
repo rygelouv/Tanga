@@ -1,13 +1,12 @@
-{
-  ignore:
-    - "**/*Screen.kt"
-    - "**/*Container.kt"
-    - "**/*UIContract.kt"
+ignore:
+  - "**/*Screen.kt"
+  - "**/*Container.kt"
+  - "**/*UIContract.kt"
 
-  fixes:
-    - "debugAndroidTest/::app/src/test/java/"
-    - "/home/runner/work/Tanga/Tanga>/::"
-  "codecov": {
-      "disable_default_path_fixes": true
-  }
+fixes:
+  - "debugAndroidTest/::app/src/test/java/"
+  - "/home/runner/work/Tanga/Tanga>/::"
+
+"codecov": {
+  "disable_default_path_fixes": true
 }
