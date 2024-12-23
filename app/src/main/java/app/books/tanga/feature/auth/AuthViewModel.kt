@@ -3,6 +3,7 @@ package app.books.tanga.feature.auth
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
@@ -38,6 +39,8 @@ class AuthViewModel @Inject constructor(
 
     fun onPageStarted() {
         analyticsTracker.trackPage(Pages.AUTHENTICATION)
+        val skipText = if (interactor.isUserAnonymous()) R.string.close else R.string.auth_skip
+        _state.update { it.copy(skipText = skipText) }
     }
 
     fun onGoogleSignInStarted() {
@@ -59,6 +62,11 @@ class AuthViewModel @Inject constructor(
     fun onSkipAuth() {
         if (_state.value.googleSignInButtonProgressState == ProgressState.Show) return
         analyticsTracker.track(Events.TAP_SKIP_SIGN_IN)
+
+        if (interactor.isUserAnonymous()) {
+            postEvent(AuthUiEvent.Close)
+            return
+        }
 
         _state.update { it.copy(skipProgressState = ProgressState.Show, disableGoogleSignInButton = true) }
         viewModelScope.launch {

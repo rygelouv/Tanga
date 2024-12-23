@@ -35,6 +35,7 @@ class ProtectedActionInteractor @Inject constructor(
     private suspend fun handleListenOrReadAction(action: ProtectedAction.SubscriptionRequiredAction):
         ProtectedActionCheckResult = when {
         action.isUponWeeklySummary() -> ProtectedActionCheckResult.Allowed
+        sessionManager.hasSession().not() -> ProtectedActionCheckResult.AuthRequired
         revenuecatController.hasActiveSubscription().not() -> ProtectedActionCheckResult.SubscriptionRequired
         else -> ProtectedActionCheckResult.Allowed
     }

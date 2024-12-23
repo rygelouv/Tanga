@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,6 +47,7 @@ fun AuthScreen(
     state: AuthUiState,
     events: AuthUiEvent,
     onAuthSkip: () -> Unit,
+    onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
     modifier: Modifier = Modifier,
@@ -55,61 +57,74 @@ fun AuthScreen(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = {
-            Row(
-                modifier = Modifier.padding(
-                    top = 5.dp,
-                    start = 5.dp,
-                    end = LocalSpacing.current.extraLarge,
-                    bottom = 5.dp
-                ),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Spacer(modifier = Modifier.weight(7f))
-                Button(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .weight(3f),
-                    colors =
-                    ButtonDefaults.buttonColors(
-                        contentColor = MaterialTheme.colorScheme.tertiary,
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
-                    ),
-                    shape = RoundedCornerShape(20.dp),
-                    elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
-                    onClick = {
-                        onAuthSkip()
-                    }
-                ) {
-                    when (state.skipProgressState) {
-                        ProgressState.Hide -> {
-                            Text(
-                                text = stringResource(id = R.string.auth_skip),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-
-                        ProgressState.Show -> {
-                            DotsAnimation(
-                                modifier = Modifier.testTag("ProgressIndicator")
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    ) {
+        topBar = { AuthTopBar(state, onAuthSkip) }
+    ) { paddingValues ->
         AuthContent(
-            modifier = Modifier.padding(it),
-            onAuthSuccess = onAuthSuccess,
+            modifier = Modifier.padding(paddingValues),
             state = state,
             events = events,
+            onAuthSuccess = onAuthSuccess,
             onGoogleSignInButtonClick = onGoogleSignInButtonClick,
             onGoogleSignInComplete = onGoogleSignInComplete,
             onGoogleSignInNotComplete = onGoogleSignInNotComplete,
-            onTermsAndPrivacyClick = onTermsAndPrivacyClick
+            onTermsAndPrivacyClick = onTermsAndPrivacyClick,
+            onClose = onClose
         )
+    }
+}
+
+@Composable
+private fun AuthTopBar(
+    state: AuthUiState,
+    onAuthSkip: () -> Unit
+) {
+    Row(
+        modifier = Modifier.padding(
+            top = 5.dp,
+            start = 5.dp,
+            end = LocalSpacing.current.extraLarge,
+            bottom = 5.dp
+        ),
+        horizontalArrangement = Arrangement.End
+    ) {
+        Spacer(modifier = Modifier.weight(7f))
+        SkipButton(
+            skipState = state.skipProgressState,
+            skipText = state.skipText,
+            onSkip = onAuthSkip
+        )
+    }
+}
+
+@Composable
+private fun RowScope.SkipButton(
+    skipState: ProgressState,
+    skipText: Int,
+    onSkip: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onSkip,
+        modifier = modifier
+            .width(120.dp)
+            .weight(3f),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+        ),
+        shape = RoundedCornerShape(20.dp),
+        elevation = ButtonDefaults.buttonElevation(0.dp)
+    ) {
+        when (skipState) {
+            ProgressState.Hide -> Text(
+                text = stringResource(id = skipText),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+            ProgressState.Show -> DotsAnimation(
+                modifier = Modifier.testTag("ProgressIndicator")
+            )
+        }
     }
 }
 
@@ -119,6 +134,7 @@ fun AuthContent(
     events: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
+    onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onGoogleSignInComplete: (Intent) -> Unit,
     modifier: Modifier = Modifier,
@@ -129,6 +145,7 @@ fun AuthContent(
         event = events,
         onGoogleSignInComplete = onGoogleSignInComplete,
         onGoogleSignInNotComplete = onGoogleSignInNotComplete,
+        onClose = onClose,
     )
 
     Column(
@@ -258,6 +275,7 @@ private fun AuthScreenPreview() {
     TangaTheme {
         AuthScreen(
             onAuthSkip = {},
+            onClose = {},
             onTermsAndPrivacyClick = {},
             onAuthSuccess = {},
             state = state,

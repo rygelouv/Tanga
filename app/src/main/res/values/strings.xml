@@ -41,9 +41,9 @@
     <string name="summary_details_recommendations">Recommended summaries</string>
     <string name="pricing_plan_message">Upgrade to Premium and get the best of Tanga</string>
     <string name="pricing_plan_offer_no_ads">No Ads</string>
-    <string name="pricing_plan_offer_unlimited_access">Unlimited Access</string>
-    <string name="pricing_plan_offer_visual_graphic_summaries">Visual Graphic Summaries</string>
-    <string name="pricing_plan_offer_video_summaries">Video Summaries</string>
+    <string name="pricing_plan_offer_unlimited_access">Unlimited Access to Summaries</string>
+    <string name="pricing_plan_offer_unlimited_audios">Unlimited Access to Audios</string>
+    <string name="pricing_plan_offer_video_summaries">AI features* (Coming soon)</string>
     <string name="pricing_plan_offer_offline_audio">Offline Audio</string>
     <string name="pricing_plan_best_value">Best Value</string>
     <string name="pricing_plan_monthly">Monthly</string>

@@ -7,10 +7,9 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=appveyor"/></a>
   <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=for-the-badge&logo=appveyor"/></a>
-  <a href="https://github.com/rygelouv/Tanga/tree/dev"><img alt="API" src="https://img.shields.io/bitrise/af836c41-1d0e-4c07-a9e1-b4c4452a0686/dev?token=TmwPfWg3f5jHJEub8sA6Hw"/></a>
   <a href="https://sonarcloud.io/summary/new_code?id=rygelouv_Tanga"><img alt="API" src="https://sonarcloud.io/api/project_badges/measure?project=rygelouv_Tanga&metric=alert_status"/></a>
-  <a href="https://codecov.io/gh/rygelouv/Tanga" ><img src="https://codecov.io/gh/rygelouv/Tanga/graph/badge.svg?token=LWTD8CBUBW"/> 
- </a>
+  <a href="https://codecov.io/gh/rygelouv/Tanga" ><img src="https://codecov.io/gh/rygelouv/Tanga/graph/badge.svg?token=LWTD8CBUBW"/></a>
+  <a href="https://github.com/rygelouv/Tanga/actions" ><img src="https://github.com/rygelouv/Tanga/actions/workflows/debug_build.yml/badge.svg"/></a>
 </p>
 
 ---
@@ -160,7 +159,8 @@ We also use Sentry for extra error tracking and monitoring. We use RevenueCat fo
 ![tanga_infra_02.png](art/tanga_infra_02.png)
 
 ### Remaining Infrastructure automation work
-- [x] Add a CI (Bitrise and Github Actions)
+- [x] Add Bitrise for CI*. We removed it because it was too expensive for a single developer. We are now using Github Actions
+- [x] Add Github Actions for CI
 - [x] Add Ktlint
 - [x] Add Detekt
 - [x] Add SonarCloud

@@ -10,12 +10,16 @@ import app.books.tanga.navigation.NavigationScreen
  */
 fun NavGraphBuilder.authentication(
     onAuthSuccess: () -> Unit,
+    onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit
 ) {
     composable(route = NavigationScreen.Authentication.route) {
         AuthScreenContainer(
             onAuthSuccess = onAuthSuccess,
-            onTermsAndPrivacyClick = onTermsAndPrivacyClick
+            onTermsAndPrivacyClick = onTermsAndPrivacyClick,
+            onClose = {
+                onClose()
+            }
         )
     }
 }
