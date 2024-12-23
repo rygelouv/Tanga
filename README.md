@@ -5,11 +5,13 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 ---
 
 <p align="center">
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=appveyor"/></a>
-  <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=for-the-badge&logo=appveyor"/></a>
   <a href="https://sonarcloud.io/summary/new_code?id=rygelouv_Tanga"><img alt="API" src="https://sonarcloud.io/api/project_badges/measure?project=rygelouv_Tanga&metric=alert_status"/></a>
   <a href="https://codecov.io/gh/rygelouv/Tanga" ><img src="https://codecov.io/gh/rygelouv/Tanga/graph/badge.svg?token=LWTD8CBUBW"/></a>
   <a href="https://github.com/rygelouv/Tanga/actions" ><img src="https://github.com/rygelouv/Tanga/actions/workflows/debug_build.yml/badge.svg"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=appveyor"/></a>
+  <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=for-the-badge&logo=appveyor"/></a>
+  <a href="https://firebase.google.com/"><img alt="API" src="https://img.shields.io/badge/firebase-a08021?style=for-the-badge&logo=firebase&logoColor=ffcd34"/></a>
+  <a href="https://sentry.io/"><img alt="API" src="https://img.shields.io/badge/sentry-%23362D59.svg?style=for-the-badge&logo=sentry&logoColor=white)"/></a>
 </p>
 
 ---
@@ -19,7 +21,7 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 ---
 
 <p align="center">
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://sonarcloud.io/images/project_badges/sonarcloud-white.svg"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=rygelouv_Tanga"><img alt="License" src="https://sonarcloud.io/images/project_badges/sonarcloud-white.svg"/></a>
   <a href="https://play.google.com/store/apps/details?id=app.books.tanga"><img alt="Playstore button" width="220" src="art/google_playstore.png"/></a>
   <a href="https://tanga.app/"><img alt="Website button" width="240" src="art/check_website_button.png"/></a>
 </p>
@@ -91,14 +93,14 @@ State must be modeled in the form of a single object that represents all its var
 ### Why isn’t the Repository also in the feature package
 
 There is a misconception among Android engineers who tend to attach and couple a repository to a feature. They will build a UI screen, then it’s viewModel and then its repository and sometime even adding a useless UseCase in the middle.
-A repository should NOT be coupled to a feature. A repository should be setup by Model and not by feature. For example: UserRepository manages data related to the User model, OrderRepository managers data related to Orders (CRUD and all other type of operations). HomeRepository or SearchRepository or ReadSummaryRepository are not valid repositories.
+A repository should NOT be coupled to a feature. A repository should be setup by Model and not by feature. For example: `UserRepository` manages data related to the User model, `OrderRepository` managers data related to Orders (CRUD and all other type of operations). `HomeRepository` or `SearchRepository` or `ReadSummaryRepository` are not valid repositories.
 So a repository has nothing to do in a feature package. Plus, a repository should be reusable across multiple features. Even if you had UseCases, repositories and UseCase are not the same type of components in your architecture. You can have a UseCase for each feature but you should not have Repo for each feature.
 And seriously, think twice before using UseCases though.
 
 ### Interactors?
 
 UseCases are supposed to be components that help isolate business logic and eventually reuse them as well as allowing the testability of such logic. However UseCases in the Android community has become a form of weird architectural ~~pornography~~ fantasy.
-We don’t use UseCases here. But we do think that sometimes a mobile app needs to run some business logic or may just need to “massage” some data from the repo/data source before passing it down to the ViewModel. That is where we bring Interactors in. They are components of business logic but:
+We don’t use UseCases on the Tanga project. But we do think that sometimes a mobile app needs to run some business logic or may just need to “massage” some data from the repo/data source before passing it down to the ViewModel. That is where we bring Interactors in. They are components of business logic but:
 
 - They are not always needed in every feature. Only when necessary and where they actually make sense.
 - They don’t just stupidly contain a single line function that calls the Repo. They have multiple functions that serve multiple different operations and logic for the same feature.
@@ -138,8 +140,11 @@ Contains code for everything related to tracking.
 At the moment we are only tracking analytics so far. We need to decouple error tracking from `app` module and move it to `Tracking` module. We also need to add performance tracking and tracing in this module.
 We may not need an abstraction for Analytics Providers though? Not sure 🤔
 
-## Next steps on UI:
+## Next important projects
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
+- Set up Feature flagging system. We will probably just reuse this https://github.com/rygelouv/FeatureFlags
+- Set up push notifications
+- Bring AI features (this is the next biggest project)
 
 ---
 
@@ -158,31 +163,31 @@ We also use Sentry for extra error tracking and monitoring. We use RevenueCat fo
 
 ![tanga_infra_02.png](art/tanga_infra_02.png)
 
-### Remaining Infrastructure automation work
+### Automation Infrastructure  work
 - [x] Add Bitrise for CI*. We removed it because it was too expensive for a single developer. We are now using Github Actions
 - [x] Add Github Actions for CI
 - [x] Add Ktlint
 - [x] Add Detekt
 - [x] Add SonarCloud
-- [x] Add Codecove for test coverage tracking
+- [x] Add Codecov for test coverage tracking
 - [x] Add error tracking system with Sentry and Crashlytics
 - [ ] Add Detekt Step to CI
-- [ ] Add full Android build on Github Action workflow
+- [x] Add full Android build on Github Action workflow
 
 ### Testing
 Some effort is put in testing. We've added some good amount of unit tests and UI tests. UI tests must be broken at the moment. We plan on getting rid of them enterily.
 - [x] Add JUnit 5
 - [X] Add Mockk
 - [x] Add Codecov for tracking project coverage
-- [x] Add Kover and Jacoco for generating coverage reports
+- [x] Add Kover and Jacoco for generating coverage reports - We've mixed this both and need to improve things around here
 - [x] Start adding unit tests.
-- [x] We need to UI test the screen composables
-- [ ] Reach 50% coverage
+- [x] UI test the screen composables - We've stopped adding UI tests for screens and will focus only on some components when necessary. 
+- [ ] Reach 50% coverage - We only test the important components such as viewModels and interactors and sometimes repositories. Not that coverage really matters but it's 50% is a pretty nice number
 - [ ] Add Screenshot tests
 - [ ] Add Maestro tests
 
 ## Performances
-- On debug build, the app is very slow on physical devices. This is need to be investigated. We started here: https://github.com/rygelouv/Tanga/pull/92
+- On debug builds, the app is very slow on physical devices. This is need to be investigated. We started here: https://github.com/rygelouv/Tanga/pull/92
 - [ ] Add macrobenchmark for Home screen
 - [ ] Add baselie profiles if necessary
 - [ ] Enable StrictMode to make sure no blocking work is done on the UI thread
