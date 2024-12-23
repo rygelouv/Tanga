@@ -1,5 +1,8 @@
-name: Auto approve
-on: pull_request_target
+name: Auto Approve PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   build:
@@ -7,6 +10,8 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: hmarr/auto-approve-action@v3
+      - name: Auto Approve for rygelouv
+        if: ${{ github.actor == 'rygelouv' }}
+        uses: hmarr/auto-approve-action@v3
         with:
           review-message: "PR automatically approved by auto-approve-action"
