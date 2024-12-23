@@ -1,7 +1,7 @@
 # This is a workflow to run Unit and Android tests and generate code coverage reports
 # It also uploads the reports to Codecov for later access
 
-name: CI
+name: CI Dev Build
 
 on:
   # Triggers the workflow on push or pull request on the dev branch
@@ -54,7 +54,13 @@ jobs:
 
      # Grant execute permission to the gradlew file.
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
+
+        # Setup Gradle Cache to improve the speed of the workflows
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
 
         # This step builds the app in debug mode using Gradle.
       - run: echo "Building Debug APK."

@@ -1,0 +1,104 @@
+name: Production Release
+
+on:
+  # Triggers for any pushed tag containing the word "release" in any part of the tag name.
+  push:
+    tags:
+      - "*release*"
+
+jobs:
+  release_build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Display Tag Name
+        run: |
+          echo "Triggered by tag: $GITHUB_REF_NAME"
+
+      # This step installs JDK 17 using the Zulu distribution. It's necessary for building the app.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+        # Loads the Google Services configuration file from a secret, decodes it, and saves it to the app directory.
+        # This file is essential for making Firebase services work into the app.
+      - name: Load Google Services file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA | base64 -D > app/google-services.json
+
+        # Loads the keystore.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create keystore.properties
+        run: |
+          echo "${{ secrets.KEYSTORE_PROPERTIES }}" > $GITHUB_WORKSPACE/keystore.properties
+
+        # Loads the secrets.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create secrets.properties
+        run: |
+          echo "${{ secrets.SECRETS_PROPERTIES }}" > $GITHUB_WORKSPACE/secrets.properties
+
+        # Loads the sentry.properties file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create sentry.properties
+        run: |
+          echo "${{ secrets.SENTRY_PROPERTIES }}" > $GITHUB_WORKSPACE/sentry.properties
+
+        # Loads the keystore file from a Github secret, decodes it, and saves it to the root directory.
+      - name: Create keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_JKS_FILE }}" | base64 -d > $GITHUB_WORKSPACE/tangakeystore.jks
+
+
+      # Grant execute permission to the gradlew file.
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+        # Setup Gradle Cache to improve the speed of the workflows
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
+
+        # Bump and override the version code and version name
+      - name: Bump Version Code
+        uses: chkfung/android-version-actions@v1.2.2
+        with:
+           gradlePath: app/build.gradle.kts
+           versionCode: ${{ github.run_number }}
+           versionName: 1.2.0
+
+        # Build Production App Bundle
+      - name: Build Release
+        run: ./gradlew bundleRelease
+
+        #Save AAB after Build job is complete to publish it as a Github release in the next job
+      - name: Upload app bundle as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-bundle
+          path: app/build/outputs/bundle/release/app-release.aab
+
+  # Deploy to PlayStore
+  deploy:
+    name: Deploy aab to PlayStore
+    needs: release_build
+    runs-on: ubuntu-latest
+    steps:
+      # Download the app bundle from the previous job
+      - name: Download app bundle from artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-bundle
+
+      # Upload the AAB to play console
+      - name: Publish to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: app.books.tanga
+          releaseFiles: ${{ github.workspace }}/app-release.aab
+          track: alpha
