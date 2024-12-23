@@ -7,7 +7,7 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 <p align="center">
   <a href="https://sonarcloud.io/summary/new_code?id=rygelouv_Tanga"><img alt="API" src="https://sonarcloud.io/api/project_badges/measure?project=rygelouv_Tanga&metric=alert_status"/></a>
   <a href="https://codecov.io/gh/rygelouv/Tanga" ><img src="https://codecov.io/gh/rygelouv/Tanga/graph/badge.svg?token=LWTD8CBUBW"/></a>
-  <a href="https://github.com/rygelouv/Tanga/actions" ><img src="https://github.com/rygelouv/Tanga/actions/workflows/debug_build.yml/badge.svg"/></a>
+  <a href="https://github.com/rygelouv/Tanga/actions" ><img src="https://github.com/rygelouv/Tanga/actions/workflows/dev_build.yml/badge.svg"/></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=appveyor"/></a>
   <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=for-the-badge&logo=appveyor"/></a>
   <a href="https://firebase.google.com/"><img alt="API" src="https://img.shields.io/badge/firebase-a08021?style=for-the-badge&logo=firebase&logoColor=ffcd34"/></a>
