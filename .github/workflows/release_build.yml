@@ -8,6 +8,7 @@ on:
 
 jobs:
   release_build:
+    name: Build Release
     runs-on: macos-latest
 
     steps:
@@ -63,15 +64,21 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
 
-        # Bump and override the version code and version name
+        # Calculate versionCode as github.run_number + 10
+        # Because prior to setting up the release workflow, we had already released 10 versions on the Play Store.
+      - name: Calculate Version Code
+        id: version_code_step
+        run: echo "versionCode=$((GITHUB_RUN_NUMBER + 10))" >> $GITHUB_ENV
+
+      # Bump and override the version code and version name
       - name: Bump Version Code
         uses: chkfung/android-version-actions@v1.2.2
         with:
-           gradlePath: app/build.gradle.kts
-           versionCode: ${{ github.run_number }}
-           versionName: 1.2.0
+          gradlePath: app/build.gradle.kts
+          versionCode: ${{ env.versionCode }}
+          versionName: 1.2.0
 
-        # Build Production App Bundle
+      # Build Production App Bundle
       - name: Build Release
         run: ./gradlew bundleRelease
 
@@ -81,6 +88,10 @@ jobs:
         with:
           name: app-bundle
           path: app/build/outputs/bundle/release/app-release.aab
+
+      # Execute unit tests
+      - name: Unit Test
+        run: ./gradlew testDebugUnitTest
 
   # Deploy to PlayStore
   deploy:
