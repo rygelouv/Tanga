@@ -22,6 +22,7 @@ import app.books.tanga.feature.summary.toSummaryDetails
 import app.books.tanga.notifications.NotificationPermissionTrigger
 import app.books.tanga.notifications.ui.notificationExplainer
 import app.books.tanga.notifications.ui.toNotificationExplainer
+import app.books.tanga.utils.BuildVersionChecker
 
 @Composable
 fun MainNavigationGraph(
@@ -86,9 +87,11 @@ fun MainNavigationGraph(
             onNavigateBack = { navController.popBackStack() }
         )
 
-        notificationExplainer(
-            onNavigateToHomeScreen = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
-            onClose = { navController.popBackStack() }
-        )
+        if (BuildVersionChecker.isAtLeastTiramisu()) {
+            notificationExplainer(
+                onNavigateToHomeScreen = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
+                onClose = { navController.popBackStack() }
+            )
+        }
     }
 }
