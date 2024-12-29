@@ -32,8 +32,8 @@ android {
         applicationId = "app.books.tanga"
         minSdk = 24
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.1.2"
+        versionCode = 13
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -87,7 +87,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.version.get()
+        // kotlinCompilerExtensionVersion = libs.versions.compose.version.get()
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
     packagingOptions {
@@ -133,10 +134,12 @@ dependencies {
     implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.messaging.ktx)
 
     // UI Libraries
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.permissions)
 
     // Kotlin Coroutines
     implementation(libs.kotlin.coroutines.android)

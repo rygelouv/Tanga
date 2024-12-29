@@ -29,5 +29,6 @@ sealed interface AuthUiEvent {
 
     sealed interface NavigateTo : AuthUiEvent {
         data object ToHomeScreen : NavigateTo
+        data object ToNotificationPermissionScreen : NavigateTo
     }
 }

@@ -16,6 +16,7 @@ fun NavGraphBuilder.summaryDetails(
     onNavigateToSubscriptions: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
+    onNavigateToPermissionExplainer: () -> Unit,
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
     composable(
@@ -38,7 +39,8 @@ fun NavGraphBuilder.summaryDetails(
             onNavigateToPreviousScreen = onNavigateToPreviousScreen,
             onNavigateToAudioPlayer = onNavigateToAudioPlayer,
             onNavigateToReadSummaryScreen = onNavigateToReadSummaryScreen,
-            onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
+            onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails,
+            onNavigateToPermissionExplainer = onNavigateToPermissionExplainer
         )
     }
 }

@@ -25,6 +25,7 @@ fun SummaryDetailsScreenContainer(
     onNavigateToSubscriptions: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
+    onNavigateToPermissionExplainer: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
@@ -42,6 +43,7 @@ fun SummaryDetailsScreenContainer(
         onNavigateToSubscriptions = onNavigateToSubscriptions,
         onNavigateToAudioPlayer = onNavigateToAudioPlayer,
         onNavigateToReadSummaryScreen = onNavigateToReadSummaryScreen,
+        onNavigateToPermissionExplainer = onNavigateToPermissionExplainer,
         onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails
     )
     val context = LocalContext.current
@@ -81,6 +83,7 @@ fun HandleEvents(
     onNavigateToPreviousScreen: () -> Unit,
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
+    onNavigateToPermissionExplainer: () -> Unit,
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
 ) {
     var showAuthSuggestion by rememberSaveable {
@@ -137,6 +140,12 @@ fun HandleEvents(
         is SummaryDetailsUiEvent.NavigateTo.ToSubscription -> {
             LaunchedEffect(Unit) {
                 onNavigateToSubscriptions()
+            }
+        }
+
+        is SummaryDetailsUiEvent.NavigateTo.ToNotificationPermission -> {
+            LaunchedEffect(Unit) {
+                onNavigateToPermissionExplainer()
             }
         }
 

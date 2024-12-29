@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun AuthScreenContainer(
     onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
+    onNavigateToNotificationPermissionScreen: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = hiltViewModel()
@@ -27,6 +28,7 @@ fun AuthScreenContainer(
         onGoogleSignInButtonClick = { viewModel.onGoogleSignInStarted() },
         onGoogleSignInComplete = { intent -> viewModel.onGoogleSignInCompleted(intent) },
         onGoogleSignInNotComplete = { viewModel.onGoogleSignInNotCompleted() },
+        onNavigateToNotificationPermissionScreen = onNavigateToNotificationPermissionScreen,
         onTermsAndPrivacyClick = {
             viewModel.onTermsAndPrivacyClick()
             onTermsAndPrivacyClick()

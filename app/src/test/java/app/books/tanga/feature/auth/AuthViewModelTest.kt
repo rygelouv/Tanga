@@ -5,6 +5,8 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.User
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
+import app.books.tanga.notifications.NotificationPermissionHandler
+import app.books.tanga.notifications.NotificationPermissionTrigger
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.tracking.AnalyticsTracker
 import app.cash.turbine.test
@@ -29,18 +31,17 @@ class AuthViewModelTest {
     private val signInClient: SignInClient = mockk()
     private val errorTracker: TangaErrorTracker = mockk()
     private val analyticsTracker: AnalyticsTracker = mockk(relaxUnitFun = true)
+    private val notificationPermissionHandler: NotificationPermissionHandler = mockk()
 
     @Test
     fun `onGoogleSignInStarted - success scenario`() = runTest {
         val signInResult = mockk<BeginSignInResult>()
         coEvery { interactor.initGoogleSignIn() } returns Result.success(signInResult)
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(NotificationPermissionTrigger.SKIP_AUTH)
+        } returns false
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onGoogleSignInStarted()
 
@@ -62,12 +63,7 @@ class AuthViewModelTest {
         val error = RuntimeException("Error")
         coEvery { interactor.initGoogleSignIn() } returns Result.failure(error)
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onGoogleSignInStarted()
 
@@ -89,13 +85,11 @@ class AuthViewModelTest {
         coEvery { interactor.signInAnonymously() } returns Result.success(user)
         coEvery { interactor.isUserAnonymous() } returns false
         coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(NotificationPermissionTrigger.SKIP_AUTH)
+        } returns false
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onSkipAuth()
 
@@ -110,16 +104,35 @@ class AuthViewModelTest {
     }
 
     @Test
+    fun `onSkipAuth - success scenario with notification permission to be requested`() = runTest {
+        val user = mockk<User>(relaxed = true)
+        coEvery { interactor.signInAnonymously() } returns Result.success(user)
+        coEvery { interactor.isUserAnonymous() } returns false
+        coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(NotificationPermissionTrigger.SKIP_AUTH)
+        } returns true
+
+        setupViewModel()
+
+        viewModel.onSkipAuth()
+
+        viewModel.state.test {
+            Assertions.assertEquals(ProgressState.Show, awaitItem().skipProgressState)
+        }
+
+        viewModel.events.test {
+            Assertions.assertEquals(AuthUiEvent.NavigateTo.ToNotificationPermissionScreen, expectMostRecentItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `onSkipAuth - close scenario`() = runTest {
         coEvery { interactor.isUserAnonymous() } returns true
         coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onSkipAuth()
 
@@ -139,12 +152,7 @@ class AuthViewModelTest {
         coEvery { interactor.signInAnonymously() } returns Result.failure(error)
         coEvery { interactor.isUserAnonymous() } returns false
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onSkipAuth()
 
@@ -168,12 +176,7 @@ class AuthViewModelTest {
         coEvery { interactor.completeGoogleSignIn(credentials) } returns Result.success(user)
         coEvery { errorTracker.setUserDetails(any(), any()) } returns Unit
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onGoogleSignInCompleted(intent)
 
@@ -196,12 +199,7 @@ class AuthViewModelTest {
         coEvery { signInClient.getSignInCredentialFromIntent(intent) } returns credentials
         coEvery { interactor.completeGoogleSignIn(credentials) } returns Result.failure(error)
 
-        viewModel = AuthViewModel(
-            interactor = interactor,
-            signInClient = signInClient,
-            errorTracker = errorTracker,
-            analyticsTracker = analyticsTracker
-        )
+        setupViewModel()
 
         viewModel.onGoogleSignInCompleted(intent)
 
@@ -214,5 +212,15 @@ class AuthViewModelTest {
             Assertions.assertEquals(AuthUiEvent.Error(error.toUiError()), expectMostRecentItem())
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    private fun setupViewModel() {
+        viewModel = AuthViewModel(
+            interactor = interactor,
+            signInClient = signInClient,
+            errorTracker = errorTracker,
+            analyticsTracker = analyticsTracker,
+            notificationPermissionHandler = notificationPermissionHandler
+        )
     }
 }

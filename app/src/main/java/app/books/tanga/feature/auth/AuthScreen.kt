@@ -47,6 +47,7 @@ fun AuthScreen(
     state: AuthUiState,
     events: AuthUiEvent,
     onAuthSkip: () -> Unit,
+    onNavigateToNotificationPermissionScreen: () -> Unit,
     onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onAuthSuccess: () -> Unit,
@@ -68,7 +69,8 @@ fun AuthScreen(
             onGoogleSignInComplete = onGoogleSignInComplete,
             onGoogleSignInNotComplete = onGoogleSignInNotComplete,
             onTermsAndPrivacyClick = onTermsAndPrivacyClick,
-            onClose = onClose
+            onClose = onClose,
+            onNavigateToNotificationPermissionScreen = onNavigateToNotificationPermissionScreen
         )
     }
 }
@@ -134,6 +136,7 @@ fun AuthContent(
     events: AuthUiEvent,
     onGoogleSignInButtonClick: () -> Unit,
     onAuthSuccess: () -> Unit,
+    onNavigateToNotificationPermissionScreen: () -> Unit,
     onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit,
     onGoogleSignInComplete: (Intent) -> Unit,
@@ -146,6 +149,7 @@ fun AuthContent(
         onGoogleSignInComplete = onGoogleSignInComplete,
         onGoogleSignInNotComplete = onGoogleSignInNotComplete,
         onClose = onClose,
+        onNavigateToNotificationPermissionScreen = onNavigateToNotificationPermissionScreen,
     )
 
     Column(
@@ -280,7 +284,8 @@ private fun AuthScreenPreview() {
             onAuthSuccess = {},
             state = state,
             events = events,
-            onGoogleSignInNotComplete = {}
+            onGoogleSignInNotComplete = {},
+            onNavigateToNotificationPermissionScreen = {}
         )
     }
 }
