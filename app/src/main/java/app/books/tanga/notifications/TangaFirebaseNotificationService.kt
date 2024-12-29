@@ -41,6 +41,7 @@ class TangaFirebaseNotificationService : FirebaseMessagingService() {
         notificationHandler.handleNotification(remoteMessage.data)
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun subscribeToTopics() {
         coroutineScope.launch {
             try {

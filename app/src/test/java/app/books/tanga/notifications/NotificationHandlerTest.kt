@@ -11,7 +11,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class NotificationHandlerImplTest {
+class NotificationHandlerTest {
 
     private val notificationInfoFactory: NotificationInfoFactory = mockk()
     private val notificationBuilder: TangaNotificationBuilder = mockk()

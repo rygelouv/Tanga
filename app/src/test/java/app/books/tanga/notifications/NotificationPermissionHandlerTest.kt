@@ -55,60 +55,63 @@ class NotificationPermissionHandlerTest {
     }
 
     @Test
-    fun `shouldRequestNotificationPermission should return true for SKIP_AUTH trigger if permission not granted`() = runBlocking {
-        // Arrange
-        mockkObject(BuildVersionChecker)
-        every { BuildVersionChecker.isAtLeastTiramisu() } returns true
-        every {
-            resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
-        } returns PackageManager.PERMISSION_DENIED
+    fun `shouldRequestNotificationPermission should return true for SKIP_AUTH trigger if permission not granted`() =
+        runBlocking {
+            // Arrange
+            mockkObject(BuildVersionChecker)
+            every { BuildVersionChecker.isAtLeastTiramisu() } returns true
+            every {
+                resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
+            } returns PackageManager.PERMISSION_DENIED
 
-        // Act
-        val result = notificationPermissionHandler.shouldRequestNotificationPermission(
-            NotificationPermissionTrigger.SKIP_AUTH
-        )
+            // Act
+            val result = notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SKIP_AUTH
+            )
 
-        // Assert
-        assertTrue(result)
-    }
-
-    @Test
-    fun `shouldRequestNotificationPermission should return true for SUMMARY_ACTION trigger when counter is a multiple of 4`() = runBlocking {
-        // Arrange
-        mockkObject(BuildVersionChecker)
-        every { BuildVersionChecker.isAtLeastTiramisu() } returns true
-        every {
-            resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
-        } returns PackageManager.PERMISSION_DENIED
-        coEvery { dataStoreRepository.getNotificationTriggerCounter() } returns 3
-        coEvery { dataStoreRepository.saveNotificationTriggerCounter(4) } returns Unit
-
-        // Act
-        val result = notificationPermissionHandler.shouldRequestNotificationPermission(
-            NotificationPermissionTrigger.SUMMARY_ACTION
-        )
-
-        // Assert
-        assertTrue(result)
-    }
+            // Assert
+            assertTrue(result)
+        }
 
     @Test
-    fun `shouldRequestNotificationPermission should return false for SUMMARY_ACTION trigger when counter is not a multiple of 4`() = runBlocking {
-        // Arrange
-        mockkObject(BuildVersionChecker)
-        every { BuildVersionChecker.isAtLeastTiramisu() } returns true
-        every {
-            resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
-        } returns PackageManager.PERMISSION_DENIED
-        coEvery { dataStoreRepository.getNotificationTriggerCounter() } returns 2
-        coEvery { dataStoreRepository.saveNotificationTriggerCounter(3) } returns Unit
+    fun `shouldRequestNotificationPermission should return true for SUMMARY_ACTION trigger when counter is a multiple of 4`() =
+        runBlocking {
+            // Arrange
+            mockkObject(BuildVersionChecker)
+            every { BuildVersionChecker.isAtLeastTiramisu() } returns true
+            every {
+                resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
+            } returns PackageManager.PERMISSION_DENIED
+            coEvery { dataStoreRepository.getNotificationTriggerCounter() } returns 3
+            coEvery { dataStoreRepository.saveNotificationTriggerCounter(4) } returns Unit
 
-        // Act
-        val result = notificationPermissionHandler.shouldRequestNotificationPermission(
-            NotificationPermissionTrigger.SUMMARY_ACTION
-        )
+            // Act
+            val result = notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SUMMARY_ACTION
+            )
 
-        // Assert
-        assertFalse(result)
-    }
+            // Assert
+            assertTrue(result)
+        }
+
+    @Test
+    fun `shouldRequestNotificationPermission should return false for SUMMARY_ACTION trigger when counter is not a multiple of 4`() =
+        runBlocking {
+            // Arrange
+            mockkObject(BuildVersionChecker)
+            every { BuildVersionChecker.isAtLeastTiramisu() } returns true
+            every {
+                resourcesProvider.getPermissionStatus(Manifest.permission.POST_NOTIFICATIONS)
+            } returns PackageManager.PERMISSION_DENIED
+            coEvery { dataStoreRepository.getNotificationTriggerCounter() } returns 2
+            coEvery { dataStoreRepository.saveNotificationTriggerCounter(3) } returns Unit
+
+            // Act
+            val result = notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SUMMARY_ACTION
+            )
+
+            // Assert
+            assertFalse(result)
+        }
 }
