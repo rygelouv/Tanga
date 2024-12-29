@@ -9,6 +9,8 @@ import app.books.tanga.utils.BuildVersionChecker
 import app.books.tanga.utils.ResourcesProvider
 import javax.inject.Inject
 
+const val NOTIFICATION_TRIGGER_COUNTER = 4
+
 interface NotificationPermissionHandler {
 
     suspend fun shouldRequestNotificationPermission(trigger: NotificationPermissionTrigger): Boolean
@@ -36,7 +38,7 @@ class NotificationPermissionHandlerImpl @Inject constructor(
     private suspend fun handleTrigger(): Boolean {
         val counter = dataStoreRepository.getNotificationTriggerCounter() + 1
         dataStoreRepository.saveNotificationTriggerCounter(counter)
-        return counter % 4 == 0
+        return counter % NOTIFICATION_TRIGGER_COUNTER == 0
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

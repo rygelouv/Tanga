@@ -73,6 +73,7 @@ class NotificationPermissionHandlerTest {
             assertTrue(result)
         }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `shouldRequestNotificationPermission should return true for SUMMARY_ACTION trigger when counter is a multiple of 4`() =
         runBlocking {
@@ -94,6 +95,7 @@ class NotificationPermissionHandlerTest {
             assertTrue(result)
         }
 
+    @Suppress("MaxLineLength")
     @Test
     fun `shouldRequestNotificationPermission should return false for SUMMARY_ACTION trigger when counter is not a multiple of 4`() =
         runBlocking {
