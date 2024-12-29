@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,50 +53,15 @@ fun NotificationExplainerScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = LocalSpacing.current.small, vertical = LocalSpacing.current.medium),
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        shape = CircleShape
-                    )
-                    .size(32.dp)
-                    .padding(9.dp)
-                    .clickable { onSkip() },
-                painter = painterResource(id = app.books.tanga.coreui.R.drawable.ic_close),
-                contentDescription = null,
-                tint = LocalTintColor.current.color
-            )
-        }
+        CloseButtonRow(onSkip = onSkip)
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
-        Text(
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = LocalSpacing.current.medium),
-            text = stringResource(id = R.string.notification_explainer_message),
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = MaterialTheme.typography.titleLarge
-        )
+        TitleText()
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
-        Image(
-            modifier =
-            Modifier
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(horizontal = 58.dp),
-            painter = painterResource(id = R.drawable.graphic_push_notifications_blue),
-            contentDescription = null
-        )
+        NotificationImage()
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
 
@@ -103,23 +69,76 @@ fun NotificationExplainerScreen(
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
 
-        TangaButton(
-            modifier = Modifier.padding(horizontal = LocalSpacing.current.large),
-            text = stringResource(id = R.string.notification_explainer_allow),
-            showInLightColor = true,
-            onClick = onAllow
-        )
-
-        Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
-
-        TangaLinedButton(
-            modifier = Modifier.padding(horizontal = LocalSpacing.current.large),
-            text = stringResource(id = R.string.notification_explainer_not_now),
-            onClick = onSkip
-        )
+        ActionButtons(onAllow = onAllow, onSkip = onSkip)
 
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
     }
+}
+
+@Composable
+private fun CloseButtonRow(onSkip: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = LocalSpacing.current.small, vertical = LocalSpacing.current.medium),
+    ) {
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                    shape = CircleShape
+                )
+                .size(32.dp)
+                .padding(9.dp)
+                .clickable { onSkip() },
+            painter = painterResource(id = app.books.tanga.coreui.R.drawable.ic_close),
+            contentDescription = null,
+            tint = LocalTintColor.current.color
+        )
+    }
+}
+
+@Composable
+private fun TitleText() {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = LocalSpacing.current.medium),
+        text = stringResource(id = R.string.notification_explainer_message),
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        style = MaterialTheme.typography.titleLarge
+    )
+}
+
+@Composable
+private fun NotificationImage() {
+    Image(
+        modifier = Modifier
+            .wrapContentWidth(Alignment.CenterHorizontally)
+            .padding(horizontal = 58.dp),
+        painter = painterResource(id = R.drawable.graphic_push_notifications_blue),
+        contentDescription = null
+    )
+}
+
+@Composable
+private fun ColumnScope.ActionButtons(onAllow: () -> Unit, onSkip: () -> Unit) {
+    TangaButton(
+        modifier = Modifier.padding(horizontal = LocalSpacing.current.large),
+        text = stringResource(id = R.string.notification_explainer_allow),
+        showInLightColor = true,
+        onClick = onAllow
+    )
+
+    Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+
+    TangaLinedButton(
+        modifier = Modifier.padding(horizontal = LocalSpacing.current.large),
+        text = stringResource(id = R.string.notification_explainer_not_now),
+        onClick = onSkip
+    )
 }
 
 @Composable
