@@ -120,5 +120,17 @@ Enjoy! 😊
     <string name="onboarding_page_one_description">Dive into the transformative wisdom of best-selling books that have changed lives around the world</string>
     <string name="onboarding_page_two_description">Whether you prefer reading or listening, enjoy summaries in the format that suits your lifestyle.</string>
     <string name="onboarding_page_three_description">Unlock your full potential with concise and impactful summaries designed to help you grow, learn, and succeed.</string>
+    <string name="notification_channel_summaries">Tanga Summaries</string>
+    <string name="notification_channel_subscriptions">Tanga Subscriptions</string>
+    <string name="notification_default_title">New Notification</string>
+    <string name="notification_default_message">Tap here to know more</string>
+    <string name="notification_explainer_message">Enable notifications to enjoy the best of Tanga!</string>
+    <string name="notification_explainer_allow">Allow</string>
+    <string name="notification_explainer_not_now">Not Now</string>
+    <string name="notification_weekly_alert_message">We will let you when a new free weekly summary is available</string>
+    <string name="notification_summaries_update_alert_message">We notify you when new summaries are available</string>
+    <string name="notifications_subscriptions_discounts_alert_message">We will send you alerts when we have discounts on subscriptions</string>
+    <string name="notifications_weekly_summary_title">📚 New Weekly Summary Available!</string>
+    <string name="notifications_weekly_summary_message">%1$s by %2$s - Check it out now! 👉</string>
 
 </resources>

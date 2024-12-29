@@ -7,6 +7,8 @@ import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.errors.toUiError
+import app.books.tanga.notifications.NotificationPermissionHandler
+import app.books.tanga.notifications.NotificationPermissionTrigger
 import app.books.tanga.tracking.AnalyticsTracker
 import app.books.tanga.tracking.Events
 import app.books.tanga.tracking.Pages
@@ -28,6 +30,7 @@ import timber.log.Timber
 class AuthViewModel @Inject constructor(
     private val interactor: AuthenticationInteractor,
     private val signInClient: SignInClient,
+    private val notificationPermissionHandler: NotificationPermissionHandler,
     private val errorTracker: TangaErrorTracker,
     private val analyticsTracker: AnalyticsTracker
 ) : ViewModel() {
@@ -72,7 +75,15 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             interactor.signInAnonymously()
                 .onSuccess { user ->
-                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                    if (notificationPermissionHandler.shouldRequestNotificationPermission(
+                            NotificationPermissionTrigger.SKIP_AUTH
+                        )
+                    ) {
+                        postEvent(AuthUiEvent.NavigateTo.ToNotificationPermissionScreen)
+                        return@onSuccess
+                    } else {
+                        postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
+                    }
                     errorTracker.setUserDetails(
                         userId = user.id,
                         // TODO remove nullability
@@ -93,7 +104,6 @@ class AuthViewModel @Inject constructor(
             interactor
                 .completeGoogleSignIn(credentials)
                 .onSuccess { user ->
-                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }
                     errorTracker.setUserDetails(
                         userId = user.id,
@@ -101,6 +111,7 @@ class AuthViewModel @Inject constructor(
                         userCreationDate = user.createdAt ?: Date()
                     )
                     analyticsTracker.setUserDetails(user.id.value)
+                    postEvent(AuthUiEvent.NavigateTo.ToHomeScreen)
                 }.onFailure { error ->
                     Timber.e("Complete Google sign In failure", error)
                     _state.update { it.copy(googleSignInButtonProgressState = ProgressState.Hide) }

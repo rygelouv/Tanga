@@ -11,6 +11,8 @@ import app.books.tanga.feature.summary.details.SummaryDetailsAnalytics
 import app.books.tanga.feature.summary.details.SummaryDetailsUiEvent
 import app.books.tanga.feature.summary.details.SummaryDetailsViewModel
 import app.books.tanga.fixtures.Fixtures
+import app.books.tanga.notifications.NotificationPermissionHandler
+import app.books.tanga.notifications.NotificationPermissionTrigger
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
@@ -42,13 +44,22 @@ class SummaryDetailsViewModelTest {
 
     private lateinit var viewModel: SummaryDetailsViewModel
 
+    @MockK
+    lateinit var notificationPermissionHandler: NotificationPermissionHandler
+
     @BeforeEach
     fun setup() {
         MockKAnnotations.init(this)
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SUMMARY_ACTION
+            )
+        } returns false
         viewModel = SummaryDetailsViewModel(
             summaryInteractor,
             favoriteInteractor,
             protectedActionInteractor,
+            notificationPermissionHandler,
             summaryDetailsAnalytics
         )
     }
@@ -269,8 +280,7 @@ class SummaryDetailsViewModelTest {
         prepareEnvironment(summaryId)
         coEvery {
             protectedActionInteractor.checkProtectedAction(ProtectedAction.SubscriptionRequiredAction.Listen(summaryId))
-        } returns
-            ProtectedActionCheckResult.SubscriptionRequired
+        } returns ProtectedActionCheckResult.SubscriptionRequired
 
         viewModel.loadSummary(summaryId)
         viewModel.onPlayClick()
@@ -278,6 +288,46 @@ class SummaryDetailsViewModelTest {
         viewModel.events.test {
             val event = expectMostRecentItem()
             Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToSubscription)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `on readClick with notification permission not granted`() = runTest {
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SUMMARY_ACTION
+            )
+        } returns true
+
+        viewModel.loadSummary(summaryId)
+        viewModel.onReadClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToNotificationPermission)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onPlayClick with notification permission not granted`() = runTest {
+        val summaryId = SummaryId("1")
+        prepareEnvironment(summaryId)
+        coEvery {
+            notificationPermissionHandler.shouldRequestNotificationPermission(
+                NotificationPermissionTrigger.SUMMARY_ACTION
+            )
+        } returns true
+
+        viewModel.loadSummary(summaryId)
+        viewModel.onPlayClick()
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            Assertions.assertTrue(event is SummaryDetailsUiEvent.NavigateTo.ToNotificationPermission)
             cancelAndConsumeRemainingEvents()
         }
     }

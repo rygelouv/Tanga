@@ -45,5 +45,7 @@ sealed interface SummaryDetailsUiEvent {
         data object ToAuth : NavigateTo
 
         data object ToSubscription : NavigateTo
+
+        data object ToNotificationPermission : NavigateTo
     }
 }

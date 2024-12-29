@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.map
 private const val ONBOARDING_PREF_KEY = "onboarding_completed"
 private const val SESSION_ID_PREF_KEY = "session_id"
 private const val WEEKLY_SUMMARY_PREF_KEY = "weekly_summary"
+private const val NOTIFICATION_TRIGGER_COUNTER = "notification_trigger_counter"
 
 val Context.defaultDataStore: DataStore<Preferences>
     by preferencesDataStore(name = "default_tanga_shared_prefs")
@@ -28,6 +29,8 @@ class DefaultPrefDataStoreRepository @Inject constructor(context: Context) {
         val sessionIdKey = stringPreferencesKey(name = SESSION_ID_PREF_KEY)
 
         val weeklySummaryKey = stringPreferencesKey(name = WEEKLY_SUMMARY_PREF_KEY)
+
+        val notificationTriggerCounterKey = stringPreferencesKey(name = NOTIFICATION_TRIGGER_COUNTER)
     }
 
     private val dataStore = context.defaultDataStore
@@ -76,4 +79,15 @@ class DefaultPrefDataStoreRepository @Inject constructor(context: Context) {
             .map { preferences ->
                 preferences[PreferencesKey.weeklySummaryKey]
             }.map { it?.let { SummaryId(it) } }
+
+    suspend fun saveNotificationTriggerCounter(counter: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.notificationTriggerCounterKey] = counter.toString()
+        }
+    }
+
+    suspend fun getNotificationTriggerCounter(): Int =
+        dataStore.data.map { preferences ->
+            preferences[PreferencesKey.notificationTriggerCounterKey]?.toInt() ?: 0
+        }.first()
 }

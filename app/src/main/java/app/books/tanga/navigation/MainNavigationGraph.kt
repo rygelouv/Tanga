@@ -7,6 +7,7 @@ import app.books.tanga.feature.audioplayer.fullplayer.playSummaryAudio
 import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
 import app.books.tanga.feature.deleteaccount.deleteAccount
 import app.books.tanga.feature.deleteaccount.toDeleteAccount
+import app.books.tanga.feature.main.toMain
 import app.books.tanga.feature.profile.privacyAndTerms
 import app.books.tanga.feature.read.readSummaryScreen
 import app.books.tanga.feature.read.toReadSummaryScreen
@@ -18,6 +19,10 @@ import app.books.tanga.feature.subscription.toSubscription
 import app.books.tanga.feature.summary.list.summariesByCategory
 import app.books.tanga.feature.summary.summaryDetails
 import app.books.tanga.feature.summary.toSummaryDetails
+import app.books.tanga.notifications.NotificationPermissionTrigger
+import app.books.tanga.notifications.ui.notificationExplainer
+import app.books.tanga.notifications.ui.toNotificationExplainer
+import app.books.tanga.utils.BuildVersionChecker
 
 @Composable
 fun MainNavigationGraph(
@@ -37,7 +42,10 @@ fun MainNavigationGraph(
             onNavigateToPreviousScreen = { navController.popBackStack() },
             onNavigateToAudioPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
             onNavigateToReadSummaryScreen = { summaryId -> navController.toReadSummaryScreen(summaryId.value) },
-            onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) }
+            onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) },
+            onNavigateToPermissionExplainer = {
+                navController.toNotificationExplainer(NotificationPermissionTrigger.SUMMARY_ACTION)
+            }
         )
 
         search(
@@ -78,5 +86,12 @@ fun MainNavigationGraph(
         privacyAndTerms(
             onNavigateBack = { navController.popBackStack() }
         )
+
+        if (BuildVersionChecker.isAtLeastTiramisu()) {
+            notificationExplainer(
+                onNavigateToHomeScreen = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
+                onClose = { navController.popBackStack() }
+            )
+        }
     }
 }

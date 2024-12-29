@@ -12,6 +12,10 @@ import app.books.tanga.feature.onboarding.onboarding
 import app.books.tanga.feature.onboarding.toOnboarding
 import app.books.tanga.feature.profile.privacyAndTerms
 import app.books.tanga.feature.profile.toPrivacyAndTerms
+import app.books.tanga.notifications.NotificationPermissionTrigger
+import app.books.tanga.notifications.ui.notificationExplainer
+import app.books.tanga.notifications.ui.toNotificationExplainer
+import app.books.tanga.utils.BuildVersionChecker
 
 @Composable
 fun NavigationGraph(
@@ -33,8 +37,21 @@ fun NavigationGraph(
             onClose = {
                 navController.popBackStack()
             },
+            onNavigateToNotificationPermissionScreen = {
+                navController.toNotificationExplainer(
+                    trigger = NotificationPermissionTrigger.SKIP_AUTH
+                )
+            },
             onTermsAndPrivacyClick = { navController.toPrivacyAndTerms() }
         )
+
+        if (BuildVersionChecker.isAtLeastTiramisu()) {
+            notificationExplainer(
+                onNavigateToHomeScreen = { navController.toMain(screenToPopUpTo = NavigationScreen.Authentication) },
+                onClose = { navController.popBackStack() }
+            )
+        }
+
         mainScreen {
             navController.toAuthentication(NavigationScreen.Main, false)
         }

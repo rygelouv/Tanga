@@ -12,6 +12,8 @@ import app.books.tanga.feature.protectedaction.ProtectedActionCheckResult
 import app.books.tanga.feature.protectedaction.ProtectedActionInteractor
 import app.books.tanga.feature.summary.SummaryInteractor
 import app.books.tanga.feature.summary.toSummaryUi
+import app.books.tanga.notifications.NotificationPermissionHandler
+import app.books.tanga.notifications.NotificationPermissionTrigger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -29,6 +31,7 @@ class SummaryDetailsViewModel @Inject constructor(
     private val summaryInteractor: SummaryInteractor,
     private val favoriteInteractor: FavoriteInteractor,
     private val protectedActionInteractor: ProtectedActionInteractor,
+    private val notificationPermissionHandler: NotificationPermissionHandler,
     private val summaryDetailsAnalytics: SummaryDetailsAnalytics,
 ) : ViewModel(), SummaryDetailsAnalytics by summaryDetailsAnalytics {
 
@@ -172,6 +175,13 @@ class SummaryDetailsViewModel @Inject constructor(
 
     fun onPlayClick() {
         viewModelScope.launch {
+            if (notificationPermissionHandler.shouldRequestNotificationPermission(
+                    NotificationPermissionTrigger.SUMMARY_ACTION
+                )
+            ) {
+                postEvent(SummaryDetailsUiEvent.NavigateTo.ToNotificationPermission)
+                return@launch
+            }
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
                 ProtectedAction.SubscriptionRequiredAction.Listen(summary.id)
             )
@@ -183,6 +193,13 @@ class SummaryDetailsViewModel @Inject constructor(
 
     fun onReadClick() {
         viewModelScope.launch {
+            if (notificationPermissionHandler.shouldRequestNotificationPermission(
+                    NotificationPermissionTrigger.SUMMARY_ACTION
+                )
+            ) {
+                postEvent(SummaryDetailsUiEvent.NavigateTo.ToNotificationPermission)
+                return@launch
+            }
             val protectedActionCheckResult = protectedActionInteractor.checkProtectedAction(
                 ProtectedAction.SubscriptionRequiredAction.Read(summary.id)
             )

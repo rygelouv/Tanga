@@ -72,4 +72,8 @@ sealed class NavigationScreen(val route: String) {
     data object Settings : NavigationScreen("settings_screen")
 
     data object PrivacyAndTerms : NavigationScreen("privacy_and_terms_screen")
+
+    data object NotificationsExplainer : NavigationScreen("notifications_explainer_screen/trigger={trigger}") {
+        const val TRIGGER_KEY = "trigger"
+    }
 }

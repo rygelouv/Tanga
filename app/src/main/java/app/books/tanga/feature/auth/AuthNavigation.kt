@@ -10,6 +10,7 @@ import app.books.tanga.navigation.NavigationScreen
  */
 fun NavGraphBuilder.authentication(
     onAuthSuccess: () -> Unit,
+    onNavigateToNotificationPermissionScreen: () -> Unit,
     onClose: () -> Unit,
     onTermsAndPrivacyClick: () -> Unit
 ) {
@@ -19,7 +20,8 @@ fun NavGraphBuilder.authentication(
             onTermsAndPrivacyClick = onTermsAndPrivacyClick,
             onClose = {
                 onClose()
-            }
+            },
+            onNavigateToNotificationPermissionScreen = onNavigateToNotificationPermissionScreen
         )
     }
 }
