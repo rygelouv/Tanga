@@ -188,6 +188,22 @@ class SearchViewModelTest {
     }
 
     @Test
+    fun `onNavigateToSummary should emit NavigateTo event`() = runTest {
+        // Given
+        val summaryId = Fixtures.dummySummary1.id
+
+        // When
+        viewModel.onNavigateToSummary(summaryId)
+
+        // Then
+        viewModel.events.test {
+            val event = awaitItem()
+            assert(event is SearchUiEvent.NavigateTo.ToSummary)
+            assert((event as SearchUiEvent.NavigateTo.ToSummary).summaryId == summaryId)
+        }
+    }
+
+    @Test
     fun `onRetry should reset error and reload data`() = runTest {
         // Given
         val categories = listOf(Fixtures.dummyCategory1, Fixtures.dummyCategory2)

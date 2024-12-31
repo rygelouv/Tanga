@@ -3,6 +3,7 @@ package app.books.tanga.feature.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.toUiError
 import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.categories.toCategoryUi
@@ -211,6 +212,10 @@ class SearchViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun onNavigateToSummary(summaryId: SummaryId) {
+        postEvent(SearchUiEvent.NavigateTo.ToSummary(summaryId))
     }
 
     private fun postEvent(event: SearchUiEvent) {

@@ -1,6 +1,7 @@
 package app.books.tanga.feature.search
 
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
 import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.summary.SummaryUi
@@ -19,6 +20,12 @@ sealed class SearchUiEvent {
     data class ShowSnackError(
         val error: UiError
     ) : SearchUiEvent()
+
+    sealed class NavigateTo : SearchUiEvent() {
+        data class ToSummary(
+            val summaryId: SummaryId
+        ) : NavigateTo()
+    }
 }
 
 /**

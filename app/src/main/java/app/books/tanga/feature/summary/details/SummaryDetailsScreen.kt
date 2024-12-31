@@ -46,7 +46,6 @@ import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
 import kotlinx.collections.immutable.ImmutableList
@@ -62,6 +61,7 @@ fun SummaryDetailsScreen(
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
     onShare: (summary: SummaryUi) -> Unit,
+    onPurchase: (summary: SummaryUi) -> Unit,
     modifier: Modifier = Modifier,
     onRecommendationClick: (SummaryId) -> Unit
 ) {
@@ -98,6 +98,7 @@ fun SummaryDetailsScreen(
                     onPlayAudioClick = onPlayAudioClick,
                     onRecommendationClick = onRecommendationClick,
                     onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } },
+                    onPurchase = onPurchase
                 )
         }
     }
@@ -110,6 +111,7 @@ private fun SummaryDetailsContent(
     onReadClick: (SummaryId) -> Unit,
     onPlayAudioClick: (SummaryId) -> Unit,
     onRecommendationClick: (SummaryId) -> Unit,
+    onPurchase: (summary: SummaryUi) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
     state.summary?.let { summary ->
@@ -129,13 +131,15 @@ private fun SummaryDetailsContent(
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
             SummaryIntroduction(summary = summary)
 
-            Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
 
+            PurchaseButton(summary, onPurchase)
+
+            Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
             Recommendations(
                 recommendations = state.recommendations.toImmutableList(),
                 onRecommendationClick = onRecommendationClick
             )
-            MiniPlayerAwareSpacer()
         }
     }
 
@@ -371,7 +375,8 @@ private fun SummaryDetailsScreenPreview() {
             onLoadSummary = {},
             onToggleFavorite = {},
             onRecommendationClick = {},
-            onShare = {}
+            onShare = {},
+            onPurchase = {}
         )
     }
 }

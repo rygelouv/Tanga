@@ -2,9 +2,7 @@ package app.books.tanga.feature.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerStatus
 import app.books.tanga.feature.auth.AuthenticationInteractor
-import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.session.SessionManager
 import app.books.tanga.session.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +13,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -42,28 +39,6 @@ class MainViewModel @Inject constructor(
                 }
         }
     }
-
-    fun onMiniPlayerStatusChange(status: MiniPlayerStatus) {
-        _state.update {
-            it.copy(
-                miniPlayerState = it.miniPlayerState.copy(status = status),
-                showMiniPlayerContainer = true
-            )
-        }
-    }
-
-    /**
-     * Mini player should not be displayed when the user navigates to the audio player destination.
-     */
-    fun onRouteChange(route: String) {
-        _state.update {
-            it.copy(
-                showMiniPlayerContainer = route.isAudioPlayerDestination().not(),
-            )
-        }
-    }
-
-    private fun String.isAudioPlayerDestination(): Boolean = NavigationScreen.PlaySummaryAudio.route.contains(this)
 
     private suspend fun postNavigateToAuthEvent() {
         _event.emit(MainUiEvent.NavigateTo.ToAuth)

@@ -19,7 +19,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
 import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerContainer
-import app.books.tanga.feature.audioplayer.miniplayer.ProvideMiniPlayerState
 import app.books.tanga.navigation.BottomBarNavigation
 import app.books.tanga.navigation.MainNavigationGraph
 import app.books.tanga.navigation.NavigationScreen
@@ -32,7 +31,6 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val event by viewModel.event.collectAsStateWithLifecycle(initialValue = MainUiEvent.Empty)
-    val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
@@ -54,15 +52,11 @@ fun MainScreen(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Surface(modifier = Modifier.padding(it)) {
-                ProvideMiniPlayerState(
-                    miniPlayerState = state.miniPlayerState
-                ) {
-                    MainNavigationGraph(
-                        navController = navController,
-                        startDestination = NavigationScreen.BottomBarScreen.Home,
-                        onRedirectToAuth = onRedirectToAuth
-                    )
-                }
+                MainNavigationGraph(
+                    navController = navController,
+                    startDestination = NavigationScreen.BottomBarScreen.Home,
+                    onRedirectToAuth = onRedirectToAuth
+                )
             }
 
             val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -71,17 +65,17 @@ fun MainScreen(
             LaunchedEffect(currentBackStackEntry) {
                 currentBackStackEntry?.destination?.route?.let { route ->
                     routeState = route
-                    viewModel.onRouteChange(route)
                 }
             }
 
-            if (state.showMiniPlayerContainer) {
+            if (routeState.isAudioPlayerDestination().not()) {
                 MiniPlayerContainer(
                     currentDestinationRoute = routeState,
-                    onExpendPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) },
-                    onStatusChange = viewModel::onMiniPlayerStatusChange
+                    onExpendPlayer = { summaryId -> navController.toPlaySummaryAudio(summaryId) }
                 )
             }
         }
     }
 }
+
+private fun String.isAudioPlayerDestination(): Boolean = NavigationScreen.PlaySummaryAudio.route.contains(this)

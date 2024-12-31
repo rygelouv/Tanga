@@ -21,7 +21,7 @@ fun SearchScreenContainer(
     val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
     val snackBarHostState = remember { SnackbarHostState() }
 
-    HandleEvents(event = event, snackBarHostState = snackBarHostState)
+    HandleEvents(event = event, snackBarHostState = snackBarHostState, onNavigateToSummary = onNavigateToSummary)
 
     SearchScreen(
         state = state,
@@ -31,7 +31,7 @@ fun SearchScreenContainer(
         onSearch = { viewModel.onSearch(it) },
         onCategorySelect = { viewModel.onCategorySelected(it) },
         onCategoryUnselect = { viewModel.onCategoryUnselected(it) },
-        onNavigateToSummary = { onNavigateToSummary(it) },
+        onNavigateToSummary = { viewModel.onNavigateToSummary(it) },
         onRetry = { viewModel.onRetry() }
     )
 }
@@ -39,11 +39,16 @@ fun SearchScreenContainer(
 @Composable
 private fun HandleEvents(
     event: SearchUiEvent?,
-    snackBarHostState: SnackbarHostState
+    snackBarHostState: SnackbarHostState,
+    onNavigateToSummary: (SummaryId) -> Unit,
 ) {
     when (event) {
         is SearchUiEvent.ShowSnackError -> {
             ShowSnackbarError(errorInfo = event.error.info, snackbarHostState = snackBarHostState)
+        }
+
+        is SearchUiEvent.NavigateTo.ToSummary -> {
+            onNavigateToSummary(event.summaryId)
         }
 
         null -> Unit

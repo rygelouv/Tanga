@@ -18,6 +18,8 @@ interface SummaryDetailsAnalytics {
 
     fun onShare(summaryId: SummaryId)
 
+    fun onPurchase(summaryId: SummaryId)
+
     fun onRecommendationClick(summaryId: SummaryId)
 
     fun onToggleFavoriteClick(summaryId: SummaryId)
@@ -38,6 +40,10 @@ class SummaryDetailsAnalyticsImpl @Inject constructor(
 
     override fun onShare(summaryId: SummaryId) {
         analyticsTracker.track(Events.TAP_SHARE_SUMMARY, mapOf(Properties.SUMMARY_ID to summaryId.value))
+    }
+
+    override fun onPurchase(summaryId: SummaryId) {
+        analyticsTracker.track(Events.TAP_PURCHASE_BOOK, mapOf(Properties.SUMMARY_ID to summaryId.value))
     }
 
     override fun onRecommendationClick(summaryId: SummaryId) {
