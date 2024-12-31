@@ -5,6 +5,7 @@ import app.books.tanga.errors.UiError
 import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
 import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
 import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerStatus
 
 data class PlaySummaryAudioUiState(
     val summaryId: String? = null,
@@ -26,3 +27,7 @@ data class MiniPlayerUiState(
     val audioTrack: AudioTrack? = null,
     val showMiniPlayer: Boolean = false
 )
+
+sealed class MiniPlayerEvents {
+    data class StatusChanged(val status: MiniPlayerStatus) : MiniPlayerEvents()
+}

@@ -12,7 +12,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.feature.auth.AuthSuggestionBottomSheet
-import app.books.tanga.utils.openLink
 import app.books.tanga.utils.shareSummary
 
 const val BASE_WEB_URL = "https://tanga-web-app--tanga-d571c.us-central1.hosted.app/summary-details/"
@@ -67,10 +66,6 @@ fun SummaryDetailsScreenContainer(
                 summaryAuthor = it.author,
                 url = BASE_WEB_URL + it.id.value
             )
-        },
-        onPurchase = {
-            viewModel.onPurchase(it.id)
-            it.purchaseBookUrl?.let { url -> openLink(context = context, url = url) }
         }
     )
 }

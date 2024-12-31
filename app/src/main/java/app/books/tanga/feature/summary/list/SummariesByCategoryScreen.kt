@@ -144,6 +144,9 @@ fun SummariesByCategoryContent(
                                     rightIcon = TangaIcons.Search,
                                     text = stringResource(id = R.string.library_explore_summaries)
                                 )
+                                // Adding extra space at the bottom to avoid mini player overlapping content
+                                Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
+                                Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
                             },
                         ) { id -> onNavigateToSummary(SummaryId(id)) }
                     }
