@@ -22,6 +22,7 @@ import app.books.tanga.BuildConfig
 import app.books.tanga.R
 import app.books.tanga.coreui.components.SimpleTopBar
 import app.books.tanga.coreui.components.TangaLinedButton
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.profile.LogoutDialog
 import app.books.tanga.feature.profile.ProfileAction
 import app.books.tanga.feature.profile.ProfileContentAction
@@ -75,6 +76,8 @@ fun SettingsScreen(
                 containerColor = Color.Transparent,
                 onClick = onDeleteAccount
             )
+
+            MiniPlayerAwareSpacer()
 
             if (state.showLogoutConfirmationDialog) {
                 LogoutDialog(
