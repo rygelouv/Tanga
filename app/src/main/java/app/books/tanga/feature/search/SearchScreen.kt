@@ -139,6 +139,9 @@ private fun DisplayContent(
                             onCategoryUnselect = onCategoryUnselect
                         )
                     }
+                },
+                footer = {
+                    Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
                 }
             ) { id -> onNavigateToSummary(SummaryId(id)) }
         }

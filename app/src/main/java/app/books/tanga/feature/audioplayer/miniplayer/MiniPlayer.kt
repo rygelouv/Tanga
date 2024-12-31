@@ -51,7 +51,7 @@ fun MiniPlayer(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(82.dp)
+            .height(MINI_PLAYER_HEIGHT.dp)
             .padding(8.dp),
     ) {
         Row(
