@@ -1,13 +1,16 @@
 package app.books.tanga.feature.audioplayer
 
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.audioplayer.fullplayer.MiniPlayerEvents
 import app.books.tanga.feature.audioplayer.infrastructure.AudioTrack
 import app.books.tanga.feature.audioplayer.infrastructure.PlaybackState
 import app.books.tanga.feature.audioplayer.infrastructure.PlayerAvailability
 import app.books.tanga.feature.audioplayer.infrastructure.PlayerController
 import app.books.tanga.feature.audioplayer.infrastructure.PlayerState
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerStatus
 import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerViewModel
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -65,5 +68,37 @@ class MiniPlayerViewModelTest {
     fun `given mini player when dismissed then hides mini player`() {
         viewModel.onDismissMiniPlayer()
         assert(!viewModel.state.value.showMiniPlayer)
+    }
+
+    @Test
+    fun `given mini player when dismissed then emit event MiniPlayerStatus_HIDDEN`() = runTest {
+        viewModel.onDismissMiniPlayer()
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            assert(event is MiniPlayerEvents.StatusChanged)
+            assert((event as MiniPlayerEvents.StatusChanged).status == MiniPlayerStatus.HIDDEN)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `given play availability when playing summary is loaded then event is MiniPlayerStatus_VISIBLE`() = runTest {
+        val audioTrack = mockk<AudioTrack> {
+            every { id } returns "1"
+            every { title } returns "Title"
+            every { author } returns "Author"
+            every { coverUrl } returns "CoverUrl"
+        }
+        every { playerController.getCurrentlyPlayingAudioTrack() } returns audioTrack
+
+        viewModel.init()
+        playAvailabilityFlow.value = PlayerAvailability.Available
+
+        viewModel.events.test {
+            val event = expectMostRecentItem()
+            assert(event is MiniPlayerEvents.StatusChanged)
+            assert((event as MiniPlayerEvents.StatusChanged).status == MiniPlayerStatus.VISIBLE)
+            cancelAndConsumeRemainingEvents()
+        }
     }
 }

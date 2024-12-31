@@ -9,10 +9,19 @@ import app.books.tanga.utils.BuildVersionChecker
 import app.books.tanga.utils.ResourcesProvider
 import javax.inject.Inject
 
+/**
+ * The number of times a user should perform an action related to summary to trigger the notification permission request
+ */
 const val NOTIFICATION_TRIGGER_COUNTER = 4
 
+/**
+ * Interface that defines the logic for handling notification permission requests
+ */
 interface NotificationPermissionHandler {
 
+    /**
+     * Determines if the notification permission should be requested based on the trigger provided
+     */
     suspend fun shouldRequestNotificationPermission(trigger: NotificationPermissionTrigger): Boolean
 }
 

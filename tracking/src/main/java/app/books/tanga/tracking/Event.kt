@@ -30,7 +30,6 @@ enum class Events(override val eventName: String) : Event {
     // TAP_VISUALIZE_SUMMARY_GRAPHIC("android_tap_visualize_summary_graphic"), Not tracking for now
     TAP_SAVE_SUMMARY("android_tap_save_summary"), // Needs properties
     TAP_SHARE_SUMMARY("android_tap_share_summary"), // Needs properties
-    TAP_PURCHASE_BOOK("android_tap_purchase_book"), // Needs properties
     TAP_REMOVE_SAVED_SUMMARY("android_tap_remove_saved_summary"), // Needs properties
     TAP_PLAY_START_AUDIO("android_tap_play_start_audio"),
     TAP_TANGA_PREMIUM_UPGRADE("android_tap_tanga_premium_upgrade"),

@@ -37,7 +37,6 @@ import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaAsyncImage
-import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
@@ -46,6 +45,7 @@ import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
 import kotlinx.collections.immutable.ImmutableList
@@ -61,7 +61,6 @@ fun SummaryDetailsScreen(
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
     onShare: (summary: SummaryUi) -> Unit,
-    onPurchase: (summary: SummaryUi) -> Unit,
     modifier: Modifier = Modifier,
     onRecommendationClick: (SummaryId) -> Unit
 ) {
@@ -98,7 +97,6 @@ fun SummaryDetailsScreen(
                     onPlayAudioClick = onPlayAudioClick,
                     onRecommendationClick = onRecommendationClick,
                     onErrorButtonClick = { state.summary?.id?.let { onLoadSummary(it) } },
-                    onPurchase = onPurchase
                 )
         }
     }
@@ -111,7 +109,6 @@ private fun SummaryDetailsContent(
     onReadClick: (SummaryId) -> Unit,
     onPlayAudioClick: (SummaryId) -> Unit,
     onRecommendationClick: (SummaryId) -> Unit,
-    onPurchase: (summary: SummaryUi) -> Unit,
     onErrorButtonClick: () -> Unit
 ) {
     state.summary?.let { summary ->
@@ -131,15 +128,13 @@ private fun SummaryDetailsContent(
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
             SummaryIntroduction(summary = summary)
 
-            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
-
-            PurchaseButton(summary, onPurchase)
-
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
+
             Recommendations(
                 recommendations = state.recommendations.toImmutableList(),
                 onRecommendationClick = onRecommendationClick
             )
+            MiniPlayerAwareSpacer()
         }
     }
 
@@ -316,24 +311,6 @@ fun SummaryIntroduction(
 }
 
 @Composable
-private fun PurchaseButton(summaryUi: SummaryUi, onPurchase: (summary: SummaryUi) -> Unit) {
-    Column(
-        modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = LocalSpacing.current.medium)
-    ) {
-        TangaButtonLeftIcon(
-            modifier = Modifier.testTag("purchase_button"),
-            text = "Purchase Book",
-            rightIcon =
-            app.books.tanga.coreui.R.drawable.ic_trolley,
-            onClick = { onPurchase(summaryUi) }
-        )
-    }
-}
-
-@Composable
 fun Recommendations(
     recommendations: ImmutableList<SummaryUi>,
     modifier: Modifier = Modifier,
@@ -375,8 +352,7 @@ private fun SummaryDetailsScreenPreview() {
             onLoadSummary = {},
             onToggleFavorite = {},
             onRecommendationClick = {},
-            onShare = {},
-            onPurchase = {}
+            onShare = {}
         )
     }
 }

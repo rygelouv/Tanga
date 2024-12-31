@@ -42,6 +42,7 @@ import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.CategoryId
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
 import kotlinx.collections.immutable.ImmutableList
@@ -158,8 +159,7 @@ fun HomeContent(
         Spacer(modifier = Modifier.height(LocalSpacing.current.medium))
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = 0.dp),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             contentPadding = PaddingValues(top = 0.dp, bottom = 0.dp)
         ) {
@@ -180,6 +180,7 @@ fun HomeContent(
                         onSeeAllClick = onSeeAllClick
                     )
                 }
+                item { MiniPlayerAwareSpacer() }
             }
             state.error?.let {
                 item {
