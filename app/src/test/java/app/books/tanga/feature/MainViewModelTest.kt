@@ -1,8 +1,10 @@
 package app.books.tanga.feature
 
+import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerStatus
 import app.books.tanga.feature.auth.AuthenticationInteractor
 import app.books.tanga.feature.main.MainUiEvent
 import app.books.tanga.feature.main.MainViewModel
+import app.books.tanga.navigation.NavigationScreen
 import app.books.tanga.rule.MainCoroutineDispatcherExtension
 import app.books.tanga.session.SessionId
 import app.books.tanga.session.SessionManager
@@ -90,6 +92,32 @@ class MainViewModelTest {
             assert(awaitItem() is MainUiEvent.NavigateTo.ToAuth)
             sessionStateFlow.emit(SessionState.SignedIn(SessionId("SomeSessionID")))
             expectNoEvents()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when mini player status changes, update mini player state`() = runTest {
+        viewModel = MainViewModel(sessionManager, authInteractor)
+
+        viewModel.onMiniPlayerStatusChange(MiniPlayerStatus.VISIBLE)
+
+        viewModel.state.test {
+            val event = expectMostRecentItem()
+            assert(event.miniPlayerState.status == MiniPlayerStatus.VISIBLE)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when route changes to audio player destination, hide mini player container`() = runTest {
+        viewModel = MainViewModel(sessionManager, authInteractor)
+
+        viewModel.onRouteChange(NavigationScreen.PlaySummaryAudio.route)
+
+        viewModel.state.test {
+            val event = expectMostRecentItem()
+            assert(!event.showMiniPlayerContainer)
             cancelAndConsumeRemainingEvents()
         }
     }
