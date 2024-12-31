@@ -110,7 +110,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `when route changes to audio player destination, hide mini player container`() = runTest {
+    fun `when navigation route changes to audio player destination, hide mini player container`() = runTest {
         viewModel = MainViewModel(sessionManager, authInteractor)
 
         viewModel.onRouteChange(NavigationScreen.PlaySummaryAudio.route)
