@@ -47,7 +47,6 @@ import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.read.components.ReadFontScaleChooser
 import app.books.tanga.feature.summary.SummaryContentState
 import app.books.tanga.feature.summary.details.SaveButton
@@ -217,7 +216,6 @@ fun ReadSummaryContent(
                     textScale = state.textScaleFactor.value
                 )
             }
-            MiniPlayerAwareSpacer()
         }
     }
 }

@@ -44,7 +44,6 @@ import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.ErrorContent
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.components.SummaryGrid
@@ -80,7 +79,7 @@ fun SearchScreen(
                 .background(color = MaterialTheme.colorScheme.background)
                 .padding(14.dp)
         ) {
-            SearchBox(query = state.query) { query ->
+            SearchBox { query ->
                 onSearch(query)
             }
 
@@ -142,7 +141,7 @@ private fun DisplayContent(
                     }
                 },
                 footer = {
-                    MiniPlayerAwareSpacer()
+                    Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
                 }
             ) { id -> onNavigateToSummary(SummaryId(id)) }
         }
@@ -217,9 +216,9 @@ private fun SearchTopBar(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SearchBox(query: String?, onSearch: (String) -> Unit) {
+private fun SearchBox(onSearch: (String) -> Unit) {
     var text by remember {
-        mutableStateOf(query ?: "")
+        mutableStateOf("")
     }
     val keyboardController = LocalSoftwareKeyboardController.current
     SearchBar(

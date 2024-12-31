@@ -42,7 +42,6 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.coreui.theme.extraExtraExtraLarge
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.utils.openLinkInCustomTab
 
 private const val CONTACT_URL = "https://form.jotform.com/242065602713550"
@@ -153,7 +152,6 @@ fun ProfileScreenBody(
                     onSettingsClick()
                 }
             }
-            MiniPlayerAwareSpacer()
         }
     }
 }

@@ -27,7 +27,6 @@ import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.summary.components.SummaryItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -73,7 +72,6 @@ fun LibraryScreen(
                 }
             }
         }
-        MiniPlayerAwareSpacer()
     }
 }
 

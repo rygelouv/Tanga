@@ -33,7 +33,6 @@ import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
-import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.categories.CategoryUi
 import app.books.tanga.feature.library.LibraryShimmerLoader
 import app.books.tanga.feature.summary.components.SummaryGrid
@@ -145,8 +144,9 @@ fun SummariesByCategoryContent(
                                     rightIcon = TangaIcons.Search,
                                     text = stringResource(id = R.string.library_explore_summaries)
                                 )
-                                // This don't seem to work well
-                                MiniPlayerAwareSpacer()
+                                // Adding extra space at the bottom to avoid mini player overlapping content
+                                Spacer(modifier = Modifier.height(LocalSpacing.current.extraExtraLarge))
+                                Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
                             },
                         ) { id -> onNavigateToSummary(SummaryId(id)) }
                     }
