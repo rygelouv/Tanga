@@ -37,6 +37,7 @@ import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaAsyncImage
+import app.books.tanga.coreui.components.TangaButtonLeftIcon
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
@@ -307,6 +308,24 @@ fun SummaryIntroduction(
         summary.synopsis?.let {
             ExpendableText(text = it)
         }
+    }
+}
+
+@Composable
+private fun PurchaseButton(summaryUi: SummaryUi, onPurchase: (summary: SummaryUi) -> Unit) {
+    Column(
+        modifier =
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = LocalSpacing.current.medium)
+    ) {
+        TangaButtonLeftIcon(
+            modifier = Modifier.testTag("purchase_button"),
+            text = "Purchase Book",
+            rightIcon =
+            app.books.tanga.coreui.R.drawable.ic_trolley,
+            onClick = { onPurchase(summaryUi) }
+        )
     }
 }
 
