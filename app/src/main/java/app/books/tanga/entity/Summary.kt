@@ -8,9 +8,9 @@ value class SummaryId(val value: String)
  *  @param author: the author of the book the summary is about
  *  @param coverImageUrl: the link to the summary cover image
  *  @param playingLength: the length of the summary audio
- *  @param slug: the slug of the summary
  *  @param synopsis: the book synopsis
  *  @param title: the title of the book the summary is about
+ *  @param keyLearnings the list of key learnings from the summary
  *  @param categories: the list of categories the summary belongs to
  */
 data class Summary(
@@ -21,5 +21,6 @@ data class Summary(
     val coverImageUrl: String,
     val playingLength: String,
     val purchaseBookUrl: String,
-    val categories: List<CategoryId>
+    val categories: List<CategoryId>,
+    val keyLearnings: List<String>
 )

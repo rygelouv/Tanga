@@ -54,7 +54,14 @@ object PreviewData {
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
-                    hasGraphic = true
+                    hasGraphic = true,
+                    keyLearnings = listOf(
+                        "Create uncontested market space to thrive",
+                        "Make competition largely irrelevant through innovation",
+                        "Create and capture new market demand",
+                        "Break value-cost trade-off traditional markets",
+                        "Align innovation with utility and cost"
+                    )
                 )
             )
             add(
@@ -64,7 +71,8 @@ object PreviewData {
                     title = "Atomic Habits",
                     author = "James Clear",
                     duration = "15",
-                    hasVideo = true
+                    hasVideo = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -74,7 +82,8 @@ object PreviewData {
                     title = "Deep Work",
                     author = "Cal Newport",
                     duration = "9",
-                    hasGraphic = true
+                    hasGraphic = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -84,7 +93,8 @@ object PreviewData {
                     title = "Ego is the Enemy",
                     author = "Ryan Holiday",
                     duration = "13",
-                    hasVideo = true
+                    hasVideo = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -93,7 +103,8 @@ object PreviewData {
                     coverUrl = FAKE_COVER_URL,
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
-                    duration = "11"
+                    duration = "11",
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -102,7 +113,8 @@ object PreviewData {
                     coverUrl = FAKE_COVER_URL,
                     title = "Good To Great",
                     author = "Jim Collins",
-                    duration = "8"
+                    duration = "8",
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -111,7 +123,9 @@ object PreviewData {
                     coverUrl = FAKE_COVER_URL,
                     title = "Never Split The Difference",
                     author = "Chris Voss",
-                    duration = "10"
+                    duration = "10",
+                    keyLearnings = emptyList()
+
                 )
             )
             add(
@@ -122,7 +136,8 @@ object PreviewData {
                     author = "Ryan Holiday",
                     duration = "10",
                     hasGraphic = true,
-                    hasVideo = true
+                    hasVideo = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -132,7 +147,8 @@ object PreviewData {
                     title = "Psychology Of Money",
                     author = "Morgan Housel",
                     duration = "10",
-                    hasGraphic = true
+                    hasGraphic = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -143,7 +159,8 @@ object PreviewData {
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "11",
                     hasGraphic = true,
-                    hasVideo = true
+                    hasVideo = true,
+                    keyLearnings = emptyList()
                 )
             )
             add(
@@ -154,7 +171,8 @@ object PreviewData {
                     author = "Mark Manson",
                     duration = "9",
                     hasGraphic = true,
-                    hasVideo = true
+                    hasVideo = true,
+                    keyLearnings = emptyList()
                 )
             )
         }

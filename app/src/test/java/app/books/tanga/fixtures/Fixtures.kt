@@ -47,6 +47,7 @@ object Fixtures {
         categories = listOf(CategoryId("1"), CategoryId("2")),
         playingLength = "12:20",
         purchaseBookUrl = "PurchaseBookUrl1",
+        keyLearnings = listOf("KeyLearning1", "KeyLearning2", "KeyLearning3")
     )
 
     val dummySummary2 = Summary(
@@ -58,6 +59,7 @@ object Fixtures {
         categories = listOf(CategoryId("3"), CategoryId("4")),
         playingLength = "10:36",
         purchaseBookUrl = "PurchaseBookUrl2",
+        keyLearnings = listOf("KeyLearning1", "KeyLearning2", "KeyLearning3")
     )
 
     val dummySummary3 = Summary(
@@ -69,6 +71,7 @@ object Fixtures {
         categories = listOf(CategoryId("5"), CategoryId("6")),
         playingLength = "10:36",
         purchaseBookUrl = "PurchaseBookUrl3",
+        keyLearnings = emptyList()
     )
 
     val dummyUser = User(

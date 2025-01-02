@@ -38,6 +38,7 @@
     <string name="self_help">Self-Help</string>
     <string name="financial_education">Financial Education</string>
     <string name="summary_details_introduction">Introduction</string>
+    <string name="summary_details_key_learnings_title">Key Ideas</string>
     <string name="summary_details_recommendations">Recommended summaries</string>
     <string name="pricing_plan_message">Upgrade to Premium and get the best of Tanga</string>
     <string name="pricing_plan_offer_no_ads">No Ads</string>
@@ -99,7 +100,7 @@ Enjoy! 😊
     <string name="restore_purchase">Restore purchase</string>
     <string name="auth_sign_in_button_text">Sign In Now</string>
     <string name="auth_suggestion_dismiss_button_text">Not Now</string>
-    <string name="tanga_landing_moto_variant_01">15 Minutes summaries of life-changing books</string>
+    <string name="tanga_landing_moto_variant_01">15 minutes summaries of life-changing books</string>
     <string name="tanga_landing_get_started">Let\'s go!</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="ic_privacy_policy">Privacy Policies</string>

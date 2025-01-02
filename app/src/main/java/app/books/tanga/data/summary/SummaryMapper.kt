@@ -19,5 +19,8 @@ fun FirestoreData.toSummary(): Summary = Summary(
     categories = this[FirestoreDatabase.Summaries.Fields.CATEGORIES].toCategoryIds(),
     coverImageUrl = this[FirestoreDatabase.Summaries.Fields.COVER_IMAGE_URL].toString(),
     playingLength = this[FirestoreDatabase.Summaries.Fields.PLAYING_LENGTH].toString(),
-    purchaseBookUrl = this[FirestoreDatabase.Summaries.Fields.PURCHASE_BOOK_URL].toString()
+    purchaseBookUrl = this[FirestoreDatabase.Summaries.Fields.PURCHASE_BOOK_URL].toString(),
+    keyLearnings = this[FirestoreDatabase.Summaries.Fields.KEY_LEARNINGS].toKeyLearnings()
 )
+
+private fun Any?.toKeyLearnings(): List<String> = (this as? List<*>)?.map { it.toString() } ?: run { emptyList() }
