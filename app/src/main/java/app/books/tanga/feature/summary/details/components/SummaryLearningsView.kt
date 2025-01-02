@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.books.tanga.R
+import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import kotlinx.collections.immutable.ImmutableList
@@ -81,9 +82,10 @@ private fun KeyLearningsItem(text: String) {
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true, device = "id:pixel_5")
 @Composable
-fun SummaryDetailsScreenPreview() {
+private fun SummaryDetailsScreenPreview() {
     TangaTheme {
         SummaryLearningsView(
             keyLearningsItems = listOf(
