@@ -11,6 +11,7 @@ private const val FAKE_COVER_URL = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-m
 /**
  * Used for Compose Previews
  */
+@Suppress("DuplicatedCode")
 object PreviewData {
     fun allCategories() =
         buildList {
