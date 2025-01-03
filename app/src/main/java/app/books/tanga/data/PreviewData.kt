@@ -54,7 +54,6 @@ object PreviewData {
                     title = "It doesn't have to be crazy at work",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "10",
-                    hasGraphic = true,
                     keyLearnings = listOf(
                         "Create uncontested market space to thrive",
                         "Make competition largely irrelevant through innovation",
@@ -71,7 +70,6 @@ object PreviewData {
                     title = "Atomic Habits",
                     author = "James Clear",
                     duration = "15",
-                    hasVideo = true,
                     keyLearnings = listOf(
                         "Make tiny changes for remarkable results",
                         "Create environment that supports good habits",
@@ -88,7 +86,6 @@ object PreviewData {
                     title = "Deep Work",
                     author = "Cal Newport",
                     duration = "9",
-                    hasGraphic = true,
                     keyLearnings = listOf(
                         "Create uncontested market space to thrive",
                         "Make competition largely irrelevant through innovation",
@@ -105,7 +102,6 @@ object PreviewData {
                     title = "Ego is the Enemy",
                     author = "Ryan Holiday",
                     duration = "13",
-                    hasVideo = true,
                     keyLearnings = listOf(
                         "Master money basics in your twenties",
                         "Negotiate financial relationships with romantic partners",
@@ -163,8 +159,6 @@ object PreviewData {
                     title = "The Obstacle Is the Way",
                     author = "Ryan Holiday",
                     duration = "10",
-                    hasGraphic = true,
-                    hasVideo = true,
                     keyLearnings = listOf(
                         "Measure depth of work not time",
                         "Create rules for deep work practice",
@@ -179,7 +173,6 @@ object PreviewData {
                     title = "Psychology Of Money",
                     author = "Morgan Housel",
                     duration = "10",
-                    hasGraphic = true,
                     keyLearnings = listOf(
                         "Tackle hardest tasks first each day",
                         "Prioritize activities for maximum impact",
@@ -193,8 +186,6 @@ object PreviewData {
                     title = "Rework",
                     author = "Jason Fried and David Heinemeir Hannson",
                     duration = "11",
-                    hasGraphic = true,
-                    hasVideo = true,
                     keyLearnings = listOf(
                         "Learn continuously through all situations",
                         "Focus on action over recognition",
@@ -209,8 +200,6 @@ object PreviewData {
                     title = "The Subtle Art Of Not Giving A Fuck",
                     author = "Mark Manson",
                     duration = "9",
-                    hasGraphic = true,
-                    hasVideo = true,
                     keyLearnings = listOf(
                         "Focus energy on vital few tasks",
                         "Eliminate unnecessary obligations and possessions",

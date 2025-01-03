@@ -44,8 +44,6 @@ fun SummaryItemBig(
         title = summary.title,
         author = summary.author,
         duration = summary.duration,
-        hasVideo = summary.hasVideo,
-        hasGraphic = summary.hasGraphic,
         width = 134.dp,
         titleSize = 18.sp,
         onSummaryClick = onSummaryClick
@@ -63,8 +61,6 @@ fun SummaryItemSmall(
         title = summary.title,
         author = summary.author,
         duration = summary.duration,
-        hasVideo = summary.hasVideo,
-        hasGraphic = summary.hasGraphic,
         width = 120.dp,
         titleSize = 14.sp,
         onSummaryClick = onSummaryClick
@@ -79,8 +75,6 @@ fun SummaryItem(
     title: String,
     author: String,
     duration: String,
-    hasVideo: Boolean,
-    hasGraphic: Boolean,
     width: Dp,
     titleSize: TextUnit,
     modifier: Modifier = Modifier,
@@ -115,9 +109,7 @@ fun SummaryItem(
             style = MaterialTheme.typography.labelMedium
         )
         SummaryIndicators(
-            duration = duration,
-            hasVideo = hasVideo,
-            hasGraphic = hasGraphic
+            duration = duration
         )
     }
 }
@@ -125,8 +117,6 @@ fun SummaryItem(
 @Composable
 fun SummaryIndicators(
     duration: String,
-    hasVideo: Boolean,
-    hasGraphic: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -149,24 +139,6 @@ fun SummaryIndicators(
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
-            )
-        }
-
-        if (hasVideo) {
-            Icon(
-                modifier = Modifier.size(13.dp),
-                painter = painterResource(id = TangaIcons.IndicatorWatch),
-                contentDescription = null,
-                tint = LocalTintColor.current.color
-            )
-        }
-        if (hasGraphic) {
-            Spacer(modifier = Modifier.width(5.dp))
-            Icon(
-                modifier = Modifier.size(13.dp),
-                painter = painterResource(id = TangaIcons.IndicatorGraphic),
-                contentDescription = null,
-                tint = LocalTintColor.current.color
             )
         }
     }

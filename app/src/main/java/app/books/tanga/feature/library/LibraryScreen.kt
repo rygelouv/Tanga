@@ -96,10 +96,6 @@ fun FavoriteGrid(
                 title = favorite.title,
                 author = favorite.author,
                 duration = favorite.playingLength,
-                // TODO: Add video indicator support
-                hasVideo = false,
-                // TODO: Add graphic indicator support
-                hasGraphic = false,
                 width = 134.dp,
                 titleSize = 18.sp,
                 onSummaryClick = { onFavoriteClick(SummaryId(favorite.summaryId)) }
