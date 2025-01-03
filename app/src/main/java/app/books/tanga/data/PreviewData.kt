@@ -72,7 +72,13 @@ object PreviewData {
                     author = "James Clear",
                     duration = "15",
                     hasVideo = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Make tiny changes for remarkable results",
+                        "Create environment that supports good habits",
+                        "Use habit stacking to build routines",
+                        "Break bad habits through system design",
+                        "Focus on identity over outcome goals"
+                    )
                 )
             )
             add(
@@ -83,7 +89,13 @@ object PreviewData {
                     author = "Cal Newport",
                     duration = "9",
                     hasGraphic = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Create uncontested market space to thrive",
+                        "Make competition largely irrelevant through innovation",
+                        "Create and capture new market demand",
+                        "Break value-cost trade-off traditional markets",
+                        "Align innovation with utility and cost"
+                    )
                 )
             )
             add(
@@ -94,7 +106,13 @@ object PreviewData {
                     author = "Ryan Holiday",
                     duration = "13",
                     hasVideo = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Master money basics in your twenties",
+                        "Negotiate financial relationships with romantic partners",
+                        "Create sustainable long-term financial plans",
+                        "Tackle student debt with strategic approach",
+                        "Invest early with limited financial means"
+                    )
                 )
             )
             add(
@@ -104,7 +122,13 @@ object PreviewData {
                     title = "So Good They Can't Ignore You",
                     author = "Cal Newport",
                     duration = "11",
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Build sustainable business without constant growth",
+                        "Maximize profit through intentional smallness",
+                        "Create systems for autonomous operation",
+                        "Focus on quality over quantity",
+                        "Design lifestyle-centered business model"
+                    )
                 )
             )
             add(
@@ -114,7 +138,11 @@ object PreviewData {
                     title = "Good To Great",
                     author = "Jim Collins",
                     duration = "8",
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Embrace vulnerability as source of strength",
+                        "Build shame resilience through practice",
+                        "Develop authentic leadership through openness",
+                    )
                 )
             )
             add(
@@ -137,7 +165,11 @@ object PreviewData {
                     duration = "10",
                     hasGraphic = true,
                     hasVideo = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Measure depth of work not time",
+                        "Create rules for deep work practice",
+                        "Embrace boredom for mental strength"
+                    )
                 )
             )
             add(
@@ -148,7 +180,10 @@ object PreviewData {
                     author = "Morgan Housel",
                     duration = "10",
                     hasGraphic = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Tackle hardest tasks first each day",
+                        "Prioritize activities for maximum impact",
+                    )
                 )
             )
             add(
@@ -160,7 +195,11 @@ object PreviewData {
                     duration = "11",
                     hasGraphic = true,
                     hasVideo = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Learn continuously through all situations",
+                        "Focus on action over recognition",
+                        "Build resilience through ego awareness",
+                    )
                 )
             )
             add(
@@ -172,7 +211,10 @@ object PreviewData {
                     duration = "9",
                     hasGraphic = true,
                     hasVideo = true,
-                    keyLearnings = emptyList()
+                    keyLearnings = listOf(
+                        "Focus energy on vital few tasks",
+                        "Eliminate unnecessary obligations and possessions",
+                    )
                 )
             )
         }

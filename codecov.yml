@@ -3,3 +3,5 @@ ignore:
   - "**/*Container.kt"
   - "**/*UIContract.kt"
   - "**/*Navigation.kt"
+  - "**/*View.kt"
+  - "**/*PreviewData.kt"
