@@ -28,7 +28,7 @@ val AuroMetalSaurus = Color(0xFF74777F)
 val SilverFoil = Color(0xFFAFAFAF)
 
 @Suppress("MagicNumber") // Detekt checks new added colors. We need to add a rule to ignore this.
-val Crayola = Color(0xFF9DB3B8)
+val LandingStatusBar = Color(0xFF605141)
 
 // Orange Tones
 val Orange = Color(0xFFFA974A)

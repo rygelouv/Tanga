@@ -33,6 +33,7 @@ object FirestoreDatabase {
             const val COVER_IMAGE_URL = "coverImageUrl"
             const val PLAYING_LENGTH = "playingLength"
             const val PURCHASE_BOOK_URL = "purchaseBookUrl"
+            const val KEY_LEARNINGS = "keyLearnings"
         }
     }
 

@@ -3,8 +3,8 @@ package app.books.tanga.feature.onboarding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
-import app.books.tanga.coreui.theme.Crayola
 import app.books.tanga.coreui.theme.Cultured
+import app.books.tanga.coreui.theme.LandingStatusBar
 import app.books.tanga.coreui.theme.Navy
 import app.books.tanga.coreui.theme.YaleBlue
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -40,7 +40,7 @@ sealed class OnboardingTransitionElement(
     val navigationBarColor: Color
 ) {
     data object Landing : OnboardingTransitionElement(
-        statusBarColor = Crayola,
+        statusBarColor = LandingStatusBar,
         navigationBarColor = Navy
     )
     data object Onboarding : OnboardingTransitionElement(

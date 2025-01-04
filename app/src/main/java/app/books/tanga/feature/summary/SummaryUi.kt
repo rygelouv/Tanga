@@ -11,13 +11,10 @@ data class SummaryUi(
     val title: String,
     val author: String,
     val duration: String,
+    val keyLearnings: List<String>,
     // TODO: 2023-09-21 make this non-nullable after FakeData is removed
     val synopsis: String? = "",
     val purchaseBookUrl: String? = null,
-    // TODO: 2023-09-21 Remove this after FakeData is removed
-    val hasGraphic: Boolean = false,
-    // TODO: 2023-09-21 Remove this after FakeData is removed
-    val hasVideo: Boolean = false
 )
 
 fun Summary.toSummaryUi(): SummaryUi =
@@ -28,7 +25,8 @@ fun Summary.toSummaryUi(): SummaryUi =
         author = author,
         duration = playingLength,
         synopsis = synopsis,
-        purchaseBookUrl = purchaseBookUrl
+        purchaseBookUrl = purchaseBookUrl,
+        keyLearnings = keyLearnings
     )
 
 data class SummaryContentState(

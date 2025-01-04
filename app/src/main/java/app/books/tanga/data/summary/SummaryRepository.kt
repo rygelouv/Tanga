@@ -40,7 +40,6 @@ class SummaryRepositoryImpl @Inject constructor(
                     .document(summaryId.value)
                     .get()
                     .await()
-
             summary.data?.toSummary() ?: throw Exception("Summary not found")
         }
 

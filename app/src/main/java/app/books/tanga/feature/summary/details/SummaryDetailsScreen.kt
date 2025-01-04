@@ -48,6 +48,7 @@ import app.books.tanga.errors.ErrorContent
 import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.summary.SummaryUi
 import app.books.tanga.feature.summary.components.SummaryRow
+import app.books.tanga.feature.summary.details.components.SummaryLearningsView
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -126,6 +127,14 @@ private fun SummaryDetailsContent(
             )
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.extraLarge))
+
+            SummaryLearningsView(
+                modifier = Modifier.padding(horizontal = LocalSpacing.current.medium).fillMaxWidth(),
+                keyLearningsItems = state.summary.keyLearnings.toImmutableList()
+            )
+
+            Spacer(modifier = Modifier.height(LocalSpacing.current.large))
+
             SummaryIntroduction(summary = summary)
 
             Spacer(modifier = Modifier.height(LocalSpacing.current.medium))

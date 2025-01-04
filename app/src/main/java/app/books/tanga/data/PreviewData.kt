@@ -8,156 +8,112 @@ import java.util.UUID
 
 private const val FAKE_COVER_URL = "https://i.ibb.co/VSbtQ6d/02-Deep-Work-01-1-min.jpg"
 
+private fun createCategory(id: String, name: String, icon: Int) = CategoryUi(
+    id = id,
+    name = name,
+    icon = icon
+)
+
+private fun createSummary(
+    title: String,
+    author: String,
+    duration: String,
+    keyLearnings: List<String> = emptyList()
+) = SummaryUi(
+    id = SummaryId(UUID.randomUUID().toString()),
+    coverUrl = FAKE_COVER_URL,
+    title = title,
+    author = author,
+    duration = duration,
+    keyLearnings = keyLearnings
+)
+
 /**
  * Used for Compose Previews
  */
+@Suppress("DuplicatedCode")
 object PreviewData {
     fun allCategories() =
-        buildList {
-            add(
-                CategoryUi(
-                    id = "1",
-                    name = "Business",
-                    icon = R.drawable.ic_business
-                )
-            )
-            add(
-                CategoryUi(
-                    id = "2",
-                    name = "Personal Development",
-                    icon = app.books.tanga.coreui.R.drawable.ic_self_development
-                )
-            )
-            add(
-                CategoryUi(
-                    id = "3",
-                    name = "Psychology",
-                    icon = app.books.tanga.coreui.R.drawable.ic_productivity
-                )
-            )
-            add(
-                CategoryUi(
-                    id = "4",
-                    name = "Financial Education",
-                    icon = app.books.tanga.coreui.R.drawable.ic_financial_education
-                )
-            )
-        }
+        listOf(
+            createCategory("1", "Business", R.drawable.ic_business),
+            createCategory("2", "Personal Development", R.drawable.ic_self_development),
+            createCategory("3", "Psychology", R.drawable.ic_productivity),
+            createCategory("4", "Financial Education", R.drawable.ic_financial_education)
+        )
 
     @Suppress("LongMethod")
-    fun allSummaries() =
-        buildList<SummaryUi> {
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "It doesn't have to be crazy at work",
-                    author = "Jason Fried and David Heinemeir Hannson",
-                    duration = "10",
-                    hasGraphic = true
-                )
+    fun allSummaries() = listOf(
+        createSummary(
+            title = "It doesn't have to be crazy at work",
+            author = "Jason Fried and David Heinemeir Hannson",
+            duration = "10",
+            keyLearnings = listOf(
+                "Create uncontested market space to thrive",
+                "Make competition largely irrelevant through innovation",
+                "Create and capture new market demand",
+                "Break value-cost trade-off traditional markets",
+                "Align innovation with utility and cost"
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Atomic Habits",
-                    author = "James Clear",
-                    duration = "15",
-                    hasVideo = true
-                )
+        ),
+        createSummary(
+            title = "Atomic Habits",
+            author = "James Clear",
+            duration = "15",
+            keyLearnings = listOf(
+                "Make tiny changes for remarkable results",
+                "Create environment that supports good habits",
+                "Use habit stacking to build routines",
+                "Break bad habits through system design",
+                "Focus on identity over outcome goals"
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Deep Work",
-                    author = "Cal Newport",
-                    duration = "9",
-                    hasGraphic = true
-                )
+        ),
+        createSummary(
+            title = "Deep Work",
+            author = "Cal Newport",
+            duration = "9",
+            keyLearnings = listOf(
+                "Create uncontested market space to thrive",
+                "Make competition largely irrelevant through innovation",
+                "Create and capture new market demand",
+                "Break value-cost trade-off traditional markets",
+                "Align innovation with utility and cost"
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Ego is the Enemy",
-                    author = "Ryan Holiday",
-                    duration = "13",
-                    hasVideo = true
-                )
+        ),
+        createSummary(
+            title = "Ego is the Enemy",
+            author = "Ryan Holiday",
+            duration = "13",
+            keyLearnings = listOf(
+                "Master money basics in your twenties",
+                "Negotiate financial relationships with romantic partners",
+                "Create sustainable long-term financial plans",
+                "Tackle student debt with strategic approach",
+                "Invest early with limited financial means"
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "So Good They Can't Ignore You",
-                    author = "Cal Newport",
-                    duration = "11"
-                )
+        ),
+        createSummary(
+            title = "So Good They Can't Ignore You",
+            author = "Cal Newport",
+            duration = "11",
+            keyLearnings = listOf(
+                "Build sustainable business without constant growth",
+                "Maximize profit through intentional smallness",
+                "Create systems for autonomous operation",
+                "Focus on quality over quantity",
+                "Design lifestyle-centered business model"
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Good To Great",
-                    author = "Jim Collins",
-                    duration = "8"
-                )
+        ),
+        createSummary(
+            title = "Good To Great",
+            author = "Jim Collins",
+            duration = "8",
+            keyLearnings = listOf(
+                "Embrace vulnerability as source of strength",
+                "Build shame resilience through practice",
+                "Develop authentic leadership through openness",
             )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Never Split The Difference",
-                    author = "Chris Voss",
-                    duration = "10"
-                )
-            )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "The Obstacle Is the Way",
-                    author = "Ryan Holiday",
-                    duration = "10",
-                    hasGraphic = true,
-                    hasVideo = true
-                )
-            )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Psychology Of Money",
-                    author = "Morgan Housel",
-                    duration = "10",
-                    hasGraphic = true
-                )
-            )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "Rework",
-                    author = "Jason Fried and David Heinemeir Hannson",
-                    duration = "11",
-                    hasGraphic = true,
-                    hasVideo = true
-                )
-            )
-            add(
-                SummaryUi(
-                    id = SummaryId(UUID.randomUUID().toString()),
-                    coverUrl = FAKE_COVER_URL,
-                    title = "The Subtle Art Of Not Giving A Fuck",
-                    author = "Mark Manson",
-                    duration = "9",
-                    hasGraphic = true,
-                    hasVideo = true
-                )
-            )
-        }
+        ),
+    )
 
     const val SUMMARY_TEXT = "## Summary of Atomic Habits\n" +
         "\n" +
