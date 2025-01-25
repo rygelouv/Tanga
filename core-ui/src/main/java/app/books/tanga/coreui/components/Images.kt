@@ -80,7 +80,7 @@ fun TangaAsyncImage(
             .build(),
         placeholder = painterResource(id = R.drawable.tanga_default_cover),
         error = painterResource(id = R.drawable.tanga_default_cover),
-        contentDescription = "summary cover",
+        contentDescription = summaryId,
     )
 }
 

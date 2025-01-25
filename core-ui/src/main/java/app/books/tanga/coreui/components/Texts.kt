@@ -107,7 +107,7 @@ fun ExpendableText(
             }
         )
         if (isExpandable || isExpended) {
-            TextButton(modifier = Modifier.padding(0.dp), onClick = { isExpended = isExpended.not() }) {
+            TextButton(modifier = Modifier.padding(4.dp), onClick = { isExpended = isExpended.not() }) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,

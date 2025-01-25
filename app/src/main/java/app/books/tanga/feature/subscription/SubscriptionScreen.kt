@@ -177,7 +177,7 @@ private fun Offers() {
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_unlimited_access))
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_unlimited_audios))
         PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_video_summaries))
-        // PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_offline_audio))
+        PricingPlanOfferItem(stringResource(id = R.string.pricing_plan_offer_cancel_anytime))
     }
 }
 
