@@ -70,14 +70,6 @@ jobs:
         id: version_code_step
         run: echo "versionCode=$((GITHUB_RUN_NUMBER + 10))" >> $GITHUB_ENV
 
-      # Bump and override the version code and version name
-      - name: Bump Version Code
-        uses: chkfung/android-version-actions@v1.2.2
-        with:
-          gradlePath: app/build.gradle.kts
-          versionCode: ${{ env.versionCode }}
-          versionName: 1.3.2
-
       # Build Production App Bundle
       - name: Build Release
         run: ./gradlew bundleRelease

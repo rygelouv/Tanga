@@ -46,6 +46,7 @@
     <string name="pricing_plan_offer_unlimited_audios">Unlimited Access to Audios</string>
     <string name="pricing_plan_offer_video_summaries">AI features* (Coming soon)</string>
     <string name="pricing_plan_offer_offline_audio">Offline Audio</string>
+    <string name="pricing_plan_offer_cancel_anytime">Cancel anytime</string>
     <string name="pricing_plan_best_value">Best Value</string>
     <string name="pricing_plan_monthly">Monthly</string>
     <string name="pricing_plan_monthly_price">$2.99</string>

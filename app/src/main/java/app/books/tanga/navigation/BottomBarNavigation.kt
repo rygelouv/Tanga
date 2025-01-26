@@ -74,7 +74,7 @@ fun RowScope.AddItem(
                         item.unselectedIcon
                     }
                 ),
-                contentDescription = "bottom bar item",
+                contentDescription = item.route,
                 tint = if (currentRoute == item.route) {
                     LocalTintColor.current.color
                 } else {
