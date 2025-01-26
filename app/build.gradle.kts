@@ -32,8 +32,8 @@ android {
         applicationId = "app.books.tanga"
         minSdk = 24
         targetSdk = 34
-        versionCode = 16
-        versionName = "1.3.2"
+        versionCode = 19
+        versionName = "1.3.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
