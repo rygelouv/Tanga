@@ -91,7 +91,7 @@ Well you know what a viewModel is. Let’s not waste time here.
 
 ### Architecture?
 
-This project follows a typical/classic MVVM approach or whatever you may wanna call it if you think it’s not MVVM, tt doesn’t really matter. What is important here is that we use a ViewModel class that holds an observable state object.
+This project follows a typical/classic MVVM approach or whatever you may wanna call it if you think it’s not MVVM, it doesn’t really matter. What is important here is that we use a ViewModel class that holds an observable state object.
 State must be modeled in the form of a single object that represents all its variations. We use data class to model and represent state. It could have been sealed classes but that also doesn’t really matter, each approach has their pros and cons.
 
 ### Why isn’t the Repository also in the feature package
@@ -115,7 +115,7 @@ We don’t use UseCases on the Tanga project. But we do think that sometimes a m
 
 Tanga project doesn’t have a module per feature breakdown as you’ll tend to see in many android sample projects that fantasize on modules. There is no plan of having a Module per feature breakdown because:
 
-- Some features are very small why have a full feature module with everything that it implies (gradle, navigation trouble, communication with other modules etc…) for just a single screen?
+- Some features are very small, why have a full feature module with everything that it implies (gradle, navigation trouble, communication with other modules etc…) for just a single screen?
 - More feature modules means more challenges in terms of navigation, communication between those, DI etc. Is it really worth it?
 - Breaking down in module should also depend on the team and the size of the project. Tanga is built by a single developer and is a relatively small project why bother with adding modularization complexity?
 
@@ -147,7 +147,6 @@ We may not need an abstraction for Analytics Providers though? Not sure 🤔
 ## Next important projects
 - Issues should be investigated and fixed: https://github.com/rygelouv/Tanga/issues
 - Set up Feature flagging system. We will probably just reuse this https://github.com/rygelouv/FeatureFlags
-- Set up push notifications
 - Bring AI features (this is the next biggest project)
 
 ---
