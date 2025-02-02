@@ -28,14 +28,16 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 
 ---
 
-## 🚧 **This project is still under construction** 🚧
-You can come back in a few months to see considerable progress. In the meantime, here are our recent achievements (this list is not always up to date)
+## **We are in production** 🎉🎉
+Here is our latested major additions to the project
 
-- [Enabled more user-centric features such as search, summaries by categories, etc](https://github.com/users/rygelouv/projects/3/views/1)
-- [Enabled Anonymous Authentication capabilities](https://github.com/users/rygelouv/projects/9)
-- [Added more unit tests and UI tests](https://github.com/users/rygelouv/projects/7)
-- [Worked on our test coverage infrastructure](https://github.com/users/rygelouv/projects/6)
-- [Worked on some performance investigation and improvements](https://github.com/users/rygelouv/projects/10)
+* feat: Add release build workflow and update dev build workflow by @rygelouv in https://github.com/rygelouv/Tanga/pull/119
+* Added support for Push notifications by @rygelouv in https://github.com/rygelouv/Tanga/pull/120
+* Fixed and improved Mini player visibility behaviour and added ui improvements by @rygelouv in https://github.com/rygelouv/Tanga/pull/123
+* Play audio in background by @rygelouv in https://github.com/rygelouv/Tanga/pull/110
+* Add mini player by @rygelouv in https://github.com/rygelouv/Tanga/pull/112
+* Allow anonymous user to access weekly summary by @rygelouv in https://github.com/rygelouv/Tanga/pull/113
+
 
 The other projects can be found here:
 - [Tanga Projects](https://github.com/rygelouv?tab=projects)
