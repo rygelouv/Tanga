@@ -29,7 +29,7 @@ See the iOS version here: [Tanga iOS](https://github.com/rygelouv/Tanga-iOS)
 ---
 
 ## **We are in production** 🎉🎉
-Here is our latested major additions to the project
+Here is our latest major additions:
 
 * feat: Add release build workflow and update dev build workflow by @rygelouv in https://github.com/rygelouv/Tanga/pull/119
 * Added support for Push notifications by @rygelouv in https://github.com/rygelouv/Tanga/pull/120
@@ -38,6 +38,8 @@ Here is our latested major additions to the project
 * Add mini player by @rygelouv in https://github.com/rygelouv/Tanga/pull/112
 * Allow anonymous user to access weekly summary by @rygelouv in https://github.com/rygelouv/Tanga/pull/113
 
+Check out the releases section:
+https://github.com/rygelouv/Tanga/releases
 
 The other projects can be found here:
 - [Tanga Projects](https://github.com/rygelouv?tab=projects)
