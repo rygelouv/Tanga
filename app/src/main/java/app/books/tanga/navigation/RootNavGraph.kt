@@ -52,9 +52,11 @@ fun NavigationGraph(
             )
         }
 
-        mainScreen {
-            navController.toAuthentication(NavigationScreen.Main, false)
-        }
+        mainScreen(
+            onRedirectToAuth = { navController.toAuthentication(NavigationScreen.Main, false) },
+            onRedirectToAuthAndClearBackstack = { navController.toAuthentication(NavigationScreen.Main) }
+        )
+
         privacyAndTerms(
             onNavigateBack = { navController.popBackStack() }
         )
