@@ -26,7 +26,7 @@ import app.books.tanga.notifications.ui.notificationExplainer
 import app.books.tanga.notifications.ui.toNotificationExplainer
 import app.books.tanga.utils.BuildVersionChecker
 
-@Suppress("LonMethod")
+@Suppress("LongMethod")
 @Composable
 fun MainNavigationGraph(
     navController: NavHostController,
