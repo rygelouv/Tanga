@@ -1,6 +1,7 @@
 package app.books.tanga.coreui.components
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,7 +54,12 @@ import app.books.tanga.coreui.theme.button
 import app.books.tanga.coreui.theme.extraExtraExtraLarge
 
 @Composable
-fun ShinyButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun ShinyButton(
+    @StringRes text: Int,
+    @DrawableRes icon: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
     val gradientColors =
         listOf(
             LocalGradientColors.current.start,
@@ -83,14 +89,14 @@ fun ShinyButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
         ) {
             Icon(
                 modifier = Modifier.size(36.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ai),
+                imageVector = ImageVector.vectorResource(id = icon),
                 contentDescription = "action icon",
                 tint = MaterialTheme.colorScheme.tertiary
             )
         }
 
         Text(
-            text = stringResource(id = R.string.ai_generate),
+            text = stringResource(id = text),
             modifier = Modifier.padding(horizontal = 20.dp),
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,

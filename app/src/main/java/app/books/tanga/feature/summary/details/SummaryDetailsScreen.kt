@@ -165,6 +165,8 @@ fun FloatingActionButton(
     onClick: (SummaryId) -> Unit
 ) {
     ShinyButton(
+        text = app.books.tanga.coreui.R.string.ai_generate,
+        icon = app.books.tanga.coreui.R.drawable.ai,
         onClick = { onClick(summaryId) },
     )
 }
