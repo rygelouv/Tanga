@@ -83,7 +83,7 @@ fun SummaryDetailsScreen(
         },
         floatingActionButton = {
             state.summary?.id?.let { summaryId ->
-                PlayFloatingActionButton(
+                FloatingActionButton(
                     summaryId = summaryId,
                     onClick = onGenerateClick
                 )
@@ -160,20 +160,13 @@ private fun SummaryDetailsContent(
 }
 
 @Composable
-fun PlayFloatingActionButton(
+fun FloatingActionButton(
     summaryId: SummaryId,
-    modifier: Modifier = Modifier,
     onClick: (SummaryId) -> Unit
 ) {
     ShinyButton(
         onClick = { onClick(summaryId) },
     )
-    /*TangaPlayAudioFab(
-        modifier = modifier.testTag("play_button"),
-        onNavigateToAudioPlayer = {
-            onClick(summaryId)
-        }
-    )*/
 }
 
 @Composable

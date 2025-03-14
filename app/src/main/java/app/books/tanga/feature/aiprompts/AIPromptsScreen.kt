@@ -25,7 +25,7 @@ fun AIPromptsScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
             SimpleTopBar(onNavigateBack)
         }
