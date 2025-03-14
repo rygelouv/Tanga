@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 
@@ -43,7 +44,9 @@ fun Tag(
     backgroundColor: Color = MaterialTheme.colorScheme.onPrimary,
     tint: Color = LocalTintColor.current.color,
     hasBorder: Boolean = false,
+    isSelectable: Boolean = true,
     isSelected: Boolean = false,
+    contentSize: ContentSize = ContentSize.Small,
     onSelect: () -> Unit = {},
     onUnselect: () -> Unit = {}
 ) {
@@ -52,7 +55,7 @@ fun Tag(
     val borderModifier = if (hasBorder) Modifier.border(1.dp, tint, shape) else Modifier
     val backgroundModifier =
         Modifier.background(color = if (selected) tint else backgroundColor, shape = shape)
-    val paddingModifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 4.dp)
+    val paddingModifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = contentSize.bottomPadding.dp)
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -62,12 +65,13 @@ fun Tag(
             .then(borderModifier)
             .then(paddingModifier)
             .clickable {
+                if (isSelectable.not()) return@clickable
                 selected = selected.not()
                 if (selected) onSelect() else onUnselect()
             }
     ) {
         Icon(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(contentSize.iconSize.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = if (selected) Color.White else tint
@@ -75,10 +79,22 @@ fun Tag(
         Spacer(modifier = Modifier.width(LocalSpacing.current.small))
         Text(
             text = text,
+            fontSize = contentSize.textSize.sp,
             style = MaterialTheme.typography.labelMedium,
             color = if (selected) Color.White else tint,
             modifier = Modifier.padding(top = LocalSpacing.current.extraSmall),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Start,
+            lineHeight = contentSize.lineHeight.sp
         )
     }
+}
+
+enum class ContentSize(
+    val iconSize: Int,
+    val textSize: Int,
+    val bottomPadding: Int,
+    val lineHeight: Int
+) {
+    Small(16, 12, 4, 16),
+    Medium(22, 14, 8, 22),
 }

@@ -17,7 +17,8 @@ fun NavGraphBuilder.summaryDetails(
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
     onNavigateToPermissionExplainer: () -> Unit,
-    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
+    onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit,
+    onNavigateToAIPrompts: (SummaryId) -> Unit
 ) {
     composable(
         route = NavigationScreen.SummaryDetails.route,
@@ -40,7 +41,8 @@ fun NavGraphBuilder.summaryDetails(
             onNavigateToAudioPlayer = onNavigateToAudioPlayer,
             onNavigateToReadSummaryScreen = onNavigateToReadSummaryScreen,
             onNavigateToRecommendedSummaryDetails = onNavigateToRecommendedSummaryDetails,
-            onNavigateToPermissionExplainer = onNavigateToPermissionExplainer
+            onNavigateToPermissionExplainer = onNavigateToPermissionExplainer,
+            onNavigateToAIPrompts = onNavigateToAIPrompts
         )
     }
 }

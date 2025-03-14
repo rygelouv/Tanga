@@ -1,5 +1,7 @@
 package app.books.tanga.di
 
+import app.books.tanga.data.aiprompts.AIPromptsRepository
+import app.books.tanga.data.aiprompts.AIPromptsRepositoryImpl
 import app.books.tanga.data.category.CategoryRepository
 import app.books.tanga.data.category.CategoryRepositoryImpl
 import app.books.tanga.data.favorite.FavoriteRepository
@@ -27,4 +29,7 @@ interface RepositoriesModule {
 
     @Binds
     fun provideFavoriteRepository(impl: FavoriteRepositoryImpl): FavoriteRepository
+
+    @Binds
+    fun provideAIPromptRepository(impl: AIPromptsRepositoryImpl): AIPromptsRepository
 }

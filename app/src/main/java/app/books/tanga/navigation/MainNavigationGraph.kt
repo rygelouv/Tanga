@@ -3,6 +3,8 @@ package app.books.tanga.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import app.books.tanga.feature.aiprompts.aiPrompts
+import app.books.tanga.feature.aiprompts.toAIPrompts
 import app.books.tanga.feature.audioplayer.fullplayer.playSummaryAudio
 import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
 import app.books.tanga.feature.deleteaccount.deleteAccount
@@ -45,7 +47,8 @@ fun MainNavigationGraph(
             onNavigateToRecommendedSummaryDetails = { summaryId -> navController.toSummaryDetails(summaryId) },
             onNavigateToPermissionExplainer = {
                 navController.toNotificationExplainer(NotificationPermissionTrigger.SUMMARY_ACTION)
-            }
+            },
+            onNavigateToAIPrompts = { summaryId -> navController.toAIPrompts(summaryId.value) }
         )
 
         search(
@@ -93,5 +96,9 @@ fun MainNavigationGraph(
                 onClose = { navController.popBackStack() }
             )
         }
+
+        aiPrompts(
+            onNavigateBack = { navController.popBackStack() }
+        )
     }
 }
