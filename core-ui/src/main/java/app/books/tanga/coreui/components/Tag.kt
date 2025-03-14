@@ -35,6 +35,7 @@ import app.books.tanga.coreui.theme.LocalTintColor
  * @param icon: The icon to be displayed as a tag.
  * @param tint: The tint of the icon.
  */
+@Suppress("LongParameterList, CognitiveComplexMethod")
 @Composable
 fun Tag(
     text: String,
@@ -89,6 +90,7 @@ fun Tag(
     }
 }
 
+@Suppress("MagicNumber")
 enum class ContentSize(
     val iconSize: Int,
     val textSize: Int,
