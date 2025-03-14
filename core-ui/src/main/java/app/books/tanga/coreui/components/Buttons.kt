@@ -1,6 +1,7 @@
 package app.books.tanga.coreui.components
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,11 +28,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -40,11 +46,64 @@ import app.books.tanga.coreui.R
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.resources.TextResource
 import app.books.tanga.coreui.resources.asString
+import app.books.tanga.coreui.theme.LocalGradientColors
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
 import app.books.tanga.coreui.theme.Shapes
 import app.books.tanga.coreui.theme.button
 import app.books.tanga.coreui.theme.extraExtraExtraLarge
+
+@Composable
+fun ShinyButton(
+    @StringRes text: Int,
+    @DrawableRes icon: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    val gradientColors =
+        listOf(
+            LocalGradientColors.current.start,
+            LocalGradientColors.current.center,
+            LocalGradientColors.current.end
+        )
+
+    Row(
+        modifier = modifier
+            .heightIn(min = 70.dp)
+            .background(
+                brush = Brush.linearGradient(colors = gradientColors),
+                shape = RoundedCornerShape(40.dp)
+            ).clickable { onClick() }
+            .testTag("pro_button"),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(modifier = Modifier.width(12.dp))
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier =
+            Modifier
+                .size(52.dp)
+                .clip(CircleShape)
+                .background(color = Color.White)
+                .padding(all = 10.dp)
+        ) {
+            Icon(
+                modifier = Modifier.size(36.dp),
+                imageVector = ImageVector.vectorResource(id = icon),
+                contentDescription = "action icon",
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+        }
+
+        Text(
+            text = stringResource(id = text),
+            modifier = Modifier.padding(horizontal = 20.dp),
+            style = MaterialTheme.typography.button,
+            textAlign = TextAlign.Center,
+            color = Color.White
+        )
+    }
+}
 
 /**
  * This is a composable that displays a button with text.

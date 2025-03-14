@@ -25,6 +25,7 @@ fun SummaryDetailsScreenContainer(
     onNavigateToAudioPlayer: (SummaryId) -> Unit,
     onNavigateToReadSummaryScreen: (SummaryId) -> Unit,
     onNavigateToPermissionExplainer: () -> Unit,
+    onNavigateToAIPrompts: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SummaryDetailsViewModel = hiltViewModel(),
     onNavigateToRecommendedSummaryDetails: (SummaryId) -> Unit
@@ -53,6 +54,7 @@ fun SummaryDetailsScreenContainer(
         onPlayAudioClick = { viewModel.onPlayClick() },
         onReadClick = { viewModel.onReadClick() },
         onLoadSummary = { viewModel.loadSummary(it) },
+        onGenerateClick = onNavigateToAIPrompts,
         onToggleFavorite = { viewModel.onToggleFavorite() },
         onRecommendationClick = { id ->
             viewModel.onRecommendationClick(id)

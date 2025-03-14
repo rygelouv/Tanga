@@ -73,4 +73,17 @@ object FirestoreDatabase {
             const val SLUG = "slug"
         }
     }
+
+    object AIPrompts {
+        // Collection Reference
+        const val COLLECTION_NAME = "prompts"
+
+        // Fields
+        object Fields {
+            const val PROMPTS = "prompts"
+            const val ID = "id"
+            const val TITLE = "title"
+            const val DESCRIPTION = "promptDescription"
+        }
+    }
 }

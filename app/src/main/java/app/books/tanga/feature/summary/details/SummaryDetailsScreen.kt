@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,9 +36,9 @@ import app.books.tanga.R
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.ExpendableText
+import app.books.tanga.coreui.components.ShinyButton
 import app.books.tanga.coreui.components.SummaryActionButton
 import app.books.tanga.coreui.components.TangaAsyncImage
-import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
 import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.LocalTintColor
@@ -62,6 +63,7 @@ fun SummaryDetailsScreen(
     onLoadSummary: (SummaryId) -> Unit,
     onToggleFavorite: () -> Unit,
     onShare: (summary: SummaryUi) -> Unit,
+    onGenerateClick: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
     onRecommendationClick: (SummaryId) -> Unit
 ) {
@@ -81,12 +83,13 @@ fun SummaryDetailsScreen(
         },
         floatingActionButton = {
             state.summary?.id?.let { summaryId ->
-                PlayFloatingActionButton(
+                FloatingActionButton(
                     summaryId = summaryId,
-                    onClick = onPlayAudioClick
+                    onClick = onGenerateClick
                 )
             }
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { paddingValues ->
         when (state.progressState) {
             ProgressState.Show -> SummaryDetailsShimmerLoader()
@@ -157,16 +160,14 @@ private fun SummaryDetailsContent(
 }
 
 @Composable
-fun PlayFloatingActionButton(
+fun FloatingActionButton(
     summaryId: SummaryId,
-    modifier: Modifier = Modifier,
     onClick: (SummaryId) -> Unit
 ) {
-    TangaPlayAudioFab(
-        modifier = modifier.testTag("play_button"),
-        onNavigateToAudioPlayer = {
-            onClick(summaryId)
-        }
+    ShinyButton(
+        text = app.books.tanga.coreui.R.string.ai_generate,
+        icon = app.books.tanga.coreui.R.drawable.ai,
+        onClick = { onClick(summaryId) },
     )
 }
 
@@ -361,7 +362,8 @@ private fun SummaryDetailsScreenPreview() {
             onLoadSummary = {},
             onToggleFavorite = {},
             onRecommendationClick = {},
-            onShare = {}
+            onShare = {},
+            onGenerateClick = {}
         )
     }
 }
