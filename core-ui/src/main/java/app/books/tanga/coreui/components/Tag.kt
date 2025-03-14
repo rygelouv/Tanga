@@ -35,7 +35,7 @@ import app.books.tanga.coreui.theme.LocalTintColor
  * @param icon: The icon to be displayed as a tag.
  * @param tint: The tint of the icon.
  */
-@Suppress("LongParameterList, CognitiveComplexMethod")
+@Suppress("CognitiveComplexMethod", "LongParameterList")
 @Composable
 fun Tag(
     text: String,
