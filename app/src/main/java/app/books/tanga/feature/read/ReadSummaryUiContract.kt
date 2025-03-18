@@ -1,5 +1,6 @@
 package app.books.tanga.feature.read
 
+import androidx.annotation.DrawableRes
 import app.books.tanga.common.ui.ProgressState
 import app.books.tanga.entity.SummaryId
 import app.books.tanga.errors.UiError
@@ -20,6 +21,11 @@ sealed class ContentType {
     data class Markdown(val markdownText: String) : ContentType()
     data class Quotes(val quotes: List<QuoteExplanation>) : ContentType()
 }
+
+data class ContentHeaderInfo(
+    @DrawableRes val icon: Int,
+    val title: String
+)
 
 sealed interface ReadSummaryUiEvent {
     data object Empty : ReadSummaryUiEvent

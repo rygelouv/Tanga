@@ -1,6 +1,5 @@
 package app.books.tanga.feature.read
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -64,11 +63,6 @@ import app.books.tanga.feature.read.components.ReadFontScaleChooser
 import app.books.tanga.feature.summary.SummaryContentState
 import app.books.tanga.feature.summary.details.SaveButton
 import kotlinx.collections.immutable.toImmutableList
-
-data class ContentHeaderInfo(
-    @DrawableRes val icon: Int,
-    val title: String
-)
 
 @Composable
 fun ReadSummaryScreen(
