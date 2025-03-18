@@ -1,5 +1,6 @@
 package app.books.tanga.coreui
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import app.books.tanga.coreui.common.parseMarkdown
@@ -15,7 +16,7 @@ class MarkdownParserTest {
     @Test
     fun parseMarkdown_renders_heading_correctly() {
         val markdown = "# Test Heading"
-        val elements = parseMarkdown(markdown, 1.0f)
+        val elements = parseMarkdown(markdown, 1.0f, Color.White)
 
         composeTestRule.setContent {
             elements.forEach { it() }
@@ -27,7 +28,7 @@ class MarkdownParserTest {
     @Test
     fun parseMarkdown_renders_paragraph_correctly() {
         val markdown = "Test Paragraph"
-        val elements = parseMarkdown(markdown, 1.0f)
+        val elements = parseMarkdown(markdown, 1.0f, Color.White)
 
         composeTestRule.setContent {
             elements.forEach { it() }
@@ -39,7 +40,7 @@ class MarkdownParserTest {
     @Test
     fun parseMarkdown_renders_emphasis_correctly() {
         val markdown = "*Test Emphasis*"
-        val elements = parseMarkdown(markdown, 1.0f)
+        val elements = parseMarkdown(markdown, 1.0f, Color.White)
 
         composeTestRule.setContent {
             elements.forEach { it() }
@@ -52,7 +53,7 @@ class MarkdownParserTest {
     @Test
     fun parseMarkdown_renders_bullet_list_correctly() {
         val markdown = "- Item 1\n- Item 2"
-        val elements = parseMarkdown(markdown, 1.0f)
+        val elements = parseMarkdown(markdown, 1.0f, Color.White)
 
         composeTestRule.setContent {
             elements.forEach { it() }
@@ -65,7 +66,7 @@ class MarkdownParserTest {
     @Test
     fun parseMarkdown_renders_ordered_list_correctly() {
         val markdown = "1. Item 1\n2. Item 2"
-        val elements = parseMarkdown(markdown, 1.0f)
+        val elements = parseMarkdown(markdown, 1.0f, Color.White)
 
         composeTestRule.setContent {
             elements.forEach { it() }

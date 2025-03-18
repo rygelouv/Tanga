@@ -22,7 +22,8 @@ import app.books.tanga.coreui.resources.asString
 fun AIPromptsScreen(
     state: AIPromptsUiState,
     onNavigateBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onPromptClick: (String) -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -52,7 +53,7 @@ fun AIPromptsScreen(
                             isSelectable = false,
                             isSelected = true,
                             contentSize = ContentSize.Medium,
-                            onSelect = { },
+                            onSelect = { onPromptClick(prompt.id) },
                             onUnselect = { }
                         )
                     }

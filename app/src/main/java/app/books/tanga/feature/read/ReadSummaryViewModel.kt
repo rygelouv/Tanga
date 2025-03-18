@@ -74,7 +74,8 @@ class ReadSummaryViewModel @Inject constructor(
                     _state.update { currentState ->
                         currentState.copy(
                             progressState = ProgressState.Hide,
-                            summaryTextContent = textContent
+                            summaryTextContent = textContent,
+                            contentType = ContentType.Markdown(textContent)
                         )
                     }
                     summaryBehaviorDelegate.loadSummary(summaryId)

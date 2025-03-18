@@ -99,6 +99,7 @@ revenuecat-purchases-version = "7.0.0"
 junit = "4.13.2"
 appcompat-version = "1.6.1"
 material-version = "1.10.0"
+firebase-vertexai-version = "16.2.0"
 
 [libraries]
 # Core Libraries
@@ -140,6 +141,8 @@ firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+firebase-vertexai = { group = "com.google.firebase", name = "firebase-vertexai", version.ref = "firebase-vertexai-version" }
+firebase-appcheck = { module = "com.google.firebase:firebase-appcheck-playintegrity" }
 
 # Image loading
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }

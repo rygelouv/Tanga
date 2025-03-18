@@ -1,16 +1,20 @@
 package app.books.tanga.feature.read
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -27,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -35,22 +41,34 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.books.tanga.common.ui.ProgressState
+import app.books.tanga.coreui.R
 import app.books.tanga.coreui.common.ExcludeFromJacocoGeneratedReport
 import app.books.tanga.coreui.components.DotsAnimation
 import app.books.tanga.coreui.components.MarkdownText
 import app.books.tanga.coreui.components.SystemBarsVisibility
 import app.books.tanga.coreui.components.TangaPlayAudioFab
 import app.books.tanga.coreui.icons.TangaIcons
+import app.books.tanga.coreui.theme.LocalSpacing
 import app.books.tanga.coreui.theme.TangaTheme
 import app.books.tanga.data.PreviewData
 import app.books.tanga.entity.SummaryId
+import app.books.tanga.feature.aiprompts.QuotesView
 import app.books.tanga.feature.audioplayer.miniplayer.MiniPlayerAwareSpacer
 import app.books.tanga.feature.read.components.ReadFontScaleChooser
 import app.books.tanga.feature.summary.SummaryContentState
 import app.books.tanga.feature.summary.details.SaveButton
+import kotlinx.collections.immutable.toImmutableList
+
+data class ContentHeaderInfo(
+    @DrawableRes val icon: Int,
+    val title: String
+)
 
 @Composable
 fun ReadSummaryScreen(
@@ -59,8 +77,10 @@ fun ReadSummaryScreen(
     onToggleFavorite: () -> Unit,
     onFontSizeClick: () -> Unit,
     onFontScaleChange: (Float) -> Unit,
+    onNavigateToAudioPlayer: (SummaryId) -> Unit,
     modifier: Modifier = Modifier,
-    onNavigateToAudioPlayer: (SummaryId) -> Unit
+    shouldShowFavoriteButton: Boolean = true,
+    contentHeaderInfo: ContentHeaderInfo? = null
 ) {
     SystemBarsVisibility(statusBarColor = MaterialTheme.colorScheme.onPrimaryContainer, statusBarVisible = true)
 
@@ -84,6 +104,7 @@ fun ReadSummaryScreen(
                         fontSizeChooserVisible = state.fontSizeChooserVisible,
                         favoriteProgressState = state.summaryContentState.favoriteProgressState,
                         onToggleFavorite = onToggleFavorite,
+                        shouldShowFavoriteButton = shouldShowFavoriteButton,
                         onFontSizeClick = onFontSizeClick
                     )
                 },
@@ -97,14 +118,51 @@ fun ReadSummaryScreen(
                     }
                 }
             ) {
-                ReadSummaryContent(
+                Column(
                     modifier = Modifier.padding(it),
-                    state = state,
-                    nestedScrollConnection = scrollConnection,
-                    onFontScaleChange = onFontScaleChange
-                )
+                ) {
+                    contentHeaderInfo?.let {
+                        ContentHeader(contentHeaderInfo = it)
+                    }
+
+                    ReadSummaryContent(
+                        state = state,
+                        nestedScrollConnection = scrollConnection,
+                        onFontScaleChange = onFontScaleChange
+                    )
+                }
             }
         }
+    }
+}
+
+@Composable
+fun ContentHeader(
+    contentHeaderInfo: ContentHeaderInfo,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.onPrimaryContainer)
+            .padding(20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            modifier = Modifier.size(28.dp),
+            painter = painterResource(id = contentHeaderInfo.icon),
+            contentDescription = null,
+            tint = Color.White
+        )
+        Spacer(modifier = Modifier.width(LocalSpacing.current.large))
+        Text(
+            text = contentHeaderInfo.title,
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.headlineMedium,
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -211,12 +269,25 @@ fun ReadSummaryContent(
                 .verticalScroll(scrollState)
                 .padding(20.dp)
         ) {
-            state.summaryTextContent?.let {
-                MarkdownText(
-                    markdownText = it,
-                    textScale = state.textScaleFactor.value
-                )
+            when (state.contentType) {
+                is ContentType.Markdown -> {
+                    MarkdownText(
+                        markdownText = state.contentType.markdownText,
+                        textScale = state.textScaleFactor.value
+                    )
+                }
+                is ContentType.Quotes -> {
+                    QuotesView(
+                        quotes = state.contentType.quotes.toImmutableList(),
+                    )
+                }
             }
+//            state.summaryTextContent?.let {
+//                MarkdownText(
+//                    markdownText = it,
+//                    textScale = state.textScaleFactor.value
+//                )
+//            }
             MiniPlayerAwareSpacer()
         }
     }
@@ -228,6 +299,7 @@ fun ReadSummaryTopBar(
     isFavorite: Boolean,
     fontSizeChooserVisible: Boolean,
     favoriteProgressState: ProgressState,
+    shouldShowFavoriteButton: Boolean,
     onBackClick: () -> Unit,
     onToggleFavorite: () -> Unit,
     onFontSizeClick: () -> Unit,
@@ -269,12 +341,14 @@ fun ReadSummaryTopBar(
                     contentDescription = "adjust font size"
                 )
             }
-            SaveButton(
-                isSaved = isFavorite,
-                progressState = favoriteProgressState,
-                tintColor = Color.White,
-                onClick = { onToggleFavorite() }
-            )
+            if (shouldShowFavoriteButton) {
+                SaveButton(
+                    isSaved = isFavorite,
+                    progressState = favoriteProgressState,
+                    tintColor = Color.White,
+                    onClick = { onToggleFavorite() }
+                )
+            }
         }
     )
 }
@@ -292,6 +366,10 @@ private fun ReadSummaryScreenPreview() {
                 ),
                 summaryTextContent = PreviewData.SUMMARY_TEXT,
                 progressState = ProgressState.Hide
+            ),
+            contentHeaderInfo = ContentHeaderInfo(
+                icon = R.drawable.idea,
+                title = "What are the most thought-provoking quotes from this book?"
             ),
             onNavigateToPreviousScreen = {},
             onToggleFavorite = {},

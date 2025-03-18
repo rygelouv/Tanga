@@ -11,6 +11,7 @@ import app.books.tanga.entity.SummaryId
 fun AIPromptsContainer(
     summaryId: SummaryId,
     onNavigateBack: () -> Unit,
+    onNavigateToResponse: () -> Unit,
     viewModel: AIPromptsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -18,7 +19,11 @@ fun AIPromptsContainer(
         viewModel.getAIPromptsForSummary(summaryId)
     }
     AIPromptsScreen(
+        state = state,
         onNavigateBack = onNavigateBack,
-        state = state
+        onPromptClick = {
+            viewModel.onPromptSelected(it)
+            onNavigateToResponse()
+        }
     )
 }

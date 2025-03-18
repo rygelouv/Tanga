@@ -5,6 +5,9 @@ import app.books.tanga.di.TimberTrees
 import app.books.tanga.di.plantAll
 import app.books.tanga.errors.TangaErrorTracker
 import app.books.tanga.revenuecat.RevenueCatInitializer
+import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -21,6 +24,11 @@ class TangaApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // Initialize Firebase App Check
+        Firebase.appCheck.installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance(),
+        )
+
         // Plant all the Timber trees added to Timber
         timberTrees.plantAll()
 

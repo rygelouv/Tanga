@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import app.books.tanga.feature.aiprompts.aiPrompts
 import app.books.tanga.feature.aiprompts.toAIPrompts
+import app.books.tanga.feature.aiprompts.toAiPromptResponse
 import app.books.tanga.feature.audioplayer.fullplayer.playSummaryAudio
 import app.books.tanga.feature.audioplayer.fullplayer.toPlaySummaryAudio
 import app.books.tanga.feature.deleteaccount.deleteAccount
@@ -99,7 +100,9 @@ fun MainNavigationGraph(
         }
 
         aiPrompts(
-            onNavigateBack = { navController.popBackStack() }
+            navController = navController,
+            onNavigateBack = { navController.popBackStack() },
+            onNavigateToResponse = { navController.toAiPromptResponse() }
         )
     }
 }
