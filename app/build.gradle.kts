@@ -122,6 +122,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.firebase.vertexai)
     kapt(libs.hilt.android.compiler)
 
     // DataStore
@@ -135,6 +136,7 @@ dependencies {
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.appcheck)
 
     // UI Libraries
     implementation(libs.accompanist.pager)

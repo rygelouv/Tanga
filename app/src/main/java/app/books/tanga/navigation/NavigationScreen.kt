@@ -77,7 +77,21 @@ sealed class NavigationScreen(val route: String) {
         const val TRIGGER_KEY = "trigger"
     }
 
-    data object AIPrompts : NavigationScreen("ai_prompts_screen/summary_id={summaryId}") {
+    data object AIPromptsOLd : NavigationScreen("ai_prompts_screen/summary_id={summaryId}") {
         const val SUMMARY_ID_KEY = "summaryId"
+    }
+
+    sealed class AIPrompts(route: String) : NavigationScreen(route) {
+
+        data object Graph : AIPrompts("$GRAPH_ROUTE/summary_id={summaryId}")
+
+        data object List : AIPrompts("$GRAPH_ROUTE/list")
+
+        data object Response : AIPrompts("$GRAPH_ROUTE/responses")
+
+        companion object {
+            const val GRAPH_ROUTE = "ai_prompts_screen"
+            const val SUMMARY_ID_KEY = "summaryId"
+        }
     }
 }

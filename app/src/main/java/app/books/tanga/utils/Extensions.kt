@@ -3,6 +3,13 @@ package app.books.tanga.utils
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,3 +60,24 @@ fun String.removeCurrencySymbol(): String = replace(Regex("[^\\d.]"), "").trim()
  * Get the currency symbol from a string.
  */
 fun String.extractCurrency(): String? = Regex("[^\\d.]").find(this)?.value?.trim()
+
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavHostController): T {
+    val navGraphRoute = destination.parent?.route ?: return viewModel()
+    val parentEntry = remember(this) {
+        navController.getBackStackEntry(navGraphRoute)
+    }
+
+    return hiltViewModel(parentEntry)
+}
+
+/**
+ * extension function that safely strips the markdown-style json delimiters if present,
+ * and returns only the JSON content itself. If no delimiters exist,
+ * it returns the trimmed original string unchanged.
+ */
+fun String.stripJsonMarkdown(): String {
+    val regex = Regex("""```json\s*(.*?)\s*```""", RegexOption.DOT_MATCHES_ALL)
+    val matchResult = regex.find(this)
+    return matchResult?.groupValues?.get(1)?.trim() ?: this.trim()
+}

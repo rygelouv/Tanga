@@ -26,12 +26,16 @@ import org.commonmark.node.Paragraph
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.text.TextContentRenderer
 
-fun parseMarkdown(markdown: String, fontScaleFactor: Float): List<@Composable () -> Unit> {
+fun parseMarkdown(
+    markdown: String,
+    fontScaleFactor: Float,
+    textColor: Color
+): List<@Composable () -> Unit> {
     val elements = mutableListOf<@Composable () -> Unit>()
 
     val parser = Parser.builder().build()
     val document = parser.parse(markdown)
-    val rendererVisitor = MarkdownRendererVisitor(elements, fontScaleFactor)
+    val rendererVisitor = MarkdownRendererVisitor(elements, fontScaleFactor, textColor)
 
     document.accept(rendererVisitor)
 
@@ -40,12 +44,13 @@ fun parseMarkdown(markdown: String, fontScaleFactor: Float): List<@Composable ()
 
 class MarkdownRendererVisitor(
     private val elements: MutableList<@Composable () -> Unit>,
-    private val scaleFactor: Float
+    private val scaleFactor: Float,
+    private val textColor: Color
 ) : AbstractVisitor() {
     private val renderer: TextContentRenderer = TextContentRenderer.builder().build()
 
     private fun scaledTextStyle(fontSize: TextUnit): TextStyle = TextStyle(
-        color = Color.White,
+        color = textColor,
         fontSize = fontSize * scaleFactor,
         lineHeight = 32.sp * scaleFactor,
         letterSpacing = 0.21.sp * scaleFactor,
@@ -73,7 +78,7 @@ class MarkdownRendererVisitor(
                     letterSpacing = style.letterSpacing * scaleFactor
                 )
                 Text(
-                    color = Color.White,
+                    color = textColor,
                     text = text,
                     style = scaledStyle,
                     fontWeight = FontWeight.Bold
@@ -99,14 +104,17 @@ class MarkdownRendererVisitor(
         bulletList?.accept(object : AbstractVisitor() {
             override fun visit(listItem: ListItem?) {
                 val text = renderer.render(listItem)
+                print("listItem: $text")
                 items.add(text)
             }
         })
 
+        print("items: $items")
+
         elements.add {
             Column {
                 items.forEach { item ->
-                    Text(text = "$marker $item", color = Color.White)
+                    Text(text = "$marker $item", color = textColor)
                 }
             }
         }
@@ -131,7 +139,7 @@ class MarkdownRendererVisitor(
                 items.forEachIndexed { index, item ->
                     Row {
                         Spacer(modifier = Modifier.width(LocalSpacing.current.large))
-                        Text(text = "${index + 1}$delimiter", style = textStyle, color = Color.White)
+                        Text(text = "${index + 1}$delimiter", style = textStyle, color = textColor)
                         Spacer(modifier = Modifier.width(LocalSpacing.current.small))
                         Text(text = item, style = textStyle)
                     }

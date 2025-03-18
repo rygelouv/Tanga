@@ -66,7 +66,10 @@ fun Tag(
             .then(borderModifier)
             .then(paddingModifier)
             .clickable {
-                if (isSelectable.not()) return@clickable
+                if (isSelectable.not()) {
+                    onSelect()
+                    return@clickable
+                }
                 selected = selected.not()
                 if (selected) onSelect() else onUnselect()
             }
