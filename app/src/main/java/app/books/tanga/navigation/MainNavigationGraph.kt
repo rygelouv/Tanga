@@ -32,7 +32,8 @@ import app.books.tanga.utils.BuildVersionChecker
 fun MainNavigationGraph(
     navController: NavHostController,
     startDestination: NavigationScreen.BottomBarScreen,
-    onRedirectToAuth: () -> Unit
+    onRedirectToAuth: () -> Unit,
+    onRedirectToAuthAndClearBackstack: () -> Unit,
 ) {
     NavHost(navController = navController, startDestination = startDestination.route) {
         bottomBarNavGraph(
@@ -79,13 +80,13 @@ fun MainNavigationGraph(
 
         settings(
             onNavigateBack = { navController.popBackStack() },
-            onNavigateToAuth = onRedirectToAuth,
+            onNavigateToAuth = onRedirectToAuthAndClearBackstack,
             onNavigateToDeleteAccount = { navController.toDeleteAccount() }
         )
 
         deleteAccount(
             onNavigateBack = { navController.popBackStack() },
-            onNavigateToAuth = onRedirectToAuth
+            onNavigateToAuth = onRedirectToAuthAndClearBackstack
         )
 
         privacyAndTerms(

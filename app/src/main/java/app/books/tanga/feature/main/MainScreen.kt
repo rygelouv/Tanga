@@ -27,6 +27,7 @@ import app.books.tanga.navigation.NavigationScreen
 @Composable
 fun MainScreen(
     onRedirectToAuth: () -> Unit,
+    onRedirectToAuthAndClearBackstack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = hiltViewModel()
 ) {
@@ -37,7 +38,7 @@ fun MainScreen(
     when (event) {
         is MainUiEvent.NavigateTo.ToAuth -> {
             LaunchedEffect(Unit) {
-                onRedirectToAuth()
+                onRedirectToAuthAndClearBackstack()
             }
         }
 
@@ -60,7 +61,8 @@ fun MainScreen(
                     MainNavigationGraph(
                         navController = navController,
                         startDestination = NavigationScreen.BottomBarScreen.Home,
-                        onRedirectToAuth = onRedirectToAuth
+                        onRedirectToAuth = onRedirectToAuth,
+                        onRedirectToAuthAndClearBackstack = onRedirectToAuthAndClearBackstack
                     )
                 }
             }
